@@ -1,0 +1,104 @@
+$max-width: 1200px !default;
+
+// Padding used for layout margins
+$pad-min: 18px !default;
+$pad-medium: 35px !default;
+
+// Sidebar widths used in media queries
+$sidebar-pad-medium: $pad-min !default;
+$sidebar-width-medium: 300px + 2* $sidebar-pad-medium !default;
+
+$indented-lists: true !default;
+
+$header-font-size: 1.3em !default;
+$header-padding-top: 1.2em !default;
+$header-padding-bottom: 1em !default;
+
+$content-min-width: 468px + 2*$pad-min !default;
+$min-width: $sidebar-width-medium + $content-min-width !default;
+
+.group { @include pie-clearfix; }
+
+body {
+  -webkit-text-size-adjust: auto;
+  max-width: $max-width;
+  min-width: $min-width;
+  position: relative;
+  margin: 0 auto;
+  > header, > nav, > footer, #content > article, #content > div > article, #content > div > section {
+    @extend .group;
+    padding-left: $pad-min;
+    padding-right: $pad-min;
+  }
+  div.pagination {
+    @extend .group;
+    margin-left: $pad-min;
+    margin-right: $pad-min;
+  }
+  > header {
+    font-size: $header-font-size;
+    padding-top: $header-padding-top;
+    padding-bottom: $header-padding-bottom;
+  }
+}
+
+#content {
+  overflow: visible;
+  margin-right: $sidebar-width-medium;
+  position: relative;
+  > div, > article {
+    width: 100%;
+    padding-top: $pad-medium/2;
+    padding-bottom: $pad-medium/2;
+    float: left;
+  }
+}
+
+aside.sidebar {
+  background-color: sidebar-bg;
+  border-top: 1px solid $sidebar-border;
+  @extend .group;
+
+  width: $sidebar-width-medium - $sidebar-pad-medium*2;
+  padding: 0 $sidebar-pad-medium $sidebar-pad-medium;
+  background: none;
+  clear: none;
+  float: left;
+  margin: 0 -100% 0 0;
+  section {
+    width: auto; margin-left: 0;
+    &.odd, &.even { float: none; width: auto; margin-left: 0; }
+  }
+}
+
+.flex-content { max-width: 100%; max-height: 100%; }
+
+.basic-alignment {
+  &.left { float: left; margin-right: 1.5em; }
+  &.right { float: right; margin-left: 1.5em; }
+  &.center { display:block; margin: 0 auto 1.5em; }
+  &.left, &.right { margin-bottom: .8em; }
+}
+
+.toggle-sidebar { &, .no-sidebar & { display: none; }}
+
+body.sidebar-footer {
+  #content { margin-right: 0px; }
+  .toggle-sidebar { display: none; }
+}
+
+#main, #content, .sidebar {
+  @extend .group;
+}
+
+#main {
+  padding: 0;
+  margin: 0 auto;
+}
+
+@if $indented-lists == false {
+  @media only screen and (min-width: 768px) {
+    ul, ol { margin-left: 0; }
+  }
+}
+

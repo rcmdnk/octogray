@@ -1,0 +1,130 @@
+$noise-bg: image-url('noise.png') top left !default;
+$img-border: inline-image('dotted-border.png');
+
+// Main Link Colors
+$link-color: lighten(#165b94, 3) !default;
+$link-color-hover: adjust-color($link-color, $lightness: 10, $saturation: 25) !default;
+$link-color-visited: adjust-color($link-color, $hue: 80, $lightness: -4) !default;
+$link-color-active: adjust-color($link-color-hover, $lightness: -15) !default;
+
+// Main Section Colors
+$main-bg: #f2f2f2 !default;
+$page-bg: #f2f2f2 !default;
+$article-border: $main-bg !default;
+
+$header-bg: $main-bg !default;
+$header-border: $header-bg !default;
+$title-color: #333 !default;
+$subtitle-color: #333 !default;
+
+$text-color: #222 !default;
+$text-color-light: #aaa !default;
+$type-border: $main-bg !default;
+
+/* Navigation */
+$nav-bg: $main-bg !default;
+$nav-bg-front: $nav-bg !default;
+$nav-bg-back: $nav-bg !default;
+$nav-color: change-color(mix($text-color, $nav-bg, 80), $hue: hue($nav-bg), $saturation: saturation($nav-bg)/2) !default;
+$nav-color-hover: $link-color-hover !default;
+$nav-placeholder: desaturate(darken($nav-bg, 10), 15) !default;
+$nav-border: $nav-bg !default;
+$nav-border-top: $nav-bg !default;
+$nav-border-bottom: $nav-bg !default;
+$nav-border-left: $nav-bg !default;
+$nav-border-right: $nav-bg !default;
+
+/* Sidebar colors */
+$sidebar-bg: $main-bg !default;
+$sidebar-link-color: $link-color !default;
+$sidebar-link-color-hover: $link-color-hover !default;
+$sidebar-link-color-active: $link-color-active !default;
+$sidebar-color: change-color(mix($text-color, $sidebar-bg, 80), $hue: hue($sidebar-bg), $saturation: saturation($sidebar-bg)/2) !default;
+$sidebar-border: $sidebar-bg !default;
+$sidebar-border-hover: $sidebar-bg !default;
+$sidebar-link-color-subdued: lighten($sidebar-color, 20) !default;
+$sidebar-link-color-subdued-hover: $sidebar-link-color-hover !default;
+$twitter-status-link: lighten($sidebar-link-color-subdued, 15) !default;
+
+$footer-color: #888 !default;
+$footer-bg: $main-bg !default;
+$footer-bg-front: $footer-bg !default;
+$footer-bg-back: linear-gradient(lighten($footer-bg, 8), $footer-bg, darken($footer-bg, 11)) !default;
+$footer-bg-back: $footer-bg !default;
+$footer-color: darken($footer-bg, 38) !default;
+$footer-color-hover: darken($footer-color, 10) !default;
+$footer-border-top: $footer-bg !default;
+$footer-border-bottom: $footer-bg !default;
+$footer-link-color: darken($footer-bg, 38) !default;
+$footer-link-color-hover: darken($footer-color, 25) !default;
+$page-border-bottom: $main-bg !default;
+
+// Table view
+* + table{
+  border-style: solid;
+  border-width: 1.5px;
+  //border-color: #CCCCCC;
+  border-color: darken($main-bg,20);
+}
+
+* + table tr {
+  &:nth-child(2n+1) {
+    //background: #F8F8F8;
+    background:darken($main-bg,4);
+  }
+  &:nth-child(even) {
+    //background: #FFFFFF;
+    background:darken($main-bg,2);
+  }
+}
+
+* + table th, * + table td {
+  border-style: solid;
+  border-width: 1.5px;
+  border-color: darken($main-bg,20);
+}
+
+* + table th {
+  font-weight: bold;
+  //background: #F0F0F0;
+  background: darken($main-bg,10);
+}
+
+th[align="left"], td[align="left"] {
+  text-align:left;
+}
+
+th[align="right"], td[align="right"] {
+  text-align:right;
+}
+
+th[align="center"],  td[align="center"] {
+  text-align:center;
+}
+
+/* Core theme application */
+
+a {
+  @include link-colors($link-color, $hover: $link-color-hover, $focus: $link-color-hover, $visited: $link-color-visited, $active: $link-color-active);
+}
+aside.sidebar a {
+  @include link-colors($sidebar-link-color, $hover: $sidebar-link-color-hover, $focus: $sidebar-link-color-hover, $active: $sidebar-link-color-active);
+}
+a {
+  @include transition(color .3s);
+}
+
+html {
+  //background: $page-bg image-url('line-tile.png') top left;
+  background: $page-bg;
+}
+body {
+  > div {
+    background: $sidebar-bg $noise-bg;
+    border-bottom: 1px solid $page-border-bottom;
+    > div {
+      background: $main-bg $noise-bg;
+      border-right: 1px solid $sidebar-border;
+    }
+  }
+}

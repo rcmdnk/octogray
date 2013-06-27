@@ -1,0 +1,71 @@
+.side-shadow-border {
+  @include box-shadow(lighten($sidebar-bg, 5) 0 1px);
+}
+aside.sidebar {
+  overflow: hidden;
+  color: $sidebar-color;
+  text-shadow: lighten($sidebar-bg, 8) 0 1px;
+  a { @extend .force-wrap; }
+  section {
+    @extend .sans;
+    font-size: .8em;
+    line-height: 1.4em;
+    margin-bottom: 1.5em;
+    h1 {
+      margin: 1.5em 0 0;
+      padding-bottom: .2em;
+      border-bottom: 1px solid $sidebar-border;
+      @extend .side-shadow-border;
+      + p {
+        padding-top: .4em;
+      }
+    }
+  }
+  img {
+    @extend .flex-content;
+    @extend .basic-alignment;
+  }
+  ul {
+    margin-bottom: 0.5em;
+    margin-left: 0;
+  }
+  li {
+    list-style: none;
+    padding: .5em 0;
+    margin: 0;
+    border-bottom: 1px solid $sidebar-border;
+    @extend .side-shadow-border;
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+  a {
+    color: inherit;
+    @include transition(color .5s);
+  }
+  &:hover a {
+    color: $sidebar-link-color;
+    &:hover { color: $sidebar-link-color-hover; }
+  }
+  a.sidebar-about {
+    color: inherit;
+    @include transition(color .5s);
+    text-decoration: none;
+  }
+  &:hover a.sidebar-about {
+    color: $sidebar-link-color;
+    &:hover { color: $sidebar-link-color-hover; }
+  }
+  .aboutme_logo {
+    float: left;
+    width: 2*$icon-link-btn-height*$icon-link-btn-font-size - 0.4em;
+    height: 2*$icon-link-btn-height*$icon-link-btn-font-size - 0.4em;
+    margin: 0.2em 0.5em 0 0.2em;
+  }
+}
+.aside-alt-link {
+  color: $sidebar-link-color-subdued;
+  &:hover {
+    color: $sidebar-link-color-subdued-hover;
+  }
+}

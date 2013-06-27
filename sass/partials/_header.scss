@@ -1,0 +1,35 @@
+body > header {
+  background: $header-bg;
+  .title_logo {
+    vertical-align: middle;
+    width: 1em;
+    height: 1em;
+    margin-right: 0.2;
+  }
+  h1 {
+    margin: 0;
+    text-align: center;
+    a, a:visited, a:hover {
+      color: $title_color;
+      text-decoration: none;
+    }
+  }
+  h2 {
+    margin: .2em 0 0;
+    @extend .sans;
+    font-size: 1em;
+    color: $sidebar-color;
+    font-weight: normal;
+    text-align: center;
+    a, a:visited {
+      color: inherit;
+      @include transition(color .5s);
+      text-decoration: none;
+    }
+    &:hover a {
+      color: inherit;
+      //color: $link-color;
+      &:hover { color: $link-color-hover; }
+    }
+  }
+}

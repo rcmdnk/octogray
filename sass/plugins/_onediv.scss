@@ -1,0 +1,18 @@
+.arrowup {
+background: #2C2C2C;
+font-size: 12px;
+position: relative;
+width: 1em;
+height: 1em;
+margin-top: 1em;
+}
+
+.arrowup::before {
+bottom: 0.8em;
+left: -0.666em;
+position: absolute;
+border-left: 1.2em solid rgba(44, 44, 44, 0);
+border-right: 1.2em solid rgba(44, 44, 44, 0);
+border-bottom: 1em solid #2C2C2C;
+content: "";
+}

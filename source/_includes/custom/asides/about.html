@@ -1,0 +1,34 @@
+<section>
+<h1>About Me</h1>
+{% if site.aboutme_logo %}
+<a href="mailto:{{site.email}}" class="sidebar-about" title="Mail"><img src="{{site.aboutme_logo}}" class="aboutme_logo" alt="" ></a>
+{% endif %}
+{% if site.aboutme_marks %}
+{% if site.email_mark %}
+<a href="mailto:{{site.email}}" title="Mail" class="sidebar-about" ><i class="icon-envelope-alt icon-link-btn"></i></a>
+{% endif %}
+{% if site.twitter_mark %}
+<a href="https://twitter.com/{{ site.twitter_user }}" title="Twitter" class="sidebar-about" ><i class="icon-twitter-sign icon-link-btn"></i></a>
+{% endif %}
+{% if site.facebook_mark %}
+<a href="https://www.facebook.com/{{ site.facebook_user }}" title="Facebook" class="sidebar-about" ><i class="icon-facebook-sign icon-link-btn"></i></a>
+{% endif %}
+{% if site.google_plus_one_mark %}
+<a href="https://plus.google.com/{{ site.facebook_user }}" title="Google +1" class="sidebar-about" ><i class="icon-google-plus-sign icon-link-btn"></i></a>
+{% endif %}
+{% if site.linkedin_mark %}
+<a href="http://www.linkedin.com/profile/view?id={{ site.linkedin_user }}" title="LinkedIn" class="sidebar-about" ><i class="icon-linkedin-sign icon-link-btn"></i></a>
+{% endif %}
+<br>
+{% if site.github_mark %}
+<a href="https://github.com/{{site.github_user}}" title="GitHub" class="sidebar-about" ><i class="icon-github-sign icon-link-btn"></i></a>
+{% endif %}
+{% if site.rss_mark %}
+<a href="{{ site.subscribe_rss }}" title="RSS" class="sidebar-about"><i class="icon-rss-sign icon-link-btn"></i></a>
+{% endif %}
+{% if site.bookmark_mark %}
+<a href="#" class="add_bookmark sidebar-about" title="Favorite" data-page_title="{{site.title}}" data-page_url="{{site.url}}"><i class="icon-star-empty icon-link-btn"></i></a>
+{% endif %}
+{% endif %}
+<br class="clearBoth">
+</section>

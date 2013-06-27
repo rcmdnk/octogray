@@ -1,0 +1,48 @@
+#archive {
+  #content > div { &, > article { padding-top: 0; } }
+}
+#blog-archives {
+  article {
+    padding: 1em 0 1em;
+    position: relative;
+    background: $img-border bottom left repeat-x;
+    &:last-child {
+      background: none;
+    }
+    footer { padding: 0; margin: 0;}
+  }
+  h1 { color: $text-color; margin-bottom: .3em; }
+  h2 { display: none; }
+  h1 {
+    font-size: 1.5em;
+    a {
+      @include hover-link;
+      color: inherit;
+      &:hover { color: $link-color-hover; }
+      font-weight: normal;
+      display: inline-block;
+    }
+  }
+  a.category, a.tag, time {
+    @extend .sans;
+    color: $text-color-light;
+  }
+  color: $text-color-light;
+  .entry-content { display: none; }
+  time {
+    font-size: .9em;
+    line-height: 1.2em;
+    .month, .day { display: inline-block; }
+    .month { text-transform: uppercase; }
+  }
+  p { margin-bottom: 1em; }
+  &, .entry-content { a { @include link-colors(inherit, $link-color-hover); }}
+  a:hover { color: $link-color-hover; }
+}
+#content > .category, .tag {
+  article {
+    margin-left: 0;
+    padding-left: 6.8em;
+  }
+  .year { display: inline; }
+}

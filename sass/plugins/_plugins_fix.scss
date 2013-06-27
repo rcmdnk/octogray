@@ -1,0 +1,39 @@
+// emoji
+.emoji {
+  height: 20px;
+  margin-bottom: 5px;
+  vertical-align: middle;
+  box-shadow: none;
+  border: 0;
+}
+
+// NailThumb
+.square-thumb {
+  width: 200px;
+  height: 200px;
+}
+.title-thumb {
+  width: 200px;
+  height: 200px;
+  float: left;
+  margin: 0 20px 20px 0;
+}
+
+// scrolltopcontrol
+.icon-scroll-up {
+  font-size: 3em;
+  color: #999999;
+  border: solid 2px #999999;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+#topcontrol {
+  z-index: 100;
+}
+
+// index_click_box
+.index_click_box{
+  cursor: pointer;
+}
+

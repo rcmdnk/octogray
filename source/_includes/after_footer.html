@@ -1,0 +1,33 @@
+{% include disqus.html %}
+{% unless page.sharing == false %}
+<script>
+(function(w,d){
+    var c,e=d.createDocumentFragment(),f=d.getElementsByTagName("script")[0],
+    a=function(a,b){if(!d.getElementById(b)){c=d.createElement("script");
+    c.src=a;c.id=b||null;c.async=true;e.appendChild(c);}};
+{% if site.google_plus_one %}
+{% if site.google_plus_one_lang %}
+    w.___gcfg={lang:"ja"};
+{% endif %}
+    a("https://apis.google.com/js/plusone.js");
+{% endif %}
+{% if site.twitter_follow_button or site.twitter_tweet_button %}
+    a("//platform.twitter.com/widgets.js");
+{% endif %}
+{% if site.facebook_like %}
+    a("//connect.facebook.net/{% if site.facebook_lang %}{{ site.facebook_lang }}{% else %}en_US{% endif %}/all.js#{% if site.facebook_appID %}appId={{ site.facebook_appID }}&{% endif %}xfbml=1","facebook-jssdk");
+{% endif %}
+    a("//b.st-hatena.com/js/bookmark_button_wo_al.js");
+    f.parentNode.insertBefore(e,f);
+})(this,document);
+</script>
+{% endunless %}
+{% if site.linkwithin_show == true %}
+<script>
+var linkwithin_site_id = {{site.linkwithin_id}};
+</script>
+<script src="http://www.linkwithin.com/widget.js"></script>
+<a href="http://www.linkwithin.com/"><img src="http://www.linkwithin.com/pixel.png" alt="Related Posts Plugin for WordPress, Blogger..." style="border: 0" /></a>
+<script>linkwithin_text='{{site.linkwithin_text}}'</script>
+{% endif %}
+{% include custom/after_footer.html %}

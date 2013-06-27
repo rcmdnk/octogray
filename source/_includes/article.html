@@ -1,0 +1,63 @@
+{% unless page.no_header %}
+<header>
+  {% unless page.meta == false %}
+  <p class="meta">
+    {% include post/date.html %}{{ time }}
+    {% include post/categories.html %},
+    {% include post/tags.html %}
+  </p>
+  {% endunless %}
+  {% if index %}
+  <h1 class="entry-title"><a href="{{root_url}}{{post.url}}">{% if site.titlecase %}{{ post.title | titlecase }}{% else %}{{ post.title }}{% endif %}</a></h1>
+
+  {% else %}
+  {% if site.zenback_show == true and page.comments == true %}
+  <!-- zenback_title_begin -->
+  {% endif %}
+  <h1 class="entry-title">{% if site.titlecase %}{{ page.title | titlecase }}{% else %}{{ page.title }}{% endif %}</h1>
+  {% if site.zenback_show == true and page.comments == true %}
+  <!-- zenback_title_end -->
+  {% endif %}
+  {%comment%}
+  {% if site.zenback_show == true and page.comments == true %}
+  <!-- zenback_date {{page.date}}-->
+  {% endif %}
+  {%endcomment%}
+  {% endif %}
+</header>
+{% endunless %}
+
+{% unless page.sharing == false %}
+  {% include post/sharing.html %}
+{% endunless %}
+{% if index %}
+<div class="entry-content index_click_box">
+  {% if post.ogimage and post.no_ogimage != true %}
+  <div class="nailthumb-container title-thumb">
+    <img src="{{post.ogimage}}" alt="" title=""/>
+  </div>
+  {% endif %}
+  {{ content | excerpt | emojify }}
+  {% capture excerpted %}{{ content | has_excerpt }}{% endcapture %}
+  {% if excerpted == 'true' %}
+  <a href="{{root_url}}{{post.url}}">{{site.excerpt_link}}</a>
+  {% endif %}
+  <br class="clearBoth">
+</div>
+{% else %}
+{% if site.zenback_show == true and page.comments == true %}
+<!-- zenback_body_begin -->
+{% endif %}
+<div class="entry-content">
+  {% if page.ogimage and page.no_ogimage != true %}
+  <div class="nailthumb-container title-thumb">
+    <img src="{{page.ogimage}}" alt="" title=""/>
+  </div>
+  {% endif %}
+  {{ content | emojify}}
+</div>
+<!-- </div><footer> * pseudo line for the function raw_content() -->
+{% if site.zenback_show == true and page.comments == true %}
+<!-- zenback_body_end -->
+{% endif %}
+{% endif %}
