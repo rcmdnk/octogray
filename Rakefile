@@ -123,7 +123,7 @@ task :new_post, :title do |t, args|
     post.puts "---"
     post.puts ""
     post.puts "<!-- more -->"
-    post.puts "{%include custom/after_excerpt.html%}"
+    post.puts "{%include after_excerpt.html%}"
     post.puts ""
     post.puts ""
     post.puts ""
