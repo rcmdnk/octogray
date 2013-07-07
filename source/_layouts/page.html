@@ -17,9 +17,13 @@ layout: default
     {% include post/sharing.html %}
   {% endunless %}
 
+  {% if site.zenback_show == true and page.comments == true %}
   <!-- zenback_body_begin -->
+  {% endif %}
   {{ content | emojify }}
+  {% if site.zenback_show == true and page.comments == true %}
   <!-- zenback_body_end -->
+  {% endif %}
 
   {% unless page.footer == false %}
     <footer>

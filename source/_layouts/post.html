@@ -5,7 +5,6 @@ single: true
 
 <div><!-- post -->
 <article class="hentry" role="article">
-
   {% include custom/pagetop.html %}
   {% include article.html %}
   <footer>
@@ -32,19 +31,16 @@ single: true
     </p>
   </footer>
 </article>
-
 {% if site.linkwithin_show == true %}
 <section>
-  {% include custom/linkwithin.html %}
+  {% include linkwithin.html %}
 </section>
 {% endif %}
-
 {% if site.zenback_show == true and page.comments == true %}
 <section>
   {% include custom/zenback.html %}
 </section>
 {% endif %}
-
 {% if site.disqus_short_name and page.comments == true %}
 <section>
   <div id="disqus_thread" aria-live="polite">{% include post/disqus_thread.html %}</div>

@@ -102,11 +102,11 @@ p, li, td{
     @extend .mono;
     display: inline-block;
     white-space: no-wrap;
-    background: #EAEAEA;
+    background: $code-mainbg;
     font-size: 0.9em;
     line-height: 1.2em;
-    color: #1A1A1A;
-    border: 1px solid #b4b4b4;
+    color: $code-color;
+    border: 1px solid $code-subcolor;
     @include border-radius(.4em);
     padding: 0 .3em;
     margin:  -0.1em 0.2em;

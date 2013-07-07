@@ -45,7 +45,6 @@ code_dir: downloads/code
 category_dir: blog/categories
 tag_dir: blog/tags
 emoji_dir: images/emoji
-#emoji_dir: external_url
 markdown: rdiscount
 rdiscount:
   extensions: ['generate_toc']
@@ -58,6 +57,8 @@ paginate: 10          # Posts per page on the blog index
 pagination_dir: blog  # Directory base for pagination URLs eg. /blog/page/2/
 recent_posts: 5       # Posts in the sidebar Recent Posts section
 excerpt_link: "Read on <i class=\"icon-hand-right\"></i>"  # "Continue reading" link text at the bottom of excerpted articles
+
+after_excerpt: after_excerpt.html
 
 titlecase: false       # Converts page and post titles to titlecase
 
@@ -149,10 +150,11 @@ facebook_mark: false
 favorite: Favorite
 
 # Hatena Bookmark
-hatena_button: false
+hatena_button: true
+hatena_user:
 
 # Pocket
-pocket_button: false
+pocket_button: true
 
 # Zenback
 zenback_show: false
@@ -163,4 +165,4 @@ linkwithin_id:
 linkwithin_text: "You might also like..."
 
 # pubsubhubbub
-hub_url: http://rcmdnk.superfeedr.com/
+hub_url: 
