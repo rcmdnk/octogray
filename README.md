@@ -18,3 +18,7 @@ There are some additional options.
 Also check `Rakefile`.
 There is modified function for generate, which will make more useful default yaml block.
 Some other useful modifications are also included.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/rcmdnk/octogray/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
