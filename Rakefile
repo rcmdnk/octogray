@@ -106,6 +106,9 @@ task :new_post, :title do |t, args|
   if File.exist?(filename)
     abort("rake aborted!") if ask("#{filename} already exists. Do you want to overwrite?", ['y', 'n']) == 'n'
   end
+  # Change title (make it for tags for some posting sites)
+  #title_tags = "[#{tags.join('][')}][#{tags.join('][')}]"
+  title_tags = "\##{tags.join(' #')}"
   puts "Creating new post: #{filename}"
   open(filename, 'w') do |post|
     post.puts "---"
@@ -129,11 +132,10 @@ task :new_post, :title do |t, args|
     post.puts ""
     post.puts "{%comment%}"
     post.puts "<img src=\"{{site.imgpath}}post/xxx.jpg\" \"\" \"\">"
-    post.puts "{%endcomment%}"
-    post.puts "{%comment%}"
+    post.puts "<i class=\"icon-arrow-right\"></i>"
+    post.puts "<hr class=\"dotted-border\">"
     post.puts "{%fn_ref 1%}"
     post.puts "{%endcomment%}"
-    post.puts "- - -"
     post.puts "{%comment%}"
     post.puts "{%footnotes%}"
     post.puts "  {%fn%}..."
@@ -199,7 +201,7 @@ end
 
 desc "Clean out caches: .pygments-cache, .gist-cache, .sass-cache"
 task :clean do
-  rm_rf [".pygments-cache/**", ".gist-cache/**", ".sass-cache/**", "source/stylesheets/screen.css"]
+  [".pygments-cache/**", ".gist-cache/**", ".sass-cache/**", "source/stylesheets/screen.css"].each { |dir| rm_rf Dir.glob(dir) }
 end
 
 desc "Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom"
@@ -249,7 +251,7 @@ task :deploy do
   Rake::Task[:copydot].invoke(source_dir, public_dir)
 
   # Check if files are fine or not
-  ok_failed_stop system("if [ -f ~/.gitavoid ];then avoidword=(`cat ~/.gitavoid`);for a in ${avoidword[@]};do if ret=`grep -r -q $a #{public_dir}`;then echo \"avoid word $a is included!!!\"; echo $ret; exit 1; fi; done; fi")
+  ok_failed_stop system("if [ -f ~/.gitavoid ];then while read a;do if ret=`grep -i -r -q $a #{public_dir}`;then echo \"avoid word $a is included!!!\"; echo $ret; exit 1;fi; done < ~/.gitavoid;else  echo \"WARNING: There is no ~/.gitavoid file!!!\";fi")
 
   Rake::Task["#{deploy_default}"].execute
 
@@ -347,11 +349,11 @@ task :setup_github_pages, :repo do |t, args|
     repo_url = args.repo
   else
     puts "Enter the read/write url for your repository"
-    puts "(For example, 'git@github.com:your_username/your_username.github.com)"
+    puts "(For example, 'git@github.com:your_username/your_username.github.io)"
     repo_url = get_stdin("Repository url: ")
   end
   user = repo_url.match(/:([^\/]+)/)[1]
-  branch = (repo_url.match(/\/[\w-]+\.github\.com/).nil?) ? 'gh-pages' : 'master'
+  branch = (repo_url.match(/\/[\w-]+\.github\.io/).nil?) ? 'gh-pages' : 'master'
   project = (branch == 'gh-pages') ? repo_url.match(/\/([^\.]+)/)[1] : ''
   unless (`git remote -v` =~ /origin.+?octopress(?:\.git)?/).nil?
     # If octopress is still the origin remote (from cloning) rename it to octopress
@@ -371,7 +373,7 @@ task :setup_github_pages, :repo do |t, args|
       end
     end
   end
-  url = "http://#{user}.github.com"
+  url = "http://#{user}.github.io"
   url += "/#{project}" unless project == ''
   jekyll_config = IO.read('_config.yml')
   jekyll_config.sub!(/^url:.*$/, "url: #{url}")

@@ -14,8 +14,7 @@ jQuery(function () {
       window.external.AddFavorite(title,url);
     }else if(navigator.userAgent.indexOf("Firefox") > -1){
       //Firefox
-      alert("サイドバーではなく、通常のブックマークにする場合、\n\"このブックマークはサイドバーに読み込む\"のチェックを外して下さい。");
-      window.sidebar.addPanel(title,url,'');
+      alert("Push "+metaKey+"-D to add favorite!");
     }else if(navigator.userAgent.indexOf("Opera") > -1){
       //Opera
       window.open(url,'sidebar','title='+title);
@@ -58,7 +57,7 @@ jQuery(function($){
   });
 });
 
-jQuery(function($) {
+jQuery(function($){
   $('.nailthumb-container').nailthumb({width:200,height:200,fitDirection:'left top',maxShrink:1});
   $('.nailthumb-container-center').nailthumb({width:200,height:200,fitDirection:'center',maxShrink:1});
 });

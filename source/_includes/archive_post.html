@@ -1,18 +1,4 @@
-{% capture category %}{{ post.categories | size }}{% endcapture %}
-{% capture tag %}{{ post.tags | size }}{% endcapture %}
+{% include post/datenopub.html %}{{ time }}
+{% include post/categories.html %},
+{% include post/tags.html %}
 <h1><a href="{{ root_url }}{{ post.url }}">{{post.title}}</a></h1>
-<time datetime="{{ post.date | datetime | date_to_xmlschema }}" >{{ post.date | date: "<span class='month'>%b</span> <span class='day'>%d</span> <span class='year'>%Y</span>"}}</time>
-{% if category != '0' || if tag != '0' %}
-<footer>
-{% if category != '0' %}
-  <span class="categories">Posted in {{ post.categories | category_links }}</span>
-{% endif %}
-{% if tag != '0' %}
-  {% if category != '0' %}
-    <span class="tags">, tagged as {{ post.tags | tag_links }}</span>
-  {% else %}
-  <span class="tags">Tagged as {{ post.tags | tag_links }}</span>
-  {% endif %}
-{% endif %}
-</footer>
-{% endif %}

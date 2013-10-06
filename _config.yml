@@ -11,6 +11,7 @@ aboutme_logo:
 author:
 # simple_search: http://google.com/search
 description:
+imgpath: /images/
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -44,7 +45,9 @@ plugins: plugins
 code_dir: downloads/code
 category_dir: blog/categories
 tag_dir: blog/tags
-emoji_dir: images/emoji
+emoji_dir: /images/emoji
+monthly_format: January
+
 markdown: rdiscount
 rdiscount:
   extensions: ['generate_toc']
@@ -107,6 +110,7 @@ twitter_show_follower_count: true
 twitter_tweet_button: true
 twitter_tweet_lang: en
 twitter_mark: false
+twitter_search:
 
 # Google +1
 google_plus_one: true
@@ -142,9 +146,10 @@ google_analytics_tracking_id:
 # Facebook Like
 facebook_like: true
 facebook_lang: en_US
-facebook_appID:
+facebook_app_id:
 facebook_user:
 facebook_mark: false
+facebook_admins_id:
 
 # Favorite
 favorite: Favorite
@@ -165,4 +170,8 @@ linkwithin_id:
 linkwithin_text: "You might also like..."
 
 # pubsubhubbub
-hub_url: 
+hub_url:
+
+# Coderwall badges
+coderwall_user:
+

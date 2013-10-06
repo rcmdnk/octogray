@@ -70,11 +70,11 @@ $page-border-bottom: $main-bg !default;
 * + table tr {
   &:nth-child(2n+1) {
     //background: #F8F8F8;
-    background:darken($main-bg,4);
+    background:lighten($main-bg,4);
   }
   &:nth-child(even) {
     //background: #FFFFFF;
-    background:darken($main-bg,2);
+    background:lighten($main-bg,2);
   }
 }
 
@@ -87,7 +87,7 @@ $page-border-bottom: $main-bg !default;
 * + table th {
   font-weight: bold;
   //background: #F0F0F0;
-  background: darken($main-bg,10);
+  background: darken($main-bg,5);
 }
 
 th[align="left"], td[align="left"] {

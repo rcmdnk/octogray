@@ -1,4 +1,4 @@
-.highlight, html .gist .gist-file .gist-syntax .gist-highlight {
+.highlight {
   td {
     &.code, &.line-data {
       width: 100%;
@@ -9,10 +9,8 @@
   border: 0px solid $pre-border !important;
 }
 
-.highlight .line-numbers, html .gist .gist-file .gist-syntax .highlight .line_numbers {
+.highlight .line-numbers {
   text-align: right;
-  font-size: $code-font-size;
-  line-height: $code-line-height;
   background: $code-subbg $noise-bg !important;
   border-right: 1px solid darken($code-mainbg, 2) !important;
   @include box-shadow(lighten($code-subbg, 2) -1px 0 inset);
@@ -22,8 +20,13 @@
   @include border-radius(0);
 }
 
+figure.code .highlight .line-numbers {
+  font-size: $code-font-size;
+  line-height: $code-line-height;
+}
+
 figure.code, .gist-file, pre {
-  @include box-shadow(rgba(#000, .06) 0 0 10px);
+  @include box-shadow(rgba(#000, .06) 0 0 1em);
   .highlight pre { @include box-shadow(none); }
 }
 
@@ -32,6 +35,7 @@ figure.code, .gist-file, pre {
 }
 html .gist .gist-file {
   font-size: $code-font-size !important;
+  line-height: $code-line-height;
   margin-bottom: 1.8em;
   position: relative;
   border: 1px solid $pre-border !important;
@@ -51,27 +55,27 @@ html .gist .gist-file {
     }
   }
   .gist-meta {
-   padding: .6em 0.8em;
+   padding: .3em .8em;
    border: 1px solid lighten($code-subbg, 2) !important;
    color: $code-subcolor;
-   font-size: .9em !important;
+   //font-size: 1em !important;
+   //line-height: $code-line-height;
    background: $code-subbg $noise-bg;
    @extend .sans;
-   line-height: 1.5em;
     a {
       color: mix($code-color, $code-subcolor) !important;
       @include hover-link;
       &:hover { color: $code-color !important; }
     }
     a[href*='#file'] {
-      position: absolute; top: 0; left:0; right:-10px;
+      position: absolute; top: 0; left:0; right:0em;
       color: #474747 !important;
       @extend .code-title;
       &:hover { color: $link-color !important; }
     }
     a[href*=raw]{
       @extend .download-source;
-      top: .4em;
+      top: 0.8em;
     }
   }
 }
@@ -206,7 +210,7 @@ $code-scroll-thumb: $code-subbg;
 
 pre, .highlight, .gist-highlight {
   &::-webkit-scrollbar {  height: .5em; background: $code-scroll-bg; }
-  &::-webkit-scrollbar-thumb:horizontal { background: $code-scroll-thumb;  -webkit-border-radius: 4px; border-radius: 4px }
+  &::-webkit-scrollbar-thumb:horizontal { background: $code-scroll-thumb;  -webkit-border-radius: 0.5em; border-radius: 0.5em }
 }
 
 .highlight code {
@@ -231,12 +235,12 @@ figure.code {
 .code-title {
   text-align: center;
   font-size: $code-font-size;
-  line-height: 2em;
+  line-height: 2.5*$code-font-size;
   text-shadow: #cbcccc 0 1px 0;
   color: #474747;
   font-weight: normal;
   margin-bottom: 0;
-  @include border-top-radius(5px);
+  @include border-top-radius(0.5em);
   font-family: "Helvetica Neue", Arial, "Lucida Grande", "Lucida Sans Unicode", Lucida, sans-serif;
   background: #aaaaaa image-url("code_bg.png") top repeat-x;
   border: 1px solid #565656;
@@ -247,11 +251,11 @@ figure.code {
 }
 
 .download-source {
-  position: absolute; right: .8em;
+  position: absolute; right: 1.0em;
   @include hover-link;
   color: #666 !important;
   z-index: 1;
-  font-size: $code-font-size;
+  font-size: 0.9em;
   text-shadow: #cbcccc 0 1px 0;
   padding-left: 3em;
 }

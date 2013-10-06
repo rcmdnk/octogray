@@ -3,7 +3,7 @@
   {% unless page.meta == false %}
   <p class="meta">
     {% include post/date.html %}{{ time }}
-    {% include post/categories.html %},
+    {% include post/categories.html %}
     {% include post/tags.html %}
   </p>
   {% endunless %}
@@ -37,7 +37,7 @@
     <img src="{{post.ogimage}}" alt="" title=""/>
   </div>
   {% endif %}
-  {{ content | excerpt | emojify }}
+  {{ content | excerpt }}
   {% capture excerpted %}{{ content | has_excerpt }}{% endcapture %}
   {% if excerpted == 'true' %}
   <a href="{{root_url}}{{post.url}}">{{site.excerpt_link}}</a>
@@ -54,7 +54,7 @@
     <img src="{{page.ogimage}}" alt="" title=""/>
   </div>
   {% endif %}
-  {{ content | emojify}}
+  {{ content }}
 </div>
 <!-- </div><footer> * pseudo line for the function raw_content() -->
 {% if site.zenback_show == true and page.comments == true %}
