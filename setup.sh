@@ -44,7 +44,7 @@ cat << EOF >> source/_includes/custom/head.html
 EOF
 
 ## [keyboardkey](http://rcmdnk.github.io/blog/2013/06/19/blog-octopress/)
-git submodule add git@github.com:rcmdnk/keyboardkey.git .plugins/keybaordkey
+git submodule add git@github.com:rcmdnk/keyboardkey.git .plugins/keyboardkey
 cp .plugins/keyboardkey/plugins/keyboardkey.rb ./plugins/
 cp .plugins/keyboardkey/sass/plugins/_keyboardkey.scss ./sass/plugins/
 
