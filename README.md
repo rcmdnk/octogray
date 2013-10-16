@@ -17,7 +17,7 @@ Also check `Rakefile`.
 There is modified function for generate, which will make more useful default yaml block.
 Some other useful modifications are also included.
 
-Preview of v0.0.2:
+Preview:
 
 * ![20131006_blog.jpg](http://rcmdnk.github.io/images/post/20131006_blog.jpg)
 * ![20130707_codeblock1.jpg](http://rcmdnk.github.io/images/post/20130707_codeblock1.jpg)

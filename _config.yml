@@ -48,6 +48,13 @@ tag_dir: blog/tags
 emoji_dir: /images/emoji
 monthly_format: January
 
+#markdown: kramdown
+#kramdown:
+#  use_coderay: true
+#  coderay:
+#    coderay_line_number: table
+#    coderay_css: class
+
 markdown: rdiscount
 rdiscount:
   extensions: ['generate_toc']
@@ -67,7 +74,9 @@ titlecase: false       # Converts page and post titles to titlecase
 
 # list each of the sidebar modules you want to include, in the order you want them to appear.
 # To add custom asides, create files in /source/_includes/custom/asides/ and add them to the list like 'custom/asides/custom_aside_name.html'
-default_asides: [custom/asides/about.html, asides/recent_posts.html, custom/asides/category_list.html, custom/asides/tag_cloud.html, asides/twitter.html]
+default_asides: [custom/asides/about.html, custom/asides/monthly_archive.html, custom/asides/category_list.html, custom/asides/tag_cloud.html, asides/recent_posts.html]
+# custom/asides/calendar.html
+# custom/asides/coderwall.html
 
 # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
 # and add an array with the asides you want to use.
@@ -99,17 +108,14 @@ github_user:
 github_repo_count: 10
 github_show_profile_link: true
 github_skip_forks: true
-github_mark: false
+github_mark: true
 
 # Twitter
 twitter_user:
-twitter_tweet_count: 4
-twitter_show_replies: false
 twitter_follow_button: true
-twitter_show_follower_count: true
 twitter_tweet_button: true
 twitter_tweet_lang: en
-twitter_mark: false
+twitter_mark: true
 twitter_search:
 
 # Google +1
@@ -117,7 +123,7 @@ google_plus_one: true
 google_plus_one_size: medium
 google_plus_one_lang: en
 google_plus_one_user:
-google_plus_one_mark: false
+google_plus_one_mark: true
 
 # Google Plus Profile
 # Hidden: No visible button, just add author information to search results
@@ -126,7 +132,7 @@ googleplus_hidden: false
 
 # LinkedIn
 linkedin_user:
-linkedin_mark: false
+linkedin_mark: true
 
 # Pinboard
 pinboard_user:
@@ -148,7 +154,7 @@ facebook_like: true
 facebook_lang: en_US
 facebook_app_id:
 facebook_user:
-facebook_mark: false
+facebook_mark: true
 facebook_admins_id:
 
 # Favorite

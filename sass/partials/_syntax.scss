@@ -31,7 +31,7 @@ figure.code, .gist-file, pre {
 }
 
 .gist .highlight, figure.code .highlight {
-  @include selection(adjust-color($code-mainbg, $lightness: 23%, $saturation: -65%), $text-shadow: $code-mainbg 0 1px);
+  @include selection(adjust-color($code-mainbg, $lightness: -23%, $saturation: -65%), $text-shadow: $code-mainbg 0 1px);
 }
 html .gist .gist-file {
   font-size: $code-font-size !important;
@@ -110,7 +110,7 @@ p, li, td{
     font-size: 0.9em;
     line-height: 1.2em;
     color: $code-color;
-    border: 1px solid $code-subcolor;
+    border: 0px solid $code-subcolor;
     @include border-radius(.4em);
     padding: 0 .3em;
     margin:  -0.1em 0.2em;

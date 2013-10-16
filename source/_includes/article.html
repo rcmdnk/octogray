@@ -32,29 +32,35 @@
 {% endunless %}
 {% if index %}
 <div class="entry-content index_click_box">
-  {% if post.ogimage and post.no_ogimage != true %}
-  <div class="nailthumb-container title-thumb">
-    <img src="{{post.ogimage}}" alt="" title=""/>
+  <div class="group">
+    {% if post.ogimage and post.no_ogimage != true %}
+    <div class="nailthumb-container title-thumb">
+      <img src="{{post.ogimage}}" alt="" title=""/>
+    </div>
+    {% endif %}
+    {{ content | excerpt }}
+    {% capture excerpted %}{{ content | has_excerpt }}{% endcapture %}
+    {% if excerpted == 'true' %}
+    <a href="{{root_url}}{{post.url}}">{{site.excerpt_link}}</a>
+    {% endif %}
   </div>
-  {% endif %}
-  {{ content | excerpt }}
-  {% capture excerpted %}{{ content | has_excerpt }}{% endcapture %}
-  {% if excerpted == 'true' %}
-  <a href="{{root_url}}{{post.url}}">{{site.excerpt_link}}</a>
-  {% endif %}
-  <br class="clearBoth">
 </div>
 {% else %}
 {% if site.zenback_show == true and page.comments == true %}
 <!-- zenback_body_begin -->
 {% endif %}
 <div class="entry-content">
-  {% if page.ogimage and page.no_ogimage != true %}
-  <div class="nailthumb-container title-thumb">
-    <img src="{{page.ogimage}}" alt="" title=""/>
+  <div class="group">
+    {% if page.ogimage and page.no_ogimage != true %}
+    <div class="nailthumb-container title-thumb">
+      <img src="{{page.ogimage}}" alt="" title=""/>
+    </div>
+    {% endif %}
+    {{ content | excerpt }}
   </div>
-  {% endif %}
-  {{ content }}
+  <div class="group">
+    {{ content | excerpt_after }}
+  </div>
 </div>
 <!-- </div><footer> * pseudo line for the function raw_content() -->
 {% if site.zenback_show == true and page.comments == true %}

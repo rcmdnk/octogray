@@ -1,15 +1,10 @@
-sup, sub {
-	padding: 0 0.2em;
-	display: inline;
-	font-size: 80%
-}
-
 .footnotes {
-    background: $img-border top left repeat-x;
-	font-size: 80%;
+  background: $img-border top left repeat-x;
+  font-size: 90%;
 }
 
-// Put the CSS for the popup here.
-// #footnotediv{
-//	
-//}
+#footnotediv{
+  background: darken($main-bg, 11);
+  border: 2px solid darken($main-bg, 21);
+  @include border-radius(.4em);
+}
