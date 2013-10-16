@@ -25,7 +25,7 @@ cp .plugins/footnote-extra/sass/plugins/_footnote.scss ./sass/plugins/
 
 ## [intro.js](http://usablica.github.io/intro.js/)
 git submodule add git@github.com:usablica/intro.js.git .plugins/intro.js
-cp .plugins/intro.js/plugins/minified/infro.min.js  ./source/javascripts/
+cp .plugins/intro.js/minified/intro.min.js ./source/javascripts
 cp .plugins/intro.js/introjs.css  ./sass/plugins/
 
 ## [jquery--ex-flex-fiex](http://github.com/cyokodog/jquery.ex-flex-fixed)
@@ -34,8 +34,8 @@ cp .plugins/jquery.ex-flex-fixed/jquery.exflexfixed-0.3.0.js ./source/javascript
 cat << EOF >> source/_includes/custom/head.html
 <script src="{{root_url}}/javascripts/jquery.exflexfixed-0.3.0.js" type="text/javascript"></script>
 <script>
-  jQuery(function($){
-    $('.scroll-fixed').exFlexFixed({
+  jQuery(function(\$){
+    \$('.scroll-fixed').exFlexFixed({
       watchPosition: true,
       container : '#content'
     });
@@ -45,8 +45,8 @@ EOF
 
 ## [keyboardkey](http://rcmdnk.github.io/blog/2013/06/19/blog-octopress/)
 git submodule add git@github.com:rcmdnk/keyboardkey.git .plugins/keybaordkey
-cp .plugins/keyboardkey/plugins/keybaordkey.rb ./plugins/
-cp .plugins/keyboardkey/sass/plugins/_keybaordkey.scss ./sass/plugins/
+cp .plugins/keyboardkey/plugins/keyboardkey.rb ./plugins/
+cp .plugins/keyboardkey/sass/plugins/_keyboardkey.scss ./sass/plugins/
 
 ## [monthly-archive](http://rcmdnk.github.io/blog/2013/10/01/blog-octopress/)
 git submodule add git@github.com:rcmdnk/monthly-archive.git .plugins/monthly-archive
