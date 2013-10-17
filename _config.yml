@@ -26,11 +26,11 @@ subscribe_rss: /atom.xml
 subscribe_email:
 # RSS feeds can list your email address if you like
 email:
-email_mark: true
-rss_mark: true
+email_mark: false
+rss_mark: false
 
 # sidebar
-aboutme_marks: true
+aboutme_marks: false
 
 # ----------------------- #
 #    Jekyll & Plugins     #
@@ -48,18 +48,18 @@ tag_dir: blog/tags
 emoji_dir: /images/emoji
 monthly_format: January
 
-#markdown: kramdown
-#kramdown:
-#  use_coderay: true
-#  coderay:
-#    coderay_line_number: table
-#    coderay_css: class
+markdown: kramdown
+kramdown:
+  use_coderay: true
+  coderay:
+    coderay_line_number: table
+    coderay_css: class
 
-markdown: rdiscount
-rdiscount:
-  extensions: ['generate_toc']
-  # Table Of Contents
-  toc_token: "{:TOC}"
+#markdown: rdiscount
+#rdiscount:
+#  extensions: ['generate_toc']
+#  # Table Of Contents
+#  toc_token: "{:TOC}"
 
 pygments: false # default python pygments have been replaced by pygments.rb
 
@@ -95,10 +95,6 @@ related_posts: false
 # 404 not found picture
 pic_404nf:
 
-# add bookmark button
-bookmark: true
-bookmark_mark: true
-
 # ----------------------- #
 #   3rd Party Settings    #
 # ----------------------- #
@@ -108,14 +104,14 @@ github_user:
 github_repo_count: 10
 github_show_profile_link: true
 github_skip_forks: true
-github_mark: true
+github_mark: false
 
 # Twitter
 twitter_user:
 twitter_follow_button: true
 twitter_tweet_button: true
 twitter_tweet_lang: en
-twitter_mark: true
+twitter_mark: false
 twitter_search:
 
 # Google +1
@@ -123,7 +119,7 @@ google_plus_one: true
 google_plus_one_size: medium
 google_plus_one_lang: en
 google_plus_one_user:
-google_plus_one_mark: true
+google_plus_one_mark: false
 
 # Google Plus Profile
 # Hidden: No visible button, just add author information to search results
@@ -132,7 +128,7 @@ googleplus_hidden: false
 
 # LinkedIn
 linkedin_user:
-linkedin_mark: true
+linkedin_mark: false
 
 # Pinboard
 pinboard_user:
@@ -150,14 +146,16 @@ disqus_show_comment_count: true
 google_analytics_tracking_id:
 
 # Facebook Like
-facebook_like: true
+facebook_like: false
 facebook_lang: en_US
 facebook_app_id:
 facebook_user:
-facebook_mark: true
+facebook_mark: false
 facebook_admins_id:
 
-# Favorite
+# Favorite, add bookmark button
+bookmark: true
+bookmark_mark: true
 favorite: Favorite
 
 # Hatena Bookmark

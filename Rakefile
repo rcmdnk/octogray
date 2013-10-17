@@ -193,7 +193,7 @@ task :new_post, :title do |t, args|
     post.puts "comments: true"
     #post.puts "category: #{category}"
     #post.puts "tags: #{tags}"
-    post.puts "keywords: #{title.gsub(' ',', ')}"
+    #post.puts "keywords: #{title.gsub(' ',', ')}"
     #post.puts "description: "
     post.puts "ogimage:"
     post.puts "published: false"
