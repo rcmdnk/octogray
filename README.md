@@ -1,7 +1,7 @@
 octogray
 ========
 
-octgray is theme for Octopress.
+octgray is a theme for Octopress.
 
 ## Instlation
 

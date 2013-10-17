@@ -67,4 +67,47 @@ git submodule add git@github.com:optikfluffel/octopress-responsive-video-embed.g
 cp .plugins/octopress-responsive-video-embed/*.rb ./plugins/
 cp .plugins/octopress-responsive-video-embed/_rve.scss ./sass/plugins/
 
+# install Gemfile
+echo -n "Do you want to udpate Gemfile? [y/n]: "
+read yn
+while [ 1 ];do
+  case $yn in
+    "y"|"Y" ) cp .themes/octogray/Gemfile .;bundle install;;
+    "n"|"N" )
+      echo "Please check .themes/octogray/Gemfile";
+      echo "for necessary packages.";
+      break
+      ;;
+    *) continue;;
+  esac
+done
 
+# install Rakefile
+echo -n "Do you want to overwrite Gemfile? [y/n]: "
+read yn
+while [ 1 ];do
+  case $yn in
+    "y"|"Y" ) cp .themes/octogray/Rakefile .;;
+    "n"|"N" )
+      echo "Please update Rakefile following"
+      echo ".themes/octogray/Rakefile.";
+      break
+      ;;
+    *) continue;;
+  esac
+done
+
+# install _config.yml
+echo -n "Do you want to overwrite _config.yml? [y/n]: "
+read yn
+while [ 1 ];do
+  case $yn in
+    "y"|"Y" ) cp .themes/octogray/_config.yml .;;
+    "n"|"N" )
+      echo "Please update _config.yml following"
+      echo ".themes/octogray/_config.yml";
+      break
+      ;;
+    *) continue;;
+  esac
+done
