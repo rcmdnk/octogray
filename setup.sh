@@ -90,7 +90,7 @@ done
 # install Rakefile
 echo
 echo
-echo -n "Do you want to overwrite Gemfile? [y/n]: "
+echo -n "Do you want to overwrite Rakefile? [y/n]: "
 read yn
 while [ 1 ];do
   case $yn in
