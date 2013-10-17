@@ -26,7 +26,7 @@ cp .plugins/footnote-extra/sass/plugins/_footnote.scss ./sass/plugins/
 ## [intro.js](http://usablica.github.io/intro.js/)
 git submodule add git@github.com:usablica/intro.js.git .plugins/intro.js
 cp .plugins/intro.js/minified/intro.min.js ./source/javascripts
-cp .plugins/intro.js/introjs.css  ./sass/plugins/
+cp .plugins/intro.js/introjs.css  ./sass/plugins/_introjs.scss
 
 ## [jquery--ex-flex-fiex](http://github.com/cyokodog/jquery.ex-flex-fixed)
 git submodule add git@github.com:cyokodog/jquery.ex-flex-fixed.git .plugins/jquery.ex-flex-fixed
