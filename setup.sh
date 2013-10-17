@@ -68,6 +68,16 @@ git submodule add git@github.com:optikfluffel/octopress-responsive-video-embed.g
 cp .plugins/octopress-responsive-video-embed/*.rb ./plugins/
 cp .plugins/octopress-responsive-video-embed/_rve.scss ./sass/plugins/
 
+## [Font Awesome](http://fortawesome.github.io/Font-Awesome/)
+git submodule add git://github.com/FortAwesome/Font-Awesome.git .plugins/Font-Awesome
+mkdir -p ./sass/plugins/font-awesome
+cp .plugins/Font-Awesome/scss/_*scss ./sass/plugins/font-awesome
+cp .plugins/Font-Awesome/scss/font-awesome.scss ./sass/plugins/_font-awesome.scss
+sed -i ".bak" 's/@import "/@import "font-awesome\//g' ./sass/plugins/_font-awesome.scss
+rm -f ./sass/plugins/_font-awesome.scss.bak
+mkdir -p source/font
+cp .plugins/Font-Awesome/font/* source/font
+
 ## other plugins
 cp .themes/octogray/plugins/*rb ./plugins/
 
