@@ -68,6 +68,8 @@ cp .plugins/octopress-responsive-video-embed/*.rb ./plugins/
 cp .plugins/octopress-responsive-video-embed/_rve.scss ./sass/plugins/
 
 # install Gemfile
+echo
+echo
 echo -n "Do you want to udpate Gemfile? [y/n]: "
 read yn
 while [ 1 ];do
@@ -87,6 +89,8 @@ while [ 1 ];do
 done
 
 # install Rakefile
+echo
+echo
 echo -n "Do you want to overwrite Gemfile? [y/n]: "
 read yn
 while [ 1 ];do
@@ -106,6 +110,8 @@ while [ 1 ];do
 done
 
 # install _config.yml
+echo
+echo
 echo -n "Do you want to overwrite _config.yml? [y/n]: "
 read yn
 while [ 1 ];do
