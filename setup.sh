@@ -80,6 +80,7 @@ while [ 1 ];do
       ;;
     *)
       echo -n "[y/n]: "
+      read yn
       continue
       ;;
   esac
@@ -98,6 +99,7 @@ while [ 1 ];do
       ;;
     *)
       echo -n "[y/n]: "
+      read yn
       continue
       ;;
   esac
@@ -116,6 +118,7 @@ while [ 1 ];do
       ;;
     *)
       echo -n "[y/n]: "
+      read yn
       continue
       ;;
   esac
