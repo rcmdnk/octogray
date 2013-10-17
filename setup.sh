@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ ! -f _config.yml ];then
   echo "please use in top directory of octopress."
