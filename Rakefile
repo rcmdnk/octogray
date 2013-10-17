@@ -173,18 +173,22 @@ task :new_post, :title do |t, args|
     title = get_stdin("Enter a title for your post: ")
   end
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
+  #title_words = title.split(' ')
+  #tags = title_words
+  #category = tags.shift
   mkdir_p "#{source_dir}/#{posts_dir}"
   filename = "#{source_dir}/#{posts_dir}/#{Time.now.strftime('%Y-%m-%d')}-#{title.to_url}.#{new_post_ext}"
   if File.exist?(filename)
     abort("rake aborted!") if ask("#{filename} already exists. Do you want to overwrite?", ['y', 'n']) == 'n'
   end
   # Change title (make it for tags for some posting sites)
-  title_tags = "\##{tags.join(' #')}"
+  #title_tags = "\##{tags.join(' #')}"
   puts "Creating new post: #{filename}"
   open(filename, 'w') do |post|
     post.puts "---"
     post.puts "layout: post"
     post.puts "title: \"#{title.gsub(/&/,'&amp;')}\""
+    #post.puts "title: \"#{title_tags}\""
     post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M')}"
     post.puts "comments: true"
     post.puts "category: #{category}"
