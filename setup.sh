@@ -51,6 +51,7 @@ cp .plugins/keyboardkey/sass/plugins/_keyboardkey.scss ./sass/plugins/
 ## [monthly-archive](http://rcmdnk.github.io/blog/2013/10/01/blog-octopress/)
 git submodule add git@github.com:rcmdnk/monthly-archive.git .plugins/monthly-archive
 cp .plugins/monthly-archive/plugins/monthly_archive.rb ./plugins/
+cp .plugins/monthly-archive/plugins/monthly_generator.rb ./plugins/
 cp .plugins/monthly-archive/source/_layouts/monthly_index.html ./source/_layouts/
 cp .plugins/monthly-archive/source/_includes/custom/asides/monthly_archive.html ./source/_includes/custom/asides/
 cp .plugins/monthly-archive/source/javascripts/monthly_archive.js ./source/javascripts/
@@ -66,6 +67,9 @@ cp .plugins/octopress-gemoji/sass/plugins/_gemoji.scss ./sass/plugins/
 git submodule add git@github.com:optikfluffel/octopress-responsive-video-embed.git .plugins/octopress-responsive-video-embed
 cp .plugins/octopress-responsive-video-embed/*.rb ./plugins/
 cp .plugins/octopress-responsive-video-embed/_rve.scss ./sass/plugins/
+
+## other plugins
+cp .themes/octogray/plugins/*rb ./plugins/
 
 # install Gemfile
 echo
