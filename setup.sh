@@ -78,7 +78,10 @@ while [ 1 ];do
       echo "for necessary packages.";
       break
       ;;
-    *) continue;;
+    *)
+      echo -n "[y/n]: "
+      continue
+      ;;
   esac
 done
 
@@ -93,7 +96,10 @@ while [ 1 ];do
       echo ".themes/octogray/Rakefile.";
       break
       ;;
-    *) continue;;
+    *)
+      echo -n "[y/n]: "
+      continue
+      ;;
   esac
 done
 
@@ -108,6 +114,9 @@ while [ 1 ];do
       echo ".themes/octogray/_config.yml";
       break
       ;;
-    *) continue;;
+    *)
+      echo -n "[y/n]: "
+      continue
+      ;;
   esac
 done
