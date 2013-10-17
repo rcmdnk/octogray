@@ -74,7 +74,7 @@ echo -n "Do you want to udpate Gemfile? [y/n]: "
 read yn
 while [ 1 ];do
   case $yn in
-    "y"|"Y" ) cp .themes/octogray/Gemfile .;bundle install;;
+    "y"|"Y" ) cp .themes/octogray/Gemfile .;bundle install;break;;
     "n"|"N" )
       printf "\n\e[31mPlease check .themes/octogray/Gemfile for necessary packages.\e[m\n"
       break
@@ -94,7 +94,7 @@ echo -n "Do you want to overwrite Gemfile? [y/n]: "
 read yn
 while [ 1 ];do
   case $yn in
-    "y"|"Y" ) cp .themes/octogray/Rakefile .;;
+    "y"|"Y" ) cp .themes/octogray/Rakefile .;break;;
     "n"|"N" )
       printf "\n\e[31mPlease update Rakefile by following .themes/octogray/Rakefile.\e[m\n"
       break
@@ -114,7 +114,7 @@ echo -n "Do you want to overwrite _config.yml? [y/n]: "
 read yn
 while [ 1 ];do
   case $yn in
-    "y"|"Y" ) cp .themes/octogray/_config.yml .;;
+    "y"|"Y" ) cp .themes/octogray/_config.yml .;break;;
     "n"|"N" )
       printf "\n\e[31mPlease update _config.yml by following .themes/octogray/_config.yml\e[m\n"
       break
