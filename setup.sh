@@ -10,6 +10,7 @@ if [ ! -d source ];then
 fi
 
 # Plugins
+mkdir -p .plugins
 
 ## [Octopress-Slideshare-Plugin](https://github.com/petehamilton/Octopress-Slideshare-Plugin)
 git submodule add git@github.com:PeterHamilton/Octopress-Slideshare-Plugin.git .plugins/Octopress-Slideshare-Plugin
@@ -27,8 +28,18 @@ echo
 
 ## [intro.js](http://usablica.github.io/intro.js/)
 git submodule add git@github.com:usablica/intro.js.git .plugins/intro.js
-cp .plugins/intro.js/minified/intro.min.js ./source/javascripts
 cp .plugins/intro.js/introjs.css  ./sass/plugins/_introjs.scss
+cp .plugins/intro.js/minified/intro.min.js ./source/javascripts
+cat << EOF >> source/_includes/custom/head.html
+<script src="{{root_url}}/javascripts/intro.min.js" type="text/javascript"></script>
+<script>
+jQuery(function($){
+  $('body').on('click', '#my_introjs', function(){
+    introJs().start();
+  });
+});
+</script>
+EOF
 echo
 
 ## [jquery--ex-flex-fiex](http://github.com/cyokodog/jquery.ex-flex-fixed)
@@ -87,9 +98,37 @@ mkdir -p source/font
 cp .plugins/Font-Awesome/font/* source/font
 echo
 
+## [NailThumb](http://www.garralab.com/nailthumb.php)
+wget -O nailthumb.1.1.zip http://sourceforge.net/projects/nailthumb/files/nailthumb.1.1.zip/download
+unzip nailthumb.1.1.zip
+rm -f nailthumb.1.1.zip
+mv nailthumb .plugins/
+cp .plugins/nailthumb/jquery.nailthumb.1.1.css ./sass/plugins/_nailthumb.scss
+cp .plugins/nailthumb/jquery.nailthumb.1.1.min.js ./source/javascripts/
+cat << EOF >> source/_includes/custom/head.html
+<script src="{{root_url}}/javascripts/jquery.nailthumb.1.1.min.js" type="text/javascript"></script>
+<script>
+jQuery(function($){
+  $('.nailthumb-container').nailthumb({width:200,height:200,fitDirection:'left top',maxShrink:1});
+  $('.nailthumb-container-center').nailthumb({width:200,height:200,fitDirection:'center',maxShrink:1});
+});
+</script>
+EOF
+echo
+
+## [jQuery SCroll to Top Control](http://www.dynamicdrive.com/dynamicindex3/scrolltop.htm)
+wget -O scrolltopcontrol.js http://www.dynamicdrive.com/dynamicindex3/scrolltopcontrol.js
+mkdir -p .plugins/scrolltopcontrol
+mv scrolltopcontrol.js .plugins/scrolltopcontrol
+cp .plugins/scrolltopcontrol/scrolltopcontrol.js ./source/javascripts/
+sed -i ".bak" "s/<img src=\"up.png\" style=\"width:48px; height:48px\" \/>/<i class=\"icon-chevron-up icon-scroll-up\"><\/i>/g" ./source/javascripts/scrolltopcontrol.js
+rm -f ./source/javascripts/scrolltopcontrol.js.bak
+echo "<script src=\"{{root_url}}/javascripts/scrolltopcontrol.js\"></script>" >> source/_includes/custom/head.html
+echo
+
+
 ## other plugins
 cp .themes/octogray/plugins/*rb ./plugins/
-echo
 
 # install Gemfile
 echo

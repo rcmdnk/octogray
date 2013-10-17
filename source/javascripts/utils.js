@@ -44,20 +44,3 @@ jQuery(function($){
   });
 });
 
-jQuery(function($){
-  $('body').on('click', '#my_introjs', function(){
-    introJs().start();
-  });
-});
-
-jQuery(function($){
-  $('.scroll-fixed').exFlexFixed({
-    watchPosition: true,
-    container : '#content'
-  });
-});
-
-jQuery(function($){
-  $('.nailthumb-container').nailthumb({width:200,height:200,fitDirection:'left top',maxShrink:1});
-  $('.nailthumb-container-center').nailthumb({width:200,height:200,fitDirection:'center',maxShrink:1});
-});
