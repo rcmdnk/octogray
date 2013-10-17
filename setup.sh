@@ -76,8 +76,7 @@ while [ 1 ];do
   case $yn in
     "y"|"Y" ) cp .themes/octogray/Gemfile .;bundle install;;
     "n"|"N" )
-      echo "Please check .themes/octogray/Gemfile";
-      echo "for necessary packages.";
+      printf "\n\e[31mPlease check .themes/octogray/Gemfile for necessary packages.\e[m\n"
       break
       ;;
     *)
@@ -97,8 +96,7 @@ while [ 1 ];do
   case $yn in
     "y"|"Y" ) cp .themes/octogray/Rakefile .;;
     "n"|"N" )
-      echo "Please update Rakefile following"
-      echo ".themes/octogray/Rakefile.";
+      printf "\n\e[31mPlease update Rakefile by following .themes/octogray/Rakefile.\e[m\n"
       break
       ;;
     *)
@@ -118,8 +116,7 @@ while [ 1 ];do
   case $yn in
     "y"|"Y" ) cp .themes/octogray/_config.yml .;;
     "n"|"N" )
-      echo "Please update _config.yml following"
-      echo ".themes/octogray/_config.yml";
+      printf "\n\e[31mPlease update _config.yml by following .themes/octogray/_config.yml\e[m\n"
       break
       ;;
     *)
