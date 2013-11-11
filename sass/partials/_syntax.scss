@@ -110,7 +110,7 @@ p, li, td{
     font-size: 0.9em;
     line-height: 1.2em;
     color: $code-color;
-    border: 0px solid $code-subcolor;
+    border: 1px solid $pre-border;
     @include border-radius(.4em);
     padding: 0 .3em;
     margin:  -0.1em 0.2em;

@@ -2,25 +2,41 @@
 {% unless page.sharing == false %}
 <script>
 (function(w,d){
-    var c,e=d.createDocumentFragment(),f=d.getElementsByTagName("script")[0],
-    a=function(a,b){if(!d.getElementById(b)){c=d.createElement("script");
-    c.src=a;c.id=b||null;c.async=true;e.appendChild(c);}};
+  var c,e=d.createDocumentFragment(),f=d.getElementsByTagName("script")[0],
+  a=function(a,b){if(!d.getElementById(b)){c=d.createElement("script");
+  c.src=a;c.id=b||null;c.async=true;e.appendChild(c);}};
+{%comment%}
 {% if site.google_plus_one %}
 {% if site.google_plus_one_lang %}
-    w.___gcfg={lang:"ja"};
+  w.___gcfg={lang:"{{site.google_plus_one_lang}}"};
 {% endif %}
-    a("https://apis.google.com/js/plusone.js");
+  a("https://apis.google.com/js/plusone.js");
 {% endif %}
 {% if site.twitter_follow_button or site.twitter_tweet_button %}
-    a("//platform.twitter.com/widgets.js");
+  a("//platform.twitter.com/widgets.js");
 {% endif %}
+{%endcomment%}
 {% if site.facebook_like %}
-    a("//connect.facebook.net/{% if site.facebook_lang %}{{ site.facebook_lang }}{% else %}en_US{% endif %}/all.js#{% if site.facebook_appID %}appId={{ site.facebook_appID }}&{% endif %}xfbml=1","facebook-jssdk");
+  a("//connect.facebook.net/{% if site.facebook_lang %}{{ site.facebook_lang }}{% else %}en_US{% endif %}/all.js#{% if site.facebook_appID %}appId={{ site.facebook_appID }}&{% endif %}xfbml=1","facebook-jssdk");
 {% endif %}
-    a("//b.st-hatena.com/js/bookmark_button_wo_al.js");
-    f.parentNode.insertBefore(e,f);
+  a("//b.st-hatena.com/js/bookmark_button_wo_al.js");
+  f.parentNode.insertBefore(e,f);
 })(this,document);
 </script>
+{% if site.google_plus_one %}
+{%comment%}somehow google_plus_one can't work in above function if analytics code of www.google-analytics.com/plugins/ga/inpage_linkid.js is included{%endcomment%}
+<!-- Google+ -->
+<script type="text/javascript">
+{% if site.google_plus_one_lang %}
+window.___gcfg = {lang: '{{site.google_plus_one_lang}}'};
+{% endif %}
+(function() {
+ var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+ po.src = 'https://apis.google.com/js/plusone.js';
+ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+ })();
+</script>
+{% endif %}
 {% endunless %}
 {% if site.linkwithin_show == true %}
 <script>
@@ -31,3 +47,4 @@ var linkwithin_site_id = {{site.linkwithin_id}};
 <script>linkwithin_text='{{site.linkwithin_text}}'</script>
 {% endif %}
 {% include custom/after_footer.html %}
+

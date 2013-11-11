@@ -8,10 +8,11 @@ titlelogo:
 subtitle:
 nav_marks: true
 aboutme_logo:
+sitelogo:
 author:
 # simple_search: http://google.com/search
 description:
-imgpath: /images/
+imgpath: /images
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -32,6 +33,9 @@ rss_mark: false
 # sidebar
 aboutme_marks: false
 
+# affiliate
+affiliate: true
+
 # ----------------------- #
 #    Jekyll & Plugins     #
 # ----------------------- #
@@ -47,9 +51,12 @@ category_dir: blog/categories
 tag_dir: blog/tags
 emoji_dir: /images/emoji
 monthly_format: January
+ps_title: P.S.
+ps_close: 
 
 markdown: kramdown
 kramdown:
+  #parse_block_html: true # need jekyll 1.1.0 or later (they are completely different from  0.12)
   use_coderay: true
   coderay:
     coderay_line_number: table
@@ -67,8 +74,6 @@ paginate: 10          # Posts per page on the blog index
 pagination_dir: blog  # Directory base for pagination URLs eg. /blog/page/2/
 recent_posts: 5       # Posts in the sidebar Recent Posts section
 excerpt_link: "Read on <i class=\"icon-hand-right\"></i>"  # "Continue reading" link text at the bottom of excerpted articles
-
-after_excerpt: after_excerpt.html
 
 titlecase: false       # Converts page and post titles to titlecase
 

@@ -9,17 +9,21 @@ ssh_port       = "22"
 document_root  = "~/website.com/"
 rsync_delete   = false
 rsync_args     = ""  # Any extra arguments to pass to rsync
-deploy_default = "push"
+#deploy_default = "push"
+deploy_ex      = "push_ex"
 
-# This will be configured for you when you run config_deploy
+# This will be used for deploy
+deploy_url     = "git@github.com:user/user.github.io"
 deploy_branch  = "master"
 
 ## -- Misc Configs -- ##
 
-public_dir      = "public"    # compiled site directory
+tmp_dir         = File.expand_path(".") + "/"  # temporary directory for public/deploy
+#tmp_dir         = File.expand_path("~/tmp/octopress/") + "/"  # temporary directory for public/deploy
+public_dir      = "#{tmp_dir}public"  # compiled site directory
 source_dir      = "source"    # source file directory
 blog_index_dir  = 'source'    # directory for your blog's index page (if you put your index in source/blog/index.html, set this to 'source/blog')
-deploy_dir      = "_deploy"   # deploy directory (for Github pages deployment)
+deploy_dir      = "#{tmp_dir}_deploy" # deploy directory (for Github pages deployment)
 stash_dir       = "_stash"    # directory to stash posts for speedy generation
 posts_dir       = "_posts"    # directory for blog files
 themes_dir      = ".themes"   # directory for blog files
@@ -49,27 +53,54 @@ end
 # Working with Jekyll #
 #######################
 
+desc "Update stylesheets"
+task :css do
+  raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
+  puts "## Update stylesheets"
+  system "compass compile --css-dir #{source_dir}/stylesheets"
+  cp_r "#{source_dir}/stylesheets/.", "#{public_dir}/stylesheets/"
+end
+
 desc "Generate jekyll site"
 task :generate do
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
   puts "## Generating Site with Jekyll"
   system "compass compile --css-dir #{source_dir}/stylesheets"
   system "jekyll"
+  system "rm -f .integrated"
+end
+
+desc "Same as generate"
+task :gen do
+  Rake::Task[:generate].execute
 end
 
 # usage rake generate_only[my-post]
 desc "Generate only the specified post (much faster)"
 task :generate_only, :filename do |t, args|
+  raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
   if args.filename
     filename = args.filename
   else
     filename = get_stdin("Enter a post file name: ")
   end
   puts "## Stashing other posts"
-  Rake::Task["isolate"].invoke(filename)
-  Rake::Task["generate"].execute
+  Rake::Task[:isolate].invoke(filename)
+  puts "## Generating Site with Jekyll"
+  system "compass compile --css-dir #{source_dir}/stylesheets"
+  system({"OCTOPRESS_ENV"=>"preview"},"jekyll")
   puts "## Restoring stashed posts"
-  Rake::Task["integrate"].execute
+  Rake::Task[:integrate].execute
+end
+
+desc "Same as generate_only"
+task :gen_only, :filename do |t, args|
+  if args.filename
+    filename = args.filename
+  else
+    filename = get_stdin("Enter a post file name: ")
+  end
+  Rake::Task[:generate_only].invoke(filename)
 end
 
 desc "Watch the site and regenerate when it changes"
@@ -99,7 +130,7 @@ task :watch_only, :filename do |t, args|
     filename = get_stdin("Enter a post file name: ")
   end
   puts "## Stashing other posts"
-  Rake::Task["isolate"].invoke(filename)
+  Rake::Task[:isolate].invoke(filename)
 
   puts "Starting to watch source with Jekyll and Compass."
   system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
@@ -109,7 +140,7 @@ task :watch_only, :filename do |t, args|
   trap("INT") {
     [jekyllPid, compassPid].each { |pid| Process.kill(9, pid) rescue Errno::ESRCH }
     puts "## Restoring stashed posts"
-    Rake::Task["integrate"].execute
+    Rake::Task[:integrate].execute
     exit 0
   }
 
@@ -144,7 +175,7 @@ task :preview_only, :filename do |t, args|
     filename = get_stdin("Enter a post file name: ")
   end
   puts "## Stashing other posts"
-  Rake::Task["isolate"].invoke(filename)
+  Rake::Task[:isolate].invoke(filename)
 
   puts "## Starting to watch source with Jekyll and Compass. Starting Rack on port #{server_port}"
   system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
@@ -155,7 +186,7 @@ task :preview_only, :filename do |t, args|
   trap("INT") {
     [jekyllPid, compassPid, rackupPid].each { |pid| Process.kill(9, pid) rescue Errno::ESRCH }
     puts "## Restoring stashed posts"
-    Rake::Task["integrate"].execute
+    Rake::Task[:integrate].execute
     exit 0
   }
 
@@ -206,11 +237,12 @@ task :new_post, :title do |t, args|
     post.puts ""
     post.puts ""
     post.puts "{%comment%}"
-    post.puts "<img src=\"{{site.imgpath}}post/xxx.jpg\" \"\" \"\">"
+    post.puts "<img src=\"{{site.imgpath}}/post/xxx.jpg\" title=\"\" alt=\"\">"
     post.puts "<i class=\"icon-arrow-right\"></i>"
     post.puts "<hr class=\"dotted-border\">"
     post.puts "{%endcomment%}"
-    post.puts "{%footnotes_extra%}"
+    post.puts ""
+    post.puts "{%include custom/endofcontent.html%}"
   end
 end
 
@@ -261,14 +293,17 @@ end
 desc "Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly."
 task :isolate, :filename do |t, args|
   FileUtils.mkdir(full_stash_dir) unless File.exist?(full_stash_dir)
-  Dir.glob("#{source_dir}/#{posts_dir}/*.*") do |post|
+  Dir.glob("#{source_dir}/#{posts_dir}/*") do |post|
     FileUtils.mv post, full_stash_dir unless post.include?(args.filename)
   end
+  system "touch .isolated"
 end
 
 desc "Move all stashed posts back into the posts directory, ready for site generation."
 task :integrate do
-  FileUtils.mv Dir.glob("#{full_stash_dir}/*.*"), "#{source_dir}/#{posts_dir}/"
+  FileUtils.mv Dir.glob("#{full_stash_dir}/*"), "#{source_dir}/#{posts_dir}/"
+  system "rm -f .isolated"
+  system "touch .integrated"
 end
 
 desc "Clean out caches: .pygments-cache, .gist-cache, .sass-cache"
@@ -319,18 +354,24 @@ task :deploy do
     File.delete(".preview-mode")
     Rake::Task[:generate].execute
   end
+  if File.exists?(".integrated") or File.exists?(".isolated")
+    puts "## Found isolated history, regenerating files ..."
+    system "rm -f .integrated .isolated"
+    Rake::Task[:integrate].execute
+    Rake::Task[:generate].execute
+  end
 
   Rake::Task[:copydot].invoke(source_dir, public_dir)
 
   # Check if files are fine or not
   ok_failed_stop system("if [ -f ~/.gitavoid ];then while read a;do if ret=`grep -i -r -q $a #{public_dir}`;then echo \"avoid word $a is included!!!\"; echo $ret; exit 1;fi; done < ~/.gitavoid;else  echo \"WARNING: There is no ~/.gitavoid file!!!\";fi")
 
-  Rake::Task["#{deploy_default}"].execute
+  Rake::Task["#{deploy_ex}"].execute
 
   #require 'net/http'
   #require 'uri'
-  #hub_url = "http://rcmdnk.superfeedr.com" # <--- replace this with your hub
-  #atom_url = "http://rcmdnk.github.io/atom.xml" # <--- replace this with your full feed url
+  #hub_url = "http://user.superfeedr.com" # <--- replace this with your hub
+  #atom_url = "http://user.github.io/atom.xml" # <--- replace this with your full feed url
   #resp, data = Net::HTTP.post_form(URI.parse(hub_url),
   #    {'hub.mode' => 'publish',
   #    'hub.url' => atom_url})
@@ -383,6 +424,31 @@ multitask :push do
   end
 end
 
+desc "deploy public directory to github pages through temporary deploy dir"
+multitask :push_ex do
+  puts "## Deploying branch to Github Pages "
+  puts "## clone from ${deploy_url}"
+  rm_rf deploy_dir
+  mkdir_p deploy_dir
+  cd "#{deploy_dir}" do
+    system "git init"
+    system "git remote add origin #{deploy_url}"
+  end
+
+  Rake::Task[:copydot].invoke(public_dir, deploy_dir)
+  puts "\n## Copying #{public_dir} to #{deploy_dir}"
+  cp_r "#{public_dir}/.", deploy_dir
+  cd "#{deploy_dir}" do
+    system "git add -A"
+    puts "\n## Commiting: Site updated at #{Time.now.utc}"
+    message = "Site updated at #{Time.now.utc}"
+    system "git commit -m \"#{message}\" >/dev/null"
+    puts "\n## Pushing generated #{deploy_dir} website"
+    system "git push -f origin #{deploy_branch}"
+    puts "\n## Github Pages deploy complete"
+  end
+end
+
 desc "Update configurations to support publishing to root or sub directory"
 task :set_root_dir, :dir do |t, args|
   puts ">>> !! Please provide a directory, eg. rake config_dir[publishing/subdirectory]" unless args.dir
@@ -422,6 +488,8 @@ desc "Set up _deploy folder and deploy branch for Github Pages deployment"
 task :setup_github_pages, :repo do |t, args|
   if args.repo
     repo_url = args.repo
+  elsif deploy_url
+    repo_url = deploy_url
   else
     puts "Enter the read/write url for your repository"
     puts "(For example, 'git@github.com:your_username/your_username.github.io.git)"

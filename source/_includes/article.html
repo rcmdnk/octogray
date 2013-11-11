@@ -26,16 +26,29 @@
   {% endif %}
 </header>
 {% endunless %}
-
 {% unless page.sharing == false %}
-  {% include post/sharing.html %}
+{% include post/sharing.html %}
 {% endunless %}
+
+{% if index %}
+{%assign ogimage=post.ogimage%}
+{% else %}
+{%assign ogimage=page.ogimage%}
+{% endif %}
+{% if ogimage != "" %}
+{%assign imgpath="{{site.imgpath}}"%}
+{%capture ogimage%}{{ogimage|replace:imgpath,site.imgpath}}{%endcapture%}
+{%assign imgpath="{{ site.imgpath }}"%}
+{%capture ogimage%}{{ogimage|replace:imgpath,site.imgpath}}{%endcapture%}
+{%assign imgpath="site.imgpath"%}
+{%capture ogimage%}{{ogimage|replace:imgpath,site.imgpath}}{%endcapture%}
+{% endif %}
 {% if index %}
 <div class="entry-content index_click_box">
   <div class="group">
     {% if post.ogimage and post.no_ogimage != true %}
     <div class="nailthumb-container title-thumb">
-      <img src="{{post.ogimage}}" alt="" title=""/>
+      <img src="{{ogimage}}" class="pic" alt="" title=""/>
     </div>
     {% endif %}
     {{ content | excerpt }}
@@ -53,7 +66,7 @@
   <div class="group">
     {% if page.ogimage and page.no_ogimage != true %}
     <div class="nailthumb-container title-thumb">
-      <img src="{{page.ogimage}}" alt="" title=""/>
+      <img src="{{ogimage}}" class="pic" alt="" title=""/>
     </div>
     {% endif %}
     {{ content | excerpt }}

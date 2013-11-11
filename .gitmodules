@@ -1,0 +1,30 @@
+[submodule ".plugins/Octopress-Slideshare-Plugin"]
+	path = .plugins/Octopress-Slideshare-Plugin
+	url = git@github.com:PeterHamilton/Octopress-Slideshare-Plugin.git
+[submodule ".plugins/footnote-extra"]
+	path = .plugins/footnote-extra
+	url = git@github.com:rcmdnk/footnote-extra.git
+[submodule ".plugins/intro.js"]
+	path = .plugins/intro.js
+	url = git@github.com:usablica/intro.js.git
+[submodule ".plugins/jquery.ex-flex-fixed"]
+	path = .plugins/jquery.ex-flex-fixed
+	url = git@github.com:cyokodog/jquery.ex-flex-fixed.git
+[submodule ".plugins/keyboardkey"]
+	path = .plugins/keyboardkey
+	url = git@github.com:rcmdnk/keyboardkey.git
+[submodule ".plugins/monthly-archive"]
+	path = .plugins/monthly-archive
+	url = git@github.com:rcmdnk/monthly-archive.git
+[submodule ".plugins/octopress-gemoji"]
+	path = .plugins/octopress-gemoji
+	url = git@github.com:rcmdnk/octopress-gemoji.git
+[submodule ".plugins/octopress-responsive-video-embed"]
+	path = .plugins/octopress-responsive-video-embed
+	url = git@github.com:optikfluffel/octopress-responsive-video-embed.git
+[submodule ".plugins/Font-Awesome"]
+	path = .plugins/Font-Awesome
+	url = git://github.com/FortAwesome/Font-Awesome.git
+[submodule ".plugins/octopress-postscript"]
+	path = .plugins/octopress-postscript
+	url = git@github.com:rcmdnk/octopress-postscript.git

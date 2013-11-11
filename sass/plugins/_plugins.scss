@@ -3,36 +3,6 @@
   Imported. Load order is alphabetical and styles can be overriden in
   custom/_style.scss which is loaded after all plugin stylesheets.
 */
-
-// emoji
-.emoji {
-  height: 20px;
-  margin-bottom: 5px;
-  vertical-align: middle;
-  box-shadow: none;
-  border: 0;
-}
-/*!
- **************************************************************
- *Images under {{site.url}}/{{site.emoji_dir}}
- *
- *octocat, squirrel, shipit
- *Copyright (c) 2013 GitHub Inc. All rights reserved.
- *
- *bowtie, neckbeard, fu
- *Copyright (c) 2013 37signals, LLC. All rights reserved.
- *
- *feelsgood, finnadie, goberserk, godmode, hurtrealbad, rage 1-4, suspect
- *Copyright (c) 2013 id Software. All rights reserved.
- *
- *trollface
- *Copyright (c) 2013 whynne@deviantart. All rights reserved.
- *
- *All other images
- *Copyright (c) 2013 Apple Inc. All rights reserved.
- **************************************************************
- */
-
 // NailThumb
 .square-thumb {
   width: 200px;
@@ -63,3 +33,16 @@
   cursor: pointer;
 }
 
+// amazon
+.amazon-box{
+  @extend .group;
+}
+.amazon-img{
+  float: left; margin-right: 1.5em;
+  margin-bottom: .8em;
+}
+.amazon-txt{
+  float: left; margin-right: 1.5em;
+  margin-bottom: .8em;
+  width: 200px;
+}

@@ -38,6 +38,7 @@ $nav-border-right: $nav-bg !default;
 $sidebar-bg: $main-bg !default;
 $sidebar-link-color: $link-color !default;
 $sidebar-link-color-hover: $link-color-hover !default;
+$sidebar-link-color-visited: $link-color-visited !default;
 $sidebar-link-color-active: $link-color-active !default;
 $sidebar-color: change-color(mix($text-color, $sidebar-bg, 80), $hue: hue($sidebar-bg), $saturation: saturation($sidebar-bg)/2) !default;
 $sidebar-border: $sidebar-bg !default;
@@ -59,50 +60,9 @@ $footer-link-color: darken($footer-bg, 38) !default;
 $footer-link-color-hover: darken($footer-color, 25) !default;
 $page-border-bottom: $main-bg !default;
 
-// Table view
-* + table{
-  border-style: solid;
-  border-width: 1.5px;
-  //border-color: #CCCCCC;
-  border-color: darken($main-bg,20);
-}
-
-* + table tr {
-  &:nth-child(2n+1) {
-    //background: #F8F8F8;
-    background:lighten($main-bg,4);
-  }
-  &:nth-child(even) {
-    //background: #FFFFFF;
-    background:lighten($main-bg,2);
-  }
-}
-
-* + table th, * + table td {
-  border-style: solid;
-  border-width: 1.5px;
-  border-color: darken($main-bg,20);
-}
-
-* + table th {
-  font-weight: bold;
-  //background: #F0F0F0;
-  background: darken($main-bg,5);
-}
-
-th[align="left"], td[align="left"] {
-  text-align:left;
-}
-
-th[align="right"], td[align="right"] {
-  text-align:right;
-}
-
-th[align="center"],  td[align="center"] {
-  text-align:center;
-}
-
 /* Core theme application */
+
+$body-border: 0px !default;
 
 a {
   @include link-colors($link-color, $hover: $link-color-hover, $focus: $link-color-hover, $visited: $link-color-visited, $active: $link-color-active);
@@ -121,10 +81,10 @@ html {
 body {
   > div {
     background: $sidebar-bg $noise-bg;
-    border-bottom: 1px solid $page-border-bottom;
+    border-bottom: $body-border solid $page-border-bottom;
     > div {
       background: $main-bg $noise-bg;
-      border-right: 1px solid $sidebar-border;
+      border-right: $body-border solid $sidebar-border;
     }
   }
 }

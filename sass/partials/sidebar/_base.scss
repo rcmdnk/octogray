@@ -20,6 +20,9 @@ aside.sidebar {
         padding-top: .4em;
       }
     }
+    &:hover a {
+      @include link-colors($sidebar-link-color, $hover: $sidebar-link-color-hover, $focus: $sidebar-link-color-hover, $visited: $sidebar-link-color-visited, $active: $sidebar-link-color-active);
+    }
   }
   img {
     @extend .flex-content;
@@ -42,19 +45,6 @@ aside.sidebar {
   a {
     color: inherit;
     @include transition(color .5s);
-  }
-  &:hover a {
-    color: $sidebar-link-color;
-    &:hover { color: $sidebar-link-color-hover; }
-  }
-  a.sidebar-about {
-    color: inherit;
-    @include transition(color .5s);
-    text-decoration: none;
-  }
-  &:hover a.sidebar-about {
-    color: $sidebar-link-color;
-    &:hover { color: $sidebar-link-color-hover; }
   }
   .aboutme_logo {
     float: left;
