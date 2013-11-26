@@ -52,6 +52,11 @@ aside.sidebar {
     height: 2*$icon-link-btn-height*$icon-link-btn-font-size - 0.4em;
     margin: 0.2em 0.5em 0 0.2em;
   }
+  img.feedly {
+    width: 30px;
+    height: 30px;
+    margin-bottom: -5px;
+  }
 }
 .aside-alt-link {
   color: $sidebar-link-color-subdued;

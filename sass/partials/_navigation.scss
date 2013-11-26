@@ -53,17 +53,17 @@ body > nav {
   ul li {
     margin: 0;
   }
-  form {
-    float: right;
-    text-align: left;
-    padding-left: .8em;
-    width: $sidebar-width-medium - $pad-medium*2 - $sidebar-pad-medium + 20px;
-    .search {
-      width: 93%;
-      font-size: .95em;
-      line-height: 1.2em;
-    }
-  }
+  //form {
+  //  float: right;
+  //  text-align: left;
+  //  padding-left: .8em;
+  //  width: $sidebar-width-medium - $pad-medium*2 - $sidebar-pad-medium + 20px;
+  //  .search {
+  //    width: 93%;
+  //    font-size: .95em;
+  //    line-height: 1.2em;
+  //  }
+  //}
   ul[data-subscription$=email] + form {
     width: $sidebar-width-medium - $pad-medium*2 - $sidebar-pad-medium - 58px;
     .search { width: 91%; }
@@ -123,4 +123,16 @@ body > nav {
 
 .main-navigation {
   text-align: center;
+}
+
+body > nav.navigation div.main-navigation form#cse-search-bmx {
+  margin: 0 auto;
+  float: none;
+  padding-left: 0;
+}
+
+.main-navigation img.feedly {
+  width: 35px;
+  height: 35px;
+  margin-bottom: -5px;
 }

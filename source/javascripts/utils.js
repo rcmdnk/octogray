@@ -44,3 +44,7 @@ jQuery(function($){
   });
 });
 
+// Open outside links with other window
+jQuery(function($){
+  $("a[href^='http']").attr('target', '_blank');
+});

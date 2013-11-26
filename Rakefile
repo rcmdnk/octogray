@@ -103,6 +103,16 @@ task :gen_only, :filename do |t, args|
   Rake::Task[:generate_only].invoke(filename)
 end
 
+desc "Same as generate_only"
+task :go, :filename do |t, args|
+  if args.filename
+    filename = args.filename
+  else
+    filename = get_stdin("Enter a post file name: ")
+  end
+  Rake::Task[:generate_only].invoke(filename)
+end
+
 desc "Watch the site and regenerate when it changes"
 task :watch do
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
@@ -384,6 +394,11 @@ end
 desc "Generate website and deploy"
 task :gen_deploy => [:integrate, :generate, :deploy] do
 end
+
+desc "Same as gen_deploy"
+task :gd => [:integrate, :generate, :deploy] do
+end
+
 
 desc "copy dot files for deployment"
 task :copydot, :source, :dest do |t, args|

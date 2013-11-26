@@ -1,50 +1,55 @@
-{% include disqus.html %}
-{% unless page.sharing == false %}
+{%if site.google_analytics_tracking_id or page.sharing != false or (site.disqus_short_name and page.comments != false) or (site.linkwithin_show == true and page.footer != false %}
 <script>
-(function(w,d){
-  var c,e=d.createDocumentFragment(),f=d.getElementsByTagName("script")[0],
-  a=function(a,b){if(!d.getElementById(b)){c=d.createElement("script");
-  c.src=a;c.id=b||null;c.async=true;e.appendChild(c);}};
-{%comment%}
-{% if site.google_plus_one %}
-{% if site.google_plus_one_lang %}
+(function (w, d) {
+  var s, e = d.getElementsByTagName("script")[0],
+  a = function (u, i) {
+    if (!d.getElementById(i)) {
+      s = d.createElement("script");
+      s.src = u;
+      if (i) {s.id = i;}
+      e.parentNode.insertBefore(s, e);
+    }
+  };
+  {%if site.google_analytics_tracking_id%}
+  w._gaq = [['_require', 'inpage_linkid',
+             '//www.google-analytics.com/plugins/ga/inpage_linkid.js'],
+            ["_setAccount", "{{site.google_analytics_tracking_id}}"],
+            ["_trackPageview"]];
+  a(("https:" == location.protocol ? "//ssl" : "//www") + ".google-analytics.com/ga.js", "ga");
+  {%endif%}
+  {% if site.twitter_follow_button or site.twitter_tweet_button %}
+  a("//platform.twitter.com/widgets.js", "twitter-wjs");
+  {%endif%}
+  {%if site.hatena_button%}
+  a("//b.st-hatena.com/js/bookmark_button_wo_al.js","hatebu-wo-al-js");
+  {%endif%}
+  {%if site.google_plus_one%}
+  {%if site.google_plus_one_lang%}
   w.___gcfg={lang:"{{site.google_plus_one_lang}}"};
-{% endif %}
-  a("https://apis.google.com/js/plusone.js");
-{% endif %}
-{% if site.twitter_follow_button or site.twitter_tweet_button %}
-  a("//platform.twitter.com/widgets.js");
-{% endif %}
-{%endcomment%}
-{% if site.facebook_like %}
+  {%endif%}
+  a("https://apis.google.com/js/plusone.js","plusone-js");
+  {%endif%}
+  {%if site.facebook_like%}
   a("//connect.facebook.net/{% if site.facebook_lang %}{{ site.facebook_lang }}{% else %}en_US{% endif %}/all.js#{% if site.facebook_appID %}appId={{ site.facebook_appID }}&{% endif %}xfbml=1","facebook-jssdk");
-{% endif %}
-  a("//b.st-hatena.com/js/bookmark_button_wo_al.js");
-  f.parentNode.insertBefore(e,f);
-})(this,document);
+  {%endif%}
+  {%if site.pocket_button%}
+  a("https://widgets.getpocket.com/v1/j/btn.js?v=1","pocket-btn-js");
+  {%endif%}
+  {%if site.linkwithin_show == true and page.footer != false%}
+  a("http://www.linkwithin.com/widget.js","linkwithin-wjs");
+  {%endif%}
+  {%if site.disqus_short_name and page.comments != false%}
+  var disqus_shortname = '{{ site.disqus_short_name }}';
+  {%if page.comments == true%}
+  var disqus_identifier = '{{ site.url }}{{ page.url }}';
+  var disqus_url = '{{ site.url }}{{ page.url }}';
+  var disqus_script = 'embed.js';
+  {%else%}
+  var disqus_script = 'count.js';
+  {%endif%}
+  a('http://'+disqus_shortname+'.disqus.com/'+disqus_script);
+  {%endif%}
+})(this, document);
 </script>
-{% if site.google_plus_one %}
-{%comment%}somehow google_plus_one can't work in above function if analytics code of www.google-analytics.com/plugins/ga/inpage_linkid.js is included{%endcomment%}
-<!-- Google+ -->
-<script type="text/javascript">
-{% if site.google_plus_one_lang %}
-window.___gcfg = {lang: '{{site.google_plus_one_lang}}'};
-{% endif %}
-(function() {
- var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
- po.src = 'https://apis.google.com/js/plusone.js';
- var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
- })();
-</script>
-{% endif %}
-{% endunless %}
-{% if site.linkwithin_show == true %}
-<script>
-var linkwithin_site_id = {{site.linkwithin_id}};
-</script>
-<script src="http://www.linkwithin.com/widget.js"></script>
-<a href="http://www.linkwithin.com/"><img src="http://www.linkwithin.com/pixel.png" alt="Related Posts Plugin for WordPress, Blogger..." style="border: 0" /></a>
-<script>linkwithin_text='{{site.linkwithin_text}}'</script>
-{% endif %}
-{% include custom/after_footer.html %}
-
+{%endif%}
+{%include custom/after_footer.html%}

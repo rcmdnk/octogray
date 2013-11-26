@@ -1,33 +1,3 @@
-<div class="main-navigation">
-  {% if site.nav_marks %}
-  <p>
-    {% if site.email_mark %}
-    <a href="mailto:{{site.email}}" title="Mail"><i class="icon-envelope-alt icon-2x"></i></a>
-    {% endif %}
-    {% if site.twitter_mark %}
-    <a href="https://twitter.com/{{ site.twitter_user }}" title="Twitter"><i class="icon-twitter-sign icon-2x"></i></a>
-    {% endif %}
-    {% if site.facebook_mark %}
-    <a href="https://www.facebook.com/{{ site.facebook_user }}" title="Facebook"><i class="icon-facebook-sign icon-2x"></i></a>
-    {% endif %}
-    {% if site.google_plus_one_mark %}
-    <a href="https://plus.google.com/{{ site.googleplus_user }}" title="Google +1"><i class="icon-google-plus-sign icon-2x"></i></a>
-    {% endif %}
-    {% if site.linkedin_mark %}
-    <a href="http://www.linkedin.com/profile/view?id={{ site.linkedin_user }}" title="LinkedIn"><i class="icon-linkedin-sign icon-2x"></i></a>
-    {% endif %}
-    {% if site.github_mark %}
-    <a href="https://github.com/{{site.github_user}}" title="GitHub"><i class="icon-github-sign icon-2x"></i></a>
-    {% endif %}
-    {% if site.rss_mark %}
-    <a href="{{site.subscribe_rss}}" title="RSS"><i class="icon-rss-sign icon-2x"></i></a>
-    {% endif %}
-    {% if site.bookmark_mark %}
-    <a href="#" class="add_bookmark" title="Favorite" data-page_title="{{site.title}}" data-page_url="{{site.url}}"><i class="icon-star-empty icon-2x"></i></a>
-    {% endif %}
-  </p>
-  {% endif %}
-  <p>
+<p>
   <a href="{{root_url}}/blog/archives" class="link_btn" >Archives</a>
-  </p>
-</div>
+</p>

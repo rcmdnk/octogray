@@ -46,3 +46,42 @@
   margin-bottom: .8em;
   width: 200px;
 }
+
+// sponsored links
+.sponsored{
+  &:before{
+    display: block;
+    line-height: 1em;
+    margin-top: 2em;
+    content: "Sponsored Links";
+  }
+}
+
+.imgres0 {
+  width: 320px;
+  height: 50px;
+}
+@media(min-width: 468px+$sidebar-width-medium+$body-border) {
+  .imgres0 {
+    width: 468px;
+    height: 60px;
+  }
+}
+@media(min-width: 728px+$sidebar-width-medium+$body-border) {
+  .imgres0 {
+    width: 728px;
+    height: 90px;
+  }
+}
+.imgresrec0 {
+  width: 300px;
+  height: 250px;
+}
+.imgresrec1 {
+  width: 300px;
+  height: 250px;
+}
+@media(min-width: 336px+$sidebar-width-medium+$body-border) {
+  .imgresrec0 { width: 336px; height: 280px;}
+  .imgresrec1 { width: 336px; height: 280px;}
+}

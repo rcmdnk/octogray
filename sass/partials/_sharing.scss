@@ -1,21 +1,13 @@
 .sharing {
-  p.meta + & {
-    padding: { top: 1em; left: 0; }
-    background: $img-border top left repeat-x;
+  height: 30px;
+  line-height: 15px;
+  margin-bottom:20px;
+
+  ul li {
+      display: block;
+      float: left !important;
+      margin-right: 10px;
   }
-}
-
-#fb-root { display: none; }
-
-div.social_box {
-    height: 30px;
-    line-height: 15px;
-    margin-bottom:20px;
-}
-ul.social li {
-    display: block;
-    float: left !important;
-    margin-right: 10px;
 }
 li.twitter {
     width: 80px;
@@ -41,6 +33,7 @@ li.facebook {
     height: 21px;
     line-height: 15px;
 }
+#fb-root { display: none; }
 li.pocket {
     width: 90px;
     height: 21px;
