@@ -53,17 +53,18 @@ body > nav {
   ul li {
     margin: 0;
   }
-  //form {
-  //  float: right;
-  //  text-align: left;
-  //  padding-left: .8em;
-  //  width: $sidebar-width-medium - $pad-medium*2 - $sidebar-pad-medium + 20px;
-  //  .search {
-  //    width: 93%;
-  //    font-size: .95em;
-  //    line-height: 1.2em;
-  //  }
-  //}
+  form {
+    //float: right;
+    //text-align: left;
+    //padding-left: .8em;
+    //width: $sidebar-width-medium - $pad-medium*2 - $sidebar-pad-medium + 20px;
+    .search {
+      width: 93%;
+      font-size: .95em;
+      line-height: 1.2em;
+      width: 20em;
+    }
+  }
   ul[data-subscription$=email] + form {
     width: $sidebar-width-medium - $pad-medium*2 - $sidebar-pad-medium - 58px;
     .search { width: 91%; }
