@@ -3,64 +3,58 @@
 {%else%}
 {%capture share_url%}{{site.url}}{{page.url}}{%endcapture%}
 {%endif%}
-<div class="group">
-  <div class="sharing">
-    <ul>
-      {% if site.twitter_tweet_button %}
-      <li class="twitter">
-        <a href="http://twitter.com/share"
-            class="twitter-share-button"
-            data-url="{{share_url}}"
-            data-via="{{ site.twitter_user }}"
-            data-counturl="{{share_url}}">Tweet</a>
-      </li>
-      {% endif %}
-      {% if site.hatena_button %}
-      <li class="hatena">
-        <a href="http://b.hatena.ne.jp/entry/{{share_url}}"
-            class="hatena-bookmark-button"
-            data-hatena-bookmark-layout="standard"
-            title="このエントリーをはてなブックマークに追加"
-        ><img src="http://b.st-hatena.com/images/entry-button/button-only.gif"
-                alt="このエントリーをはてなブックマークに追加"
-                width="20"
-                height="20"
-                style="border: none;"/></a>
-      </li>
-      {% endif %}
-      {% if site.google_plus_one %}
-      <li class="googleplus">
-        <div class="g-plusone"
-            data-size="{{ site.google_plus_one_size }}"
-            data-href="{{share_url}}"></div>
-      </li>
-      {% endif %}
-      {% if site.facebook_like %}
-      <li class="facebook">
-        <div class="fb-like"
-            data-send="false"
-            data-layout="button_count"
-            data-show-faces="false"
-            data-font="verdana"
-            data-href="{{share_url}}"></div>
-      </li>
-      {% endif %}
-      {% if site.pocket_button %}
-      <li class="pocket">
-        <a href="https://getpocket.com/save"
-            class="pocket-btn" data-lang="en"
-            data-save-url="{{share_url}}"
-            data-pocket-count="horizontal"
-            data-pocket-align="left">Pocket</a>
-      </li>
-      {% endif %}
-      {% if site.bookmark %}
-      <li class="bookmark"><input class="link_btn add_bookmark"
-            type="button"
-            value="{{site.favorite}}"
-            data-page_title="{{post.title}} - {{site.title}}"
-            data-page_url="{{share_url}}"/></li>
-      {% endif %}
-    </ul>
-  </div>
+<div class="sharing">
+  <ul>
+    {% if site.hatena_button %}
+    <li class="hatena">
+      <a href="http://b.hatena.ne.jp/entry/{{share_url}}"
+          class="hatena-bookmark-button"
+          data-hatena-bookmark-layout="standard"
+      ><img src="http://b.st-hatena.com/images/entry-button/button-only.gif"
+            alt="Add to Hatena Bookmark"/></a>
+    </li>
+    {% endif %}
+    {% if site.twitter_tweet_button %}
+    <li class="twitter">
+      <a href="http://twitter.com/share"
+          class="twitter-share-button"
+          data-url="{{share_url}}"
+          data-via="{{ site.twitter_user }}"
+          data-counturl="{{share_url}}">Tweet</a>
+    </li>
+    {% endif %}
+    {% if site.google_plus_one %}
+    <li class="googleplus">
+      <div class="g-plusone"
+          data-size="{{ site.google_plus_one_size }}"
+          data-href="{{share_url}}"></div>
+    </li>
+    {% endif %}
+    {% if site.facebook_like %}
+    <li class="facebook">
+      <div class="fb-like"
+          data-send="false"
+          data-layout="button_count"
+          data-show-faces="false"
+          data-font="verdana"
+          data-href="{{share_url}}"></div>
+    </li>
+    {% endif %}
+    {% if site.pocket_button %}
+    <li class="pocket">
+      <a href="https://getpocket.com/save"
+          class="pocket-btn" data-lang="en"
+          data-save-url="{{share_url}}"
+          data-pocket-count="horizontal"
+          data-pocket-align="left">Pocket</a>
+    </li>
+    {% endif %}
+    {% if site.bookmark %}
+    <li class="bookmark"><input class="link_btn add_bookmark"
+          type="button"
+          value="{{site.favorite}}"
+          data-page_title="{{post.title}} - {{site.title}}"
+          data-page_url="{{share_url}}"/></li>
+    {% endif %}
+  </ul>
 </div>

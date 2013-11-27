@@ -1,42 +1,42 @@
 {%if site.google_analytics_tracking_id or page.sharing != false or (site.disqus_short_name and page.comments != false) or (site.linkwithin_show == true and page.footer != false %}
 <script>
 (function (w, d) {
-  var s, e = d.getElementsByTagName("script")[0],
+  var j, s = d.getElementsByTagName('script')[0],
   a = function (u, i) {
     if (!d.getElementById(i)) {
-      s = d.createElement("script");
-      s.src = u;
-      if (i) {s.id = i;}
-      e.parentNode.insertBefore(s, e);
+      j = d.createElement('script');
+      j.src = u;
+      if (i) {j.id = i;}
+      s.parentNode.insertBefore(j, s);
     }
   };
   {%if site.google_analytics_tracking_id%}
   w._gaq = [['_require', 'inpage_linkid',
              '//www.google-analytics.com/plugins/ga/inpage_linkid.js'],
-            ["_setAccount", "{{site.google_analytics_tracking_id}}"],
-            ["_trackPageview"]];
-  a(("https:" == location.protocol ? "//ssl" : "//www") + ".google-analytics.com/ga.js", "ga");
+            ['_setAccount', '{{site.google_analytics_tracking_id}}'],
+            ['_trackPageview']];
+  a(('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js', 'ga');
   {%endif%}
   {% if site.twitter_follow_button or site.twitter_tweet_button %}
-  a("//platform.twitter.com/widgets.js", "twitter-wjs");
+  a('//platform.twitter.com/widgets.js', 'twitter-wjs');
   {%endif%}
   {%if site.hatena_button%}
-  a("//b.st-hatena.com/js/bookmark_button_wo_al.js","hatebu-wo-al-js");
+  a('//b.st-hatena.com/js/bookmark_button.js','hatebu-js');
   {%endif%}
   {%if site.google_plus_one%}
   {%if site.google_plus_one_lang%}
-  w.___gcfg={lang:"{{site.google_plus_one_lang}}"};
+  w.___gcfg={lang:'{{site.google_plus_one_lang}}'};
   {%endif%}
-  a("https://apis.google.com/js/plusone.js","plusone-js");
+  a('//apis.google.com/js/plusone.js','plusone-js');
   {%endif%}
   {%if site.facebook_like%}
-  a("//connect.facebook.net/{% if site.facebook_lang %}{{ site.facebook_lang }}{% else %}en_US{% endif %}/all.js#{% if site.facebook_appID %}appId={{ site.facebook_appID }}&{% endif %}xfbml=1","facebook-jssdk");
+  a('//connect.facebook.net/{% if site.facebook_lang %}{{ site.facebook_lang }}{% else %}en_US{% endif %}/all.js#{% if site.facebook_app_id %}appId={{ site.facebook_app_id }}&{% endif %}xfbml=1','facebook-jssdk');
   {%endif%}
   {%if site.pocket_button%}
-  a("https://widgets.getpocket.com/v1/j/btn.js?v=1","pocket-btn-js");
+  a('//widgets.getpocket.com/v1/j/btn.js?v=1','pocket-btn-js');
   {%endif%}
   {%if site.linkwithin_show == true and page.footer != false%}
-  a("http://www.linkwithin.com/widget.js","linkwithin-wjs");
+  a('//www.linkwithin.com/widget.js','linkwithin-wjs');
   {%endif%}
   {%if site.disqus_short_name and page.comments != false%}
   var disqus_shortname = '{{ site.disqus_short_name }}';
@@ -44,10 +44,10 @@
   var disqus_identifier = '{{ site.url }}{{ page.url }}';
   var disqus_url = '{{ site.url }}{{ page.url }}';
   var disqus_script = 'embed.js';
-  {%else%}
+  {%elsif site.disqus_short_name and site.disqus_show_comment_count == true %}
   var disqus_script = 'count.js';
   {%endif%}
-  a('http://'+disqus_shortname+'.disqus.com/'+disqus_script);
+  a('//'+disqus_shortname+'.disqus.com/'+disqus_script);
   {%endif%}
 })(this, document);
 </script>
