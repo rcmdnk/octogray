@@ -28,3 +28,6 @@
 [submodule ".plugins/octopress-postscript"]
 	path = .plugins/octopress-postscript
 	url = git@github.com:rcmdnk/octopress-postscript.git
+[submodule ".plugins/octopress-encodeURIComponent"]
+	path = .plugins/octopress-encodeURIComponent
+	url = git@github.com:rcmdnk/octopress-encodeURIComponent.git
