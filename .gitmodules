@@ -31,3 +31,6 @@
 [submodule ".plugins/octopress-encodeURIComponent"]
 	path = .plugins/octopress-encodeURIComponent
 	url = git@github.com:rcmdnk/octopress-encodeURIComponent.git
+[submodule ".plugins/GitHub-jQuery-Repo-Widget"]
+	path = .plugins/GitHub-jQuery-Repo-Widget
+	url = git@github.com:JoelSutherland/GitHub-jQuery-Repo-Widget

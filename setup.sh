@@ -102,6 +102,11 @@ mkdir -p source/font
 cp .theme/octogray/.plugins/Font-Awesome/font/* source/font
 echo
 
+## [githubrepo-octopress](https://github.com/sotsy/githubrepo-octopress)
+cp .themes/octogray/.plugins/githubrepo-octopress/githubwidget.rb plugins/
+cp .themes/octogray/.plugins/GitHub-jQuery-Repo-Widget/jquery.githubRepoWidget.min.js source/javascripts/
+echo "<script src=\"{{root_url}}/javascripts/jquery.githubRepoWidget.min.js\"></script>" >> source/_includes/custom/head.html
+
 ## [NailThumb](http://www.garralab.com/nailthumb.php)
 wget -O nailthumb.1.1.zip http://sourceforge.net/projects/nailthumb/files/nailthumb.1.1.zip/download
 unzip nailthumb.1.1.zip
@@ -120,6 +125,7 @@ jQuery(function($){
 EOF
 echo
 
+
 ## [jQuery SCroll to Top Control](http://www.dynamicdrive.com/dynamicindex3/scrolltop.htm)
 wget -O scrolltopcontrol.js http://www.dynamicdrive.com/dynamicindex3/scrolltopcontrol.js
 mkdir -p .theme/octogray/.plugins/scrolltopcontrol
@@ -129,6 +135,7 @@ sed -i ".bak" "s/<img src=\"up.png\" style=\"width:48px; height:48px\" \/>/<i cl
 rm -f ./source/javascripts/scrolltopcontrol.js.bak
 echo "<script src=\"{{root_url}}/javascripts/scrolltopcontrol.js\"></script>" >> source/_includes/custom/head.html
 echo
+
 
 
 ## other plugins
