@@ -34,6 +34,3 @@
 [submodule ".plugins/GitHub-jQuery-Repo-Widget"]
 	path = .plugins/GitHub-jQuery-Repo-Widget
 	url = git@github.com:JoelSutherland/GitHub-jQuery-Repo-Widget
-[submodule ".plugins/githubrepo-octopress"]
-	path = .plugins/githubrepo-octopress
-	url = git@github.com:rcmdnk/githubrepo-octopress
