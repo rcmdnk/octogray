@@ -68,10 +68,6 @@ cp .theme/octogray/.plugins/keyboardkey/plugins/keyboardkey.rb ./plugins/
 cp .theme/octogray/.plugins/keyboardkey/sass/plugins/_keyboardkey.scss ./sass/plugins/
 echo
 
-## [octopress-encodeURIComponent](http://rcmdnk.github.io/blog/2013/11/28/blog-octopress/)
-cp .theme/octogray/.plugins/octopress-encodeURIComponent/plugins/encodeURIComponent.rb ./plugins/
-echo
-
 ## [monthly-archive](http://rcmdnk.github.io/blog/2013/10/01/blog-octopress/)
 cp .theme/octogray/.plugins/monthly-archive/plugins/monthly_archive.rb ./plugins/
 cp .theme/octogray/.plugins/monthly-archive/plugins/monthly_generator.rb ./plugins/
