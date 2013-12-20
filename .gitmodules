@@ -1,12 +1,12 @@
+[submodule "githubrepo-octopress"]
+	path = githubrepo-octopress
+	url = git@github.com:sotsy/githubrepo-octopress.git
+[submodule "intro.js"]
+	path = intro.js
+	url = git@github.com:usablica/intro.js.git
 [submodule ".plugins/Octopress-Slideshare-Plugin"]
 	path = .plugins/Octopress-Slideshare-Plugin
 	url = git@github.com:PeterHamilton/Octopress-Slideshare-Plugin.git
-[submodule ".plugins/intro.js"]
-	path = .plugins/intro.js
-	url = git@github.com:usablica/intro.js.git
-[submodule ".plugins/jquery.ex-flex-fixed"]
-	path = .plugins/jquery.ex-flex-fixed
-	url = git@github.com:cyokodog/jquery.ex-flex-fixed.git
 [submodule ".plugins/keyboardkey"]
 	path = .plugins/keyboardkey
 	url = git@github.com:rcmdnk/keyboardkey.git
@@ -19,21 +19,27 @@
 [submodule ".plugins/octopress-responsive-video-embed"]
 	path = .plugins/octopress-responsive-video-embed
 	url = git@github.com:optikfluffel/octopress-responsive-video-embed.git
-[submodule ".plugins/Font-Awesome"]
-	path = .plugins/Font-Awesome
-	url = git://github.com/FortAwesome/Font-Awesome.git
 [submodule ".plugins/octopress-postscript"]
 	path = .plugins/octopress-postscript
 	url = git@github.com:rcmdnk/octopress-postscript.git
+[submodule ".plugins/Font-Awesome"]
+	path = .plugins/Font-Awesome
+	url = git@github.com:FortAwesome/Font-Awesome.git
 [submodule ".plugins/GitHub-jQuery-Repo-Widget"]
 	path = .plugins/GitHub-jQuery-Repo-Widget
-	url = git@github.com:JoelSutherland/GitHub-jQuery-Repo-Widget
-[submodule ".plugins/githubrepo-octopress"]
-	path = .plugins/githubrepo-octopress
-	url = git@github.com:rcmdnk/githubrepo-octopress
-[submodule ".plugins/jekyll-tweet-tag"]
-	path = .plugins/jekyll-tweet-tag
-	url = https://github.com/scottwb/jekyll-tweet-tag.git
+	url = git@github.com:JoelSutherland/GitHub-jQuery-Repo-Widget.git
 [submodule ".plugins/footnote-inline"]
 	path = .plugins/footnote-inline
 	url = git@github.com:rcmdnk/footnote-inline
+[submodule ".plugins/intro.js"]
+	path = .plugins/intro.js
+	url = git@github.com:usablica/intro.js.git
+[submodule ".plugins/jekyll-tweet-tag"]
+	path = .plugins/jekyll-tweet-tag
+	url = git@github.com:scottwb/jekyll-tweet-tag.git
+[submodule ".plugins/jquery.ex-flex-fixed"]
+	path = .plugins/jquery.ex-flex-fixed
+	url = git@github.com:cyokodog/jquery.ex-flex-fixed.git
+[submodule ".plugins/githubrepo-octopress"]
+	path = .plugins/githubrepo-octopress
+	url = git@github.com:sotsy/githubrepo-octopress.git
