@@ -1,9 +1,6 @@
 [submodule ".plugins/Octopress-Slideshare-Plugin"]
 	path = .plugins/Octopress-Slideshare-Plugin
 	url = git@github.com:PeterHamilton/Octopress-Slideshare-Plugin.git
-[submodule ".plugins/footnote-extra"]
-	path = .plugins/footnote-extra
-	url = git@github.com:rcmdnk/footnote-extra.git
 [submodule ".plugins/intro.js"]
 	path = .plugins/intro.js
 	url = git@github.com:usablica/intro.js.git
@@ -34,3 +31,9 @@
 [submodule ".plugins/githubrepo-octopress"]
 	path = .plugins/githubrepo-octopress
 	url = git@github.com:rcmdnk/githubrepo-octopress
+[submodule ".plugins/jekyll-tweet-tag"]
+	path = .plugins/jekyll-tweet-tag
+	url = https://github.com/scottwb/jekyll-tweet-tag.git
+[submodule ".plugins/footnote-inline"]
+	path = .plugins/footnote-inline
+	url = git@github.com:rcmdnk/footnote-inline

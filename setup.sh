@@ -17,20 +17,16 @@ rake install['octogray']
 cp .theme/octogray/.plugins/Octopress-Slideshare-Plugin/slideshare.rb ./plugins/
 echo
 
-## [footnote-extra](http://rcmdnk.github.io/blog/2013/10/12/blog-octopress/)
-cp .theme/octogray/.plugins/footnote-extra/plugins/footnote_extra.rb ./plugins/
-cp .theme/octogray/.plugins/footnote-extra/plugins/footnote_inline.rb ./plugins/
-cp .theme/octogray/.plugins/footnote-extra/source/javascripts/footnote.js ./source/javascripts/
+## [footnote-inline](http://rcmdnk.github.io/blog/2013/10/12/blog-octopress/)
+cp .theme/octogray/.plugins/footnote-inline/plugins/footnote_inline.rb ./plugins/
+cp .theme/octogray/.plugins/footnote-inline/source/javascripts/footnote.js ./source/javascripts/
 echo "<script src=\"{{root_url}}/javascripts/footnote.js\"></script>" >> source/_includes/custom/head.html
-cp .theme/octogray/.plugins/footnote-extra/sass/plugins/_footnote.scss ./sass/plugins/
+cp .theme/octogray/.plugins/footnote-inline/sass/plugins/_footnote.scss ./sass/plugins/
 echo
 
 ## [octopress-postscript](https://github.com/rcmdnk/octopress-postscript)
-cp .theme/octogray/.plugins/footnote-extra/plugins/footnote_extra.rb ./plugins/
-cp .theme/octogray/.plugins/footnote-extra/plugins/footnote_inline.rb ./plugins/
-cp .theme/octogray/.plugins/footnote-extra/source/javascripts/footnote.js ./source/javascripts/
-echo "<script src=\"{{root_url}}/javascripts/footnote.js\"></script>" >> source/_includes/custom/head.html
-cp .theme/octogray/.plugins/footnote-extra/sass/plugins/_footnote.scss ./sass/plugins/
+cp .theme/octogray/.plugins/octopress-postscript/plugins/postscript.rb ./plugins/
+cp .theme/octogray/.plugins/octopress-postscript/sass/plugins/_postscript.scss ./sass/plugins/
 echo
 
 ## [intro.js](http://usablica.github.io/intro.js/)
@@ -86,6 +82,10 @@ echo
 ## [octopress-responsive-video-embed](https://github.com/optikfluffel/octopress-responsive-video-embed)
 cp .theme/octogray/.plugins/octopress-responsive-video-embed/*.rb ./plugins/
 cp .theme/octogray/.plugins/octopress-responsive-video-embed/_rve.scss ./sass/plugins/
+echo
+
+## [jekyll-tweet-tag.git](https://github.com/scottwb/jekyll-tweet-tag.git)
+cp .theme/octogray/.plugins/jekyll-tweet-tag ./plugins
 echo
 
 ## [Font Awesome](http://fortawesome.github.io/Font-Awesome/)
