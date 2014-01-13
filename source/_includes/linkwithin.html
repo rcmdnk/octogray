@@ -1,3 +1,6 @@
+{% unless site.affiliate == false or site.affiliate_link_unit == false or page.affiliate == false %}
+{% include custom/affiliate/google_linklarge0.html %}
+{% endunless %}
 <div class="linkwithin_div"></div>
 <script>
 var linkwithin_site_id = {{site.linkwithin_id}};

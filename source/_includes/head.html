@@ -6,29 +6,16 @@
   <meta charset="utf-8">
   <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
   <meta name="author" content="{{ site.author }}">
-  {% capture description %}{% if page.description %}{{ page.description }}{% else %}{% if index %}{{ site.description }}{% else %}{{ content | raw_content }}{% endif %}{% endif %}{% endcapture %}
-  <meta name="description" content="{{ description | strip_html | condense_spaces | truncate:150 }}">
+  {% capture description %}{% if page.description %}{{ page.description }}{% else %}{{ content | raw_content }}{% endif %}{% endcapture %}
+  {% capture description %}{{ description | strip_html | condense_spaces | truncate:150 }}{% endcapture %}
+  <meta name="description" content="{{ description }}">
   {% if page.keywords %}<meta name="keywords" content="{{ page.keywords }}">{% endif %}
   <meta property="og:title" content="{{page.title}}" />
   <meta property="og:type" content="blog" />
-  <meta property="og:description" content="{{ description | strip_html | condense_spaces | truncate:150 }}">
+  <meta property="og:description" content="{{ description }}">
   {% capture canonical %}{{ site.url }}{% if site.permalink contains '.html' %}{{ page.url }}{% else %}{{ page.url | remove:'index.html' }}{% endif %}{% endcapture %}
   <meta property="og:url" content="{{canonical}}" />
-  {% assign ogimage = "" %}
-  {% if site.sitelogo %}
-  {% assign ogimage = site.sitelogo %}
-  {% endif %}
-  {% if page.ogimage %}
-  {% assign ogimage = page.ogimage %}
-  {% elsif page.content contains "<img " %}
-  {%capture str%}{{page.content|newline_to_br|replace:" ","TMPSPACE"}}{%endcapture%}
-  {%capture first_word%}{{str|split:"<imgTMPSPACE"|first}}<imgTMPSPACE{%endcapture%}
-  {%capture str%}{{str|remove_first:first_word}}{%endcapture%}
-  {%capture first_word%}{{str|split:'src="'|first}}src="{%endcapture%}
-  {%capture str%}{{str|remove_first:first_word}}{%endcapture%}
-  {%capture src%}{{str|split:'"'|first}}{%endcapture%}
-  {%if src != ""%}{%assign ogimage = src%}{%endif%}
-  {% endif %}
+  {% assign ogimage = "" %}{% if site.sitelogo %}{% assign ogimage = site.sitelogo %}{% endif %}{% if page.ogimage %}{% assign ogimage = page.ogimage %}{% elsif page.content contains "<img " %}{%capture str%}{{page.content|newline_to_br|replace:" ","TMPSPACE"}}{%endcapture%}{%capture first_word%}{{str|split:"<imgTMPSPACE"|first}}<imgTMPSPACE{%endcapture%}{%capture str%}{{str|remove_first:first_word}}{%endcapture%}{%capture first_word%}{{str|split:'src="'|first}}src="{%endcapture%}{%capture str%}{{str|remove_first:first_word}}{%endcapture%}{%capture src%}{{str|split:'"'|first}}{%endcapture%}{%if src != ""%}{%assign ogimage = src%}{%endif%}{% endif %}
   {%assign imgpath="{{site.imgpath}}"%}
   {%capture ogimage%}{{ogimage|replace:imgpath,site.imgpath}}{%endcapture%}
   {%assign imgpath="{{ site.imgpath }}"%}
@@ -50,12 +37,21 @@
   {% capture canonical %}{{ site.url }}{% if site.permalink contains '.html' %}{{ page.url }}{% else %}{% if page.url contains site.category_dir %}/{% endif %}{{ page.url | remove:'index.html' }}{% endif %}{% endcapture %}
   <link rel="canonical" href="{{ canonical }}">
   <link href="{{root_url}}/favicon.png" rel="icon">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <link href="{{root_url}}/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="{{site.subscribe_rss}}" rel="alternate" title="{{site.title}}" type="application/atom+xml">
   {% include custom/head.html %}
   <script src="{{root_url}}/javascripts/modernizr-2.0.js"></script>
+  <script src="{{root_url}}/javascripts/ender.js"></script>
   <script src="{{root_url}}/javascripts/octopress.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+  <script src="{{root_url}}/javascripts/footnote.js"></script>
+  <script src="{{root_url}}/javascripts/scrolltopcontrol.js"></script>
+  <script src="{{root_url}}/javascripts/intro.min.js"></script>
+  <script src="{{root_url}}/javascripts/jquery.exflexfixed-0.3.0.js"></script>
+  <script src="{{root_url}}/javascripts/jquery.nailthumb.1.1.min.js"></script>
+  <script src="{{root_url}}/javascripts/jquery.githubRepoWidget.min.js"></script>
+  <script src="{{root_url}}/javascripts/monthly_archive.js"></script>
   <script src="{{root_url}}/javascripts/utils.js"></script>
   {% include custom/licenses.html %}
 </head>

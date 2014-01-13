@@ -12,6 +12,7 @@ sitelogo: /images/MacApp/MacLogoMiddle.png
 author: rcmdnk
 simple_search: http://google.com/search
 description: PC関連の自分設定やスクリプト等を紹介してます。
+google_custom_search: overlay_simple
 google_search: false
 imgpath: /images
 
@@ -36,6 +37,7 @@ aboutme_marks: false
 
 # affiliate
 affiliate: true
+affiliate_link_unit: false
 
 # ----------------------- #
 #    Jekyll & Plugins     #
@@ -153,6 +155,7 @@ google_analytics_tracking_id:
 
 # Facebook Like
 facebook_like: false
+facebook_share: true
 facebook_lang: en_US
 facebook_app_id:
 facebook_user:
@@ -181,3 +184,13 @@ linkwithin_text: "You might also like..."
 
 # pubsubhubbub
 hub_url:
+
+# Coderwall badges
+coderwall_user:
+
+# feedly
+feedly_mark: false
+feedly_atom: yoursite.github.io%2Fatom.xml
+
+# Tumblr
+tumblr_button: true

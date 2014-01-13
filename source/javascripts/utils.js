@@ -1,4 +1,4 @@
-jQuery(function () {
+jQuery(function($){
   $(".add_bookmark").click(function () {
   if ( ! $(this).data('page_title') || ! $(this).data('page_url') ){
     return addBookmark(document.title, location.href)
@@ -48,3 +48,22 @@ jQuery(function($){
 jQuery(function($){
   $("a[href^='http']").attr('target', '_blank');
 });
+
+jQuery(function($){
+  $('body').on('click', '#my_introjs', function(){
+    introJs().start();
+  });
+});
+
+jQuery(function($){
+  $('.scroll-fixed').exFlexFixed({
+    watchPosition: true,
+    container : '#content'
+  });
+});
+
+jQuery(function($){
+  $('.nailthumb-container').nailthumb({width:200,height:200,fitDirection:'left top'});
+  $('.nailthumb-container-center').nailthumb({width:200,height:200,fitDirection:'center'});
+});
+

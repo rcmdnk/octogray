@@ -9,7 +9,6 @@
   {% endunless %}
   {% if index %}
   <h1 class="entry-title"><a href="{{root_url}}{{post.url}}">{% if site.titlecase %}{{ post.title | titlecase }}{% else %}{{ post.title }}{% endif %}</a></h1>
-
   {% else %}
   {% if site.zenback_show == true and page.comments == true %}
   <!-- zenback_title_begin -->
@@ -26,29 +25,14 @@
   {% endif %}
 </header>
 {% endunless %}
-{% unless page.sharing == false %}
-{% include post/sharing.html %}
-{% endunless %}
-
-{% if index %}
-{%assign ogimage=post.ogimage%}
-{% else %}
-{%assign ogimage=page.ogimage%}
-{% endif %}
-{% if ogimage != "" %}
-{%assign imgpath="{{site.imgpath}}"%}
-{%capture ogimage%}{{ogimage|replace:imgpath,site.imgpath}}{%endcapture%}
-{%assign imgpath="{{ site.imgpath }}"%}
-{%capture ogimage%}{{ogimage|replace:imgpath,site.imgpath}}{%endcapture%}
-{%assign imgpath="site.imgpath"%}
-{%capture ogimage%}{{ogimage|replace:imgpath,site.imgpath}}{%endcapture%}
-{% endif %}
+{% unless page.sharing == false %}{% include post/sharing.html %}{% endunless %}
+{% if index %}{% assign ogimage=post.ogimage %}{% else %}{% assign ogimage=page.ogimage %}{% endif %}
 {% if index %}
 <div class="entry-content index_click_box">
   <div class="group">
     {% if post.ogimage and post.no_ogimage != true %}
     <div class="nailthumb-container title-thumb">
-      <img src="{{ogimage}}" class="pic" alt="" title=""/>
+      {%img pic val:ogimage%}
     </div>
     {% endif %}
     {{ content | excerpt }}
@@ -66,11 +50,12 @@
   <div class="group">
     {% if page.ogimage and page.no_ogimage != true %}
     <div class="nailthumb-container title-thumb">
-      <img src="{{ogimage}}" class="pic" alt="" title=""/>
+      {%img pic val:ogimage%}
     </div>
     {% endif %}
     {{ content | excerpt }}
   </div>
+  <!-- more -->
   <div class="group">
     {{ content | excerpt_after }}
   </div>

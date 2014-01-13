@@ -5,32 +5,32 @@
 {% endif %}
 {% if site.aboutme_marks %}
 {% if site.email_mark %}
-<a href="mailto:{{site.email}}" title="Mail" class="sidebar-about" ><i class="icon-envelope-alt icon-link-btn"></i></a>
+<a href="mailto:{{site.email}}" title="Mail" class="sidebar-about" ><i class="fa fa-envelope icon-link-btn"></i></a>
 {% endif %}
 {% if site.twitter_mark %}
-<a href="https://twitter.com/{{ site.twitter_user }}" title="Twitter" class="sidebar-about" ><i class="icon-twitter-sign icon-link-btn"></i></a>
+<a href="https://twitter.com/{{ site.twitter_user }}" title="Twitter" class="sidebar-about" ><i class="fa fa-twitter icon-link-btn"></i></a>
 {% endif %}
 {% if site.facebook_mark %}
-<a href="https://www.facebook.com/{{ site.facebook_user }}" title="Facebook" class="sidebar-about" ><i class="icon-facebook-sign icon-link-btn"></i></a>
+<a href="https://www.facebook.com/{{ site.facebook_user }}" title="Facebook" class="sidebar-about" ><i class="fa fa-facebook-square icon-link-btn"></i></a>
 {% endif %}
 {% if site.google_plus_one_mark %}
-<a href="https://plus.google.com/{{ site.googleplus_user }}" title="Google +1" class="sidebar-about" ><i class="icon-google-plus-sign icon-link-btn"></i></a>
+<a href="https://plus.google.com/{{ site.googleplus_user }}" title="Google +1" class="sidebar-about" ><i class="fa fa-google-plus-square icon-link-btn"></i></a>
 {% endif %}
 {% if site.linkedin_mark %}
-<a href="http://www.linkedin.com/profile/view?id={{ site.linkedin_user }}" title="LinkedIn" class="sidebar-about" ><i class="icon-linkedin-sign icon-link-btn"></i></a>
+<a href="http://www.linkedin.com/profile/view?id={{ site.linkedin_user }}" title="LinkedIn" class="sidebar-about" ><i class="fa fa-linkedin-square icon-link-btn"></i></a>
 {% endif %}
 {% if site.github_mark %}
-<a href="https://github.com/{{site.github_user}}" title="GitHub" class="sidebar-about" ><i class="icon-github-sign icon-link-btn"></i></a>
+<a href="https://github.com/{{site.github_user}}" title="GitHub" class="sidebar-about" ><i class="fa fa-github-alt icon-link-btn"></i></a>
 {% endif %}
 <br>
 {% if site.rss_mark %}
-<a href="{{ site.subscribe_rss }}" title="RSS" class="sidebar-about"><i class="icon-rss-sign icon-link-btn"></i></a>
+<a href="{{ site.subscribe_rss }}" title="RSS" class="sidebar-about"><i class="fa fa-rss icon-link-btn"></i></a>
 {% endif %}
 {% if site.feedly_mark %}
 <a href='http://cloud.feedly.com/#subscription%2Ffeed%2Fhttp%3A%2F%2F{{site.feedly_atom}}'  target='blank'><img id='feedlyFollow' src='/images/feedly.png' alt='follow us in feedly' title="feedly" class="feedly"></a>
 {% endif %}
 {% if site.bookmark_mark %}
-<a href="#" class="add_bookmark sidebar-about" title="Favorite" data-page_title="{{site.title}}" data-page_url="{{site.url}}"><i class="icon-star-empty icon-link-btn"></i></a>
+<a href="#" class="add_bookmark sidebar-about" title="Favorite" data-page_title="{{site.title}}" data-page_url="{{site.url}}"><i class="fa fa-star-o icon-link-btn"></i></a>
 {% endif %}
 {% endif %}
 </section>

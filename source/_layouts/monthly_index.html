@@ -4,6 +4,7 @@ footer: false
 ---
 
 <div id="blog-archives" class="monthly">
+{% assign index = true %}
 {% for post in page.period_posts %}
 <article>
   {% include archive_post.html %}

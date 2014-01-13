@@ -2,36 +2,50 @@
   {% if site.nav_marks %}
   <p>
     {% if site.email_mark %}
-    <a href="mailto:{{site.email}}" title="Mail"><i class="icon-envelope-alt icon-2x"></i></a>
+    <a href="mailto:{{site.email}}" title="Mail"><i class="fa fa-envelope fa-2x"></i></a>
     {% endif %}
     {% if site.twitter_mark %}
-    <a href="https://twitter.com/{{ site.twitter_user }}" title="Twitter"><i class="icon-twitter-sign icon-2x"></i></a>
+    <a href="https://twitter.com/{{ site.twitter_user }}" title="Twitter"><i class="fa fa-twitter fa-2x"></i></a>
     {% endif %}
     {% if site.facebook_mark %}
-    <a href="https://www.facebook.com/{{ site.facebook_user }}" title="Facebook"><i class="icon-facebook-sign icon-2x"></i></a>
+    <a href="https://www.facebook.com/{{ site.facebook_user }}" title="Facebook"><i class="fa fa-facebook-square fa-2x"></i></a>
     {% endif %}
     {% if site.google_plus_one_mark %}
-    <a href="https://plus.google.com/{{ site.googleplus_user }}" title="Google +1"><i class="icon-google-plus-sign icon-2x"></i></a>
+    <a href="https://plus.google.com/{{ site.googleplus_user }}" title="Google +1"><i class="fa fa-google-plus-square fa-2x"></i></a>
     {% endif %}
     {% if site.linkedin_mark %}
-    <a href="http://www.linkedin.com/profile/view?id={{ site.linkedin_user }}" title="LinkedIn"><i class="icon-linkedin-sign icon-2x"></i></a>
+    <a href="http://www.linkedin.com/profile/view?id={{ site.linkedin_user }}" title="LinkedIn"><i class="fa fa-linkedin-square fa-2x"></i></a>
     {% endif %}
     {% if site.github_mark %}
-    <a href="https://github.com/{{site.github_user}}" title="GitHub"><i class="icon-github-sign icon-2x"></i></a>
+    <a href="https://github.com/{{site.github_user}}" title="GitHub"><i class="fa fa-github-alt fa-2x"></i></a>
     {% endif %}
     {% if site.rss_mark %}
-    <a href="{{site.subscribe_rss}}" title="RSS"><i class="icon-rss-sign icon-2x"></i></a>
+    <a href="{{site.subscribe_rss}}" title="RSS"><i class="fa fa-rss fa-2x"></i></a>
     {% endif %}
     {% if site.feedly_mark %}
     <a href='http://cloud.feedly.com/#subscription%2Ffeed%2Fhttp%3A%2F%2F{{site.feedly_atom}}'  target='blank'><img id='feedlyFollow' src='/images/feedly.png' alt='follow us in feedly' title="feedly" class="feedly"></a>
     {% endif %}
     {% if site.bookmark_mark %}
-    <a href="#" class="add_bookmark" title="Favorite" data-page_title="{{site.title}}" data-page_url="{{site.url}}"><i class="icon-star-empty icon-2x"></i></a>
+    <a href="#" class="add_bookmark" title="Favorite" data-page_title="{{site.title}}" data-page_url="{{site.url}}"><i class="fa fa-star-o fa-2x"></i></a>
     {% endif %}
   </p>
   {% endif %}
   {% include custom/navigation.html %}
-  {% if site.google_search %}
+  {% if site.google_custom_search == 'compact' %}
+  {% include custom/google_search/compact.html %}
+  {% elsif site.google_custom_search == 'onlyresults' %}
+  {% include custom/google_search/onlyresults.html %}
+  {% elsif site.google_custom_search == 'overlay' %}
+  {% include custom/google_search/overlay.html %}
+  {% elsif site.google_custom_search == 'overlay_simple' %}
+  {% include custom/google_search/overlay_simple.html %}
+  {% elsif site.google_custom_search == 'overlay_classic' %}
+  {% include custom/google_search/overlay_classic.html %}
+  {% elsif site.google_custom_search == 'twolines' %}
+  {% include custom/google_search/twolines.html %}
+  {% elsif site.google_custom_search == 'twopages' %}
+  {% include custom/google_search/twopages.html %}
+  {% elsif site.google_search %}
   {% include custom/affiliate/google_search0.html %}
   {% elsif site.simple_search %}
   <form action="{{ site.simple_search }}" method="get">
@@ -41,4 +55,7 @@
     </fieldset>
   </form>
   {%endif%}
+  {% unless site.affiliate == false or site.affiliate_link_unit == false or page.affiliate == false %}
+  {% include custom/affiliate/google_linkshort0.html %}
+  {% endunless %}
 </div>

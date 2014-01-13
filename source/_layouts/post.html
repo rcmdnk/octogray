@@ -33,7 +33,7 @@ single: true
     </p>
   </footer>
 </article>
-{% if site.linkwithin_show == true %}
+{% if site.linkwithin_show == true and page.footer != false %}
 <section>
   {% include linkwithin.html %}
 </section>

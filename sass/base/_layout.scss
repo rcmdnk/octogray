@@ -77,8 +77,11 @@ aside.sidebar {
 .basic-alignment {
   &.left { float: left; margin-right: 1.5em; }
   &.right { float: right; margin-left: 1.5em; }
-  &.center { display:block; margin: 0 auto 1.5em; }
-  &.left, &.right { margin-bottom: .8em; }
+  &.center { display:block; margin-left: auto; margin-right: auto; }
+}
+
+.center_wrapper {
+  text-align: center;
 }
 
 .toggle-sidebar { &, .no-sidebar & { display: none; }}

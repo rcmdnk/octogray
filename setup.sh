@@ -20,7 +20,6 @@ echo
 ## [footnote-inline](http://rcmdnk.github.io/blog/2013/10/12/blog-octopress/)
 cp .theme/octogray/.plugins/footnote-inline/plugins/footnote_inline.rb ./plugins/
 cp .theme/octogray/.plugins/footnote-inline/source/javascripts/footnote.js ./source/javascripts/
-echo "<script src=\"{{root_url}}/javascripts/footnote.js\"></script>" >> source/_includes/custom/head.html
 cp .theme/octogray/.plugins/footnote-inline/sass/plugins/_footnote.scss ./sass/plugins/
 echo
 
@@ -32,31 +31,10 @@ echo
 ## [intro.js](http://usablica.github.io/intro.js/)
 cp .theme/octogray/.plugins/intro.js/introjs.css  ./sass/plugins/_introjs.scss
 cp .theme/octogray/.plugins/intro.js/minified/intro.min.js ./source/javascripts
-cat << EOF >> source/_includes/custom/head.html
-<script src="{{root_url}}/javascripts/intro.min.js" type="text/javascript"></script>
-<script>
-jQuery(function($){
-  $('body').on('click', '#my_introjs', function(){
-    introJs().start();
-  });
-});
-</script>
-EOF
 echo
 
 ## [jquery--ex-flex-fiex](http://github.com/cyokodog/jquery.ex-flex-fixed)
 cp .theme/octogray/.plugins/jquery.ex-flex-fixed/jquery.exflexfixed-0.3.0.js ./source/javascripts/
-cat << EOF >> source/_includes/custom/head.html
-<script src="{{root_url}}/javascripts/jquery.exflexfixed-0.3.0.js" type="text/javascript"></script>
-<script>
-  jQuery(function(\$){
-    \$('.scroll-fixed').exFlexFixed({
-      watchPosition: true,
-      container : '#content'
-    });
-  });
-</script>
-EOF
 echo
 
 ## [keyboardkey](http://rcmdnk.github.io/blog/2013/06/19/blog-octopress/)
@@ -70,7 +48,6 @@ cp .theme/octogray/.plugins/monthly-archive/plugins/monthly_generator.rb ./plugi
 cp .theme/octogray/.plugins/monthly-archive/source/_layouts/monthly_index.html ./source/_layouts/
 cp .theme/octogray/.plugins/monthly-archive/source/_includes/custom/asides/monthly_archive.html ./source/_includes/custom/asides/
 cp .theme/octogray/.plugins/monthly-archive/source/javascripts/monthly_archive.js ./source/javascripts/
-echo "<script src=\"{{root_url}}/javascripts/monthly_archive.js\"></script>" >> source/_includes/custom/head.html
 cp .theme/octogray/.plugins/monthly-archive/sass/plugins/_monthly_archive.scss ./sass/plugins/
 echo
 
@@ -88,20 +65,9 @@ echo
 cp .theme/octogray/.plugins/jekyll-tweet-tag ./plugins
 echo
 
-## [Font Awesome](http://fortawesome.github.io/Font-Awesome/)
-mkdir -p ./sass/plugins/font-awesome
-cp .theme/octogray/.plugins/Font-Awesome/scss/_*scss ./sass/plugins/font-awesome
-cp .theme/octogray/.plugins/Font-Awesome/scss/font-awesome.scss ./sass/plugins/_font-awesome.scss
-sed -i ".bak" 's/@import "/@import "font-awesome\//g' ./sass/plugins/_font-awesome.scss
-rm -f ./sass/plugins/_font-awesome.scss.bak
-mkdir -p source/font
-cp .theme/octogray/.plugins/Font-Awesome/font/* source/font
-echo
-
 ## [githubrepo-octopress](https://github.com/sotsy/githubrepo-octopress)
 cp .themes/octogray/.plugins/githubrepo-octopress/githubwidget.rb plugins/
 cp .themes/octogray/.plugins/GitHub-jQuery-Repo-Widget/jquery.githubRepoWidget.min.js source/javascripts/
-echo "<script src=\"{{root_url}}/javascripts/jquery.githubRepoWidget.min.js\"></script>" >> source/_includes/custom/head.html
 
 ## [NailThumb](http://www.garralab.com/nailthumb.php)
 wget -O nailthumb.1.1.zip http://sourceforge.net/projects/nailthumb/files/nailthumb.1.1.zip/download
@@ -110,15 +76,6 @@ rm -f nailthumb.1.1.zip
 mv nailthumb .theme/octogray/.plugins/
 cp .theme/octogray/.plugins/nailthumb/jquery.nailthumb.1.1.css ./sass/plugins/_nailthumb.scss
 cp .theme/octogray/.plugins/nailthumb/jquery.nailthumb.1.1.min.js ./source/javascripts/
-cat << EOF >> source/_includes/custom/head.html
-<script src="{{root_url}}/javascripts/jquery.nailthumb.1.1.min.js" type="text/javascript"></script>
-<script>
-jQuery(function($){
-  $('.nailthumb-container').nailthumb({width:200,height:200,fitDirection:'left top',maxShrink:1});
-  $('.nailthumb-container-center').nailthumb({width:200,height:200,fitDirection:'center',maxShrink:1});
-});
-</script>
-EOF
 echo
 
 
@@ -127,9 +84,8 @@ wget -O scrolltopcontrol.js http://www.dynamicdrive.com/dynamicindex3/scrolltopc
 mkdir -p .theme/octogray/.plugins/scrolltopcontrol
 mv scrolltopcontrol.js .theme/octogray/.plugins/scrolltopcontrol
 cp .theme/octogray/.plugins/scrolltopcontrol/scrolltopcontrol.js ./source/javascripts/
-sed -i ".bak" "s/<img src=\"up.png\" style=\"width:48px; height:48px\" \/>/<i class=\"icon-chevron-up icon-scroll-up\"><\/i>/g" ./source/javascripts/scrolltopcontrol.js
+sed -i ".bak" "s/<img src=\"up.png\" style=\"width:48px; height:48px\" \/>/<i class=\"fa fa-chevron-up icon-scroll-up\"><\/i>/g" ./source/javascripts/scrolltopcontrol.js
 rm -f ./source/javascripts/scrolltopcontrol.js.bak
-echo "<script src=\"{{root_url}}/javascripts/scrolltopcontrol.js\"></script>" >> source/_includes/custom/head.html
 echo
 
 

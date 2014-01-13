@@ -73,15 +73,10 @@
     height: 90px;
   }
 }
-.imgresrec0 {
-  width: 300px;
-  height: 250px;
-}
-.imgresrec1 {
+.imgresrec0, .imgresrec1, .imgresrecmid {
   width: 300px;
   height: 250px;
 }
 @media(min-width: 336px+$sidebar-width-medium+$body-border) {
-  .imgresrec0 { width: 336px; height: 280px;}
-  .imgresrec1 { width: 336px; height: 280px;}
+  .imgresrec0, .imgresrec1, .imgresrecmid { width: 336px; height: 280px;}
 }

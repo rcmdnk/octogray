@@ -54,9 +54,24 @@
     </li>
     {% endif %}
     {% if site.tumblr_button %}
-    {% if index %}{% capture description %}{% if post.description %}{{ post.description }}{% endif %}{% endcapture %}{% else %}{% capture description %}{% if page.description %}{{ page.description }}{% else %}{{ content | raw_content }}{% endif %}{% endcapture %}{% capture description %}{% if page.description %}{{ page.description }}{% else %}{{ content|raw_content }}{% endif %}{% endcapture %}{% endif %}
+    {% if index %}
+      {% capture description %}
+        {% if post.description %}
+          {{ post.description }}
+        {% endif %}
+      {% endcapture %}
+    {% else %}
+      {% capture description %}
+        {% if page.description %}
+          {{ page.description }}
+        {% else %}
+          {{ content | excerpt }}
+        {% endif %}
+      {% endcapture %}
+    {% endif %}
+    {% capture description %}{{ description | strip_html | codense_spaces | truncate:150 }}{% endcapture %}
     <li class="tumblr">
-      <a href="http://www.tumblr.com/share/link?url={{share_url|cgi_escape}}&name={{share_title|cgi_escape}}&description={{description|strip_html|condense_spaces|truncate:150|cgi_escape}}"
+      <a href="http://www.tumblr.com/share/link?url={{share_url|cgi_escape}}&name={{share_title|cgi_escape}}&description={{description|cgi_escape}}"
           title="Share on Tumblr"
           class="tumblr_button"
           style="">Tumblr</a>

@@ -82,8 +82,11 @@ task :generate_only, :filename do |t, args|
   if args.filename
     filename = args.filename
   else
-    filename = get_stdin("Enter a post file name: ")
+    filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.reverse[0]
   end
+  puts ""
+  puts "## Test build for #{filename}"
+  puts ""
   puts "## Stashing other posts"
   Rake::Task[:isolate].invoke(filename)
   puts "## Generating Site with Jekyll"
@@ -98,7 +101,7 @@ task :gen_only, :filename do |t, args|
   if args.filename
     filename = args.filename
   else
-    filename = get_stdin("Enter a post file name: ")
+    filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.reverse[0]
   end
   Rake::Task[:generate_only].invoke(filename)
 end
@@ -108,7 +111,7 @@ task :go, :filename do |t, args|
   if args.filename
     filename = args.filename
   else
-    filename = get_stdin("Enter a post file name: ")
+    filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.reverse[0]
   end
   Rake::Task[:generate_only].invoke(filename)
 end
@@ -137,8 +140,11 @@ task :watch_only, :filename do |t, args|
   if args.filename
     filename = args.filename
   else
-    filename = get_stdin("Enter a post file name: ")
+    filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.reverse[0]
   end
+  puts ""
+  puts "## Test for #{filename}"
+  puts ""
   puts "## Stashing other posts"
   Rake::Task[:isolate].invoke(filename)
 
@@ -182,8 +188,11 @@ task :preview_only, :filename do |t, args|
   if args.filename
     filename = args.filename
   else
-    filename = get_stdin("Enter a post file name: ")
+    filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.reverse[0]
   end
+  puts ""
+  puts "## Test for #{filename}"
+  puts ""
   puts "## Stashing other posts"
   Rake::Task[:isolate].invoke(filename)
 
@@ -247,8 +256,8 @@ task :new_post, :title do |t, args|
     post.puts ""
     post.puts ""
     post.puts "{%comment%}"
-    post.puts "<img src=\"{{site.imgpath}}/post/xxx.jpg\" title=\"\" alt=\"\">"
-    post.puts "<i class=\"icon-arrow-right\"></i>"
+    post.puts "![xxxxx]({{site.imgpath}}/post/xxxxx){:class=\"pic\"}"
+    post.puts "<i class=\"fa fa-arrow-right\"></i>"
     post.puts "<hr class=\"dotted-border\">"
     post.puts "{%endcomment%}"
     post.puts ""
@@ -265,7 +274,7 @@ task :new_page, :filename do |t, args|
   site_config = YAML.load(IO.read('_config.yml'))
   author = site_config['author']
   if args.filename.downcase =~ /(^.+\/)?(.+)/
-    filename, dot, extension = $2.rpartition('.').reject(&:empty?)         # Get filename and etension
+    filename, extension = $2.rpartition('.').reject(&:empty?)         # Get filename and etension
     title = filename
     page_dir.concat($1.downcase.sub(/^\//, '').split('/')) unless $1.nil?  # Add path to page_dir Array
     if extension.nil?
@@ -378,17 +387,8 @@ task :deploy do
 
   Rake::Task["#{deploy_ex}"].execute
 
-  #require 'net/http'
-  #require 'uri'
-  #hub_url = "http://user.superfeedr.com" # <--- replace this with your hub
-  #atom_url = "http://user.github.io/atom.xml" # <--- replace this with your full feed url
-  #resp, data = Net::HTTP.post_form(URI.parse(hub_url),
-  #    {'hub.mode' => 'publish',
-  #    'hub.url' => atom_url})
-  #raise "!! Hub notification error: #{resp.code} #{resp.msg}, #{data}" unless resp.code == "204"
-  #puts "## Notified hub (" + hub_url + ") that feed #{atom_url} has been updated"
-
-  #Rake::Task[:ping].execute
+  Rake::Task[:superfeedr].execute
+  Rake::Task[:ping].execute
 end
 
 desc "Generate website and deploy"
@@ -599,12 +599,25 @@ task :list do
   puts "(type rake -T for more detail)\n\n"
 end
 
-require "yaml"
-require "xmlrpc/client"
+desc 'send to Superfeedr'
+task :superfeedr do
+  #require 'net/http'
+  #require 'uri'
+  #hub_url = "http://yoursite.superfeedr.com" # <--- replace this with your hub
+  #atom_url = "http://yoursite.github.io/atom.xml" # <--- replace this with your full feed url
+  #resp, data = Net::HTTP.post_form(URI.parse(hub_url),
+  #    {'hub.mode' => 'publish',
+  #    'hub.url' => atom_url})
+  #raise "!! Hub notification error: #{resp.code} #{resp.msg}, #{data}" unless resp.code == "204"
+  #puts "## Notified hub (" + hub_url + ") that feed #{atom_url} has been updated"
+end
 
 #-- sending ping --#
 desc "Sedning ping to Web Search Engines"
 task :ping do
+  require "yaml"
+  require "xmlrpc/client"
+
   site_config = YAML.load(IO.read('_config.yml'))
   blog_title = site_config['title']
   blog_url = site_config['url']
