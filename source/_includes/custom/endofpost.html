@@ -1,3 +1,8 @@
 {% comment %}
   Add content to be output at the end of the post.
 {% endcomment %}
+{% unless site.affiliate == false or site.affiliate_link_unit == false or page.affiliate == false %}
+<section>
+{% include custom/affiliate/google_link_bottom.html %}
+</section>
+{% endunless %}
