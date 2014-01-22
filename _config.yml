@@ -35,10 +35,6 @@ rss_mark: false
 # sidebar
 aboutme_marks: false
 
-# affiliate
-affiliate: true
-affiliate_link_unit: false
-
 # ----------------------- #
 #    Jekyll & Plugins     #
 # ----------------------- #
@@ -195,6 +191,10 @@ feedly_atom: yoursite.github.io%2Fatom.xml
 
 # Tumblr
 tumblr_button: true
+
+# affiliate
+affiliate: true
+affiliate_link_unit: false
 
 # Google adsense
 sponsored_links: "Sponsored Links";

@@ -3,7 +3,8 @@
 {% endcomment %}
 {% unless site.affiliate == false or page.affiliate == false %}
 <div class="center_wrapper">
-  <div class="sponsored center">
+  <div class="center">{{site.sponsored_links}}</div>
+  <div class="center">
     {% include custom/affiliate/google_mid.html %}
   </div>
 </div>

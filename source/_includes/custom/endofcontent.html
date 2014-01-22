@@ -1,6 +1,7 @@
 {% unless site.affiliate == false or page.affiliate == false %}
 <div class="center_wrapper">
-  <div class="sponsored center group">
+  <div class="center">{{site.sponsored_links}}</div>
+  <div class="center group">
     {% include custom/affiliate/google_bottom.html %}
   </div>
 </div>
