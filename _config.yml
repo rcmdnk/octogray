@@ -193,8 +193,8 @@ feedly_atom: yoursite.github.io%2Fatom.xml
 tumblr_button: true
 
 # affiliate
-affiliate: true
+affiliate: false
 affiliate_link_unit: false
 
 # Google adsense
-sponsored_links: "Sponsored Links";
+sponsored_links: "Sponsored Links"
