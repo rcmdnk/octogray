@@ -12,7 +12,7 @@ echo -n "Do you want to udpate Gemfile? [y/n]: "
 read yn
 while [ 1 ];do
   case $yn in
-    "y"|"Y" ) cp .themes/octogray/Gemfile .;bundle install;break;;
+    "y"|"Y" ) cp .themes/octogray/Gemfile .;break;;
     "n"|"N" )
       printf "\n\e[31mPlease check .themes/octogray/Gemfile for necessary packages.\e[m\n"
       break
@@ -32,7 +32,7 @@ echo -n "Do you want to overwrite Rakefile? [y/n]: "
 read yn
 while [ 1 ];do
   case $yn in
-    "y"|"Y" ) cp .themes/octogray/Rakefile .;bundle update;break;;
+    "y"|"Y" ) cp .themes/octogray/Rakefile .;break;;
     "n"|"N" )
       printf "\n\e[31mPlease update Rakefile by following .themes/octogray/Rakefile.\e[m\n"
       break
