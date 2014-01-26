@@ -11,8 +11,8 @@ aboutme_logo: /images/MacApp/MacLogoMini.png
 sitelogo: /images/MacApp/MacLogoMiddle.png
 author: your_name
 simple_search: http://google.com/search
-description: PC関連の自分設定やスクリプト等を紹介してます。
-google_custom_search: overlay_simple
+description:
+google_custom_search:
 google_search: false
 imgpath: /images
 
