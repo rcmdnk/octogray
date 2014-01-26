@@ -62,12 +62,12 @@ cp .themes/octogray/.plugins/octopress-responsive-video-embed/_rve.scss ./sass/p
 echo
 
 ## [jekyll-tweet-tag.git](https://github.com/scottwb/jekyll-tweet-tag.git)
-cp .themes/octogray/.plugins/jekyll-tweet-tag ./plugins
+cp .themes/octogray/.plugins/jekyll-tweet-tag/tweet_tag.rb ./plugins
 echo
 
 ## [githubrepo-octopress](https://github.com/sotsy/githubrepo-octopress)
-cp .themess/octogray/.plugins/githubrepo-octopress/githubwidget.rb plugins/
-cp .themess/octogray/.plugins/GitHub-jQuery-Repo-Widget/jquery.githubRepoWidget.min.js source/javascripts/
+cp .themes/octogray/.plugins/githubrepo-octopress/githubwidget.rb plugins/
+cp .themes/octogray/.plugins/GitHub-jQuery-Repo-Widget/jquery.githubRepoWidget.min.js source/javascripts/
 
 ## [NailThumb](http://www.garralab.com/nailthumb.php)
 wget -O nailthumb.1.1.zip http://sourceforge.net/projects/nailthumb/files/nailthumb.1.1.zip/download
