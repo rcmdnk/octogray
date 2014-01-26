@@ -5,13 +5,74 @@ if [ ! -f _config.yml ];then
   exit 1
 fi
 
+# install Gemfile
+echo
+echo
+echo -n "Do you want to udpate Gemfile? [y/n]: "
+read yn
+while [ 1 ];do
+  case $yn in
+    "y"|"Y" ) cp .themes/octogray/Gemfile .;bundle install;break;;
+    "n"|"N" )
+      printf "\n\e[31mPlease check .themes/octogray/Gemfile for necessary packages.\e[m\n"
+      break
+      ;;
+    *)
+      echo -n "[y/n]: "
+      read yn
+      continue
+      ;;
+  esac
+done
+
+# install Rakefile
+echo
+echo
+echo -n "Do you want to overwrite Rakefile? [y/n]: "
+read yn
+while [ 1 ];do
+  case $yn in
+    "y"|"Y" ) cp .themes/octogray/Rakefile .;bundle update;break;;
+    "n"|"N" )
+      printf "\n\e[31mPlease update Rakefile by following .themes/octogray/Rakefile.\e[m\n"
+      break
+      ;;
+    *)
+      echo -n "[y/n]: "
+      read yn
+      continue
+      ;;
+  esac
+done
+
+# install _config.yml
+echo
+echo
+echo -n "Do you want to overwrite _config.yml? [y/n]: "
+read yn
+while [ 1 ];do
+  case $yn in
+    "y"|"Y" ) cp .themes/octogray/_config.yml .;break;;
+    "n"|"N" )
+      printf "\n\e[31mPlease update _config.yml by following .themes/octogray/_config.yml\e[m\n"
+      break
+      ;;
+    *)
+      echo -n "[y/n]: "
+      read yn
+      continue
+      ;;
+  esac
+done
+
+# first, install normal files by install task
+bundle update
+rake install['octogray']
+
 # initialize submodules
 cd .themes/octogray
 git submodule update --init
 cd ../../
-
-# first, install normal files by install task
-rake install['octogray']
 
 ## [Octopress-Slideshare-Plugin](https://github.com/petehamilton/Octopress-Slideshare-Plugin)
 cp .themes/octogray/.plugins/Octopress-Slideshare-Plugin/slideshare.rb ./plugins/
@@ -93,62 +154,3 @@ echo
 ## other plugins
 cp .themes/octogray/plugins/*rb ./plugins/
 
-# install Gemfile
-echo
-echo
-echo -n "Do you want to udpate Gemfile? [y/n]: "
-read yn
-while [ 1 ];do
-  case $yn in
-    "y"|"Y" ) cp .themes/octogray/Gemfile .;bundle install;break;;
-    "n"|"N" )
-      printf "\n\e[31mPlease check .themes/octogray/Gemfile for necessary packages.\e[m\n"
-      break
-      ;;
-    *)
-      echo -n "[y/n]: "
-      read yn
-      continue
-      ;;
-  esac
-done
-
-# install Rakefile
-echo
-echo
-echo -n "Do you want to overwrite Rakefile? [y/n]: "
-read yn
-while [ 1 ];do
-  case $yn in
-    "y"|"Y" ) cp .themes/octogray/Rakefile .;break;;
-    "n"|"N" )
-      printf "\n\e[31mPlease update Rakefile by following .themes/octogray/Rakefile.\e[m\n"
-      break
-      ;;
-    *)
-      echo -n "[y/n]: "
-      read yn
-      continue
-      ;;
-  esac
-done
-
-# install _config.yml
-echo
-echo
-echo -n "Do you want to overwrite _config.yml? [y/n]: "
-read yn
-while [ 1 ];do
-  case $yn in
-    "y"|"Y" ) cp .themes/octogray/_config.yml .;break;;
-    "n"|"N" )
-      printf "\n\e[31mPlease update _config.yml by following .themes/octogray/_config.yml\e[m\n"
-      break
-      ;;
-    *)
-      echo -n "[y/n]: "
-      read yn
-      continue
-      ;;
-  esac
-done
