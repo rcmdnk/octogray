@@ -17,7 +17,6 @@ deploy_branch  = "gh-pages"
 ## -- Misc Configs -- ##
 
 tmp_dir         = File.expand_path(".") + "/"  # temporary directory for public/deploy
-#tmp_dir         = File.expand_path("~/tmp/octopress/") + "/"  # temporary directory for public/deploy
 public_dir      = "#{tmp_dir}public"  # compiled site directory
 source_dir      = "source"    # source file directory
 blog_index_dir  = 'source'    # directory for your blog's index page (if you put your index in source/blog/index.html, set this to 'source/blog')
@@ -28,8 +27,6 @@ posts_dir       = "_posts"    # directory for blog files
 themes_dir      = ".themes"   # directory for blog files
 new_post_ext    = "markdown"  # default new post file extension when using the new_post task
 new_page_ext    = "markdown"  # default new page file extension when using the new_page task
-#new_post_ext    = "md"        # default new post file extension when using the new_post task
-#new_page_ext    = "md"        # default new page file extension when using the new_page task
 server_port     = "4000"      # port for preview server eg. localhost:4000
 word_avoid      = "~/.gitavoid"  # words which must be avoided to be published
 ping_file       = "ping.yml"  # file of site list for ping
@@ -549,23 +546,48 @@ task :setup_github_pages, :repo do |t, args|
   File.open('_config.yml', 'w') do |f|
     f.write jekyll_config
   end
-  rm_rf deploy_dir
-  mkdir deploy_dir
-  cd "#{deploy_dir}" do
-    system "git init"
-    system "echo 'My Octopress Page is coming soon &hellip;' > index.html"
-    system "git add ."
-    system "git commit -m \"Octopress init\""
-    system "git branch -m gh-pages" unless branch == 'master'
-    system "git remote add origin #{repo_url}"
+  ext = 'markdown'
+  if ask("Do you want to use 'md' extension instead of 'markdown'?", ['y', 'n']) == 'y'
+    ext = 'md'
+  end
+  if ask("Do you want to push_ex (renew remote repository evrey time)?", ['y', 'n']) == 'y'
+    dir = get_stdin("Enter where you want to put _deploy (default './'): ")
+    if dir == ""
+      dir = "./"
+    elsif
+      if dir[-1] == "/"
+        dir = dir[0..-2]
+      end
+    end
     rakefile = IO.read(__FILE__)
-    rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
     rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push_ex\\3")
+    rakefile.sub!(/(tmp_dir\s*=\s*File.expand_path\()(["'])[^"']*["']/,"\\1\\2#{dir}\\2")
+    rakefile.sub!(/new_post_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_post_ext\\1=\\2\\3#{ext}\\3")
+    rakefile.sub!(/new_page_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_page_ext\\1=\\2\\3#{ext}\\3")
     File.open(__FILE__, 'w') do |f|
       f.write rakefile
     end
+  else
+    rm_rf deploy_dir
+    mkdir deploy_dir
+    cd "#{deploy_dir}" do
+      system "git init"
+      system "echo 'My Octopress Page is coming soon &hellip;' > index.html"
+      system "git add ."
+      system "git commit -m \"Octopress init\""
+      system "git branch -m gh-pages" unless branch == 'master'
+      system "git remote add origin #{repo_url}"
+      rakefile = IO.read(__FILE__)
+      rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
+      rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push\\3")
+      rakefile.sub!(/new_post_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_post_ext\\1=\\2\\3#{ext}\\3")
+      rakefile.sub!(/new_page_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_page_ext\\1=\\2\\3#{ext}\\3")
+      File.open(__FILE__, 'w') do |f|
+        f.write rakefile
+      end
+    end
+    puts "\n---\n## Now you can deploy to #{repo_url} with `rake deploy` ##"
   end
-  puts "\n---\n## Now you can deploy to #{repo_url} with `rake deploy` ##"
 end
 
 def ok_failed(condition)
