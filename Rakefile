@@ -13,6 +13,7 @@ deploy_default = "rsync"
 
 # This will be configured for you when you run config_deploy
 deploy_branch  = "gh-pages"
+repo_url       = "git@github.com:user/user.github.io.git"
 
 ## -- Misc Configs -- ##
 
@@ -445,15 +446,13 @@ end
 
 desc "deploy public directory to github pages through temporary deploy dir"
 multitask :push_ex do
-  site_config = YAML.load(IO.read('_config.yml'))
-  url = site_config['url']
   puts "## Deploying branch to Github Pages "
-  puts "## clone from ${url}"
+  puts "## clone from #{repo_url}"
   rm_rf deploy_dir
   mkdir_p deploy_dir
   cd "#{deploy_dir}" do
     system "git init"
-    system "git remote add origin #{url}"
+    system "git remote add origin #{repo_url}"
   end
 
   Rake::Task[:copydot].invoke(public_dir, deploy_dir)
@@ -546,12 +545,19 @@ task :setup_github_pages, :repo do |t, args|
   File.open('_config.yml', 'w') do |f|
     f.write jekyll_config
   end
+
   ext = 'markdown'
   if ask("Do you want to use 'md' extension instead of 'markdown'?", ['y', 'n']) == 'y'
     ext = 'md'
   end
+  rakefile = IO.read(__FILE__)
+  rakefile.sub!(/new_post_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_post_ext\\1=\\2\\3#{ext}\\3")
+  rakefile.sub!(/new_page_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_page_ext\\1=\\2\\3#{ext}\\3")
+  rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
+  rakefile.sub!(/repo_url(\s*)=(\s*)(["'])[\w-]*["']/, "repo_url\\1=\\2\\3#{repo_url}\\3")
+
   if ask("Do you want to push_ex (renew remote repository evrey time)?", ['y', 'n']) == 'y'
-    dir = get_stdin("Enter where you want to put _deploy (default './'): ")
+    dir = get_stdin("Enter where you want to put _deploy (current: #{tmp_dir}): ")
     if dir == ""
       dir = "./"
     elsif
@@ -559,14 +565,8 @@ task :setup_github_pages, :repo do |t, args|
         dir = dir[0..-2]
       end
     end
-    rakefile = IO.read(__FILE__)
     rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push_ex\\3")
     rakefile.sub!(/(tmp_dir\s*=\s*File.expand_path\()(["'])[^"']*["']/,"\\1\\2#{dir}\\2")
-    rakefile.sub!(/new_post_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_post_ext\\1=\\2\\3#{ext}\\3")
-    rakefile.sub!(/new_page_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_page_ext\\1=\\2\\3#{ext}\\3")
-    File.open(__FILE__, 'w') do |f|
-      f.write rakefile
-    end
   else
     rm_rf deploy_dir
     mkdir deploy_dir
@@ -577,16 +577,12 @@ task :setup_github_pages, :repo do |t, args|
       system "git commit -m \"Octopress init\""
       system "git branch -m gh-pages" unless branch == 'master'
       system "git remote add origin #{repo_url}"
-      rakefile = IO.read(__FILE__)
-      rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
       rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push\\3")
-      rakefile.sub!(/new_post_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_post_ext\\1=\\2\\3#{ext}\\3")
-      rakefile.sub!(/new_page_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_page_ext\\1=\\2\\3#{ext}\\3")
-      File.open(__FILE__, 'w') do |f|
-        f.write rakefile
-      end
     end
     puts "\n---\n## Now you can deploy to #{repo_url} with `rake deploy` ##"
+  end
+  File.open(__FILE__, 'w') do |f|
+    f.write rakefile
   end
 end
 
@@ -631,12 +627,11 @@ end
 desc 'send to Superfeedr'
 task :superfeedr do
   site_config = YAML.load(IO.read('_config.yml'))
-  subdomain = site_config['superfeedr_subdomain']
+  hub_url = site_config['hub_url']
   url = site_config['url']
-  if subdomain != ""
+  if hub_url != ""
     require 'net/http'
     require 'uri'
-    hub_url = "http://#{subdomain}.superfeedr.com"
     atom_url = "#{url}/atom.xml"
     resp, data = Net::HTTP.post_form(URI.parse(hub_url),
         {'hub.mode' => 'publish',
