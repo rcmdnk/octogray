@@ -1,0 +1,188 @@
+--- _config.yml	2014-01-31 08:18:48.000000000 +0100
++++ .themes/octogray/_config.yml	2014-01-31 08:18:47.000000000 +0100
+@@ -6,20 +6,34 @@
+ title: My Octopress Blog
+ subtitle: A blogging framework for hackers.
+ author: Your Name
++titlelogo:
++nav_marks: true
++aboutme_logo: /images/MacApp/MacLogoMini.png
++sitelogo: /images/MacApp/MacLogoMiddle.png
+ simple_search: http://google.com/search
+ description:
++google_custom_search:
++google_search: false
++imgpath: /images
+ 
+ # Default date format is "ordinal" (resulting in "July 22nd 2007")
+ # You can customize the format as defined in
+ # http://www.ruby-doc.org/core-1.9.2/Time.html#method-i-strftime
+ # Additionally, %o will give you the ordinal representation of the day
+ date_format: "ordinal"
++#date_format: "%d %b %Y"
++
+ 
+ # RSS / Email (optional) subscription links (change if using something like Feedburner)
+ subscribe_rss: /atom.xml
+ subscribe_email:
+ # RSS feeds can list your email address if you like
+ email:
++email_mark: false
++rss_mark: false
++
++# sidebar
++aboutme_marks: false
+ 
+ # ----------------------- #
+ #    Jekyll & Plugins     #
+@@ -33,24 +47,41 @@
+ plugins: plugins
+ code_dir: downloads/code
+ category_dir: blog/categories
+-markdown: rdiscount
+-rdiscount:
+-  extensions:
+-    - autolink
+-    - footnotes
+-    - smart
++tag_dir: blog/tags
++emoji_dir: /images/emoji
++monthly_format: January
++ps_title: P.S.
++ps_close:
++
++markdown: kramdown
++kramdown:
++  #parse_block_html: true # need jekyll 1.1.0 or later (they are completely different from  0.12)
++  use_coderay: true
++  coderay:
++    coderay_line_number: table
++    coderay_css: class
++
++#markdown: rdiscount
++#rdiscount:
++#  extensions: ['generate_toc']
++#  # Table Of Contents
++#  toc_token: "{:TOC}"
++
+ pygments: false # default python pygments have been replaced by pygments.rb
+ 
+ paginate: 10          # Posts per page on the blog index
+ pagination_dir: blog  # Directory base for pagination URLs eg. /blog/page/2/
+ recent_posts: 5       # Posts in the sidebar Recent Posts section
+-excerpt_link: "Read on &rarr;"  # "Continue reading" link text at the bottom of excerpted articles
++excerpt_link: "Read on <i class=\"icon-hand-right\"></i>"  # "Continue reading" link text at the bottom of excerpted articles
+ 
+ titlecase: true       # Converts page and post titles to titlecase
+ 
+ # list each of the sidebar modules you want to include, in the order you want them to appear.
+ # To add custom asides, create files in /source/_includes/custom/asides/ and add them to the list like 'custom/asides/custom_aside_name.html'
+ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
++#default_asides: [custom/asides/google_aside_top.html, custom/asides/about.html, custom/asides/monthly_archive.html, custom/asides/category_list.html, custom/asides/tag_cloud.html, asides/recent_posts.html]
++# custom/asides/calendar.html
++# custom/asides/coderwall.html
+ 
+ # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
+ # and add an array with the asides you want to use.
+@@ -58,6 +89,17 @@
+ # post_asides:
+ # page_asides:
+ 
++# scroll-fixed
++n_scroll_fixed: 2
++
++
++# Related post
++related_posts_limit: 5
++related_posts: false
++
++# 404 not found picture
++pic_404nf:
++
+ # ----------------------- #
+ #   3rd Party Settings    #
+ # ----------------------- #
+@@ -67,20 +109,32 @@
+ github_repo_count: 0
+ github_show_profile_link: true
+ github_skip_forks: true
++github_mark: false
+ 
+ # Twitter
+ twitter_user:
++twitter_follow_button: true
+ twitter_tweet_button: true
++twitter_tweet_lang: en
++twitter_mark: false
++twitter_search:
+ 
+ # Google +1
+ google_plus_one: false
+ google_plus_one_size: medium
++google_plus_one_lang: en
++google_plus_one_user:
++google_plus_one_mark: false
+ 
+ # Google Plus Profile
+ # Hidden: No visible button, just add author information to search results
+ googleplus_user:
+ googleplus_hidden: false
+ 
++# LinkedIn
++linkedin_user:
++linkedin_mark: false
++
+ # Pinboard
+ pinboard_user:
+ pinboard_count: 3
+@@ -98,3 +152,50 @@
+ 
+ # Facebook Like
+ facebook_like: false
++facebook_share: true
++facebook_lang: en_US
++facebook_app_id:
++facebook_user:
++facebook_mark: false
++facebook_admins_id:
++
++# Favorite, add bookmark button
++bookmark: true
++bookmark_mark: true
++favorite: Favorite
++
++# Hatena Bookmark
++hatena_button: true
++hatena_user:
++hatena_add: "Add to Hatena Bookmark"
++
++# Pocket
++pocket_button: true
++
++# Zenback
++zenback_show: false
++
++# LinkWithin
++linkwithin_show: false
++linkwithin_id:
++linkwithin_text: "You might also like..."
++
++# pubsubhubbub
++hub_url:
++
++# Coderwall badges
++coderwall_user:
++
++# feedly
++feedly_mark: false
++feedly_atom: yoursite.github.io%2Fatom.xml
++
++# Tumblr
++tumblr_button: true
++
++# affiliate
++affiliate: false
++affiliate_link_unit: false
++
++# Google adsense
++sponsored_links: "Sponsored Links"
