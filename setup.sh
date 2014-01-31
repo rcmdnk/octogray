@@ -4,15 +4,14 @@ if [ ! -f _config.yml ];then
   echo "please use in top directory of octopress."
   exit 1
 fi
+echo
 
 # install Gemfile
-echo
-echo
 echo -n "Do you want to udpate Gemfile? [y/n]: "
 read yn
 while [ 1 ];do
   case $yn in
-    "y"|"Y" ) cp .themes/octogray/Gemfile .;break;;
+    "y"|"Y" ) patch -u Gemfile < .themes/octogray/patches/Gemfile.patch;break;;
     "n"|"N" )
       printf "\n\e[31mPlease check .themes/octogray/Gemfile for necessary packages.\e[m\n"
       break
@@ -24,15 +23,14 @@ while [ 1 ];do
       ;;
   esac
 done
+echo
 
 # install Rakefile
-echo
-echo
 echo -n "Do you want to overwrite Rakefile? [y/n]: "
 read yn
 while [ 1 ];do
   case $yn in
-    "y"|"Y" ) cp .themes/octogray/Rakefile .;break;;
+    "y"|"Y" ) patch -u Rakefile < .themes/octogray/patches/Rakefile.patch;break;;
     "n"|"N" )
       printf "\n\e[31mPlease update Rakefile by following .themes/octogray/Rakefile.\e[m\n"
       break
@@ -44,15 +42,14 @@ while [ 1 ];do
       ;;
   esac
 done
+echo
 
 # install _config.yml
-echo
-echo
 echo -n "Do you want to overwrite _config.yml? [y/n]: "
 read yn
 while [ 1 ];do
   case $yn in
-    "y"|"Y" ) cp .themes/octogray/_config.yml .;break;;
+    "y"|"Y" ) patch -u _config.yml < .themes/octogray/patches/_config.yml.patch;break;;
     "n"|"N" )
       printf "\n\e[31mPlease update _config.yml by following .themes/octogray/_config.yml\e[m\n"
       break
@@ -64,6 +61,7 @@ while [ 1 ];do
       ;;
   esac
 done
+echo
 
 # first, install normal files by install task
 bundle update
@@ -137,8 +135,8 @@ rm -f nailthumb.1.1.zip
 mv nailthumb .themes/octogray/.plugins/
 cp .themes/octogray/.plugins/nailthumb/jquery.nailthumb.1.1.css ./sass/plugins/_nailthumb.scss
 cp .themes/octogray/.plugins/nailthumb/jquery.nailthumb.1.1.min.js ./source/javascripts/
+rm -rf nailthumb
 echo
-
 
 ## [jQuery SCroll to Top Control](http://www.dynamicdrive.com/dynamicindex3/scrolltop.htm)
 wget -O scrolltopcontrol.js http://www.dynamicdrive.com/dynamicindex3/scrolltopcontrol.js
@@ -148,8 +146,6 @@ cp .themes/octogray/.plugins/scrolltopcontrol/scrolltopcontrol.js ./source/javas
 sed -i ".bak" "s/<img src=\"up.png\" style=\"width:48px; height:48px\" \/>/<i class=\"fa fa-chevron-up icon-scroll-up\"><\/i>/g" ./source/javascripts/scrolltopcontrol.js
 rm -f ./source/javascripts/scrolltopcontrol.js.bak
 echo
-
-
 
 ## other plugins
 cp .themes/octogray/plugins/*rb ./plugins/

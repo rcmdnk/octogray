@@ -9,12 +9,10 @@ ssh_port       = "22"
 document_root  = "~/website.com/"
 rsync_delete   = false
 rsync_args     = ""  # Any extra arguments to pass to rsync
-#deploy_default = "push"
-deploy_ex      = "push_ex"
+deploy_default = "rsync"
 
-# This will be used for deploy
-deploy_url     = "git@github.com:user/user.github.io"
-deploy_branch  = "master"
+# This will be configured for you when you run config_deploy
+deploy_branch  = "gh-pages"
 
 ## -- Misc Configs -- ##
 
@@ -25,13 +23,19 @@ source_dir      = "source"    # source file directory
 blog_index_dir  = 'source'    # directory for your blog's index page (if you put your index in source/blog/index.html, set this to 'source/blog')
 deploy_dir      = "#{tmp_dir}_deploy" # deploy directory (for Github pages deployment)
 stash_dir       = "_stash"    # directory to stash posts for speedy generation
+full_stash_dir  = "#{source_dir}/#{stash_dir}"    # full path for stash dir
 posts_dir       = "_posts"    # directory for blog files
 themes_dir      = ".themes"   # directory for blog files
 new_post_ext    = "md"        # default new post file extension when using the new_post task
 new_page_ext    = "md"        # default new page file extension when using the new_page task
 server_port     = "4000"      # port for preview server eg. localhost:4000
+word_avoid      = "~/.gitavoid"  # words which must be avoided to be published
+ping_file       = "ping.yml"  # file of site list for ping
 
-full_stash_dir  = "#{source_dir}/#{stash_dir}"    # full path for stash dir
+if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
+  puts '## Set the codepage to 65001 for Windows machines'
+  `chcp 65001`
+end
 
 desc "Initial setup for Octopress: copies the default theme into the path of Jekyll's generator. Rake install defaults to rake install[classic] to install a different theme run rake install[some_theme_name]"
 task :install, :theme do |t, args|
@@ -274,7 +278,7 @@ task :new_page, :filename do |t, args|
   site_config = YAML.load(IO.read('_config.yml'))
   author = site_config['author']
   if args.filename.downcase =~ /(^.+\/)?(.+)/
-    filename, extension = $2.rpartition('.').reject(&:empty?)         # Get filename and etension
+    filename, dot, extension = $2.rpartition('.').reject(&:empty?)         # Get filename and extension
     title = filename
     page_dir.concat($1.downcase.sub(/^\//, '').split('/')) unless $1.nil?  # Add path to page_dir Array
     if extension.nil?
@@ -340,7 +344,7 @@ task :update_style, :theme do |t, args|
   mv "sass", "sass.old"
   puts "## Moved styles into sass.old/"
   cp_r "#{themes_dir}/"+theme+"/sass/", "sass"
-  cp_r "sass.old/custom/.", "sass/custom"
+  cp_r "sass/custom/.", "sass.old/custom"
   puts "## Updated Sass ##"
 end
 
@@ -365,6 +369,7 @@ end
 ##############
 # Deploying  #
 ##############
+
 desc "Default deploy task"
 task :deploy do
   # Check if preview posts exist, which should not be published
@@ -383,9 +388,9 @@ task :deploy do
   Rake::Task[:copydot].invoke(source_dir, public_dir)
 
   # Check if files are fine or not
-  ok_failed_stop system("if [ -f ~/.gitavoid ];then while read a;do if ret=`grep -i -r -q $a #{public_dir}`;then echo \"avoid word $a is included!!!\"; echo $ret; exit 1;fi; done < ~/.gitavoid;else  echo \"WARNING: There is no ~/.gitavoid file!!!\";fi")
+  ok_failed_stop system("if [ -f #{word_avoid} ];then while read a;do if ret=`grep -i -r -q $a #{public_dir}`;then echo \"A word $a is included, must be avoided!!!\"; echo $ret; exit 1;fi; done < #{word_avoid};fi")
 
-  Rake::Task["#{deploy_ex}"].execute
+  Rake::Task["#{deploy_default}"].execute
 
   Rake::Task[:superfeedr].execute
   Rake::Task[:ping].execute
@@ -430,7 +435,7 @@ multitask :push do
   cp_r "#{public_dir}/.", deploy_dir
   cd "#{deploy_dir}" do
     system "git add -A"
-    puts "\n## Commiting: Site updated at #{Time.now.utc}"
+    puts "\n## Committing: Site updated at #{Time.now.utc}"
     message = "Site updated at #{Time.now.utc}"
     system "git commit -m \"#{message}\""
     puts "\n## Pushing generated #{deploy_dir} website"
@@ -441,13 +446,15 @@ end
 
 desc "deploy public directory to github pages through temporary deploy dir"
 multitask :push_ex do
+  site_config = YAML.load(IO.read('_config.yml'))
+  url = site_config['url']
   puts "## Deploying branch to Github Pages "
-  puts "## clone from ${deploy_url}"
+  puts "## clone from ${url}"
   rm_rf deploy_dir
   mkdir_p deploy_dir
   cd "#{deploy_dir}" do
     system "git init"
-    system "git remote add origin #{deploy_url}"
+    system "git remote add origin #{url}"
   end
 
   Rake::Task[:copydot].invoke(public_dir, deploy_dir)
@@ -503,8 +510,6 @@ desc "Set up _deploy folder and deploy branch for Github Pages deployment"
 task :setup_github_pages, :repo do |t, args|
   if args.repo
     repo_url = args.repo
-  elsif deploy_url
-    repo_url = deploy_url
   else
     puts "Enter the read/write url for your repository"
     puts "(For example, 'git@github.com:your_username/your_username.github.io.git)"
@@ -553,7 +558,7 @@ task :setup_github_pages, :repo do |t, args|
     system "git remote add origin #{repo_url}"
     rakefile = IO.read(__FILE__)
     rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
-    rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push\\3")
+    rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push_ex\\3")
     File.open(__FILE__, 'w') do |f|
       f.write rakefile
     end
@@ -601,34 +606,41 @@ end
 
 desc 'send to Superfeedr'
 task :superfeedr do
-  #require 'net/http'
-  #require 'uri'
-  #hub_url = "http://yoursite.superfeedr.com" # <--- replace this with your hub
-  #atom_url = "http://yoursite.github.io/atom.xml" # <--- replace this with your full feed url
-  #resp, data = Net::HTTP.post_form(URI.parse(hub_url),
-  #    {'hub.mode' => 'publish',
-  #    'hub.url' => atom_url})
-  #raise "!! Hub notification error: #{resp.code} #{resp.msg}, #{data}" unless resp.code == "204"
-  #puts "## Notified hub (" + hub_url + ") that feed #{atom_url} has been updated"
+  site_config = YAML.load(IO.read('_config.yml'))
+  subdomain = site_config['superfeedr_subdomain']
+  url = site_config['url']
+  if subdomain != ""
+    require 'net/http'
+    require 'uri'
+    hub_url = "http://#{subdomain}.superfeedr.com"
+    atom_url = "#{url}/atom.xml"
+    resp, data = Net::HTTP.post_form(URI.parse(hub_url),
+        {'hub.mode' => 'publish',
+        'hub.url' => atom_url})
+    raise "!! Hub notification error: #{resp.code} #{resp.msg}, #{data}" unless resp.code == "204"
+    puts "## Notified hub (" + hub_url + ") that feed #{atom_url} has been updated"
+  end
 end
 
 #-- sending ping --#
 desc "Sedning ping to Web Search Engines"
 task :ping do
-  require "yaml"
-  require "xmlrpc/client"
+  if File.exist?(ping_file)
+    require "yaml"
+    require "xmlrpc/client"
 
-  site_config = YAML.load(IO.read('_config.yml'))
-  blog_title = site_config['title']
-  blog_url = site_config['url']
-  ping_url = YAML.load(IO.read('ping.yml'))
-  ping_url.each do |url|
-    ping = XMLRPC::Client.new2(url)
-    begin
-      result = ping.call('weblogUpdates.ping', blog_title, blog_url)
-      puts "#{url} : #{result}"
-    rescue => e
-      puts "#{url} : #{e}"
+    site_config = YAML.load(IO.read('_config.yml'))
+    blog_title = site_config['title']
+    blog_url = site_config['url']
+    ping_url = YAML.load(IO.read('ping.yml'))
+    ping_url.each do |url|
+      ping = XMLRPC::Client.new2(url)
+      begin
+        result = ping.call('weblogUpdates.ping', blog_title, blog_url)
+        puts "#{url} : #{result}"
+      rescue => e
+        puts "#{url} : #{e}"
+      end
     end
   end
 end

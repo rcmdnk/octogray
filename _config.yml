@@ -2,14 +2,14 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://yoursite.github.io
-title: octopress blog
+url: http://yoursite.com
+title: My Octopress Blog
+subtitle: A blogging framework for hackers.
+author: Your Name
 titlelogo:
-subtitle:
 nav_marks: true
 aboutme_logo: /images/MacApp/MacLogoMini.png
 sitelogo: /images/MacApp/MacLogoMiddle.png
-author: your_name
 simple_search: http://google.com/search
 description:
 google_custom_search:
@@ -20,8 +20,8 @@ imgpath: /images
 # You can customize the format as defined in
 # http://www.ruby-doc.org/core-1.9.2/Time.html#method-i-strftime
 # Additionally, %o will give you the ordinal representation of the day
-#date_format: "ordinal"
-date_format: "%d %b %Y"
+date_format: "ordinal"
+#date_format: "%d %b %Y"
 
 
 # RSS / Email (optional) subscription links (change if using something like Feedburner)
@@ -74,17 +74,18 @@ pagination_dir: blog  # Directory base for pagination URLs eg. /blog/page/2/
 recent_posts: 5       # Posts in the sidebar Recent Posts section
 excerpt_link: "Read on <i class=\"icon-hand-right\"></i>"  # "Continue reading" link text at the bottom of excerpted articles
 
-titlecase: false       # Converts page and post titles to titlecase
+titlecase: true       # Converts page and post titles to titlecase
 
 # list each of the sidebar modules you want to include, in the order you want them to appear.
 # To add custom asides, create files in /source/_includes/custom/asides/ and add them to the list like 'custom/asides/custom_aside_name.html'
-default_asides: [custom/asides/google_aside_top.html, custom/asides/about.html, custom/asides/monthly_archive.html, custom/asides/category_list.html, custom/asides/tag_cloud.html, asides/recent_posts.html]
+default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
+#default_asides: [custom/asides/google_aside_top.html, custom/asides/about.html, custom/asides/monthly_archive.html, custom/asides/category_list.html, custom/asides/tag_cloud.html, asides/recent_posts.html]
 # custom/asides/calendar.html
 # custom/asides/coderwall.html
 
 # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
 # and add an array with the asides you want to use.
-# blog_index_asides: [custom/asides/about.html]
+# blog_index_asides:
 # post_asides:
 # page_asides:
 
@@ -105,7 +106,7 @@ pic_404nf:
 
 # Github repositories
 github_user:
-github_repo_count: 10
+github_repo_count: 0
 github_show_profile_link: true
 github_skip_forks: true
 github_mark: false
@@ -119,7 +120,7 @@ twitter_mark: false
 twitter_search:
 
 # Google +1
-google_plus_one: true
+google_plus_one: false
 google_plus_one_size: medium
 google_plus_one_lang: en
 google_plus_one_user:
@@ -144,7 +145,7 @@ delicious_count: 3
 
 # Disqus Comments
 disqus_short_name:
-disqus_show_comment_count: true
+disqus_show_comment_count: false
 
 # Google Analytics
 google_analytics_tracking_id:
