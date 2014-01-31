@@ -32,6 +32,9 @@ email:
 email_mark: false
 rss_mark: false
 
+# superfeedr
+superfeedr_subdomain: ""
+
 # sidebar
 aboutme_marks: false
 
