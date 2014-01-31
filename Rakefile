@@ -80,7 +80,7 @@ task :gen do
 end
 
 # usage rake generate_only[my-post]
-desc "Generate only the specified post (much faster)"
+desc "Generate only specified post (much faster)"
 task :generate_only, :filename do |t, args|
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
   if args.filename
@@ -137,7 +137,7 @@ task :watch do
 end
 
 # usage rake watch_only[my-post]
-desc "watch only the specified post"
+desc "watch only specified post"
 task :watch_only, :filename do |t, args|
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
 
@@ -185,7 +185,7 @@ task :preview do
 end
 
 # usage rake preview_only[my-post]
-desc "preview only the specified post"
+desc "preview only specified post"
 task :preview_only, :filename do |t, args|
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
 
@@ -624,7 +624,7 @@ task :list do
   puts "(type rake -T for more detail)\n\n"
 end
 
-desc 'send to Superfeedr'
+desc 'Send to Superfeedr'
 task :superfeedr do
   site_config = YAML.load(IO.read('_config.yml'))
   hub_url = site_config['hub_url']
@@ -642,7 +642,7 @@ task :superfeedr do
 end
 
 #-- sending ping --#
-desc "Sedning ping to Web Search Engines"
+desc "Send ping to Web Search Engines"
 task :ping do
   if File.exist?(ping_file)
     require "yaml"
