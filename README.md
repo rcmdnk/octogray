@@ -39,7 +39,7 @@ is rather annoying when you put something wrong by accident.
 ## Additional tasks
 
 | task | Description |
-|:-:|:-|
+| :-: | :- |
 | css | Update only style sheets |
 | gd | Same as gen_deploy |
 | gen | Same as generate |
