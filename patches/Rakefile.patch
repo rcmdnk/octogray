@@ -1,6 +1,10 @@
---- Rakefile	2014-01-31 11:29:07.000000000 +0100
-+++ .themes/octogray/Rakefile	2014-01-31 11:28:57.000000000 +0100
-@@ -16,16 +16,20 @@
+--- Rakefile	2014-01-31 15:39:19.000000000 +0100
++++ .themes/octogray/Rakefile	2014-01-31 15:39:15.000000000 +0100
+@@ -13,19 +13,24 @@
+ 
+ # This will be configured for you when you run config_deploy
+ deploy_branch  = "gh-pages"
++repo_url       = "git@github.com:user/user.github.io.git"
  
  ## -- Misc Configs -- ##
  
@@ -23,7 +27,7 @@
  
  if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
    puts '## Set the codepage to 65001 for Windows machines'
-@@ -52,12 +56,67 @@
+@@ -52,12 +57,67 @@
  # Working with Jekyll #
  #######################
  
@@ -91,7 +95,7 @@
  end
  
  desc "Watch the site and regenerate when it changes"
-@@ -76,6 +135,37 @@
+@@ -76,6 +136,37 @@
    [jekyllPid, compassPid].each { |pid| Process.wait(pid) }
  end
  
@@ -129,7 +133,7 @@
  desc "preview the site in a web browser"
  task :preview do
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
-@@ -93,6 +183,40 @@
+@@ -93,6 +184,40 @@
    [jekyllPid, compassPid, rackupPid].each { |pid| Process.wait(pid) }
  end
  
@@ -170,7 +174,7 @@
  # usage rake new_post[my-new-post] or rake new_post['my new post'] or rake new_post (defaults to "new-post")
  desc "Begin a new post in #{source_dir}/#{posts_dir}"
  task :new_post, :title do |t, args|
-@@ -102,20 +226,45 @@
+@@ -102,20 +227,45 @@
      title = get_stdin("Enter a title for your post: ")
    end
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
@@ -218,7 +222,7 @@
    end
  end
  
-@@ -125,6 +274,8 @@
+@@ -125,6 +275,8 @@
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
    args.with_defaults(:filename => 'new-page')
    page_dir = [source_dir]
@@ -227,7 +231,7 @@
    if args.filename.downcase =~ /(^.+\/)?(.+)/
      filename, dot, extension = $2.rpartition('.').reject(&:empty?)         # Get filename and extension
      title = filename
-@@ -147,10 +298,12 @@
+@@ -147,10 +299,12 @@
        page.puts "---"
        page.puts "layout: page"
        page.puts "title: \"#{title}\""
@@ -240,7 +244,7 @@
        page.puts "---"
      end
    else
-@@ -161,21 +314,23 @@
+@@ -161,21 +315,23 @@
  # usage rake isolate[my-post]
  desc "Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly."
  task :isolate, :filename do |t, args|
@@ -270,7 +274,7 @@
  end
  
  desc "Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom"
-@@ -222,15 +377,33 @@
+@@ -222,15 +378,33 @@
      File.delete(".preview-mode")
      Rake::Task[:generate].execute
    end
@@ -304,21 +308,19 @@
  desc "copy dot files for deployment"
  task :copydot, :source, :dest do |t, args|
    FileList["#{args.source}/**/.*"].exclude("**/.", "**/..", "**/.DS_Store", "**/._*").each do |file|
-@@ -270,6 +443,33 @@
+@@ -270,6 +444,31 @@
    end
  end
  
 +desc "deploy public directory to github pages through temporary deploy dir"
 +multitask :push_ex do
-+  site_config = YAML.load(IO.read('_config.yml'))
-+  url = site_config['url']
 +  puts "## Deploying branch to Github Pages "
-+  puts "## clone from ${url}"
++  puts "## clone from #{repo_url}"
 +  rm_rf deploy_dir
 +  mkdir_p deploy_dir
 +  cd "#{deploy_dir}" do
 +    system "git init"
-+    system "git remote add origin #{url}"
++    system "git remote add origin #{repo_url}"
 +  end
 +
 +  Rake::Task[:copydot].invoke(public_dir, deploy_dir)
@@ -338,7 +340,7 @@
  desc "Update configurations to support publishing to root or sub directory"
  task :set_root_dir, :dir do |t, args|
    puts ">>> !! Please provide a directory, eg. rake config_dir[publishing/subdirectory]" unless args.dir
-@@ -346,23 +546,48 @@
+@@ -346,23 +545,45 @@
    File.open('_config.yml', 'w') do |f|
      f.write jekyll_config
    end
@@ -351,29 +353,33 @@
 -    system "git commit -m \"Octopress init\""
 -    system "git branch -m gh-pages" unless branch == 'master'
 -    system "git remote add origin #{repo_url}"
+-    rakefile = IO.read(__FILE__)
+-    rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
+-    rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push\\3")
+-    File.open(__FILE__, 'w') do |f|
+-      f.write rakefile
++
 +  ext = 'markdown'
 +  if ask("Do you want to use 'md' extension instead of 'markdown'?", ['y', 'n']) == 'y'
 +    ext = 'md'
 +  end
++  rakefile = IO.read(__FILE__)
++  rakefile.sub!(/new_post_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_post_ext\\1=\\2\\3#{ext}\\3")
++  rakefile.sub!(/new_page_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_page_ext\\1=\\2\\3#{ext}\\3")
++  rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
++  rakefile.sub!(/repo_url(\s*)=(\s*)(["'])[^"']*["']/, "repo_url\\1=\\2\\3#{repo_url}\\3")
++
 +  if ask("Do you want to push_ex (renew remote repository evrey time)?", ['y', 'n']) == 'y'
-+    dir = get_stdin("Enter where you want to put _deploy (default './'): ")
++    dir = get_stdin("Enter where you want to put _deploy (current: #{tmp_dir}): ")
 +    if dir == ""
 +      dir = "./"
 +    elsif
 +      if dir[-1] == "/"
 +        dir = dir[0..-2]
 +      end
-+    end
-     rakefile = IO.read(__FILE__)
--    rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
--    rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push\\3")
+     end
 +    rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push_ex\\3")
 +    rakefile.sub!(/(tmp_dir\s*=\s*File.expand_path\()(["'])[^"']*["']/,"\\1\\2#{dir}\\2")
-+    rakefile.sub!(/new_post_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_post_ext\\1=\\2\\3#{ext}\\3")
-+    rakefile.sub!(/new_page_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_page_ext\\1=\\2\\3#{ext}\\3")
-     File.open(__FILE__, 'w') do |f|
-       f.write rakefile
-     end
 +  else
 +    rm_rf deploy_dir
 +    mkdir deploy_dir
@@ -384,22 +390,18 @@
 +      system "git commit -m \"Octopress init\""
 +      system "git branch -m gh-pages" unless branch == 'master'
 +      system "git remote add origin #{repo_url}"
-+      rakefile = IO.read(__FILE__)
-+      rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
 +      rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push\\3")
-+      rakefile.sub!(/new_post_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_post_ext\\1=\\2\\3#{ext}\\3")
-+      rakefile.sub!(/new_page_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_page_ext\\1=\\2\\3#{ext}\\3")
-+      File.open(__FILE__, 'w') do |f|
-+        f.write rakefile
-+      end
 +    end
 +    puts "\n---\n## Now you can deploy to #{repo_url} with `rake deploy` ##"
++  end
++  File.open(__FILE__, 'w') do |f|
++    f.write rakefile
    end
 -  puts "\n---\n## Now you can deploy to #{repo_url} with `rake deploy` ##"
  end
  
  def ok_failed(condition)
-@@ -402,3 +627,46 @@
+@@ -402,3 +623,45 @@
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end
@@ -407,12 +409,11 @@
 +desc 'send to Superfeedr'
 +task :superfeedr do
 +  site_config = YAML.load(IO.read('_config.yml'))
-+  subdomain = site_config['superfeedr_subdomain']
++  hub_url = site_config['hub_url']
 +  url = site_config['url']
-+  if subdomain != ""
++  if hub_url != ""
 +    require 'net/http'
 +    require 'uri'
-+    hub_url = "http://#{subdomain}.superfeedr.com"
 +    atom_url = "#{url}/atom.xml"
 +    resp, data = Net::HTTP.post_form(URI.parse(hub_url),
 +        {'hub.mode' => 'publish',

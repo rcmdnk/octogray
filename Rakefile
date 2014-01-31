@@ -554,7 +554,7 @@ task :setup_github_pages, :repo do |t, args|
   rakefile.sub!(/new_post_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_post_ext\\1=\\2\\3#{ext}\\3")
   rakefile.sub!(/new_page_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_page_ext\\1=\\2\\3#{ext}\\3")
   rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
-  rakefile.sub!(/repo_url(\s*)=(\s*)(["'])[\w-]*["']/, "repo_url\\1=\\2\\3#{repo_url}\\3")
+  rakefile.sub!(/repo_url(\s*)=(\s*)(["'])[^"']*["']/, "repo_url\\1=\\2\\3#{repo_url}\\3")
 
   if ask("Do you want to push_ex (renew remote repository evrey time)?", ['y', 'n']) == 'y'
     dir = get_stdin("Enter where you want to put _deploy (current: #{tmp_dir}): ")

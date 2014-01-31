@@ -1,6 +1,6 @@
---- _config.yml	2014-01-31 11:29:07.000000000 +0100
-+++ .themes/octogray/_config.yml	2014-01-31 09:49:04.000000000 +0100
-@@ -6,20 +6,37 @@
+--- _config.yml	2014-01-31 15:35:54.000000000 +0100
++++ .themes/octogray/_config.yml	2014-01-31 15:36:00.000000000 +0100
+@@ -6,20 +6,34 @@
  title: My Octopress Blog
  subtitle: A blogging framework for hackers.
  author: Your Name
@@ -30,15 +30,12 @@
 +email_mark: false
 +rss_mark: false
 +
-+# superfeedr
-+superfeedr_subdomain: ""
-+
 +# sidebar
 +aboutme_marks: false
  
  # ----------------------- #
  #    Jekyll & Plugins     #
-@@ -33,24 +50,41 @@
+@@ -33,24 +47,41 @@
  plugins: plugins
  code_dir: downloads/code
  category_dir: blog/categories
@@ -87,7 +84,7 @@
  
  # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
  # and add an array with the asides you want to use.
-@@ -58,6 +92,17 @@
+@@ -58,6 +89,17 @@
  # post_asides:
  # page_asides:
  
@@ -105,7 +102,7 @@
  # ----------------------- #
  #   3rd Party Settings    #
  # ----------------------- #
-@@ -67,20 +112,32 @@
+@@ -67,20 +109,32 @@
  github_repo_count: 0
  github_show_profile_link: true
  github_skip_forks: true
@@ -138,7 +135,7 @@
  # Pinboard
  pinboard_user:
  pinboard_count: 3
-@@ -98,3 +155,50 @@
+@@ -98,3 +152,50 @@
  
  # Facebook Like
  facebook_like: false
@@ -187,5 +184,5 @@
 +affiliate: false
 +affiliate_link_unit: false
 +
-+# Google adsense
++# Google Adsense
 +sponsored_links: "Sponsored Links"
