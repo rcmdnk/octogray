@@ -38,20 +38,6 @@ is rather annoying when you put something wrong by accident.
 
 ## Additional tasks
 
-| task | Description |
-| :--: | :---------- |
-| css | Update only style sheets |
-| gd | Same as gen_deploy |
-| gen | Same as generate |
-| gen_only | Same as generate_only |
-| generate_only | Generate only specified post (much faster). If no post is given, generate only the latest (of time stamp) post in source/_post. |
-| go | Same as generate_only |
-| ping | Send ping to Web Search Engines |
-| preview_only | Preview only specified (latest) post |
-| push_ex | Deploy public directory to github pages through temporary deploy dir |
-| superfeedr | Send to Superfeedr |
-| watch_only | Watch only specified post |
-
 task | Description
 :--: | :----------
 css | Update only style sheets
@@ -65,12 +51,6 @@ preview_only | Preview only specified (latest) post
 push_ex | Deploy public directory to github pages through temporary deploy dir
 superfeedr | Send to Superfeedr
 watch_only | Watch only specified post
-
-Markdown | Less | Pretty
---- | --- | ---
-*Still* | `renders` | **nicely**
-1 | 2 | 3
-
 
 ## Previews
 
