@@ -7,12 +7,12 @@ octgray is a theme for Octopress.
 
     $ cd octopress
     $ git submodule add git@github.com:rcmdnk/octogray.git .themes/octogray
-    $ source .themes/octogray/setup.sh
+    $ .themes/octogray/setup.sh
 
-During the instration, you will be asked if you want to replace
-`_config.yml` and `Rakefile`, too.
+During the instration, you will be asked if you want to apply patch to
+`Gemfile`, `_config.yml` and `Rakefile`, too.
 
-If you want to keep current files, ignore and please check these files in octogray later.
+If you want to keep current files, ignore and check these files in octogray later.
 
 Preview:
 
