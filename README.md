@@ -52,6 +52,12 @@ is rather annoying when you put something wrong by accident.
 | superfeedr | Send to Superfeedr |
 | watch_only | Watch only specified post |
 
+Markdown | Less | Pretty
+--- | --- | ---
+*Still* | `renders` | **nicely**
+1 | 2 | 3
+
+
 ## Previews
 
 * [preview (my blog)](http://rcmdnk.github.io/).
