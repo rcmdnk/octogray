@@ -7,7 +7,7 @@ fi
 echo
 
 # install Gemfile
-echo -n "Do you want to udpate Gemfile? [y/n]: "
+echo -n "Do you want to patch Gemfile? [y/n]: "
 read yn
 while [ 1 ];do
   case $yn in
@@ -26,7 +26,7 @@ done
 echo
 
 # install Rakefile
-echo -n "Do you want to overwrite Rakefile? [y/n]: "
+echo -n "Do you want to patch Rakefile? [y/n]: "
 read yn
 while [ 1 ];do
   case $yn in
@@ -45,7 +45,7 @@ done
 echo
 
 # install _config.yml
-echo -n "Do you want to overwrite _config.yml? [y/n]: "
+echo -n "Do you want to patch _config.yml? [y/n]: "
 read yn
 while [ 1 ];do
   case $yn in
