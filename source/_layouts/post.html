@@ -44,6 +44,7 @@ single: true
   {% include custom/zenback.html %}
 </section>
 {% endif %}
+{% include custom/before_disqus.html %}
 {% if site.disqus_short_name and page.comments == true %}
 <section>
   <div id="disqus_thread" aria-live="polite">{% include post/disqus_thread.html %}</div>
