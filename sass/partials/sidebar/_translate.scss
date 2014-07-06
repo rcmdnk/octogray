@@ -1,0 +1,17 @@
+aside.sidebar {
+  .goog-te-gadget {
+     //text-align:center;
+  }
+  div#google_translate_element div.goog-te-gadget-simple {
+    background-color: #ffffff !important;
+    padding: 5px !important;
+    border-radius: 10px !important;
+    border: solid 2px darken($nav-bg, 15) !important;
+  }
+  div#google_translate_element div.goog-te-gadget-simple a.goog-te-menu-value span {
+    color: darken($nav-bg, 30) !important;
+  }
+  div#google_translate_element div.goog-te-gadget-simple a.goog-te-menu-value span:hover {
+    color: darken($nav-bg, 100) !important;
+  }
+}
