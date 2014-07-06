@@ -68,7 +68,7 @@ echo -n "Do you want to patch _config.yml? [y/n]: "
 read yn
 while [ 1 ];do
   case $yn in
-    "y"|"Y" ) cd plugins;patch < ../.themes/octogray/patches/plugins.patch;cd../;break;;
+    "y"|"Y" ) cd plugins;patch < ../.themes/octogray/patches/plugins.patch;cd ../;break;;
     "n"|"N" )
       printf "\n\e[31mPlease update plugins_for_patch by following .themes/octogray/plugins\e[m\n"
       break
