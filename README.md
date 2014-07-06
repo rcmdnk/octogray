@@ -58,6 +58,3 @@ watch_only | Watch only specified post.
 
 ![20131006_blog.jpg](http://rcmdnk.github.io/images/post/20131006_blog.jpg)
 ![20130707_codeblock1.jpg](http://rcmdnk.github.io/images/post/20130707_codeblock1.jpg)
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/rcmdnk/octogray/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-

@@ -69,4 +69,3 @@ module Jekyll
 end
 
 Liquid::Template.register_tag('include_array', Jekyll::IncludeArrayTag)
-

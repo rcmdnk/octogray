@@ -12,7 +12,7 @@ rsync_args     = ""  # Any extra arguments to pass to rsync
 deploy_default = "push_ex"
 
 # This will be configured for you when you run config_deploy
-deploy_branch  = "gh-pages"
+deploy_branch  = "master"
 repo_url       = "git@github.com:user/user.github.io.git"
 
 ## -- Misc Configs -- ##
@@ -65,12 +65,20 @@ task :css do
   cp_r "#{source_dir}/stylesheets/.", "#{public_dir}/stylesheets/"
 end
 
+desc "Update stylesheets with nested style"
+task :css_nested do
+  raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
+  puts "## Update stylesheets"
+  system "compass compile -s nested --css-dir #{source_dir}/stylesheets"
+  cp_r "#{source_dir}/stylesheets/.", "#{public_dir}/stylesheets/"
+end
+
 desc "Generate jekyll site"
 task :generate do
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
   puts "## Generating Site with Jekyll"
   system "compass compile --css-dir #{source_dir}/stylesheets"
-  system "jekyll"
+  system "jekyll build"
   system "rm -f .integrated"
 end
 
@@ -95,7 +103,7 @@ task :generate_only, :filename do |t, args|
   Rake::Task[:isolate].invoke(filename)
   puts "## Generating Site with Jekyll"
   system "compass compile --css-dir #{source_dir}/stylesheets"
-  system({"OCTOPRESS_ENV"=>"preview"},"jekyll")
+  system({"OCTOPRESS_ENV"=>"preview"},"jekyll build")
   puts "## Restoring stashed posts"
   Rake::Task[:integrate].execute
 end
@@ -125,7 +133,7 @@ task :watch do
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
   puts "Starting to watch source with Jekyll and Compass."
   system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
-  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll --auto")
+  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch")
   compassPid = Process.spawn("compass watch")
 
   trap("INT") {
@@ -154,7 +162,7 @@ task :watch_only, :filename do |t, args|
 
   puts "Starting to watch source with Jekyll and Compass."
   system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
-  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll --auto")
+  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch")
   compassPid = Process.spawn("compass watch")
 
   trap("INT") {
@@ -172,7 +180,7 @@ task :preview do
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
   puts "Starting to watch source with Jekyll and Compass. Starting Rack on port #{server_port}"
   system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
-  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll --auto")
+  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch")
   compassPid = Process.spawn("compass watch")
   rackupPid = Process.spawn("rackup --port #{server_port}")
 
@@ -202,7 +210,7 @@ task :preview_only, :filename do |t, args|
 
   puts "## Starting to watch source with Jekyll and Compass. Starting Rack on port #{server_port}"
   system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
-  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll --auto")
+  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch")
   compassPid = Process.spawn("compass watch")
   rackupPid = Process.spawn("rackup --port #{server_port}")
 
@@ -243,8 +251,9 @@ task :new_post, :title do |t, args|
     post.puts "layout: post"
     post.puts "title: \"#{title.gsub(/&/,'&amp;')}\""
     #post.puts "title: \"#{title_tags}\""
-    post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M')}"
+    post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M:%S %z')}"
     post.puts "comments: true"
+    post.puts "category:"
     #post.puts "category: #{category}"
     #post.puts "tags: #{tags}"
     #post.puts "keywords: #{title.gsub(' ',', ')}"
@@ -331,7 +340,7 @@ end
 
 desc "Clean out caches: .pygments-cache, .gist-cache, .sass-cache"
 task :clean do
-  [".pygments-cache/**", ".gist-cache/**", ".sass-cache/**", "source/stylesheets/screen.css"].each { |dir| rm_rf Dir.glob(dir) }
+  [".pygments-cache/**", ".gist-cache/**", ".sass-cache/**", "source/stylesheets/**"].each { |dir| rm_rf Dir.glob(dir) }
 end
 
 desc "Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom"
@@ -343,8 +352,8 @@ task :update_style, :theme do |t, args|
   end
   mv "sass", "sass.old"
   puts "## Moved styles into sass.old/"
-  cp_r "#{themes_dir}/"+theme+"/sass/", "sass"
-  cp_r "sass/custom/.", "sass.old/custom"
+  cp_r "#{themes_dir}/"+theme+"/sass/", "sass", :remove_destination=>true
+  cp_r "sass.old/custom/.", "sass/custom/", :remove_destination=>true
   puts "## Updated Sass ##"
 end
 
@@ -404,7 +413,6 @@ desc "Same as gen_deploy"
 task :gd => [:integrate, :generate, :deploy] do
 end
 
-
 desc "copy dot files for deployment"
 task :copydot, :source, :dest do |t, args|
   FileList["#{args.source}/**/.*"].exclude("**/.", "**/..", "**/.DS_Store", "**/._*").each do |file|
@@ -435,8 +443,8 @@ multitask :push do
   cp_r "#{public_dir}/.", deploy_dir
   cd "#{deploy_dir}" do
     system "git add -A"
-    puts "\n## Committing: Site updated at #{Time.now.utc}"
     message = "Site updated at #{Time.now.utc}"
+    puts "\n## Committing: #{message}"
     system "git commit -m \"#{message}\""
     puts "\n## Pushing generated #{deploy_dir} website"
     system "git push origin #{deploy_branch}"

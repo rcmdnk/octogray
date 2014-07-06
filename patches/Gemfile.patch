@@ -1,19 +1,20 @@
---- Gemfile	2014-01-31 11:29:07.000000000 +0100
-+++ .themes/octogray/Gemfile	2014-01-31 09:49:04.000000000 +0100
-@@ -5,6 +5,7 @@
-   gem 'jekyll', '~> 0.12'
-   gem 'rdiscount', '~> 2.0.7'
-   gem 'pygments.rb', '~> 0.3.4'
-+  gem 'coderay'
+diff --git a/master:Gemfile b/source:Gemfile
+index 9557d59..c28183a 100644
+--- a/master:Gemfile
++++ b/source:Gemfile
+@@ -8,12 +8,15 @@ group :development do
+   gem 'jekyll-sitemap'
+   gem 'rdiscount', '~> 2.0'
    gem 'RedCloth', '~> 4.2.9'
-   gem 'haml', '~> 3.1.7'
++  gem 'coderay'
+   gem 'haml', '~> 4.0'
    gem 'compass', '~> 0.12.2'
-@@ -14,6 +15,8 @@
+   gem 'sass-globbing', '~> 1.0.0'
+   gem 'rubypants', '~> 0.2.0'
    gem 'rb-fsevent', '~> 0.9'
    gem 'stringex', '~> 1.4.0'
-   gem 'liquid', '~> 2.3.0'
 +  gem 'thin'
 +  gem 'gemoji'
-   gem 'directory_watcher', '1.4.1'
  end
  
+ gem 'sinatra', '~> 1.4.2'

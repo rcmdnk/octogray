@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 
 if [ ! -f _config.yml ];then
-  echo "please use in top directory of octopress."
+  echo "please call setup.sh from the top directory of octopress."
   exit 1
 fi
 echo
 
-# install Gemfile
+# patch Gemfile
 echo -n "Do you want to patch Gemfile? [y/n]: "
 read yn
 while [ 1 ];do
   case $yn in
-    "y"|"Y" ) patch -u Gemfile < .themes/octogray/patches/Gemfile.patch;break;;
+    "y"|"Y" ) patch Gemfile < .themes/octogray/patches/Gemfile.patch;break;;
     "n"|"N" )
       printf "\n\e[31mPlease check .themes/octogray/Gemfile for necessary packages.\e[m\n"
       break
@@ -25,12 +25,12 @@ while [ 1 ];do
 done
 echo
 
-# install Rakefile
+# patch Rakefile
 echo -n "Do you want to patch Rakefile? [y/n]: "
 read yn
 while [ 1 ];do
   case $yn in
-    "y"|"Y" ) patch -u Rakefile < .themes/octogray/patches/Rakefile.patch;break;;
+    "y"|"Y" ) patch Rakefile < .themes/octogray/patches/Rakefile.patch;break;;
     "n"|"N" )
       printf "\n\e[31mPlease update Rakefile by following .themes/octogray/Rakefile.\e[m\n"
       break
@@ -44,14 +44,33 @@ while [ 1 ];do
 done
 echo
 
-# install _config.yml
+# patch _config.yml
 echo -n "Do you want to patch _config.yml? [y/n]: "
 read yn
 while [ 1 ];do
   case $yn in
-    "y"|"Y" ) patch -u _config.yml < .themes/octogray/patches/_config.yml.patch;break;;
+    "y"|"Y" ) patch _config.yml < .themes/octogray/patches/_config.yml.patch;break;;
     "n"|"N" )
       printf "\n\e[31mPlease update _config.yml by following .themes/octogray/_config.yml\e[m\n"
+      break
+      ;;
+    *)
+      echo -n "[y/n]: "
+      read yn
+      continue
+      ;;
+  esac
+done
+echo
+
+# patch plugins (image_tag.rb, include_array.rb, octopress_filter.rb)
+echo -n "Do you want to patch _config.yml? [y/n]: "
+read yn
+while [ 1 ];do
+  case $yn in
+    "y"|"Y" ) cd plugins;patch < ../.themes/octogray/patches/plugins.patch;cd../;break;;
+    "n"|"N" )
+      printf "\n\e[31mPlease update plugins_for_patch by following .themes/octogray/plugins\e[m\n"
       break
       ;;
     *)

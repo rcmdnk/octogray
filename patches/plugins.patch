@@ -1,0 +1,93 @@
+diff --git a/image_tag.rb b/image_tag.rb
+index 4567000..15adef5 100644
+--- a/image_tag.rb
++++ b/image_tag.rb
+@@ -24,7 +24,7 @@ module Jekyll
+     def initialize(tag_name, markup, tokens)
+       attributes = ['class', 'src', 'width', 'height', 'title']
+ 
+-      if markup =~ /(?<class>\S.*\s+)?(?<src>(?:https?:\/\/|\/|\S+\/)\S+)(?:\s+(?<width>\d+))?(?:\s+(?<height>\d+))?(?<title>\s+.+)?/i
++      if markup =~ /(?<class>\S.*\s+)?(?<src>(?:https?:\/\/|\S*\/|val:)\S+)(?:\s+(?<width>\d+))?(?:\s+(?<height>\d+))?(?<title>\s+.+)?/i
+         @img = attributes.reduce({}) { |img, attr| img[attr] = $~[attr].strip if $~[attr]; img }
+         if /(?:"|')(?<title>[^"']+)?(?:"|')\s+(?:"|')(?<alt>[^"']+)?(?:"|')/ =~ @img['title']
+           @img['title']  = title
+@@ -39,6 +39,12 @@ module Jekyll
+ 
+     def render(context)
+       if @img
++        @img['src'] = context[@img['src'].split(':')[1]] if @img['src'] =~ /^val:/
++        if ! (@img['class'] and @img['class'].include?('noimgpath'))
++          if context['site.imgpath'] and @img['src'] !~ /^(http|#{context['site.imgpath']})/
++            @img['src'] = context['site.imgpath']+@img['src']
++          end
++        end
+         "<img #{@img.collect {|k,v| "#{k}=\"#{v}\"" if v}.join(" ")}>"
+       else
+         "Error processing input, expected syntax: {% img [class name(s)] [http[s]:/]/path/to/image [width [height]] [title text | \"title text\" [\"alt text\"]] %}"
+diff --git a/include_array.rb b/include_array.rb
+index 000040f..5c744c2 100644
+--- a/include_array.rb
++++ b/include_array.rb
+@@ -31,6 +31,11 @@ module Jekyll
+       end
+ 
+       rtn = ''
++      n_files = context.environments.first['site'][@array_name].size ? \
++        context.environments.first['site'][@array_name].size : 0
++      n_files_count = n_files
++      n_last_fixed = context.registers[:site].config['n_scroll_fixed'] ? \
++        context.registers[:site].config['n_scroll_fixed'] : 0
+       (context.environments.first['site'][@array_name] || []).each do |file|
+         if file !~ /^[a-zA-Z0-9_\/\.-]+$/ || file =~ /\.\// || file =~ /\/\./
+           rtn = rtn + "Include file '#{file}' contains invalid characters or sequences"
+@@ -42,11 +47,19 @@ module Jekyll
+             source = File.read(file)
+             partial = Liquid::Template.parse(source)
+             context.stack do
++              if n_files_count == n_last_fixed
++                rtn = rtn + "<div class=\"scroll-fixed\">"
++              end
++
+               rtn = rtn + partial.render(context)
++              if n_last_fixed != 0 and n_files_count == 1
++                rtn = rtn + "</div>"
++              end
+             end
+           else
+             rtn = rtn + "Included file '#{file}' not found in _includes directory"
+           end
++          n_files_count -= 1
+         end
+       end
+       rtn
+diff --git a/octopress_filters.rb b/octopress_filters.rb
+index aad5bf9..bb3c60f 100644
+--- a/octopress_filters.rb
++++ b/octopress_filters.rb
+@@ -49,6 +49,14 @@ module OctopressLiquidFilters
+     end
+   end
+ 
++  def excerpt_after(input)
++    if input.index(/<!--\s*more\s*-->/i)
++      input.split(/<!--\s*more\s*-->/i)[1]
++    else
++      ""
++    end
++  end
++
+   # Checks for excerpts (helpful for template conditionals)
+   def has_excerpt(input)
+     input =~ /<!--\s*more\s*-->/i ? true : false
+@@ -66,6 +74,11 @@ module OctopressLiquidFilters
+   # Extracts raw content DIV from template, used for page description as {{ content }}
+   # contains complete sub-template code on main page level
+   def raw_content(input)
++    /<div class="entry-content">(?<content>[\s\S]*?)<!--\s*more\s*-->/ =~ input
++    if ! (content.nil?)
++      return content
++    end
++
+     /<div class="entry-content">(?<content>[\s\S]*?)<\/div>\s*<(footer|\/article)>/ =~ input
+     return (content.nil?) ? input : content
+   end

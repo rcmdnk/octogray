@@ -1,9 +1,17 @@
---- Rakefile	2014-01-31 15:39:19.000000000 +0100
-+++ .themes/octogray/Rakefile	2014-01-31 15:39:15.000000000 +0100
-@@ -13,19 +13,24 @@
+diff --git a/master:Rakefile b/source:Rakefile
+index 7c15332..8d717fe 100644
+--- a/master:Rakefile
++++ b/source:Rakefile
+@@ -9,23 +9,28 @@ ssh_port       = "22"
+ document_root  = "~/website.com/"
+ rsync_delete   = false
+ rsync_args     = ""  # Any extra arguments to pass to rsync
+-deploy_default = "rsync"
++deploy_default = "push_ex"
  
  # This will be configured for you when you run config_deploy
- deploy_branch  = "gh-pages"
+-deploy_branch  = "gh-pages"
++deploy_branch  = "master"
 +repo_url       = "git@github.com:user/user.github.io.git"
  
  ## -- Misc Configs -- ##
@@ -27,7 +35,7 @@
  
  if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
    puts '## Set the codepage to 65001 for Windows machines'
-@@ -52,12 +57,67 @@
+@@ -52,12 +57,75 @@ end
  # Working with Jekyll #
  #######################
  
@@ -39,12 +47,20 @@
 +  cp_r "#{source_dir}/stylesheets/.", "#{public_dir}/stylesheets/"
 +end
 +
++desc "Update stylesheets with nested style"
++task :css_nested do
++  raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
++  puts "## Update stylesheets"
++  system "compass compile -s nested --css-dir #{source_dir}/stylesheets"
++  cp_r "#{source_dir}/stylesheets/.", "#{public_dir}/stylesheets/"
++end
++
  desc "Generate jekyll site"
  task :generate do
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
    puts "## Generating Site with Jekyll"
    system "compass compile --css-dir #{source_dir}/stylesheets"
-   system "jekyll"
+   system "jekyll build"
 +  system "rm -f .integrated"
 +end
 +
@@ -69,7 +85,7 @@
 +  Rake::Task[:isolate].invoke(filename)
 +  puts "## Generating Site with Jekyll"
 +  system "compass compile --css-dir #{source_dir}/stylesheets"
-+  system({"OCTOPRESS_ENV"=>"preview"},"jekyll")
++  system({"OCTOPRESS_ENV"=>"preview"},"jekyll build")
 +  puts "## Restoring stashed posts"
 +  Rake::Task[:integrate].execute
 +end
@@ -95,7 +111,7 @@
  end
  
  desc "Watch the site and regenerate when it changes"
-@@ -76,6 +136,37 @@
+@@ -76,6 +144,37 @@ task :watch do
    [jekyllPid, compassPid].each { |pid| Process.wait(pid) }
  end
  
@@ -117,7 +133,7 @@
 +
 +  puts "Starting to watch source with Jekyll and Compass."
 +  system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
-+  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll --auto")
++  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch")
 +  compassPid = Process.spawn("compass watch")
 +
 +  trap("INT") {
@@ -133,7 +149,7 @@
  desc "preview the site in a web browser"
  task :preview do
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
-@@ -93,6 +184,40 @@
+@@ -93,6 +192,40 @@ task :preview do
    [jekyllPid, compassPid, rackupPid].each { |pid| Process.wait(pid) }
  end
  
@@ -155,7 +171,7 @@
 +
 +  puts "## Starting to watch source with Jekyll and Compass. Starting Rack on port #{server_port}"
 +  system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
-+  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll --auto")
++  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch")
 +  compassPid = Process.spawn("compass watch")
 +  rackupPid = Process.spawn("rackup --port #{server_port}")
 +
@@ -174,7 +190,7 @@
  # usage rake new_post[my-new-post] or rake new_post['my new post'] or rake new_post (defaults to "new-post")
  desc "Begin a new post in #{source_dir}/#{posts_dir}"
  task :new_post, :title do |t, args|
-@@ -102,20 +227,45 @@
+@@ -102,20 +235,46 @@ task :new_post, :title do |t, args|
      title = get_stdin("Enter a title for your post: ")
    end
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
@@ -193,11 +209,11 @@
      post.puts "---"
      post.puts "layout: post"
      post.puts "title: \"#{title.gsub(/&/,'&amp;')}\""
--    post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M:%S %z')}"
 +    #post.puts "title: \"#{title_tags}\""
-+    post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M')}"
+     post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M:%S %z')}"
      post.puts "comments: true"
 -    post.puts "categories: "
++    post.puts "category:"
 +    #post.puts "category: #{category}"
 +    #post.puts "tags: #{tags}"
 +    #post.puts "keywords: #{title.gsub(' ',', ')}"
@@ -222,7 +238,7 @@
    end
  end
  
-@@ -125,6 +275,8 @@
+@@ -125,6 +284,8 @@ task :new_page, :filename do |t, args|
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
    args.with_defaults(:filename => 'new-page')
    page_dir = [source_dir]
@@ -231,7 +247,7 @@
    if args.filename.downcase =~ /(^.+\/)?(.+)/
      filename, dot, extension = $2.rpartition('.').reject(&:empty?)         # Get filename and extension
      title = filename
-@@ -147,10 +299,12 @@
+@@ -147,10 +308,12 @@ task :new_page, :filename do |t, args|
        page.puts "---"
        page.puts "layout: page"
        page.puts "title: \"#{title}\""
@@ -244,7 +260,7 @@
        page.puts "---"
      end
    else
-@@ -161,21 +315,23 @@
+@@ -161,21 +324,23 @@ end
  # usage rake isolate[my-post]
  desc "Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly."
  task :isolate, :filename do |t, args|
@@ -270,11 +286,11 @@
  desc "Clean out caches: .pygments-cache, .gist-cache, .sass-cache"
  task :clean do
 -  rm_rf [".pygments-cache/**", ".gist-cache/**", ".sass-cache/**", "source/stylesheets/screen.css"]
-+  [".pygments-cache/**", ".gist-cache/**", ".sass-cache/**", "source/stylesheets/screen.css"].each { |dir| rm_rf Dir.glob(dir) }
++  [".pygments-cache/**", ".gist-cache/**", ".sass-cache/**", "source/stylesheets/**"].each { |dir| rm_rf Dir.glob(dir) }
  end
  
  desc "Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom"
-@@ -222,15 +378,33 @@
+@@ -222,15 +387,32 @@ task :deploy do
      File.delete(".preview-mode")
      Rake::Task[:generate].execute
    end
@@ -292,8 +308,8 @@
 +
    Rake::Task["#{deploy_default}"].execute
 +
-+  Rake::Task[:superfeedr].execute
 +  Rake::Task[:ping].execute
++  Rake::Task[:superfeedr].execute
  end
  
  desc "Generate website and deploy"
@@ -304,11 +320,10 @@
 +task :gd => [:integrate, :generate, :deploy] do
 +end
 +
-+
  desc "copy dot files for deployment"
  task :copydot, :source, :dest do |t, args|
    FileList["#{args.source}/**/.*"].exclude("**/.", "**/..", "**/.DS_Store", "**/._*").each do |file|
-@@ -270,6 +444,31 @@
+@@ -270,6 +452,31 @@ multitask :push do
    end
  end
  
@@ -340,7 +355,7 @@
  desc "Update configurations to support publishing to root or sub directory"
  task :set_root_dir, :dir do |t, args|
    puts ">>> !! Please provide a directory, eg. rake config_dir[publishing/subdirectory]" unless args.dir
-@@ -346,23 +545,45 @@
+@@ -346,23 +553,45 @@ task :setup_github_pages, :repo do |t, args|
    File.open('_config.yml', 'w') do |f|
      f.write jekyll_config
    end
@@ -367,7 +382,7 @@
 +  rakefile.sub!(/new_post_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_post_ext\\1=\\2\\3#{ext}\\3")
 +  rakefile.sub!(/new_page_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_page_ext\\1=\\2\\3#{ext}\\3")
 +  rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
-+  rakefile.sub!(/repo_url(\s*)=(\s*)(["'])[^"']*["']/, "repo_url\\1=\\2\\3#{repo_url}\\3")
++  rakefile.sub!(/repo_url(\s*)=(\s*)(["'])[\w-]*["']/, "repo_url\\1=\\2\\3#{repo_url}\\3")
 +
 +  if ask("Do you want to push_ex (renew remote repository evrey time)?", ['y', 'n']) == 'y'
 +    dir = get_stdin("Enter where you want to put _deploy (current: #{tmp_dir}): ")
@@ -401,7 +416,7 @@
  end
  
  def ok_failed(condition)
-@@ -402,3 +623,45 @@
+@@ -402,3 +631,45 @@ task :list do
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end

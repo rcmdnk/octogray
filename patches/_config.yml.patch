@@ -1,14 +1,16 @@
---- _config.yml	2014-01-31 15:35:54.000000000 +0100
-+++ .themes/octogray/_config.yml	2014-01-31 15:36:00.000000000 +0100
-@@ -6,20 +6,34 @@
+diff --git a/master:_config.yml b/source:_config.yml
+index c1d56f4..96c5650 100644
+--- a/master:_config.yml
++++ b/source:_config.yml
+@@ -6,20 +6,34 @@ url: http://yoursite.com
  title: My Octopress Blog
  subtitle: A blogging framework for hackers.
  author: Your Name
 +titlelogo:
 +nav_marks: true
-+aboutme_logo: /images/MacApp/MacLogoMini.png
-+sitelogo: /images/MacApp/MacLogoMiddle.png
- simple_search: http://google.com/search
++aboutme_logo: /images/about.png
++sitelogo: /images/logo.png
+ simple_search: https://www.google.com/search
  description:
 +google_custom_search:
 +google_search: false
@@ -35,7 +37,7 @@
  
  # ----------------------- #
  #    Jekyll & Plugins     #
-@@ -33,24 +47,41 @@
+@@ -33,25 +47,38 @@ destination: public
  plugins: plugins
  code_dir: downloads/code
  category_dir: blog/categories
@@ -59,21 +61,19 @@
 +    coderay_line_number: table
 +    coderay_css: class
 +
-+#markdown: rdiscount
-+#rdiscount:
-+#  extensions: ['generate_toc']
-+#  # Table Of Contents
-+#  toc_token: "{:TOC}"
-+
- pygments: false # default python pygments have been replaced by pygments.rb
++#pygments: false # default python pygments have been replaced by pygments.rb
+ highlighter: pygments # default python pygments have been replaced by pygments.rb
  
  paginate: 10          # Posts per page on the blog index
- pagination_dir: blog  # Directory base for pagination URLs eg. /blog/page/2/
++#pagination_dir: blog  # Directory base for pagination URLs eg. /blog/page/2/
+ paginate_path: "posts/:num"  # Directory base for pagination URLs eg. /posts/2/
  recent_posts: 5       # Posts in the sidebar Recent Posts section
 -excerpt_link: "Read on &rarr;"  # "Continue reading" link text at the bottom of excerpted articles
-+excerpt_link: "Read on <i class=\"icon-hand-right\"></i>"  # "Continue reading" link text at the bottom of excerpted articles
++excerpt_link: "Read on <i class=\"fa fa-hand-o-right\"></i>"  # "Continue reading" link text at the bottom of excerpted articles
+ excerpt_separator: "<!--more-->"
  
- titlecase: true       # Converts page and post titles to titlecase
+-titlecase: true       # Converts page and post titles to titlecase
++titlecase: false       # Converts page and post titles to titlecase
  
  # list each of the sidebar modules you want to include, in the order you want them to appear.
  # To add custom asides, create files in /source/_includes/custom/asides/ and add them to the list like 'custom/asides/custom_aside_name.html'
@@ -84,13 +84,15 @@
  
  # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
  # and add an array with the asides you want to use.
-@@ -58,6 +89,17 @@
+@@ -59,6 +86,19 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
  # post_asides:
  # page_asides:
  
 +# scroll-fixed
 +n_scroll_fixed: 2
 +
++# scrolltop
++scrolltop: false
 +
 +# Related post
 +related_posts_limit: 5
@@ -102,7 +104,7 @@
  # ----------------------- #
  #   3rd Party Settings    #
  # ----------------------- #
-@@ -67,20 +109,32 @@
+@@ -68,20 +108,32 @@ github_user:
  github_repo_count: 0
  github_show_profile_link: true
  github_skip_forks: true
@@ -135,7 +137,7 @@
  # Pinboard
  pinboard_user:
  pinboard_count: 3
-@@ -98,3 +152,50 @@
+@@ -99,3 +151,55 @@ google_analytics_tracking_id:
  
  # Facebook Like
  facebook_like: false
@@ -186,3 +188,8 @@
 +
 +# Google Adsense
 +sponsored_links: "Sponsored Links"
++
++# Google Translate
++google_translate_lang: en
++# SIMPLE/TOP_LEFT/TOP_RIGHT/BOTTOM_LEFT/BOTTOM_RIGHT
++google_translate_layout: SIMPLE
