@@ -2,3 +2,6 @@
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href='//fonts.googleapis.com/css?family=Black+Ops+One' rel='stylesheet' type='text/css'>
+{% if site.google_translate_layout and page.translate != false %}
+<meta name="google-translate-customization" content="{{site.google-transrate-content}}"></meta>
+{% endif %}

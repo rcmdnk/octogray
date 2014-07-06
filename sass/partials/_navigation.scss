@@ -246,6 +246,7 @@ div.gsc-clear-button {
 .cse .gsc-control-cse, .gsc-control-cse {
   background-color: $nav-bg !important;
   border: 1px solid $nav-bg !important;
+  padding: 0;
 }
 .cse .gsc-webResult.gsc-result, .gsc-webResult.gsc-result, .gsc-imageResult-column, .gsc-imageResult-classic {
    border: 1px solid $nav-bg !important;
@@ -365,3 +366,20 @@ a.gsc-trailing-more-results:link {
   }
 }
 
+// translation
+.goog-te-gadget {
+   text-align:center;
+}
+div#google_translate_element div.goog-te-gadget-simple {
+  background-color: #ffffff !important;
+  padding: 3px !important;
+  border-radius: 10px !important;
+  border: solid 2px darken($nav-bg, 15) !important;
+}
+div#google_translate_element div.goog-te-gadget-simple a.goog-te-menu-value span {
+  font-size: 14px !important;
+  color: darken($nav-bg, 30) !important;
+}
+div#google_translate_element div.goog-te-gadget-simple a.goog-te-menu-value span:hover {
+  color: darken($nav-bg, 100) !important;
+}

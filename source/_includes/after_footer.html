@@ -1,5 +1,14 @@
-{% if site.google_analytics_tracking_id or page.sharing != false or (site.disqus_short_name and page.comments != false) or (site.linkwithin_show == true and page.footer != false %}
-<script>
+{% if site.google_analytics_tracking_id or page.sharing != false or (site.disqus_short_name and page.comments != false) or (site.linkwithin_show == true and page.footer != false or site.google_translate_lang %}
+<script type="text/javascript">
+{% if site.google_translate_layout and page.translate != false %}
+{% capture analytics %}{% if site.google_analytics_tracking_id %}, gaTrack: true, gaId: '{{site.google_analytics_tracking_id}}'{% endif %}{% endcapture %}
+{% capture layout %}{% if site.google_translate_layout == 'SIMPLE' %}InlineLayout.SIMPLE{% else %}FloatPosition.{{site.google_translate_layout}}{% endif %}{% endcapture %}
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: '{{site.google_translate_lang}}', layout: google.translate.TranslateElement.{{layout}}, autoDisplay: false, multilanguagePage: true{{analytics}}}, 'google_translate_element');
+}
+</script>
+<script type="text/javascript">
+{% endif %}
 (function (w, d) {
   var j, s = d.getElementsByTagName('script')[0],
   a = function (u, i) {
@@ -49,14 +58,18 @@
   {% endif %}
   {% if site.disqus_short_name and page.comments != false %}
   var disqus_shortname = '{{ site.disqus_short_name }}';
+  var disqus_script = '';
   {% if page.comments == true %}
   var disqus_identifier = '{{ site.url }}{{ page.url }}';
   var disqus_url = '{{ site.url }}{{ page.url }}';
-  var disqus_script = 'embed.js';
+  disqus_script = 'embed.js';
   {% elsif site.disqus_short_name and site.disqus_show_comment_count == true %}
-  var disqus_script = 'count.js';
+  disqus_script = 'count.js';
   {% endif %}
   a('//'+disqus_shortname+'.disqus.com/'+disqus_script);
+  {% endif %}
+  {% if site.google_translate_layout and page.translate != false %}
+  a('//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit','translate-js');
   {% endif %}
 })(this, document);
 </script>

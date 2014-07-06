@@ -30,32 +30,59 @@
     {% endif %}
   </p>
   {% endif %}
-  {% include custom/navigation.html %}
+  <p>
+    {% include custom/navigation.html %}
+  </p>
   {% if site.google_custom_search == 'compact' %}
-  {% include custom/google_search/compact.html %}
+  <p>
+    {% include custom/google_search/compact.html %}
+  </p>
   {% elsif site.google_custom_search == 'onlyresults' %}
-  {% include custom/google_search/onlyresults.html %}
+  <p>
+    {% include custom/google_search/onlyresults.html %}
+  </p>
   {% elsif site.google_custom_search == 'overlay' %}
-  {% include custom/google_search/overlay.html %}
+  <p>
+    {% include custom/google_search/overlay.html %}
+  </p>
   {% elsif site.google_custom_search == 'overlay_simple' %}
-  {% include custom/google_search/overlay_simple.html %}
+  <p>
+    {% include custom/google_search/overlay_simple.html %}
+  </p>
   {% elsif site.google_custom_search == 'overlay_classic' %}
-  {% include custom/google_search/overlay_classic.html %}
+  <p>
+    {% include custom/google_search/overlay_classic.html %}
+  </p>
   {% elsif site.google_custom_search == 'twolines' %}
-  {% include custom/google_search/twolines.html %}
+  <p>
+    {% include custom/google_search/twolines.html %}
+  </p>
   {% elsif site.google_custom_search == 'twopages' %}
-  {% include custom/google_search/twopages.html %}
+  <p>
+    {% include custom/google_search/twopages.html %}
+  </p>
   {% elsif site.google_search %}
-  {% include custom/affiliate/google_search.html %}
+  <p>
+    {% include custom/affiliate/google_search.html %}
+  </p>
   {% elsif site.simple_search %}
-  <form action="{{ site.simple_search }}" method="get">
-    <fieldset role="search">
-      <input type="hidden" name="q" value="site:{{ site.url | shorthand_url }}" />
-      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-    </fieldset>
-  </form>
+  <p>
+    <form action="{{ site.simple_search }}" method="get">
+      <fieldset role="search">
+        <input type="hidden" name="q" value="site:{{ site.url | shorthand_url }}" />
+        <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+      </fieldset>
+    </form>
+  </p>
   {%endif%}
   {% unless site.affiliate == false or site.affiliate_link_unit == false or page.affiliate == false %}
-  {% include custom/affiliate/google_linkshort0.html %}
+  <p>
+    {% include custom/affiliate/google_linkshort0.html %}
+  </p>
   {% endunless %}
+  {% if site.google_translate_layout and page.translate != false %}
+  <p>
+    <div id="google_translate_element"></div>
+  </p>
+  {% endif %}
 </div>
