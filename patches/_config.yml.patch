@@ -1,5 +1,5 @@
 diff --git a/master:_config.yml b/master-tmp:_config.yml
-index c1d56f4..798f2ef 100644
+index c1d56f4..84402e6 100644
 --- a/master:_config.yml
 +++ b/master-tmp:_config.yml
 @@ -6,20 +6,35 @@ url: http://yoursite.com
@@ -79,7 +79,7 @@ index c1d56f4..798f2ef 100644
  # list each of the sidebar modules you want to include, in the order you want them to appear.
  # To add custom asides, create files in /source/_includes/custom/asides/ and add them to the list like 'custom/asides/custom_aside_name.html'
 -default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
-+default_asides: [custom/asides/google_aside_top.html, custom/asides/about.html, custom/asides/monthly_archive.html, custom/asides/category_list.html, custom/asides/tag_cloud.html, asides/recent_posts.html]
++default_asides: [custom/asides/google_aside_top.html, custom/asides/about.html, custom/asides/amazon_wishlist.html, custom/asides/monthly_archive.html, custom/asides/category_list.html, custom/asides/tag_cloud.html, custom/asides/twitter_search.html, custom/asides/hatebu.html, asides/recent_posts.html]
 +# custom/asides/calendar.html
 +# custom/asides/coderwall.html
  
@@ -138,7 +138,7 @@ index c1d56f4..798f2ef 100644
  # Pinboard
  pinboard_user:
  pinboard_count: 3
-@@ -99,3 +150,63 @@ google_analytics_tracking_id:
+@@ -99,3 +150,65 @@ google_analytics_tracking_id:
  
  # Facebook Like
  facebook_like: false
@@ -158,6 +158,7 @@ index c1d56f4..798f2ef 100644
 +hatena_button: true
 +hatena_user:
 +hatena_add: "Add to Hatena Bookmark"
++hatena_popular_posts: false
 +
 +# Pocket
 +pocket_button: true
@@ -202,3 +203,4 @@ index c1d56f4..798f2ef 100644
 +
 +# Amazon tag
 +#amazon_ad_tag: xxxxxx0c-22
++amazon_wishlist: false
