@@ -1,3 +1,4 @@
+{% if site.google_custom_search_pub %}
 <div id='cse' style='width: 100%;'>Loading</div>
 <script src='//www.google.com/jsapi' type='text/javascript'></script>
 <script type='text/javascript'>
@@ -28,4 +29,4 @@ google.setOnLoadCallback(function() {
   }
 }, true);
 </script>
-
+{% endif %}

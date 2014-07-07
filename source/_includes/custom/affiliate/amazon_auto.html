@@ -1,3 +1,4 @@
+{% if site.amazon_ad_tag %}
 {% unless site.affiliate == false or page.affiliate == false %}
 <div>
   <script type="text/javascript"><!--
@@ -5,3 +6,4 @@
   <script type="text/javascript" src="http://ir-jp.amazon-adsystem.com/s/ads.js"></script>
 </div>
 {% endunless %}
+{% endif %}
