@@ -12,7 +12,7 @@ aboutme_logo: /images/about.png
 sitelogo: /images/logo.png
 simple_search: https://www.google.com/search
 description:
-google_custom_search:
+google_custom_search: overlay_simple
 google_search: false
 imgpath: /images
 
@@ -203,3 +203,11 @@ sponsored_links: "Sponsored Links"
 google_translate_lang: en
 # SIMPLE/TOP_LEFT/TOP_RIGHT/BOTTOM_LEFT/BOTTOM_RIGHT
 google_translate_layout: SIMPLE
+google_translate_cutomize:
+
+# Google Custom Search
+google_custom_search_pub:
+google_custom_search_lang: en
+
+# Amazon tag
+#amazon_ad_tag: xxxxxx0c-22

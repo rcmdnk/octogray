@@ -1,3 +1,11 @@
 {% comment %}
   Add content to be output before TOC (normally called from after_excerpt.html).
 {% endcomment %}
+{% unless site.affiliate == false or page.affiliate == false %}
+<div class="center_wrapper">
+  <div>{{site.sponsored_links}}</div>
+  <div>
+    {% include custom/affiliate/google_mid.html %}
+  </div>
+</div>
+{% endunless %}
