@@ -17,7 +17,7 @@ while [ 1 ];do
       break
       ;;
     *)
-      echo -n "[y/n]: "
+      echo -n "Do you want to patch Gemfile? [y/n]: "
       read yn
       continue
       ;;
@@ -36,7 +36,7 @@ while [ 1 ];do
       break
       ;;
     *)
-      echo -n "[y/n]: "
+      echo -n "Do you want to patch Rakefile? [y/n]: "
       read yn
       continue
       ;;
@@ -55,7 +55,7 @@ while [ 1 ];do
       break
       ;;
     *)
-      echo -n "[y/n]: "
+      echo -n "Do you want to patch _config.yml? [y/n]: "
       read yn
       continue
       ;;
@@ -74,7 +74,7 @@ while [ 1 ];do
       break
       ;;
     *)
-      echo -n "[y/n]: "
+      echo -n "Do you want to patch _config.yml? [y/n]: "
       read yn
       continue
       ;;
