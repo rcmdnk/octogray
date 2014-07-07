@@ -70,7 +70,7 @@ while [ 1 ];do
   case $yn in
     "y"|"Y" ) cd plugins;patch < ../.themes/octogray/patches/plugins.patch;cd ../;break;;
     "n"|"N" )
-      printf "\n\e[31mPlease update plugins_for_patch by following .themes/octogray/plugins\e[m\n"
+      printf "\n\e[31mPlease update plugins by following .themes/octogray/plugins\e[m\n"
       break
       ;;
     *)
@@ -166,5 +166,5 @@ rm -f ./source/javascripts/scrolltopcontrol.js.bak
 echo
 
 ## other plugins
-cp .themes/octogray/plugins/*rb ./plugins/
+cp .themes/octogray/plugins_add/*rb ./plugins/
 
