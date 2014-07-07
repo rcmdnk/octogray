@@ -154,6 +154,7 @@ rm -f nailthumb.1.1.zip
 mv nailthumb .themes/octogray/.plugins/
 cp .themes/octogray/.plugins/nailthumb/jquery.nailthumb.1.1.css ./sass/plugins/_nailthumb.scss
 cp .themes/octogray/.plugins/nailthumb/jquery.nailthumb.1.1.min.js ./source/javascripts/
+rm -rf .themes/octogray/.plugins/nailthumb/
 echo
 
 ## [jQuery SCroll to Top Control](http://www.dynamicdrive.com/dynamicindex3/scrolltop.htm)
@@ -163,6 +164,7 @@ mv scrolltopcontrol.js .themes/octogray/.plugins/scrolltopcontrol
 cp .themes/octogray/.plugins/scrolltopcontrol/scrolltopcontrol.js ./source/javascripts/
 sed -i ".bak" "s/<img src=\"up.png\" style=\"width:48px; height:48px\" \/>/<i class=\"fa fa-chevron-up icon-scroll-up\"><\/i>/g" ./source/javascripts/scrolltopcontrol.js
 rm -f ./source/javascripts/scrolltopcontrol.js.bak
+rm -rf .themes/octogray/.plugins/scrolltopcontrol/
 echo
 
 ## other plugins
