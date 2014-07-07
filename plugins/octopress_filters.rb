@@ -22,7 +22,7 @@ module OctopressFilters
 end
 
 module Jekyll
-  class ContentFilters < PostFilter
+  class ContentFilters < PageHooks
     include OctopressFilters
     def pre_render(post)
       if post.ext.match('html|textile|markdown|md|haml|slim|xml')
@@ -91,7 +91,7 @@ module OctopressLiquidFilters
   # Replaces relative urls with full urls
   def expand_urls(input, url='')
     url ||= '/'
-    input.gsub /(\s+(href|src)\s*=\s*["|']{1})(\/[^\"'>]*)/ do
+    input.gsub /(\s+(href|src)\s*=\s*["|']{1})(\/[^\/>]{1}[^\"'>]*)/ do
       $1+url+$3
     end
   end
