@@ -1,0 +1,8 @@
+{% if site.amazon_wishlist %}
+{% unless site.affiliate == false or page.affiliate == false %}
+<section>
+{% include custom/affiliate/amazon_wishlist.html %}
+<a href="URL of your wishlist">My Wish List</a>
+</section>
+{% endunless %}
+{% endif %}

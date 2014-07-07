@@ -75,7 +75,7 @@ titlecase: false       # Converts page and post titles to titlecase
 
 # list each of the sidebar modules you want to include, in the order you want them to appear.
 # To add custom asides, create files in /source/_includes/custom/asides/ and add them to the list like 'custom/asides/custom_aside_name.html'
-default_asides: [custom/asides/google_aside_top.html, custom/asides/about.html, custom/asides/monthly_archive.html, custom/asides/category_list.html, custom/asides/tag_cloud.html, asides/recent_posts.html]
+default_asides: [custom/asides/google_aside_top.html, custom/asides/about.html, custom/asides/amazon_wishlist.html, custom/asides/monthly_archive.html, custom/asides/category_list.html, custom/asides/tag_cloud.html, custom/asides/twitter_search.html, custom/asides/hatebu.html, asides/recent_posts.html]
 # custom/asides/calendar.html
 # custom/asides/coderwall.html
 
@@ -166,6 +166,7 @@ favorite: Favorite
 hatena_button: true
 hatena_user:
 hatena_add: "Add to Hatena Bookmark"
+hatena_popular_posts: false
 
 # Pocket
 pocket_button: true
@@ -210,3 +211,4 @@ google_custom_search_lang: en
 
 # Amazon tag
 #amazon_ad_tag: xxxxxx0c-22
+amazon_wishlist: false
