@@ -91,6 +91,8 @@ cd .themes/octogray
 git submodule update --init
 cd ../../
 
+# install submodules
+
 ## [Octopress-Slideshare-Plugin](https://github.com/petehamilton/Octopress-Slideshare-Plugin)
 cp .themes/octogray/.plugins/Octopress-Slideshare-Plugin/slideshare.rb ./plugins/
 echo
@@ -147,6 +149,8 @@ echo
 cp .themes/octogray/.plugins/githubrepo-octopress/githubwidget.rb plugins/
 cp .themes/octogray/.plugins/GitHub-jQuery-Repo-Widget/jquery.githubRepoWidget.min.js source/javascripts/
 
+# install downloaded plugins
+
 ## [NailThumb](http://www.garralab.com/nailthumb.php)
 wget -O nailthumb.1.1.zip http://sourceforge.net/projects/nailthumb/files/nailthumb.1.1.zip/download
 unzip nailthumb.1.1.zip
@@ -167,6 +171,8 @@ rm -f ./source/javascripts/scrolltopcontrol.js.bak
 rm -rf .themes/octogray/.plugins/scrolltopcontrol/
 echo
 
-## other plugins
+# other plugins
 cp .themes/octogray/plugins_add/*rb ./plugins/
 
+# other files
+cp .themes/octogray/ping.yml .
