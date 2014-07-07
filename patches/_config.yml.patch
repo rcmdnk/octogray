@@ -1,5 +1,5 @@
 diff --git a/master:_config.yml b/master-tmp:_config.yml
-index c1d56f4..2a17192 100644
+index c1d56f4..c142156 100644
 --- a/master:_config.yml
 +++ b/master-tmp:_config.yml
 @@ -6,20 +6,35 @@ url: http://yoursite.com
@@ -38,7 +38,7 @@ index c1d56f4..2a17192 100644
  
  # ----------------------- #
  #    Jekyll & Plugins     #
-@@ -33,25 +48,37 @@ destination: public
+@@ -33,25 +48,36 @@ destination: public
  plugins: plugins
  code_dir: downloads/code
  category_dir: blog/categories
@@ -66,8 +66,8 @@ index c1d56f4..2a17192 100644
  highlighter: pygments # default python pygments have been replaced by pygments.rb
  
  paginate: 10          # Posts per page on the blog index
-+#pagination_dir: blog  # Directory base for pagination URLs eg. /blog/page/2/
- paginate_path: "posts/:num"  # Directory base for pagination URLs eg. /posts/2/
+-paginate_path: "posts/:num"  # Directory base for pagination URLs eg. /posts/2/
++paginate_path: "blog/page/:num"  # Directory base for pagination URLs eg. /blog/page/2/
  recent_posts: 5       # Posts in the sidebar Recent Posts section
 -excerpt_link: "Read on &rarr;"  # "Continue reading" link text at the bottom of excerpted articles
 +excerpt_link: "Read on <i class=\"fa fa-hand-o-right\"></i>"  # "Continue reading" link text at the bottom of excerpted articles
@@ -85,7 +85,7 @@ index c1d56f4..2a17192 100644
  
  # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
  # and add an array with the asides you want to use.
-@@ -59,6 +86,19 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
+@@ -59,6 +85,19 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
  # post_asides:
  # page_asides:
  
@@ -105,7 +105,7 @@ index c1d56f4..2a17192 100644
  # ----------------------- #
  #   3rd Party Settings    #
  # ----------------------- #
-@@ -68,20 +108,32 @@ github_user:
+@@ -68,20 +107,32 @@ github_user:
  github_repo_count: 0
  github_show_profile_link: true
  github_skip_forks: true
@@ -138,7 +138,7 @@ index c1d56f4..2a17192 100644
  # Pinboard
  pinboard_user:
  pinboard_count: 3
-@@ -99,3 +151,63 @@ google_analytics_tracking_id:
+@@ -99,3 +150,63 @@ google_analytics_tracking_id:
  
  # Facebook Like
  facebook_like: false
