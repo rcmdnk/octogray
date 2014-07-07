@@ -8,8 +8,9 @@ subtitle: A blogging framework for hackers.
 author: Your Name
 titlelogo:
 nav_marks: true
-aboutme_logo: /images/about.png
-sitelogo: /images/logo.png
+# Please add your images to there
+#aboutme_logo: /images/about.png
+#sitelogo: /images/logo.png
 simple_search: https://www.google.com/search
 description:
 google_custom_search: overlay_simple
