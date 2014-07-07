@@ -1,18 +1,19 @@
-diff --git a/master:_config.yml b/source:_config.yml
-index c1d56f4..96c5650 100644
+diff --git a/master:_config.yml b/master-tmp:_config.yml
+index c1d56f4..2a17192 100644
 --- a/master:_config.yml
-+++ b/source:_config.yml
-@@ -6,20 +6,34 @@ url: http://yoursite.com
++++ b/master-tmp:_config.yml
+@@ -6,20 +6,35 @@ url: http://yoursite.com
  title: My Octopress Blog
  subtitle: A blogging framework for hackers.
  author: Your Name
 +titlelogo:
 +nav_marks: true
-+aboutme_logo: /images/about.png
-+sitelogo: /images/logo.png
++# Please add your images to there
++#aboutme_logo: /images/about.png
++#sitelogo: /images/logo.png
  simple_search: https://www.google.com/search
  description:
-+google_custom_search:
++google_custom_search: overlay_simple
 +google_search: false
 +imgpath: /images
  
@@ -37,7 +38,7 @@ index c1d56f4..96c5650 100644
  
  # ----------------------- #
  #    Jekyll & Plugins     #
-@@ -33,25 +47,38 @@ destination: public
+@@ -33,25 +48,37 @@ destination: public
  plugins: plugins
  code_dir: downloads/code
  category_dir: blog/categories
@@ -77,8 +78,8 @@ index c1d56f4..96c5650 100644
  
  # list each of the sidebar modules you want to include, in the order you want them to appear.
  # To add custom asides, create files in /source/_includes/custom/asides/ and add them to the list like 'custom/asides/custom_aside_name.html'
- default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
-+#default_asides: [custom/asides/google_aside_top.html, custom/asides/about.html, custom/asides/monthly_archive.html, custom/asides/category_list.html, custom/asides/tag_cloud.html, asides/recent_posts.html]
+-default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
++default_asides: [custom/asides/google_aside_top.html, custom/asides/about.html, custom/asides/monthly_archive.html, custom/asides/category_list.html, custom/asides/tag_cloud.html, asides/recent_posts.html]
 +# custom/asides/calendar.html
 +# custom/asides/coderwall.html
  
@@ -137,7 +138,7 @@ index c1d56f4..96c5650 100644
  # Pinboard
  pinboard_user:
  pinboard_count: 3
-@@ -99,3 +151,55 @@ google_analytics_tracking_id:
+@@ -99,3 +151,63 @@ google_analytics_tracking_id:
  
  # Facebook Like
  facebook_like: false
@@ -193,3 +194,11 @@ index c1d56f4..96c5650 100644
 +google_translate_lang: en
 +# SIMPLE/TOP_LEFT/TOP_RIGHT/BOTTOM_LEFT/BOTTOM_RIGHT
 +google_translate_layout: SIMPLE
++google_translate_cutomize:
++
++# Google Custom Search
++google_custom_search_pub:
++google_custom_search_lang: en
++
++# Amazon tag
++#amazon_ad_tag: xxxxxx0c-22
