@@ -1,5 +1,5 @@
 diff --git a/master:_config.yml b/master-tmp:_config.yml
-index c1d56f4..84402e6 100644
+index c1d56f4..96928ca 100644
 --- a/master:_config.yml
 +++ b/master-tmp:_config.yml
 @@ -6,20 +6,35 @@ url: http://yoursite.com
@@ -67,7 +67,7 @@ index c1d56f4..84402e6 100644
  
  paginate: 10          # Posts per page on the blog index
 -paginate_path: "posts/:num"  # Directory base for pagination URLs eg. /posts/2/
-+paginate_path: "blog/page/:num"  # Directory base for pagination URLs eg. /blog/page/2/
++paginate_path: "blog/page/:num/"  # Directory base for pagination URLs eg. /blog/page/2/
  recent_posts: 5       # Posts in the sidebar Recent Posts section
 -excerpt_link: "Read on &rarr;"  # "Continue reading" link text at the bottom of excerpted articles
 +excerpt_link: "Read on <i class=\"fa fa-hand-o-right\"></i>"  # "Continue reading" link text at the bottom of excerpted articles
