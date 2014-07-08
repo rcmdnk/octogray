@@ -1,7 +1,7 @@
-diff --git a/master:Rakefile b/master-tmp:Rakefile
-index 7c15332..ff327c1 100644
+diff --git a/master:Rakefile b/source:Rakefile
+index 7c15332..de17c93 100644
 --- a/master:Rakefile
-+++ b/master-tmp:Rakefile
++++ b/source:Rakefile
 @@ -9,23 +9,31 @@ ssh_port       = "22"
  document_root  = "~/website.com/"
  rsync_delete   = false
@@ -193,7 +193,7 @@ index 7c15332..ff327c1 100644
  # usage rake new_post[my-new-post] or rake new_post['my new post'] or rake new_post (defaults to "new-post")
  desc "Begin a new post in #{source_dir}/#{posts_dir}"
  task :new_post, :title do |t, args|
-@@ -102,20 +238,46 @@ task :new_post, :title do |t, args|
+@@ -102,20 +238,47 @@ task :new_post, :title do |t, args|
      title = get_stdin("Enter a title for your post: ")
    end
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
@@ -216,7 +216,8 @@ index 7c15332..ff327c1 100644
      post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M:%S %z')}"
      post.puts "comments: true"
 -    post.puts "categories: "
-+    post.puts "category:"
++    post.puts "categories:"
++    post.puts "tags:"
 +    #post.puts "categories: #{category}"
 +    #post.puts "tags: #{tags}"
 +    #post.puts "keywords: #{title.gsub(' ',', ')}"
@@ -241,7 +242,7 @@ index 7c15332..ff327c1 100644
    end
  end
  
-@@ -125,6 +287,8 @@ task :new_page, :filename do |t, args|
+@@ -125,6 +288,8 @@ task :new_page, :filename do |t, args|
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
    args.with_defaults(:filename => 'new-page')
    page_dir = [source_dir]
@@ -250,7 +251,7 @@ index 7c15332..ff327c1 100644
    if args.filename.downcase =~ /(^.+\/)?(.+)/
      filename, dot, extension = $2.rpartition('.').reject(&:empty?)         # Get filename and extension
      title = filename
-@@ -147,10 +311,12 @@ task :new_page, :filename do |t, args|
+@@ -147,10 +312,12 @@ task :new_page, :filename do |t, args|
        page.puts "---"
        page.puts "layout: page"
        page.puts "title: \"#{title}\""
@@ -263,7 +264,7 @@ index 7c15332..ff327c1 100644
        page.puts "---"
      end
    else
-@@ -161,21 +327,23 @@ end
+@@ -161,21 +328,23 @@ end
  # usage rake isolate[my-post]
  desc "Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly."
  task :isolate, :filename do |t, args|
@@ -293,7 +294,7 @@ index 7c15332..ff327c1 100644
  end
  
  desc "Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom"
-@@ -222,15 +390,32 @@ task :deploy do
+@@ -222,15 +391,32 @@ task :deploy do
      File.delete(".preview-mode")
      Rake::Task[:generate].execute
    end
@@ -326,7 +327,7 @@ index 7c15332..ff327c1 100644
  desc "copy dot files for deployment"
  task :copydot, :source, :dest do |t, args|
    FileList["#{args.source}/**/.*"].exclude("**/.", "**/..", "**/.DS_Store", "**/._*").each do |file|
-@@ -270,6 +455,31 @@ multitask :push do
+@@ -270,6 +456,31 @@ multitask :push do
    end
  end
  
@@ -358,7 +359,7 @@ index 7c15332..ff327c1 100644
  desc "Update configurations to support publishing to root or sub directory"
  task :set_root_dir, :dir do |t, args|
    puts ">>> !! Please provide a directory, eg. rake config_dir[publishing/subdirectory]" unless args.dir
-@@ -346,23 +556,45 @@ task :setup_github_pages, :repo do |t, args|
+@@ -346,23 +557,45 @@ task :setup_github_pages, :repo do |t, args|
    File.open('_config.yml', 'w') do |f|
      f.write jekyll_config
    end
@@ -419,7 +420,7 @@ index 7c15332..ff327c1 100644
  end
  
  def ok_failed(condition)
-@@ -402,3 +634,52 @@ task :list do
+@@ -402,3 +635,52 @@ task :list do
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end

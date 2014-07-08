@@ -1,7 +1,7 @@
-diff --git a/master:_config.yml b/master-tmp:_config.yml
+diff --git a/master:_config.yml b/source:_config.yml
 index c1d56f4..96928ca 100644
 --- a/master:_config.yml
-+++ b/master-tmp:_config.yml
++++ b/source:_config.yml
 @@ -6,20 +6,35 @@ url: http://yoursite.com
  title: My Octopress Blog
  subtitle: A blogging framework for hackers.
