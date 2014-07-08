@@ -167,6 +167,9 @@ mkdir -p .themes/octogray/.plugins/scrolltopcontrol
 mv scrolltopcontrol.js .themes/octogray/.plugins/scrolltopcontrol
 cp .themes/octogray/.plugins/scrolltopcontrol/scrolltopcontrol.js ./source/javascripts/
 sed -i ".bak" "s/<img src=\"up.png\" style=\"width:48px; height:48px\" \/>/<i class=\"fa fa-chevron-up icon-scroll-up\"><\/i>/g" ./source/javascripts/scrolltopcontrol.js
+sed -i ".bak" "s/startline:100/startline:300/g" ./source/javascripts/scrolltopcontrol.js
+sed -i ".bak" "s/offsety:5/offsety:20/g" ./source/javascripts/scrolltopcontrol.js
+sed -i ".bak" "s/bottom:mainobj/top:mainobj/g" ./source/javascripts/scrolltopcontrol.js
 rm -f ./source/javascripts/scrolltopcontrol.js.bak
 rm -rf .themes/octogray/.plugins/scrolltopcontrol/
 echo
