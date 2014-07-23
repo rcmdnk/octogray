@@ -108,11 +108,6 @@ cp .themes/octogray/.plugins/octopress-postscript/plugins/postscript.rb ./plugin
 cp .themes/octogray/.plugins/octopress-postscript/sass/plugins/_postscript.scss ./sass/plugins/
 echo
 
-## [intro.js](http://usablica.github.io/intro.js/)
-cp .themes/octogray/.plugins/intro.js/introjs.css  ./sass/plugins/_introjs.scss
-cp .themes/octogray/.plugins/intro.js/minified/intro.min.js ./source/javascripts
-echo
-
 ## [jquery--ex-flex-fiex](http://github.com/cyokodog/jquery.ex-flex-fixed)
 cp .themes/octogray/.plugins/jquery.ex-flex-fixed/jquery.exflexfixed-0.3.0.js ./source/javascripts/
 echo
