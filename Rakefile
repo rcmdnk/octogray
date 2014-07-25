@@ -79,6 +79,7 @@ end
 desc "Generate jekyll site"
 task :generate do
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
+  Rake::Task[:check].invoke("new")
   puts "## Generating Site with Jekyll"
   system "compass compile --css-dir #{source_dir}/stylesheets"
   system "jekyll build"
@@ -86,9 +87,7 @@ task :generate do
 end
 
 desc "Same as generate"
-task :gen do
-  Rake::Task[:generate].execute
-end
+task :gen => :generate
 
 # usage rake generate_only[my-post]
 desc "Generate only specified post (much faster)"
@@ -104,31 +103,28 @@ task :generate_only, :filename do |t, args|
   puts ""
   puts "## Stashing other posts"
   Rake::Task[:isolate].invoke(filename)
-  puts "## Generating Site with Jekyll"
-  system "compass compile --css-dir #{source_dir}/stylesheets"
-  system({"OCTOPRESS_ENV"=>"preview"},"jekyll build")
-  puts "## Restoring stashed posts"
-  Rake::Task[:integrate].execute
+  begin
+    Rake::Task[:check].invoke("new")
+    puts "## Generating Site with Jekyll"
+    system "compass compile --css-dir #{source_dir}/stylesheets"
+    system({"OCTOPRESS_ENV"=>"preview"},"jekyll build")
+    puts "## Restoring stashed posts"
+    Rake::Task[:integrate].execute
+  rescue
+    puts $!
+    Rake::Task[:integrate].execute
+    exit 1
+  end
 end
 
 desc "Same as generate_only"
 task :gen_only, :filename do |t, args|
-  if args.filename
-    filename = args.filename
-  else
-    filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.reverse[0]
-  end
-  Rake::Task[:generate_only].invoke(filename)
+  Rake::Task[:generate_only].invoke(args.filename)
 end
 
 desc "Same as generate_only"
 task :go, :filename do |t, args|
-  if args.filename
-    filename = args.filename
-  else
-    filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.reverse[0]
-  end
-  Rake::Task[:generate_only].invoke(filename)
+  Rake::Task[:generate_only].invoke(args.filename)
 end
 
 desc "Watch the site and regenerate when it changes"
@@ -163,19 +159,25 @@ task :watch_only, :filename do |t, args|
   puts "## Stashing other posts"
   Rake::Task[:isolate].invoke(filename)
 
-  puts "Starting to watch source with Jekyll and Compass."
-  system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
-  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch")
-  compassPid = Process.spawn("compass watch")
+  begin
+    puts "Starting to watch source with Jekyll and Compass."
+    system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
+    jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch")
+    compassPid = Process.spawn("compass watch")
 
-  trap("INT") {
-    [jekyllPid, compassPid].each { |pid| Process.kill(9, pid) rescue Errno::ESRCH }
-    puts "## Restoring stashed posts"
+    trap("INT") {
+      [jekyllPid, compassPid].each { |pid| Process.kill(9, pid) rescue Errno::ESRCH }
+      puts "## Restoring stashed posts"
+      Rake::Task[:integrate].execute
+      exit 0
+    }
+
+    [jekyllPid, compassPid].each { |pid| Process.wait(pid) }
+  rescue
+    puts $1
     Rake::Task[:integrate].execute
-    exit 0
-  }
-
-  [jekyllPid, compassPid].each { |pid| Process.wait(pid) }
+    exit 1
+  end
 end
 
 desc "preview the site in a web browser"
@@ -211,21 +213,26 @@ task :preview_only, :filename do |t, args|
   puts "## Stashing other posts"
   Rake::Task[:isolate].invoke(filename)
 
-  puts "## Starting to watch source with Jekyll and Compass. Starting Rack on port #{server_port}"
-  system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
-  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch")
-  compassPid = Process.spawn("compass watch")
-  rackupPid = Process.spawn("rackup --port #{server_port}")
+  begin
+    puts "## Starting to watch source with Jekyll and Compass. Starting Rack on port #{server_port}"
+    system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
+    jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch")
+    compassPid = Process.spawn("compass watch")
+    rackupPid = Process.spawn("rackup --port #{server_port}")
 
-  trap("INT") {
-    [jekyllPid, compassPid, rackupPid].each { |pid| Process.kill(9, pid) rescue Errno::ESRCH }
-    puts "## Restoring stashed posts"
+    trap("INT") {
+      [jekyllPid, compassPid, rackupPid].each { |pid| Process.kill(9, pid) rescue Errno::ESRCH }
+      puts "## Restoring stashed posts"
+      Rake::Task[:integrate].execute
+      exit 0
+    }
+
+    [jekyllPid, compassPid, rackupPid].each { |pid| Process.wait(pid) }
+  rescue
+    puts $1
     Rake::Task[:integrate].execute
-    exit 0
-  }
-
-  [jekyllPid, compassPid, rackupPid].each { |pid| Process.wait(pid) }
-
+    exit 1
+  end
 end
 
 
@@ -273,7 +280,7 @@ task :new_post, :title do |t, args|
     post.puts ""
     post.puts ""
     post.puts "{%comment%}"
-    post.puts "![xxxxx]({{site.imgpath}}/post/xxxxx){:class=\"pic\"}"
+    post.puts "![xxxxx]({{site.imgpath}}/post/xxxxx){:class=\"pic imglink\"}"
     post.puts "<i class=\"fa fa-arrow-right\"></i>"
     post.puts "<hr class=\"dotted-border\">"
     post.puts "{%endcomment%}"
@@ -330,7 +337,7 @@ desc "Move all other posts than the one currently being worked on to a temporary
 task :isolate, :filename do |t, args|
   FileUtils.mkdir(full_stash_dir) unless File.exist?(full_stash_dir)
   Dir.glob("#{source_dir}/#{posts_dir}/*") do |post|
-    FileUtils.mv post, full_stash_dir unless post.include?(args.filename)
+    FileUtils.mv post, full_stash_dir unless post.end_with?(args.filename)
   end
   system "touch .isolated"
 end
@@ -410,12 +417,10 @@ task :deploy do
 end
 
 desc "Generate website and deploy"
-task :gen_deploy => [:integrate, :generate, :deploy] do
-end
+task :gen_deploy => [:integrate, :generate, :deploy]
 
 desc "Same as gen_deploy"
-task :gd => [:integrate, :generate, :deploy] do
-end
+task :gd => [:integrate, :generate, :deploy]
 
 desc "copy dot files for deployment"
 task :copydot, :source, :dest do |t, args|
@@ -607,7 +612,7 @@ def ok_failed(condition)
 end
 
 def get_stdin(message)
-  print message
+  puts message
   STDIN.gets.chomp
 end
 
@@ -634,6 +639,63 @@ desc "list tasks"
 task :list do
   puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
   puts "(type rake -T for more detail)\n\n"
+end
+
+def grep_check(word, grep_option, opt)
+  vword=word
+  if word.index("^") == 0
+    vword=word.sub("^", ":")
+  end
+  if opt == 0
+    grep_option = "-A1 -B1 #{grep_option}"
+    comment = "An empty line is required around \\\"#{word}\\\"!"
+  elsif opt == 1
+    grep_option = "-B1 #{grep_option}"
+    comment = "An empty line is required before \\\"#{word}\\\"!"
+  elsif opt == 2
+    grep_option = "-A1 #{grep_option}"
+    comment = "An empty line is required after \\\"#{word}\\\"!"
+  end
+  puts "\nChecking \"#{word}\"...\n\n"
+  ok_failed_stop system("\
+      if grep -H -n -e \"#{word}\" #{grep_option}|\
+          grep -v \"#{vword}\";then \
+        printf \"\\\\n\\\\e[31m\";\
+        echo #{comment};\
+        printf \"\\\\e[m\\\\n\";\
+        exit 1;\
+      fi")
+end
+
+desc 'Check source'
+task :check, :opt do |t, args|
+  grep_files = "-r #{source_dir} --include \"*.#{new_post_ext}\""
+  if args.opt == "new"
+    grep_files = "#{source_dir}/#{posts_dir}/*.#{new_post_ext}"
+  end
+  puts "\n## Checking codes..."
+  grep_option = "#{grep_files}|\
+      grep -v \"^--$\"|\
+      grep -v \"#{new_post_ext}-[0-9]\\\+-$\"|\
+      grep -v \"{%\ *raw\ *%}$\""
+
+  grep_check("^{%\ *codeblock", grep_option, 1)
+  #grep_check("^>", grep_option, 0)
+  #grep_check("^#", grep_option, 1)
+  grep_check("^- - -$", grep_option, 1)
+  #grep_check("^<hr>$", grep_option, 1)
+
+  puts "\nChecking words to be avoided...\n\n"
+  ok_failed_stop system("\
+      if [ -f #{word_avoid} ];then \
+        while read a;do \
+          if ret=$(grep -i -q $a #{grep_files});then \
+            echo \"A word $a is included, must be avoided!!!\";\
+            echo $ret;\
+            exit 1;\
+          fi;\
+        done < #{word_avoid};\
+      fi")
 end
 
 desc 'Send to Superfeedr'
