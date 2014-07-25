@@ -696,6 +696,7 @@ task :check, :opt do |t, args|
           fi;\
         done < #{word_avoid};\
       fi")
+  puts ""
 end
 
 desc 'Send to Superfeedr'
