@@ -107,7 +107,7 @@ task :generate_only, :filename do |t, args|
     Rake::Task[:check].invoke("new")
     puts "## Generating Site with Jekyll"
     system "compass compile --css-dir #{source_dir}/stylesheets"
-    system({"OCTOPRESS_ENV"=>"preview"},"jekyll build")
+    system({"OCTOPRESS_ENV"=>"preview"},"jekyll build --unpublished")
     puts "## Restoring stashed posts"
     Rake::Task[:integrate].execute
   rescue
@@ -132,7 +132,7 @@ task :watch do
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
   puts "Starting to watch source with Jekyll and Compass."
   system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
-  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch")
+  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch --unpublished")
   compassPid = Process.spawn("compass watch")
 
   trap("INT") {
@@ -162,7 +162,7 @@ task :watch_only, :filename do |t, args|
   begin
     puts "Starting to watch source with Jekyll and Compass."
     system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
-    jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch")
+    jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch --unpublished")
     compassPid = Process.spawn("compass watch")
 
     trap("INT") {
@@ -185,7 +185,7 @@ task :preview do
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
   puts "Starting to watch source with Jekyll and Compass. Starting Rack on port #{server_port}"
   system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
-  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch")
+  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch --unpublished")
   compassPid = Process.spawn("compass watch")
   rackupPid = Process.spawn("rackup --port #{server_port}")
 
@@ -216,7 +216,7 @@ task :preview_only, :filename do |t, args|
   begin
     puts "## Starting to watch source with Jekyll and Compass. Starting Rack on port #{server_port}"
     system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
-    jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch")
+    jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch --unpublished")
     compassPid = Process.spawn("compass watch")
     rackupPid = Process.spawn("rackup --port #{server_port}")
 
@@ -280,7 +280,7 @@ task :new_post, :title do |t, args|
     post.puts ""
     post.puts ""
     post.puts "{%comment%}"
-    post.puts "![xxxxx]({{site.imgpath}}/post/xxxxx){:class=\"pic imglink\"}"
+    post.puts "![xxxxx]({{site.imgpath}}/post/xxxxx){:class=\"pic\"}"
     post.puts "<i class=\"fa fa-arrow-right\"></i>"
     post.puts "<hr class=\"dotted-border\">"
     post.puts "{%endcomment%}"
@@ -658,7 +658,7 @@ def grep_check(word, grep_option, opt)
   end
   puts "\nChecking \"#{word}\"...\n\n"
   ok_failed_stop system("\
-      if grep -H -n -e \"#{word}\" #{grep_option}|\
+      if grep -H -n -e \"#{word}\" #{grep_option} 2>/dev/null|\
           grep -v \"#{vword}\";then \
         printf \"\\\\n\\\\e[31m\";\
         echo #{comment};\
@@ -689,7 +689,7 @@ task :check, :opt do |t, args|
   ok_failed_stop system("\
       if [ -f #{word_avoid} ];then \
         while read a;do \
-          if ret=$(grep -i -q $a #{grep_files});then \
+          if ret=$(grep -i -q $a #{grep_files} 2>/dev/null);then \
             echo \"A word $a is included, must be avoided!!!\";\
             echo $ret;\
             exit 1;\

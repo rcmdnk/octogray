@@ -81,6 +81,10 @@ default_asides: [custom/asides/google_aside_top.html, custom/asides/about.html, 
 # custom/asides/calendar.html
 # custom/asides/coderwall.html
 
+# Width of the aside
+#aside_width: 300 # set sass/base/_layout.scss: $sidebar-width-min as 320px
+aside_width: 336 # set sass/base/_layout.scss: $sidebar-width-min as 350px
+
 # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
 # and add an array with the asides you want to use.
 # blog_index_asides:
@@ -99,6 +103,12 @@ related_posts: false
 
 # 404 not found picture
 pic_404nf:
+
+# Filtering Content
+show_drafts: null
+limit_posts: 0
+future:      true
+unpublished: false
 
 # ----------------------- #
 #   3rd Party Settings    #
