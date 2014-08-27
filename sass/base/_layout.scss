@@ -1,6 +1,6 @@
 $max-width: 1200px !default;
 
-$content-min-width: 320px !default;
+$content-min-width: 350px !default;
 
 // Padding used for layout margins
 $pad-min: 10px !default;
@@ -8,6 +8,9 @@ $pad-medium: 35px !default;
 
 // Sidebar widths used in media queries
 $sidebar-pad-medium: $pad-min !default;
+// sidebar width must be smaller than content width,
+// if it should be remained in smaller window.
+// Otherwise the side bar will go under the content.
 $sidebar-width-medium: $content-min-width !default;
 
 $min-width: $content-min-width * 2 - $body-border !default;
