@@ -1,11 +1,12 @@
-diff --git a/master:_config.yml b/source:_config.yml
-index c1d56f4..96928ca 100644
---- a/master:_config.yml
+diff --git a/octopress/master:_config.yml b/source:_config.yml
+index c1d56f4..f0af8f1 100644
+--- a/octopress/master:_config.yml
 +++ b/source:_config.yml
-@@ -6,20 +6,35 @@ url: http://yoursite.com
+@@ -6,20 +6,38 @@ url: http://yoursite.com
  title: My Octopress Blog
  subtitle: A blogging framework for hackers.
  author: Your Name
++lang: ja
 +titlelogo:
 +nav_marks: true
 +# Please add your images to there
@@ -24,6 +25,8 @@ index c1d56f4..96928ca 100644
  date_format: "ordinal"
 +#date_format: "%d %b %Y"
 +
++# time zone
++# timezone: UTC
  
  # RSS / Email (optional) subscription links (change if using something like Feedburner)
  subscribe_rss: /atom.xml
@@ -38,7 +41,7 @@ index c1d56f4..96928ca 100644
  
  # ----------------------- #
  #    Jekyll & Plugins     #
-@@ -33,25 +48,36 @@ destination: public
+@@ -33,25 +51,40 @@ destination: public
  plugins: plugins
  code_dir: downloads/code
  category_dir: blog/categories
@@ -82,10 +85,14 @@ index c1d56f4..96928ca 100644
 +default_asides: [custom/asides/google_aside_top.html, custom/asides/about.html, custom/asides/amazon_wishlist.html, custom/asides/monthly_archive.html, custom/asides/category_list.html, custom/asides/tag_cloud.html, custom/asides/twitter_search.html, custom/asides/hatebu.html, asides/recent_posts.html]
 +# custom/asides/calendar.html
 +# custom/asides/coderwall.html
++
++# Width of the aside
++#aside_width: 300 # set sass/base/_layout.scss: $sidebar-width-min as 320px
++aside_width: 336 # set sass/base/_layout.scss: $sidebar-width-min as 350px
  
  # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
  # and add an array with the asides you want to use.
-@@ -59,6 +85,19 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
+@@ -59,6 +92,25 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
  # post_asides:
  # page_asides:
  
@@ -102,10 +109,16 @@ index c1d56f4..96928ca 100644
 +# 404 not found picture
 +pic_404nf:
 +
++# Filtering Content
++show_drafts: null
++limit_posts: 0
++future:      true
++unpublished: false
++
  # ----------------------- #
  #   3rd Party Settings    #
  # ----------------------- #
-@@ -68,20 +107,32 @@ github_user:
+@@ -68,20 +120,32 @@ github_user:
  github_repo_count: 0
  github_show_profile_link: true
  github_skip_forks: true
@@ -138,7 +151,7 @@ index c1d56f4..96928ca 100644
  # Pinboard
  pinboard_user:
  pinboard_count: 3
-@@ -99,3 +150,65 @@ google_analytics_tracking_id:
+@@ -99,3 +163,66 @@ google_analytics_tracking_id:
  
  # Facebook Like
  facebook_like: false
@@ -187,6 +200,7 @@ index c1d56f4..96928ca 100644
 +# affiliate
 +affiliate: false
 +affiliate_link_unit: false
++#affiliate_services: "Google Adsense"
 +
 +# Google Adsense
 +sponsored_links: "Sponsored Links"

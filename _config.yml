@@ -6,6 +6,7 @@ url: http://yoursite.com
 title: My Octopress Blog
 subtitle: A blogging framework for hackers.
 author: Your Name
+lang: ja
 titlelogo:
 nav_marks: true
 # Please add your images to there
@@ -207,6 +208,7 @@ tumblr_button: true
 # affiliate
 affiliate: false
 affiliate_link_unit: false
+#affiliate_services: "Google Adsense"
 
 # Google Adsense
 sponsored_links: "Sponsored Links"
