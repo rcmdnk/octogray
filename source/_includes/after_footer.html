@@ -20,14 +20,10 @@ function googleTranslateElementInit() {
     }
   };
   {% if site.google_analytics_tracking_id %}
-  {%comment%}
-  w._gaq = [['_require', 'inpage_linkid',
-             '//www.google-analytics.com/plugins/ga/inpage_linkid.js'],
-            ['_setAccount', '{{site.google_analytics_tracking_id}}'],
-            ['_trackPageview']];
-  a(('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js', 'ga');
-  {%endcomment%}
   w._gaq = w._gaq || [];
+  var pluginUrl =
+      '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+      _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
   w._gaq.push(['_setAccount', '{{site.google_analytics_tracking_id}}']);
   w._gaq.push(['_trackPageview']);
   a(('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js', 'ga');

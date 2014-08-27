@@ -67,3 +67,12 @@ jQuery(function($){
   $('.nailthumb-container-center').nailthumb({width:200,height:200,fitDirection:'center'});
 });
 
+jQuery(function($){
+  $("img").each(function(){
+    if( $(this).parent()[0].nodeName.toLowerCase() != "a"){
+      if($(this).hasClass("imglink") || $(this).attr("src").startsWith('/images/post/')){
+        $(this).wrap($('<a href="'+$(this).attr('src')+'" />'));
+      }
+    }
+  });
+});

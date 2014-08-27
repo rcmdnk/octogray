@@ -3,12 +3,12 @@ layout: default
 footer: false
 ---
 
-<div class="blog-index">
+<div class="blog-index" itemscope itemtype="http://schema.org/Blog">
   {% assign index = true %}
   {% include custom/pagetop.html %}
   {% for post in paginator.posts %}
   {% assign content = post.content %}
-  <article>
+  <article itemscope itemtype="http://schema.org/BlogPosting">
     {% include article.html %}
   </article>
   {% endfor %}

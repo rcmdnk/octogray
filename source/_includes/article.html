@@ -2,18 +2,18 @@
 <header>
   {% unless page.meta == false %}
   <p class="meta">
-    {% include post/datenopub.html %}{{ time }}
+    {% include post/date.html %}{{ time }}
     {% include post/categories.html %}
     {% include post/tags.html %}
   </p>
   {% endunless %}
   {% if index %}
-  <h1 class="entry-title"><a href="{{root_url}}{{post.url}}">{% if site.titlecase %}{{ post.title | titlecase }}{% else %}{{ post.title }}{% endif %}</a></h1>
+  <h1 class="entry-title" itemprop="name headline"><a href="{{root_url}}{{post.url}}">{% if site.titlecase %}{{ post.title | titlecase }}{% else %}{{ post.title }}{% endif %}</a></h1>
   {% else %}
   {% if site.zenback_show == true and page.comments == true %}
   <!-- zenback_title_begin -->
   {% endif %}
-  <h1 class="entry-title">{% if site.titlecase %}{{ page.title | titlecase }}{% else %}{{ page.title }}{% endif %}</h1>
+  <h1 class="entry-title" itemprop="name headline">{% if site.titlecase %}{{ page.title | titlecase }}{% else %}{{ page.title }}{% endif %}</h1>
   {% if site.zenback_show == true and page.comments == true %}
   <!-- zenback_title_end -->
   {% endif %}
