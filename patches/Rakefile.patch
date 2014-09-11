@@ -1,5 +1,5 @@
 diff --git a/master:Rakefile b/source:Rakefile
-index 81a03df..63862fd 100644
+index 81a03df..9647d99 100644
 --- a/master:Rakefile
 +++ b/source:Rakefile
 @@ -9,27 +9,32 @@ ssh_port       = "22"
@@ -394,7 +394,16 @@ index 81a03df..63862fd 100644
      puts "\n## Github Pages deploy complete"
    end
  end
-@@ -346,23 +559,45 @@ task :setup_github_pages, :repo do |t, args|
+@@ -312,7 +525,7 @@ task :setup_github_pages, :repo do |t, args|
+   else
+     puts "Enter the read/write url for your repository"
+     puts "(For example, 'git@github.com:your_username/your_username.github.io.git)"
+-    puts "           or 'https://github.com/your_username/your_username.github.io')"
++    puts "           , 'https://github.com/your_username/repository')"
+     repo_url = get_stdin("Repository url: ")
+   end
+   protocol = (repo_url.match(/(^git)@/).nil?) ? 'https' : 'git'
+@@ -346,23 +559,46 @@ task :setup_github_pages, :repo do |t, args|
    File.open('_config.yml', 'w') do |f|
      f.write jekyll_config
    end
@@ -413,20 +422,21 @@ index 81a03df..63862fd 100644
 -    File.open(__FILE__, 'w') do |f|
 -      f.write rakefile
 +
++  rakefile = IO.read(__FILE__)
++  rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
++  rakefile.sub!(/repo_url(\s*)=(\s*)(["'])[0-9a-zA-Z\-\_\/\@\.\:]*["']/, "repo_url\\1=\\2\\3#{repo_url}\\3")
++
 +  ext = 'markdown'
 +  if ask("Do you want to use 'md' extension instead of 'markdown'?", ['y', 'n']) == 'y'
 +    ext = 'md'
 +  end
-+  rakefile = IO.read(__FILE__)
 +  rakefile.sub!(/new_post_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_post_ext\\1=\\2\\3#{ext}\\3")
 +  rakefile.sub!(/new_page_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_page_ext\\1=\\2\\3#{ext}\\3")
-+  rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
-+  rakefile.sub!(/repo_url(\s*)=(\s*)(["'])[\w-]*["']/, "repo_url\\1=\\2\\3#{repo_url}\\3")
 +
 +  if ask("Do you want to push_ex (renew remote repository evrey time)?", ['y', 'n']) == 'y'
 +    dir = get_stdin("Enter where you want to put _deploy (current: #{tmp_dir}): ")
 +    if dir == ""
-+      dir = "./"
++      dir = tmp_dir
 +    elsif
 +      if dir[-1] == "/"
 +        dir = dir[0..-2]
@@ -455,7 +465,7 @@ index 81a03df..63862fd 100644
  end
  
  def ok_failed(condition)
-@@ -374,7 +609,7 @@ def ok_failed(condition)
+@@ -374,7 +610,7 @@ def ok_failed(condition)
  end
  
  def get_stdin(message)
@@ -464,7 +474,7 @@ index 81a03df..63862fd 100644
    STDIN.gets.chomp
  end
  
-@@ -402,3 +637,110 @@ task :list do
+@@ -402,3 +638,110 @@ task :list do
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end

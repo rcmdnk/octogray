@@ -525,7 +525,7 @@ task :setup_github_pages, :repo do |t, args|
   else
     puts "Enter the read/write url for your repository"
     puts "(For example, 'git@github.com:your_username/your_username.github.io.git)"
-    puts "           or 'https://github.com/your_username/your_username.github.io')"
+    puts "           , 'https://github.com/your_username/repository')"
     repo_url = get_stdin("Repository url: ")
   end
   protocol = (repo_url.match(/(^git)@/).nil?) ? 'https' : 'git'
@@ -560,20 +560,21 @@ task :setup_github_pages, :repo do |t, args|
     f.write jekyll_config
   end
 
+  rakefile = IO.read(__FILE__)
+  rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
+  rakefile.sub!(/repo_url(\s*)=(\s*)(["'])[0-9a-zA-Z\-\_\/\@\.\:]*["']/, "repo_url\\1=\\2\\3#{repo_url}\\3")
+
   ext = 'markdown'
   if ask("Do you want to use 'md' extension instead of 'markdown'?", ['y', 'n']) == 'y'
     ext = 'md'
   end
-  rakefile = IO.read(__FILE__)
   rakefile.sub!(/new_post_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_post_ext\\1=\\2\\3#{ext}\\3")
   rakefile.sub!(/new_page_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_page_ext\\1=\\2\\3#{ext}\\3")
-  rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
-  rakefile.sub!(/repo_url(\s*)=(\s*)(["'])[\w-]*["']/, "repo_url\\1=\\2\\3#{repo_url}\\3")
 
   if ask("Do you want to push_ex (renew remote repository evrey time)?", ['y', 'n']) == 'y'
     dir = get_stdin("Enter where you want to put _deploy (current: #{tmp_dir}): ")
     if dir == ""
-      dir = "./"
+      dir = tmp_dir
     elsif
       if dir[-1] == "/"
         dir = dir[0..-2]
