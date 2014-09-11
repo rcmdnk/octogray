@@ -18,7 +18,6 @@ repo_url       = "git@github.com:user/user.github.io.git"
 ## -- Misc Configs -- ##
 
 tmp_dir         = File.expand_path(".") + "/"  # temporary directory for public/deploy
-# tmp_dir         = File.expand_path("~/tmp/octopress") + "/"  # temporary directory for public/deploy, at outside of octopress directory
 public_dir      = "#{tmp_dir}public"  # compiled site directory
 source_dir      = "source"    # source file directory
 blog_index_dir  = 'source'    # directory for your blog's index page (if you put your index in source/blog/index.html, set this to 'source/blog')
@@ -29,8 +28,6 @@ posts_dir       = "_posts"    # directory for blog files
 themes_dir      = ".themes"   # directory for blog files
 new_post_ext    = "markdown"  # default new post file extension when using the new_post task
 new_page_ext    = "markdown"  # default new page file extension when using the new_page task
-#new_post_ext    = "md"  # default new post file extension when using the new_post task
-#new_page_ext    = "md"  # default new page file extension when using the new_page task
 server_port     = "4000"      # port for preview server eg. localhost:4000
 word_avoid      = "~/.gitavoid"  # words which must be avoided to be published
 ping_file       = "ping.yml"  # file of site list for ping
