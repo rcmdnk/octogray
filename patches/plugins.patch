@@ -61,77 +61,10 @@ index 000040f..5c744c2 100644
        end
        rtn
 diff --git a/octopress_filters.rb b/octopress_filters.rb
-index 9c7fa6c..bb3c60f 100644
+index 9c7fa6c..da25c52 100644
 --- a/octopress_filters.rb
 +++ b/octopress_filters.rb
-@@ -1,45 +1,38 @@
- #custom filters for Octopress
- require './plugins/backtick_code_block'
--require 'octopress-hooks'
-+require 'jekyll-page-hooks'
- require 'jekyll-sitemap'
--require 'octopress-date-format'
-+require 'jekyll-date-format'
- require './plugins/raw'
- require 'rubypants'
- 
- module OctopressFilters
--  def self.pre_filter(page)
--    if page.ext.match('html|textile|markdown|md|haml|slim|xml')
--      input = BacktickCodeBlock::render_code_block(page.content)
--      page.content = input.gsub /(<figure.+?>.+?<\/figure>)/m do
--        TemplateWrapper::safe_wrap($1)
--      end
-+  include BacktickCodeBlock
-+  include TemplateWrapper
-+  def pre_filter(input)
-+    input = render_code_block(input)
-+    input.gsub /(<figure.+?>.+?<\/figure>)/m do
-+      safe_wrap($1)
-     end
-   end
--  def self.post_filter(page)
--    if page.ext.match('html|textile|markdown|md|haml|slim|xml')
--      page.output = TemplateWrapper::unwrap(page.output)
--    end
--
--    page.output = RubyPants.new(page.output).to_html
--  end
--
--  class PageFilters < Octopress::Hooks::Page
--    def pre_render(page)
--      OctopressFilters::pre_filter(page)
--    end
--
--    def post_render(page)
--      OctopressFilters::post_filter(page)
--    end
-+  def post_filter(input)
-+    input = unwrap(input)
-+    RubyPants.new(input).to_html
-   end
-+end
- 
--  class PostFilters < Octopress::Hooks::Post
-+module Jekyll
-+  class ContentFilters < PageHooks
-+    include OctopressFilters
-     def pre_render(post)
--      OctopressFilters::pre_filter(post)
-+      if post.ext.match('html|textile|markdown|md|haml|slim|xml')
-+        post.content = pre_filter(post.content)
-+      end
-     end
--
-     def post_render(post)
--      OctopressFilters::post_filter(post)
-+      if post.ext.match('html|textile|markdown|md|haml|slim|xml')
-+        post.content = post_filter(post.content)
-+      end
-     end
-   end
- end
-@@ -56,6 +49,14 @@ module OctopressLiquidFilters
+@@ -56,6 +56,14 @@ module OctopressLiquidFilters
      end
    end
  
@@ -146,7 +79,7 @@ index 9c7fa6c..bb3c60f 100644
    # Checks for excerpts (helpful for template conditionals)
    def has_excerpt(input)
      input =~ /<!--\s*more\s*-->/i ? true : false
-@@ -73,6 +74,11 @@ module OctopressLiquidFilters
+@@ -73,6 +81,11 @@ module OctopressLiquidFilters
    # Extracts raw content DIV from template, used for page description as {{ content }}
    # contains complete sub-template code on main page level
    def raw_content(input)
