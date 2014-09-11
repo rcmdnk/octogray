@@ -610,7 +610,7 @@ def ok_failed(condition)
 end
 
 def get_stdin(message)
-  puts message
+  print message
   STDIN.gets.chomp
 end
 
