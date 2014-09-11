@@ -1,85 +1,75 @@
 #!/usr/bin/env bash
 
+yes=0
+if [ "$1" = "-y" ] || [ "$1" = "--yes" ];then
+  yes=1
+fi
+
 if [ ! -f _config.yml ];then
   echo "please call setup.sh from the top directory of octopress."
   exit 1
 fi
 echo
 
+# yes/no helper function
+function yesno () {
+  echo -n "$1 [y/n]: "
+  if [ $yes -eq 1 ];then
+    echo "y"
+    return 0
+  fi
+  read yn
+  while [ 1 ];do
+    case $yn in
+      "y"|"Y" ) return 0;;
+      "n"|"N" ) return 1;;
+      *)
+        echo -n "Answer yes or no. [y/n]: "
+        read yn
+        continue
+        ;;
+    esac
+  done
+}
+
 # patch Gemfile
-echo -n "Do you want to patch Gemfile? [y/n]: "
-read yn
-while [ 1 ];do
-  case $yn in
-    "y"|"Y" ) patch Gemfile < .themes/octogray/patches/Gemfile.patch;break;;
-    "n"|"N" )
-      printf "\n\e[31mPlease check .themes/octogray/Gemfile for necessary packages.\e[m\n"
-      break
-      ;;
-    *)
-      echo -n "Do you want to patch Gemfile? [y/n]: "
-      read yn
-      continue
-      ;;
-  esac
-done
+yesno "Do you want to patch Gemfile?"
+ret=$?
+if [ $ret -eq 0 ];then
+  patch Gemfile < .themes/octogray/patches/Gemfile.patch
+else
+  printf "\n\e[31mPlease check .themes/octogray/Gemfile for necessary packages.\e[m\n"
+fi
 echo
 
 # patch Rakefile
-echo -n "Do you want to patch Rakefile? [y/n]: "
-read yn
-while [ 1 ];do
-  case $yn in
-    "y"|"Y" ) patch Rakefile < .themes/octogray/patches/Rakefile.patch;break;;
-    "n"|"N" )
-      printf "\n\e[31mPlease update Rakefile by following .themes/octogray/Rakefile.\e[m\n"
-      break
-      ;;
-    *)
-      echo -n "Do you want to patch Rakefile? [y/n]: "
-      read yn
-      continue
-      ;;
-  esac
-done
+yesno "Do you want to patch Rakefile?"
+ret=$?
+if [ $ret -eq 0 ];then
+  patch Rakefile < .themes/octogray/patches/Rakefile.patch
+else
+  "\n\e[31mPlease update Rakefile by following .themes/octogray/Rakefile.\e[m\n"
+fi
 echo
 
 # patch _config.yml
-echo -n "Do you want to patch _config.yml? [y/n]: "
-read yn
-while [ 1 ];do
-  case $yn in
-    "y"|"Y" ) patch _config.yml < .themes/octogray/patches/_config.yml.patch;break;;
-    "n"|"N" )
-      printf "\n\e[31mPlease update _config.yml by following .themes/octogray/_config.yml\e[m\n"
-      break
-      ;;
-    *)
-      echo -n "Do you want to patch _config.yml? [y/n]: "
-      read yn
-      continue
-      ;;
-  esac
-done
+yesno "Do you want to patch _config.yml?"
+ret=$?
+if [ $ret -eq 0 ];then
+  patch _config.yml < .themes/octogray/patches/_config.yml.patch
+else
+  printf "\n\e[31mPlease update _config.yml by following .themes/octogray/_config.yml\e[m\n"
+fi
 echo
 
 # patch plugins (image_tag.rb, include_array.rb, octopress_filter.rb)
-echo -n "Do you want to patch _config.yml? [y/n]: "
-read yn
-while [ 1 ];do
-  case $yn in
-    "y"|"Y" ) cd plugins;patch < ../.themes/octogray/patches/plugins.patch;cd ../;break;;
-    "n"|"N" )
-      printf "\n\e[31mPlease update plugins by following .themes/octogray/plugins\e[m\n"
-      break
-      ;;
-    *)
-      echo -n "Do you want to patch _config.yml? [y/n]: "
-      read yn
-      continue
-      ;;
-  esac
-done
+yesno "Do you want to patch _config.yml?"
+ret=$?
+if [ $ret -eq 0 ];then
+  cd plugins;patch < ../.themes/octogray/patches/plugins.patch;cd ../
+else
+  printf "\n\e[31mPlease update plugins by following .themes/octogray/plugins\e[m\n"
+fi
 echo
 
 # first, install normal files by install task
