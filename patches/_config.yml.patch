@@ -6,7 +6,7 @@ index c1d56f4..f0af8f1 100644
  title: My Octopress Blog
  subtitle: A blogging framework for hackers.
  author: Your Name
-+lang: ja
++lang: en
 +titlelogo:
 +nav_marks: true
 +# Please add your images to there
