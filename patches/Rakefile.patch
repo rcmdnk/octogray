@@ -1,5 +1,5 @@
 diff --git a/master:Rakefile b/source:Rakefile
-index 81a03df..9647d99 100644
+index 81a03df..5246be0 100644
 --- a/master:Rakefile
 +++ b/source:Rakefile
 @@ -9,27 +9,32 @@ ssh_port       = "22"
@@ -465,15 +465,6 @@ index 81a03df..9647d99 100644
  end
  
  def ok_failed(condition)
-@@ -374,7 +610,7 @@ def ok_failed(condition)
- end
- 
- def get_stdin(message)
--  print message
-+  puts message
-   STDIN.gets.chomp
- end
- 
 @@ -402,3 +638,110 @@ task :list do
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
