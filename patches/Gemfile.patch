@@ -1,8 +1,15 @@
 diff --git a/master:Gemfile b/source:Gemfile
-index 9557d59..c28183a 100644
+index b02ee4b..cd17770 100644
 --- a/master:Gemfile
 +++ b/source:Gemfile
-@@ -8,12 +8,15 @@ group :development do
+@@ -3,17 +3,21 @@ source "https://rubygems.org"
+ group :development do
+   gem 'rake', '~> 10.0'
+   gem 'jekyll', '~> 2.0'
+-  gem 'octopress-hooks', '~> 2.2'
+-  gem 'octopress-date-format', '~> 2.0'
++  gem 'jekyll-page-hooks', '~> 1.2'
++  gem 'jekyll-date-format', '~> 1.0'
    gem 'jekyll-sitemap'
    gem 'rdiscount', '~> 2.0'
    gem 'RedCloth', '~> 4.2.9'
@@ -15,6 +22,7 @@ index 9557d59..c28183a 100644
    gem 'stringex', '~> 1.4.0'
 +  gem 'thin'
 +  gem 'gemoji'
++  gem 'json'
  end
  
  gem 'sinatra', '~> 1.4.2'
