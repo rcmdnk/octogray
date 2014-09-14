@@ -519,7 +519,7 @@ task :set_root_dir, :dir do |t, args|
 end
 
 desc "Set up _deploy folder and deploy branch for Github Pages deployment"
-task :setup_github_pages, :repo do |t, args|
+task :setup_github_pages, [:repo, :yes] do |t, args|
   if args.repo
     repo_url = args.repo
   else
@@ -565,14 +565,18 @@ task :setup_github_pages, :repo do |t, args|
   rakefile.sub!(/repo_url(\s*)=(\s*)(["'])[0-9a-zA-Z\-\_\/\@\.\:]*["']/, "repo_url\\1=\\2\\3#{repo_url}\\3")
 
   ext = 'markdown'
-  if ask("Do you want to use 'md' extension instead of 'markdown'?", ['y', 'n']) == 'y'
+  if ask("Do you want to use 'md' extension instead of 'markdown'?", ['y', 'n'], args.yes) == 'y'
     ext = 'md'
   end
   rakefile.sub!(/new_post_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_post_ext\\1=\\2\\3#{ext}\\3")
   rakefile.sub!(/new_page_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_page_ext\\1=\\2\\3#{ext}\\3")
 
-  if ask("Do you want to push_ex (renew remote repository evrey time)?", ['y', 'n']) == 'y'
-    dir = get_stdin("Enter where you want to put _deploy (current: #{tmp_dir}): ")
+  if ask("Do you want to push_ex (renew remote repository evrey time)?", ['y', 'n'], args.yes) == 'y'
+    if yn_check(args.yes) == "y"
+      dir = ""
+    else
+      dir = get_stdin("Enter where you want to put _deploy (current: #{tmp_dir}): ")
+    end
     if dir == ""
       dir = tmp_dir
     elsif
@@ -614,9 +618,22 @@ def get_stdin(message)
   STDIN.gets.chomp
 end
 
-def ask(message, valid_options)
+def yn_check(yn)
+  if yn == "y" or yn == "yes" or yn == "-y" or yn == "--yes"
+    answer = "y"
+  else
+    answer = "n"
+  end
+  answer
+end
+
+def ask(message, valid_options, yn = "")
   if valid_options
-    answer = get_stdin("#{message} #{valid_options.to_s.gsub(/"/, '').gsub(/, /,'/')} ") while !valid_options.include?(answer)
+    if valid_options.include?("y") and yn_check(yn) == "y"
+      answer = "y"
+    else
+      answer = get_stdin("#{message} #{valid_options.to_s.gsub(/"/, '').gsub(/, /,'/')}: ") while !valid_options.include?(answer)
+    end
   else
     answer = get_stdin(message)
   end
@@ -744,4 +761,3 @@ def ok_failed_stop(condition)
     raise "FAILD"
   end
 end
-

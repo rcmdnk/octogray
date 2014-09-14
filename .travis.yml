@@ -1,0 +1,29 @@
+language: ruby
+rvm:
+  - 1.9.3
+  - 2.0.0
+  - 2.1.0
+git:
+  submodules: false
+before_install:
+  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+install:
+  - cd ~/
+  - git clone git://github.com/imathis/octopress.git ./octopress.orig
+  - cp -r octopress.orig octopress.master
+  - cd ~/octopress.master
+  - git submodule add git://github.com/rcmdnk/octogray.git .themes/octogray
+  - sed -i 's/git@github.com:/https:\/\/github.com\//' .themes/octogray/.gitmodules
+  - cd ~/
+  - cp -r octopress.orig octopress.gh-pages
+  - cd ~/octopress.gh-pages
+  - git submodule add git://github.com/rcmdnk/octogray.git .themes/octogray
+  - sed -i 's/git@github.com:/https:\/\/github.com\//' .themes/octogray/.gitmodules
+before_script:
+script:
+  - cd ~/octopress.master
+  - ./.themes/octogray/setup.sh -y
+  - rake setup_github_pages["git@github.com:rcmdnk/rcmdnk.github.io","yes"]
+  - cd ~/octopress.gh-pages
+  - ./.themes/octogray/setup.sh -y
+  - rake setup_github_pages["git@github.com:rcmdnk/test","yes"]
