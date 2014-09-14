@@ -565,7 +565,7 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
   rakefile.sub!(/repo_url(\s*)=(\s*)(["'])[0-9a-zA-Z\-\_\/\@\.\:]*["']/, "repo_url\\1=\\2\\3#{repo_url}\\3")
 
   ext = 'markdown'
-  if ask("Do you want to use 'md' extension instead of 'markdown'?", ['y', 'n'], args.yes) == 'y'
+  if ask("Do you want to use 'md' extension instead of 'markdown'?", ['y', 'n'], args.yes) == "y"
     ext = 'md'
   end
   rakefile.sub!(/new_post_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_post_ext\\1=\\2\\3#{ext}\\3")
