@@ -35,11 +35,11 @@ function yesno () {
 # sed nobackup replace function
 if sed --version 2>/dev/null |grep -q GNU;then
   function sedi () {
-    sed -i"" $*
+    sed -i"" "$@"
   }
 else
   function sedi () {
-    sed -i "" $*
+    sed -i "" "$@"
   }
 fi
 
