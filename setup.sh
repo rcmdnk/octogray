@@ -32,6 +32,17 @@ function yesno () {
   done
 }
 
+# sed nobackup replace function
+if sed --version 2>/dev/null |grep -q GNU;then
+  function sedi () {
+    sed -i"" $*
+  }
+else
+  function sedi () {
+    sed -i "" $*
+  }
+fi
+
 # patch Gemfile
 yesno "Do you want to patch Gemfile?"
 ret=$?
@@ -151,11 +162,10 @@ wget -O scrolltopcontrol.js http://www.dynamicdrive.com/dynamicindex3/scrolltopc
 mkdir -p .themes/octogray/.plugins/scrolltopcontrol
 mv scrolltopcontrol.js .themes/octogray/.plugins/scrolltopcontrol
 cp .themes/octogray/.plugins/scrolltopcontrol/scrolltopcontrol.js ./source/javascripts/
-sed -i ".bak" "s/<img src=\"up.png\" style=\"width:48px; height:48px\" \/>/<i class=\"fa fa-chevron-up icon-scroll-up\"><\/i>/g" ./source/javascripts/scrolltopcontrol.js
-sed -i ".bak" "s/startline:100/startline:300/g" ./source/javascripts/scrolltopcontrol.js
-sed -i ".bak" "s/offsety:5/offsety:20/g" ./source/javascripts/scrolltopcontrol.js
-sed -i ".bak" "s/bottom:mainobj/top:mainobj/g" ./source/javascripts/scrolltopcontrol.js
-rm -f ./source/javascripts/scrolltopcontrol.js.bak
+sedi "s/<img src=\"up.png\" style=\"width:48px; height:48px\" \/>/<i class=\"fa fa-chevron-up icon-scroll-up\"><\/i>/g" ./source/javascripts/scrolltopcontrol.js
+sedi "s/startline:100/startline:300/g" ./source/javascripts/scrolltopcontrol.js
+sedi "s/offsety:5/offsety:20/g" ./source/javascripts/scrolltopcontrol.js
+sedi "s/bottom:mainobj/top:mainobj/g" ./source/javascripts/scrolltopcontrol.js
 rm -rf .themes/octogray/.plugins/scrolltopcontrol/
 echo
 
