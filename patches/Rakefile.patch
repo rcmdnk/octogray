@@ -1,5 +1,5 @@
 diff --git a/master:Rakefile b/source:Rakefile
-index 81a03df..5246be0 100644
+index 81a03df..291e073 100644
 --- a/master:Rakefile
 +++ b/source:Rakefile
 @@ -9,27 +9,32 @@ ssh_port       = "22"
@@ -394,7 +394,14 @@ index 81a03df..5246be0 100644
      puts "\n## Github Pages deploy complete"
    end
  end
-@@ -312,7 +525,7 @@ task :setup_github_pages, :repo do |t, args|
+@@ -306,13 +519,13 @@ task :set_root_dir, :dir do |t, args|
+ end
+ 
+ desc "Set up _deploy folder and deploy branch for Github Pages deployment"
+-task :setup_github_pages, :repo do |t, args|
++task :setup_github_pages, [:repo, :yes] do |t, args|
+   if args.repo
+     repo_url = args.repo
    else
      puts "Enter the read/write url for your repository"
      puts "(For example, 'git@github.com:your_username/your_username.github.io.git)"
@@ -403,7 +410,7 @@ index 81a03df..5246be0 100644
      repo_url = get_stdin("Repository url: ")
    end
    protocol = (repo_url.match(/(^git)@/).nil?) ? 'https' : 'git'
-@@ -346,23 +559,46 @@ task :setup_github_pages, :repo do |t, args|
+@@ -346,23 +559,50 @@ task :setup_github_pages, :repo do |t, args|
    File.open('_config.yml', 'w') do |f|
      f.write jekyll_config
    end
@@ -427,21 +434,25 @@ index 81a03df..5246be0 100644
 +  rakefile.sub!(/repo_url(\s*)=(\s*)(["'])[0-9a-zA-Z\-\_\/\@\.\:]*["']/, "repo_url\\1=\\2\\3#{repo_url}\\3")
 +
 +  ext = 'markdown'
-+  if ask("Do you want to use 'md' extension instead of 'markdown'?", ['y', 'n']) == 'y'
++  if ask("Do you want to use 'md' extension instead of 'markdown'?", ['y', 'n'], args.yes) == "y"
 +    ext = 'md'
 +  end
 +  rakefile.sub!(/new_post_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_post_ext\\1=\\2\\3#{ext}\\3")
 +  rakefile.sub!(/new_page_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_page_ext\\1=\\2\\3#{ext}\\3")
 +
-+  if ask("Do you want to push_ex (renew remote repository evrey time)?", ['y', 'n']) == 'y'
-+    dir = get_stdin("Enter where you want to put _deploy (current: #{tmp_dir}): ")
++  if ask("Do you want to push_ex (renew remote repository evrey time)?", ['y', 'n'], args.yes) == 'y'
++    if yn_check(args.yes) == "y"
++      dir = ""
++    else
++      dir = get_stdin("Enter where you want to put _deploy (current: #{tmp_dir}): ")
++    end
 +    if dir == ""
 +      dir = tmp_dir
 +    elsif
 +      if dir[-1] == "/"
 +        dir = dir[0..-2]
 +      end
-+    end
+     end
 +    rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push_ex\\3")
 +    rakefile.sub!(/(tmp_dir\s*=\s*File.expand_path\()(["'])[^"']*["']/,"\\1\\2#{dir}\\2")
 +  else
@@ -455,7 +466,7 @@ index 81a03df..5246be0 100644
 +      system "git branch -m gh-pages" unless branch == 'master'
 +      system "git remote add origin #{repo_url}"
 +      rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push\\3")
-     end
++    end
 +    puts "\n---\n## Now you can deploy to #{repo_url} with `rake deploy` ##"
 +  end
 +  File.open(__FILE__, 'w') do |f|
@@ -465,7 +476,32 @@ index 81a03df..5246be0 100644
  end
  
  def ok_failed(condition)
-@@ -402,3 +638,110 @@ task :list do
+@@ -378,9 +618,22 @@ def get_stdin(message)
+   STDIN.gets.chomp
+ end
+ 
+-def ask(message, valid_options)
++def yn_check(yn)
++  if yn == "y" or yn == "yes" or yn == "-y" or yn == "--yes"
++    answer = "y"
++  else
++    answer = "n"
++  end
++  answer
++end
++
++def ask(message, valid_options, yn = "")
+   if valid_options
+-    answer = get_stdin("#{message} #{valid_options.to_s.gsub(/"/, '').gsub(/, /,'/')} ") while !valid_options.include?(answer)
++    if valid_options.include?("y") and yn_check(yn) == "y"
++      answer = "y"
++    else
++      answer = get_stdin("#{message} #{valid_options.to_s.gsub(/"/, '').gsub(/, /,'/')}: ") while !valid_options.include?(answer)
++    end
+   else
+     answer = get_stdin(message)
+   end
+@@ -402,3 +655,109 @@ task :list do
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end
@@ -575,4 +611,3 @@ index 81a03df..5246be0 100644
 +    raise "FAILD"
 +  end
 +end
-+
