@@ -1,5 +1,5 @@
 diff --git a/master:Rakefile b/source:Rakefile
-index 81a03df..770736d 100644
+index 81a03df..3a9f872 100644
 --- a/master:Rakefile
 +++ b/source:Rakefile
 @@ -9,27 +9,32 @@ ssh_port       = "22"
@@ -568,9 +568,9 @@ index 81a03df..770736d 100644
 +desc 'Send to Superfeedr'
 +task :superfeedr do
 +  site_config = YAML.load(IO.read('_config.yml'))
-+  hub_url = site_config['hub_url'].strip()
++  hub_url = site_config['hub_url']
 +  url = site_config['url']
-+  if hub_url != ""
++  if hub_url != nil and hub_url != ""
 +    require 'net/http'
 +    require 'uri'
 +    atom_url = "#{url}/atom.xml"

@@ -718,9 +718,9 @@ end
 desc 'Send to Superfeedr'
 task :superfeedr do
   site_config = YAML.load(IO.read('_config.yml'))
-  hub_url = site_config['hub_url'].strip()
+  hub_url = site_config['hub_url']
   url = site_config['url']
-  if hub_url != ""
+  if hub_url != nil and hub_url != ""
     require 'net/http'
     require 'uri'
     atom_url = "#{url}/atom.xml"
