@@ -477,6 +477,7 @@ multitask :push_ex do
     puts "\n## Commiting: Site updated at #{Time.now.utc}"
     message = "Site updated at #{Time.now.utc}"
     system "git commit -m \"#{message}\" >/dev/null"
+    system "git branch -m #{deploy_dir}" unless branch == 'master'
     puts "\n## Pushing generated #{deploy_dir} website"
     system "git push -f origin #{deploy_branch}"
     puts "\n## Github Pages deploy complete"
@@ -592,9 +593,9 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
     cd "#{deploy_dir}" do
       system "git init"
       system "echo 'My Octopress Page is coming soon &hellip;' > index.html"
-      system "git add ."
+      system "git add -A"
       system "git commit -m \"Octopress init\""
-      system "git branch -m gh-pages" unless branch == 'master'
+      system "git branch -m #{deploy_branch}" unless branch == 'master'
       system "git remote add origin #{repo_url}"
       rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push\\3")
     end
