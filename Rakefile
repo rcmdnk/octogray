@@ -477,7 +477,7 @@ multitask :push_ex do
     puts "\n## Commiting: Site updated at #{Time.now.utc}"
     message = "Site updated at #{Time.now.utc}"
     system "git commit -m \"#{message}\" >/dev/null"
-    system "git branch -m #{deploy_dir}" unless branch == 'master'
+    system "git branch -m #{deploy_branch}" unless deploy_branch == 'master'
     puts "\n## Pushing generated #{deploy_dir} website"
     system "git push -f origin #{deploy_branch}"
     puts "\n## Github Pages deploy complete"
