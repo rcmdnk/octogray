@@ -718,7 +718,7 @@ end
 desc 'Send to Superfeedr'
 task :superfeedr do
   site_config = YAML.load(IO.read('_config.yml'))
-  hub_url = site_config['hub_url']
+  hub_url = site_config['hub_url'].strip()
   url = site_config['url']
   if hub_url != ""
     require 'net/http'
