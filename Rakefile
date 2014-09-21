@@ -533,7 +533,12 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
   if protocol == 'git'
     user = repo_url.match(/:([^\/]+)/)[1]
   else
-    user = repo_url.match(/github\.com\/([^\/]+)/)[1]
+    begin
+      user = repo_url.match(/github\.com\/([^\/]+)/)[1]
+    rescue
+      # In case of GH_TOKEN (https://${GH_TOKEN}@github.com:user/repo)
+      user = repo_url.match(/:([^\/]+)/)[1]
+    end
   end
   branch = (repo_url.match(/\/[\w-]+\.github\.(?:io|com)/).nil?) ? 'gh-pages' : 'master'
   project = (branch == 'gh-pages') ? repo_url.match(/\/([^\.]+)/)[1] : ''
