@@ -1,7 +1,7 @@
 language: ruby
 rvm:
   - 1.9.3
-  - 2.0.0
+  #- 2.0.0
   #- 2.1.0
 git:
   submodules: false
@@ -21,6 +21,7 @@ before_install:
     fi
   - sedi 's/git@github.com:/https:\/\/github.com\//' .gitmodules
 install:
+  - echo test
   - cd ~/
   - git clone git://github.com/imathis/octopress.git ./octopress.orig
   - cp -r octopress.orig octopress.master
@@ -39,11 +40,11 @@ script:
   - cd ~/octopress.gh-pages
   - ./.themes/octogray/setup.sh -y
   - rake setup_github_pages["https://${GH_TOKEN}@github.com:rcmdnk/octogray_test","yes"]
-  - post=$(rake new_post["test"]|grep "Creating new post"|cut -d: -f2)
-  - 'sedi "s/published: *false/published: true/" $post'
-  - sedi "s/categories:/categories: cat/" $post
-  - sedi "s/tags:/tags: tag/" $post
-  - sedi "s/<\!-- *more *-->/This is test post."\\$'\n'"<\!-- more -->/" $post
-  - sedi "s/{%include after_excerpt.html%}/{%include after_excerpt.html%}"\\$'\n'"# Test Sectiontest"\\$'\n'"test test./" $post
+  - 'post=$(rake new_post["test"]|grep "Creating new post"|cut -d: -f2)'
+  - 'sedi "s/published: \*false/published: true/" $post'
+  - 'sedi "s/categories:/categories: cat/" $post'
+  - 'sedi "s/tags:/tags: tag/" $post'
+  - 'sedi "s/<\!-- *more *-->/This is test post."\\$'\n'"<\!-- more -->/" $post'
+  - 'sedi "s/{%include after_excerpt.html%}/{%include after_excerpt.html%}"\\$'\n'"# Test Sectiontest"\\$'\n'"test test./" $post'
   - rake gen
   - rake deploy
