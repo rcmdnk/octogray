@@ -9,30 +9,29 @@ env:
   global:
     - secure: Y1zZsXL4f33mLaCpfnp+UkFIoJ2JcHaZgZ+QlQj5y01AwWn7oFJy95ug2Qr/BOZZl4/MjM5gfNAJOq28o+Sv0jUyitRJJVabuRXzw7QnNJtQ/e5JqaXWO/3MpPUvVDdj19BbqbhWsVWYC/6KPLg/xubSkS/LKVpHJjcUHil1jtM=
 before_install:
-  - |
-    if sed --version 2>/dev/null |grep -q GNU;then
-      function sedi () {
-        sed -i"" $*
-      }
-    else
-      function sedi () {
-        sed -i "" $*
-      }
-    fi
-  - sedi 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+  #- |
+  #  if sed --version 2>/dev/null |grep -q GNU;then
+  #    function sedi () {
+  #      sed -i"" $*
+  #    }
+  #  else
+  #    function sedi () {
+  #      sed -i "" $*
+  #    }
+  #  fi
+  - sed -i"" 's/git@github.com:/https:\/\/github.com\//' .gitmodules
 install:
-  - echo test
   - cd ~/
   - git clone git://github.com/imathis/octopress.git ./octopress.orig
   - cp -r octopress.orig octopress.master
   - cd ~/octopress.master
   - git submodule add git://github.com/rcmdnk/octogray.git .themes/octogray
-  - sedi 's/git@github.com:/https:\/\/github.com\//' .themes/octogray/.gitmodules
+  - sed -i"" 's/git@github.com:/https:\/\/github.com\//' .themes/octogray/.gitmodules
   - cd ~/
   - cp -r octopress.orig octopress.gh-pages
   - cd ~/octopress.gh-pages
   - git submodule add git://github.com/rcmdnk/octogray.git .themes/octogray
-  - sedi 's/git@github.com:/https:\/\/github.com\//' .themes/octogray/.gitmodules
+  - sed -i"" 's/git@github.com:/https:\/\/github.com\//' .themes/octogray/.gitmodules
 script:
   - cd ~/octopress.master
   - ./.themes/octogray/setup.sh -y
@@ -41,10 +40,10 @@ script:
   - ./.themes/octogray/setup.sh -y
   - rake setup_github_pages["https://${GH_TOKEN}@github.com:rcmdnk/octogray_test","yes"]
   - 'post=$(rake new_post["test"]|grep "Creating new post"|cut -d: -f2)'
-  - 'sedi "s/published: \*false/published: true/" $post'
-  - 'sedi "s/categories:/categories: cat/" $post'
-  - 'sedi "s/tags:/tags: tag/" $post'
-  - 'sedi "s/<\!-- *more *-->/This is test post."\\$'\n'"<\!-- more -->/" $post'
-  - 'sedi "s/{%include after_excerpt.html%}/{%include after_excerpt.html%}"\\$'\n'"# Test Sectiontest"\\$'\n'"test test./" $post'
+  - 'sed -i"" "s/published: \*false/published: true/" $post'
+  - 'sed -i"" "s/categories:/categories: cat/" $post'
+  - 'sed -i"" "s/tags:/tags: tag/" $post'
+  - sed -i"" "s/<\!-- *more *-->/This is test post."\\$'\n'"<\!-- more -->/" $post
+  - sed -i"" "s/{%include after_excerpt.html%}/{%include after_excerpt.html%}"\\$'\n'"# Test Sectiontest"\\$'\n'"test test./" $post
   - rake gen
   - rake deploy
