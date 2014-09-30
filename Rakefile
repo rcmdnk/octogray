@@ -14,6 +14,7 @@ deploy_default = "push_ex"
 # This will be configured for you when you run config_deploy
 deploy_branch  = "master"
 repo_url       = "git@github.com:user/user.github.io.git"
+use_token      = false
 
 ## -- Misc Configs -- ##
 
@@ -453,7 +454,8 @@ multitask :push do
     puts "\n## Committing: #{message}"
     system "git commit -m \"#{message}\""
     puts "\n## Pushing generated #{deploy_dir} website"
-    system "git push origin #{deploy_branch}"
+    quiet = (use_token)? " --quiet ":""
+    system "git push #{quiet} origin #{deploy_branch}"
     puts "\n## Github Pages deploy complete"
   end
 end
@@ -479,7 +481,8 @@ multitask :push_ex do
     system "git commit -m \"#{message}\" >/dev/null"
     system "git branch -m #{deploy_branch}" unless deploy_branch == 'master'
     puts "\n## Pushing generated #{deploy_dir} website"
-    system "git push -f origin #{deploy_branch}"
+    system "git push #{quiet} -f origin #{deploy_branch}"
+    system "git push #{quiet} -f orig #{deploy_branch}"
     puts "\n## Github Pages deploy complete"
   end
 end
@@ -570,6 +573,7 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
   rakefile = IO.read(__FILE__)
   rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
   rakefile.sub!(/repo_url(\s*)=(\s*)(["'])[0-9a-zA-Z\-\_\/\@\.\:]*["']/, "repo_url\\1=\\2\\3#{repo_url}\\3")
+  rakefile.sub!(/use_token(\s*)=(\s*)(["'])[0-9a-zA-Z\-\_\/\@\.\:]*["']/, "repo_url\\1=\\2\\3#{use_token}\\3")
 
   ext = 'markdown'
   if ask("Do you want to use 'md' extension instead of 'markdown'?", ['y', 'n'], args.yes) == "y"
