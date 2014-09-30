@@ -463,7 +463,11 @@ end
 desc "deploy public directory to github pages through temporary deploy dir"
 multitask :push_ex do
   puts "## Deploying branch to Github Pages "
-  puts "## clone from #{repo_url}"
+  if use_token
+    puts "## clone the repository..."
+  else
+    puts "## clone from #{repo_url}"
+  end
   rm_rf deploy_dir
   mkdir_p deploy_dir
   cd "#{deploy_dir}" do
@@ -610,7 +614,11 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
       system "git remote add origin #{repo_url}"
       rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push\\3")
     end
-    puts "\n---\n## Now you can deploy to #{repo_url} with `rake deploy` ##"
+    if use_token
+      puts "\n---\n## Now you can deploy with `rake deploy` ##"
+    else
+      puts "\n---\n## Now you can deploy to #{repo_url} with `rake deploy` ##"
+    end
   end
   File.open(__FILE__, 'w') do |f|
     f.write rakefile
