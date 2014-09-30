@@ -483,8 +483,6 @@ multitask :push_ex do
     puts "\n## Pushing generated #{deploy_dir} website"
     quiet = (use_token)? " --quiet ":""
     system "git push #{quiet} -f origin #{deploy_branch}"
-    puts "\n## Pushing generated #{deploy_dir} website, one more"
-    system "git push #{quiet} -f orig #{deploy_branch}"
     puts "\n## Github Pages deploy complete"
   end
 end
