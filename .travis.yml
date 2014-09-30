@@ -48,7 +48,7 @@ script:
   - 'sed -i"" "s/categories:/categories: cat/" $post'
   - 'sed -i"" "s/tags:/tags: tag/" $post'
   - sed -i"" "s/<\!-- *more *-->/This is test post."\\$'\n'"<\!-- more -->/" $post
-  - sed -i"" "s/{%include after_excerpt.html%}/{%include after_excerpt.html%}"\\$'\n'"# Test Sectiontest"\\$'\n'"test #{Time.now.utc} test./" $post
+  - sed -i"" "s/{%include after_excerpt.html%}/{%include after_excerpt.html%}"\\$'\n'"# Test Sectiontest"\\$'\n'"test $(date) test./" $post
   - cat $post
   - rake gen
   - rake deploy
