@@ -7,6 +7,10 @@ git:
   submodules: false
 env:
   global:
+    - GIT_COMMITTER_NAME=rcmdnk
+    - GIT_COMMITTER_EMAIL=rcmdnk@gmail.com
+    - GIT_AUTHOR_NAME=rcmdnk
+    - GIT_AUTHOR_EMAIL=rcmdnk@gmail.com
     - secure: Y1zZsXL4f33mLaCpfnp+UkFIoJ2JcHaZgZ+QlQj5y01AwWn7oFJy95ug2Qr/BOZZl4/MjM5gfNAJOq28o+Sv0jUyitRJJVabuRXzw7QnNJtQ/e5JqaXWO/3MpPUvVDdj19BbqbhWsVWYC/6KPLg/xubSkS/LKVpHJjcUHil1jtM=
 before_install:
   #- |
@@ -35,7 +39,7 @@ install:
 script:
   - cd ~/octopress.master
   - ./.themes/octogray/setup.sh -y
-  - rake setup_github_pages["git@github.com:rcmdnk/test.github.io","yes"]
+  - rake setup_github_pages["https://$GH_TOKEN@github.com/rcmdnk/test.github.io","yes"]
   - cd ~/octopress.gh-pages
   - ./.themes/octogray/setup.sh -y
   - rake setup_github_pages["https://${GH_TOKEN}@github.com:rcmdnk/octogray_test","yes"]
