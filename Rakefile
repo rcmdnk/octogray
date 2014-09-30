@@ -482,6 +482,7 @@ multitask :push_ex do
     system "git branch -m #{deploy_branch}" unless deploy_branch == 'master'
     puts "\n## Pushing generated #{deploy_dir} website"
     system "git push #{quiet} -f origin #{deploy_branch}"
+    puts "\n## Pushing generated #{deploy_dir} website, one more"
     system "git push #{quiet} -f orig #{deploy_branch}"
     puts "\n## Github Pages deploy complete"
   end
