@@ -1,5 +1,5 @@
 diff --git a/master:Rakefile b/source:Rakefile
-index 81a03df..6f383fa 100644
+index 81a03df..faf049a 100644
 --- a/master:Rakefile
 +++ b/source:Rakefile
 @@ -9,27 +9,33 @@ ssh_port       = "22"
@@ -435,7 +435,7 @@ index 81a03df..6f383fa 100644
    unless (`git remote -v` =~ /origin.+?octopress(?:\.git)?/).nil?
      # If octopress is still the origin remote (from cloning) rename it to octopress
      system "git remote rename origin octopress"
-@@ -330,7 +550,11 @@ task :setup_github_pages, :repo do |t, args|
+@@ -330,15 +550,19 @@ task :setup_github_pages, :repo do |t, args|
        # If this is a user/organization pages repository, add the correct origin remote
        # and checkout the source branch for committing changes to the blog source.
        system "git remote add origin #{repo_url}"
@@ -448,6 +448,17 @@ index 81a03df..6f383fa 100644
        system "git config branch.master.remote origin"
        puts "Set origin as default remote"
        system "git branch -m master source"
+       puts "Master branch renamed to 'source' for committing your blog source files"
+     else
+-      unless !public_dir.match("#{project}").nil?
+-        system "rake set_root_dir[#{project}]"
+-      end
++      #unless !public_dir.match("#{project}").nil?
++      #  system "rake set_root_dir[#{project}]"
++      #end
+     end
+   end
+   jekyll_config = IO.read('_config.yml')
 @@ -346,23 +570,51 @@ task :setup_github_pages, :repo do |t, args|
    File.open('_config.yml', 'w') do |f|
      f.write jekyll_config

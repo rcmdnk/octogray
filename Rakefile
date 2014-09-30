@@ -560,9 +560,9 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
       system "git branch -m master source"
       puts "Master branch renamed to 'source' for committing your blog source files"
     else
-      unless !public_dir.match("#{project}").nil?
-        system "rake set_root_dir[#{project}]"
-      end
+      #unless !public_dir.match("#{project}").nil?
+      #  system "rake set_root_dir[#{project}]"
+      #end
     end
   end
   jekyll_config = IO.read('_config.yml')
