@@ -39,10 +39,10 @@ install:
 script:
   - cd ~/octopress.master
   - ./.themes/octogray/setup.sh -y
-  - rake setup_github_pages["https://$GH_TOKEN@github.com/rcmdnk/test.github.io","yes"]
+  - rake setup_github_pages["git@github.com:rcmdnk/test.github.io","yes"] >/dev/null
   - cd ~/octopress.gh-pages
   - ./.themes/octogray/setup.sh -y
-  - rake setup_github_pages["https://${GH_TOKEN}@github.com:rcmdnk/octogray_test","yes"]
+  - rake setup_github_pages["https://${GH_TOKEN}@github.com:rcmdnk/octogray_test","yes"] >/dev/null
   - 'post=$(rake new_post["test"]|grep "Creating new post"|cut -d: -f2)'
   - 'sed -i"" "s/published: \*false/published: true/" $post'
   - 'sed -i"" "s/categories:/categories: cat/" $post'

@@ -486,7 +486,7 @@ end
 
 desc "Update configurations to support publishing to root or sub directory"
 task :set_root_dir, :dir do |t, args|
-  puts ">>> !! Please provide a directory, eg. rake config_dir[publishing/subdirectory]" unless args.dir
+  puts ">>> !! Please provide a directory, eg. rake set_root_dir[publishing/subdirectory]" unless args.dir
   if args.dir
     if args.dir == "/"
       dir = ""
@@ -530,6 +530,7 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
     repo_url = get_stdin("Repository url: ")
   end
   protocol = (repo_url.match(/(^git)@/).nil?) ? 'https' : 'git'
+  use_token = false
   if protocol == 'git'
     user = repo_url.match(/:([^\/]+)/)[1]
   else
@@ -538,10 +539,11 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
     rescue
       # In case of GH_TOKEN (https://${GH_TOKEN}@github.com:user/repo)
       user = repo_url.match(/:([^\/]+)/)[1]
+      use_token = true
     end
   end
   branch = (repo_url.match(/\/[\w-]+\.github\.(?:io|com)/).nil?) ? 'gh-pages' : 'master'
-  project = (branch == 'gh-pages') ? repo_url.match(/\/([^\.]+)/)[1] : ''
+  project = (branch == 'gh-pages') ? repo_url.split("/")[-1].sub(/\.git$/, "") : ''
   unless (`git remote -v` =~ /origin.+?octopress(?:\.git)?/).nil?
     # If octopress is still the origin remote (from cloning) rename it to octopress
     system "git remote rename origin octopress"
@@ -549,7 +551,11 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
       # If this is a user/organization pages repository, add the correct origin remote
       # and checkout the source branch for committing changes to the blog source.
       system "git remote add origin #{repo_url}"
-      puts "Added remote #{repo_url} as origin"
+      if use_token
+        puts "Added given remote as origin"
+      else
+        puts "Added remote #{repo_url} as origin"
+      end
       system "git config branch.master.remote origin"
       puts "Set origin as default remote"
       system "git branch -m master source"
