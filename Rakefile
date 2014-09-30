@@ -525,25 +525,20 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
     repo_url = args.repo
   else
     puts "Enter the read/write url for your repository"
-    puts "(For example, 'git@github.com:your_username/your_username.github.io.git)"
-    puts "           , 'https://github.com/your_username/repository')"
+    puts "For example, 'git@github.com:your_username/your_username.github.io.git"
+    puts "             'https://github.com/your_username/repository'"
+    puts "             'https://${GH_TOKEN}@github.com/your_username/repository'"
     repo_url = get_stdin("Repository url: ")
   end
   protocol = (repo_url.match(/(^git)@/).nil?) ? 'https' : 'git'
-  use_token = false
   if protocol == 'git'
     user = repo_url.match(/:([^\/]+)/)[1]
   else
-    begin
-      user = repo_url.match(/github\.com\/([^\/]+)/)[1]
-    rescue
-      # In case of GH_TOKEN (https://${GH_TOKEN}@github.com:user/repo)
-      user = repo_url.match(/:([^\/]+)/)[1]
-      use_token = true
-    end
+    user = repo_url.match(/github\.com\/([^\/]+)/)[1]
   end
   branch = (repo_url.match(/\/[\w-]+\.github\.(?:io|com)/).nil?) ? 'gh-pages' : 'master'
   project = (branch == 'gh-pages') ? repo_url.split("/")[-1].sub(/\.git$/, "") : ''
+  use_token = (repo_url.match(/https:\/\/.*@github.com/))? true : false
   unless (`git remote -v` =~ /origin.+?octopress(?:\.git)?/).nil?
     # If octopress is still the origin remote (from cloning) rename it to octopress
     system "git remote rename origin octopress"

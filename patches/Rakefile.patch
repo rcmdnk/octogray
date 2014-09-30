@@ -1,5 +1,5 @@
 diff --git a/master:Rakefile b/source:Rakefile
-index 81a03df..42a56c8 100644
+index 81a03df..a1c6439 100644
 --- a/master:Rakefile
 +++ b/source:Rakefile
 @@ -9,27 +9,32 @@ ssh_port       = "22"
@@ -403,7 +403,7 @@ index 81a03df..42a56c8 100644
    if args.dir
      if args.dir == "/"
        dir = ""
-@@ -306,23 +520,30 @@ task :set_root_dir, :dir do |t, args|
+@@ -306,13 +520,14 @@ task :set_root_dir, :dir do |t, args|
  end
  
  desc "Set up _deploy folder and deploy branch for Github Pages deployment"
@@ -413,32 +413,25 @@ index 81a03df..42a56c8 100644
      repo_url = args.repo
    else
      puts "Enter the read/write url for your repository"
-     puts "(For example, 'git@github.com:your_username/your_username.github.io.git)"
+-    puts "(For example, 'git@github.com:your_username/your_username.github.io.git)"
 -    puts "           or 'https://github.com/your_username/your_username.github.io')"
-+    puts "           , 'https://github.com/your_username/repository')"
++    puts "For example, 'git@github.com:your_username/your_username.github.io.git"
++    puts "             'https://github.com/your_username/repository'"
++    puts "             'https://${GH_TOKEN}@github.com/your_username/repository'"
      repo_url = get_stdin("Repository url: ")
    end
    protocol = (repo_url.match(/(^git)@/).nil?) ? 'https' : 'git'
-+  use_token = false
-   if protocol == 'git'
-     user = repo_url.match(/:([^\/]+)/)[1]
-   else
--    user = repo_url.match(/github\.com\/([^\/]+)/)[1]
-+    begin
-+      user = repo_url.match(/github\.com\/([^\/]+)/)[1]
-+    rescue
-+      # In case of GH_TOKEN (https://${GH_TOKEN}@github.com:user/repo)
-+      user = repo_url.match(/:([^\/]+)/)[1]
-+      use_token = true
-+    end
+@@ -322,7 +537,8 @@ task :setup_github_pages, :repo do |t, args|
+     user = repo_url.match(/github\.com\/([^\/]+)/)[1]
    end
    branch = (repo_url.match(/\/[\w-]+\.github\.(?:io|com)/).nil?) ? 'gh-pages' : 'master'
 -  project = (branch == 'gh-pages') ? repo_url.match(/\/([^\.]+)/)[1] : ''
 +  project = (branch == 'gh-pages') ? repo_url.split("/")[-1].sub(/\.git$/, "") : ''
++  use_token = (repo_url.match(/https:\/\/.*@github.com/))? true : false
    unless (`git remote -v` =~ /origin.+?octopress(?:\.git)?/).nil?
      # If octopress is still the origin remote (from cloning) rename it to octopress
      system "git remote rename origin octopress"
-@@ -330,7 +551,11 @@ task :setup_github_pages, :repo do |t, args|
+@@ -330,7 +546,11 @@ task :setup_github_pages, :repo do |t, args|
        # If this is a user/organization pages repository, add the correct origin remote
        # and checkout the source branch for committing changes to the blog source.
        system "git remote add origin #{repo_url}"
@@ -451,7 +444,7 @@ index 81a03df..42a56c8 100644
        system "git config branch.master.remote origin"
        puts "Set origin as default remote"
        system "git branch -m master source"
-@@ -346,23 +571,50 @@ task :setup_github_pages, :repo do |t, args|
+@@ -346,23 +566,50 @@ task :setup_github_pages, :repo do |t, args|
    File.open('_config.yml', 'w') do |f|
      f.write jekyll_config
    end
@@ -517,7 +510,7 @@ index 81a03df..42a56c8 100644
  end
  
  def ok_failed(condition)
-@@ -378,9 +630,22 @@ def get_stdin(message)
+@@ -378,9 +625,22 @@ def get_stdin(message)
    STDIN.gets.chomp
  end
  
@@ -542,7 +535,7 @@ index 81a03df..42a56c8 100644
    else
      answer = get_stdin(message)
    end
-@@ -402,3 +667,109 @@ task :list do
+@@ -402,3 +662,109 @@ task :list do
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end
