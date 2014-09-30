@@ -544,6 +544,7 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
   branch = (repo_url.match(/\/[\w-]+\.github\.(?:io|com)/).nil?) ? 'gh-pages' : 'master'
   project = (branch == 'gh-pages') ? repo_url.split("/")[-1].sub(/\.git$/, "") : ''
   use_token = (repo_url.match(/https:\/\/.*@github.com/))? true : false
+  use_token_val = use_token ? "true" : "false"
   unless (`git remote -v` =~ /origin.+?octopress(?:\.git)?/).nil?
     # If octopress is still the origin remote (from cloning) rename it to octopress
     system "git remote rename origin octopress"
@@ -575,8 +576,7 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
   rakefile = IO.read(__FILE__)
   rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
   rakefile.sub!(/repo_url(\s*)=(\s*)(["'])[0-9a-zA-Z\-\_\/\@\.\:]*["']/, "repo_url\\1=\\2\\3#{repo_url}\\3")
-  use_token_val = use_token ? "true" : "false"
-  rakefile.sub!(/use_token(\s*)=(\s*)(["'])[0-9a-zA-Z\-\_\/\@\.\:]*["']/, "use_token\\1=\\2\\3#{use_token_val}\\3")
+  rakefile.sub!(/use_token(\s*)=(\s*)[0-9a-zA-Z\-\_\/\@\.\:]*/, "use_token\\1=\\2#{use_token_val}")
 
   ext = 'markdown'
   if ask("Do you want to use 'md' extension instead of 'markdown'?", ['y', 'n'], args.yes) == "y"
