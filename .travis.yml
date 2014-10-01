@@ -11,7 +11,7 @@ env:
     - GIT_COMMITTER_EMAIL=rcmdnk@gmail.com
     - GIT_AUTHOR_NAME=rcmdnk
     - GIT_AUTHOR_EMAIL=rcmdnk@gmail.com
-    - secure: iJIctrvYLcG8TtuJIycToQKOJD5PcgxlHaxbqansIaJXgCxK9HZitp+PqHUB5vO/Jl4mFs97UMYD0t6fA4k4qdkyEKHk6kehOI02JFcO/71pHECLEVkRdoA0+bbSJCOIbYLc91hHsEGNr/Y76zwI75vOgcIQJhjh/YfwiAzMtnc=
+    - secure: "CFYr8N+df+I2BQBGbkEm17gceXu4QZ0oDuPGlJFA67ePuKWC7ivbkdZgfVOmtYAWUXItKYrK/kj69LFX7VIq7QifT0avvk2sbNLf7/aIYTziHFx2rJad7RdeLXQCTMIHNI1ppQXecCagE7w/QvV581GJ81rdR+z/6KsOO8ukJhQ="
 before_install:
   #- |
   #  if sed --version 2>/dev/null |grep -q GNU;then
