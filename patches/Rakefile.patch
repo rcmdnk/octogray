@@ -366,7 +366,7 @@ index 81a03df..02ff2da 100644
      system "git commit -m \"#{message}\""
      puts "\n## Pushing generated #{deploy_dir} website"
 -    Bundler.with_clean_env { system "git push origin #{deploy_branch}" }
-+    quiet = (use_token)? " --quiet ":""
++    quiet = ""
 +    system "git push #{quiet} origin #{deploy_branch}"
 +    puts "\n## Github Pages deploy complete"
 +  end
@@ -397,7 +397,7 @@ index 81a03df..02ff2da 100644
 +    system "git commit -m \"#{message}\" >/dev/null"
 +    system "git branch -m #{deploy_branch}" unless deploy_branch == 'master'
 +    puts "\n## Pushing generated #{deploy_dir} website"
-+    quiet = (use_token)? " --quiet ":""
++    quiet = ""
 +    system "git push #{quiet} -f origin #{deploy_branch}"
      puts "\n## Github Pages deploy complete"
    end
