@@ -25,7 +25,7 @@ before_install:
   #  fi
   - sed -i"" 's/git@github.com:/https:\/\/github.com\//' .gitmodules
 install:
-  - git push https://${GH_TOKEN}@github.com/rcmdnk/octogray'
+  - git push -f https://${GH_TOKEN}@github.com/rcmdnk/octogray'
   - cd ~/
   - git clone git://github.com/imathis/octopress.git ./octopress.orig
   - cp -r octopress.orig octopress.master
