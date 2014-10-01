@@ -53,4 +53,5 @@ script:
   - rake gen
   - rake deploy
   - 'cd _deploy && git push -f https://${GH_TOKEN}@github.com/rcmdnk/octogray_test gh_pages'
+  - echo XX${GH_TOKEN}XX
 
