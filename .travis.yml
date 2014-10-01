@@ -11,7 +11,7 @@ env:
     - GIT_COMMITTER_EMAIL=rcmdnk@gmail.com
     - GIT_AUTHOR_NAME=rcmdnk
     - GIT_AUTHOR_EMAIL=rcmdnk@gmail.com
-    - secure: "CFYr8N+df+I2BQBGbkEm17gceXu4QZ0oDuPGlJFA67ePuKWC7ivbkdZgfVOmtYAWUXItKYrK/kj69LFX7VIq7QifT0avvk2sbNLf7/aIYTziHFx2rJad7RdeLXQCTMIHNI1ppQXecCagE7w/QvV581GJ81rdR+z/6KsOO8ukJhQ="
+    - secure: "UOfu9FrGiIMwJV/u2a3cwd4XrDd+KOvpTfJlC+QDLeL3l8ozjD7OUZ4xnA8hFNwzoHUK14hPM+TX7MeT4gN9GdFJqjn9MEhgNnz0pEx9mCVEQyfqnxYiWzU8G3NaMfF1CXiMuU3o04qY1/CkGJD9xpgWs1ksJDoBr8TB63ZWi34="
 before_install:
   #- |
   #  if sed --version 2>/dev/null |grep -q GNU;then
@@ -52,5 +52,3 @@ script:
   - cat $post
   - rake gen
   - rake deploy
-  - 'cd _deploy && git push -f https://${GH_TOKEN}@github.com/rcmdnk/octogray_test gh_pages'
-

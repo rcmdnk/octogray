@@ -455,7 +455,7 @@ multitask :push do
     system "git commit -m \"#{message}\""
     puts "\n## Pushing generated #{deploy_dir} website"
     quiet = (use_token)? " --quiet ":""
-    system "git push #{quiet} origin #{deploy_branch}"
+    system "git push #{quiet} origin #{deploy_branch} >& /dev/null"
     puts "\n## Github Pages deploy complete"
   end
 end
@@ -486,7 +486,7 @@ multitask :push_ex do
     system "git branch -m #{deploy_branch}" unless deploy_branch == 'master'
     puts "\n## Pushing generated #{deploy_dir} website"
     quiet = (use_token)? " --quiet ":""
-    system "git push #{quiet} -f origin #{deploy_branch}"
+    system "git push #{quiet} -f origin #{deploy_branch} >& /dev/null"
     puts "\n## Github Pages deploy complete"
   end
 end
