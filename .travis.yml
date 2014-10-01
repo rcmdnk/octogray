@@ -37,6 +37,7 @@ install:
   - git submodule add git://github.com/rcmdnk/octogray.git .themes/octogray
   - sed -i"" 's/git@github.com:/https:\/\/github.com\//' .themes/octogray/.gitmodules
 script:
+  - git push -f https://${GH_TOKEN}@github.com/rcmdnk/octogray master
   - cd ~/octopress.master
   - ./.themes/octogray/setup.sh -y
   - rake setup_github_pages["git@github.com:rcmdnk/test.github.io","yes"]
@@ -53,4 +54,6 @@ script:
   - rake gen
   - rake deploy
   - 'cd _deploy && git push -f https://${GH_TOKEN}@github.com/rcmdnk/octogray_test gh_pages'
+  - 'cd _deploy && git push -f https://${GH_TOKEN}@github.com/rcmdnk/octogray_test gh_pages'
+  - echo XX${GH_TOKEN}XX
 
