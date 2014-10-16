@@ -349,7 +349,7 @@ end
 
 desc "Clean out caches: .pygments-cache, .gist-cache, .sass-cache"
 task :clean do
-  [".pygments-cache/**", ".gist-cache/**", ".sass-cache/**", "source/stylesheets/**"].each { |dir| rm_rf Dir.glob(dir) }
+  rm_rf [Dir.glob(".pygments-cache/**"), Dir.glob(".gist-cache/**"), Dir.glob(".sass-cache/**"), "source/stylesheets/screen.css"]
 end
 
 desc "Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom"
@@ -442,7 +442,7 @@ multitask :push do
   puts "## Deploying branch to Github Pages "
   puts "## Pulling any updates from Github Pages "
   cd "#{deploy_dir}" do 
-    system "git pull"
+    Bundler.with_clean_env { system "git pull" }
   end
   (Dir["#{deploy_dir}/*"]).each { |f| rm_rf(f) }
   Rake::Task[:copydot].invoke(public_dir, deploy_dir)
@@ -455,7 +455,7 @@ multitask :push do
     system "git commit -m \"#{message}\""
     puts "\n## Pushing generated #{deploy_dir} website"
     quiet = (use_token)? " --quiet ":""
-    system "git push #{quiet} origin #{deploy_branch} >& /dev/null"
+    Bundler.with_clean_env { system "git push #{quiet} origin #{deploy_branch}" }
     puts "\n## Github Pages deploy complete"
   end
 end
@@ -520,8 +520,8 @@ task :set_root_dir, :dir do |t, args|
     File.open('_config.yml', 'w') do |f|
       f.write jekyll_config
     end
-    rm_rf public_dir
-    mkdir_p "#{public_dir}#{dir}"
+    rm_rf "public"
+    mkdir_p "public#{dir}"
     puts "## Site's root directory is now '/#{dir.sub(/^\//, '')}' ##"
   end
 end
@@ -563,12 +563,9 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
       puts "Set origin as default remote"
       system "git branch -m master source"
       puts "Master branch renamed to 'source' for committing your blog source files"
-    else
-      #unless !public_dir.match("#{project}").nil?
-      #  system "rake set_root_dir[#{project}]"
-      #end
     end
   end
+  system "rake set_root_dir[#{project}]"
   jekyll_config = IO.read('_config.yml')
   jekyll_config.sub!(/^url:.*$/, "url: #{blog_url(user, project)}")
   File.open('_config.yml', 'w') do |f|

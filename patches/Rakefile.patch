@@ -1,7 +1,7 @@
-diff --git a/master:Rakefile b/source:Rakefile
-index 81a03df..02ff2da 100644
+diff --git a/master:Rakefile b/test:Rakefile
+index f7084da..5dbded1 100644
 --- a/master:Rakefile
-+++ b/source:Rakefile
++++ b/test:Rakefile
 @@ -9,27 +9,33 @@ ssh_port       = "22"
  document_root  = "~/website.com/"
  rsync_delete   = false
@@ -290,7 +290,7 @@ index 81a03df..02ff2da 100644
        page.puts "---"
      end
    else
-@@ -161,21 +333,23 @@ end
+@@ -161,16 +333,18 @@ end
  # usage rake isolate[my-post]
  desc "Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly."
  task :isolate, :filename do |t, args|
@@ -314,12 +314,6 @@ index 81a03df..02ff2da 100644
  end
  
  desc "Clean out caches: .pygments-cache, .gist-cache, .sass-cache"
- task :clean do
--  rm_rf [".pygments-cache/**", ".gist-cache/**", ".sass-cache/**", "source/stylesheets/screen.css"]
-+  [".pygments-cache/**", ".gist-cache/**", ".sass-cache/**", "source/stylesheets/**"].each { |dir| rm_rf Dir.glob(dir) }
- end
- 
- desc "Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom"
 @@ -222,14 +396,29 @@ task :deploy do
      File.delete(".preview-mode")
      Rake::Task[:generate].execute
@@ -352,22 +346,13 @@ index 81a03df..02ff2da 100644
  
  desc "copy dot files for deployment"
  task :copydot, :source, :dest do |t, args|
-@@ -253,7 +442,7 @@ multitask :push do
-   puts "## Deploying branch to Github Pages "
-   puts "## Pulling any updates from Github Pages "
-   cd "#{deploy_dir}" do 
--    Bundler.with_clean_env { system "git pull" }
-+    system "git pull"
-   end
-   (Dir["#{deploy_dir}/*"]).each { |f| rm_rf(f) }
-   Rake::Task[:copydot].invoke(public_dir, deploy_dir)
 @@ -265,14 +454,46 @@ multitask :push do
      puts "\n## Committing: #{message}"
      system "git commit -m \"#{message}\""
      puts "\n## Pushing generated #{deploy_dir} website"
 -    Bundler.with_clean_env { system "git push origin #{deploy_branch}" }
 +    quiet = (use_token)? " --quiet ":""
-+    system "git push #{quiet} origin #{deploy_branch}"
++    Bundler.with_clean_env { system "git push #{quiet} origin #{deploy_branch}" }
 +    puts "\n## Github Pages deploy complete"
 +  end
 +end
@@ -398,7 +383,7 @@ index 81a03df..02ff2da 100644
 +    system "git branch -m #{deploy_branch}" unless deploy_branch == 'master'
 +    puts "\n## Pushing generated #{deploy_dir} website"
 +    quiet = (use_token)? " --quiet ":""
-+    system "git push #{quiet} -f origin #{deploy_branch}"
++    system "git push #{quiet} -f origin #{deploy_branch} >& /dev/null"
      puts "\n## Github Pages deploy complete"
    end
  end
@@ -410,7 +395,16 @@ index 81a03df..02ff2da 100644
    if args.dir
      if args.dir == "/"
        dir = ""
-@@ -306,13 +527,14 @@ task :set_root_dir, :dir do |t, args|
+@@ -299,20 +520,21 @@ task :set_root_dir, :dir do |t, args|
+     File.open('_config.yml', 'w') do |f|
+       f.write jekyll_config
+     end
+-    rm_rf public_dir
+-    mkdir_p "#{public_dir}#{dir}"
++    rm_rf "public"
++    mkdir_p "public#{dir}"
+     puts "## Site's root directory is now '/#{dir.sub(/^\//, '')}' ##"
+   end
  end
  
  desc "Set up _deploy folder and deploy branch for Github Pages deployment"
@@ -439,7 +433,7 @@ index 81a03df..02ff2da 100644
    unless (`git remote -v` =~ /origin.+?octopress(?:\.git)?/).nil?
      # If octopress is still the origin remote (from cloning) rename it to octopress
      system "git remote rename origin octopress"
-@@ -330,15 +554,19 @@ task :setup_github_pages, :repo do |t, args|
+@@ -330,39 +554,72 @@ task :setup_github_pages, :repo do |t, args|
        # If this is a user/organization pages repository, add the correct origin remote
        # and checkout the source branch for committing changes to the blog source.
        system "git remote add origin #{repo_url}"
@@ -453,17 +447,15 @@ index 81a03df..02ff2da 100644
        puts "Set origin as default remote"
        system "git branch -m master source"
        puts "Master branch renamed to 'source' for committing your blog source files"
-     else
+-    else
 -      unless !public_dir.match("#{project}").nil?
 -        system "rake set_root_dir[#{project}]"
 -      end
-+      #unless !public_dir.match("#{project}").nil?
-+      #  system "rake set_root_dir[#{project}]"
-+      #end
      end
    end
++  system "rake set_root_dir[#{project}]"
    jekyll_config = IO.read('_config.yml')
-@@ -346,23 +574,55 @@ task :setup_github_pages, :repo do |t, args|
+   jekyll_config.sub!(/^url:.*$/, "url: #{blog_url(user, project)}")
    File.open('_config.yml', 'w') do |f|
      f.write jekyll_config
    end
@@ -506,7 +498,7 @@ index 81a03df..02ff2da 100644
 +      if dir[-1] == "/"
 +        dir = dir[0..-2]
 +      end
-     end
++    end
 +    rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push_ex\\3")
 +    rakefile.sub!(/(tmp_dir\s*=\s*File.expand_path\()(["'])[^"']*["']/,"\\1\\2#{dir}\\2")
 +  else
@@ -520,7 +512,7 @@ index 81a03df..02ff2da 100644
 +      system "git branch -m #{deploy_branch}" unless branch == 'master'
 +      system "git remote add origin #{repo_url}"
 +      rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push\\3")
-+    end
+     end
 +    if use_token
 +      puts "\n---\n## Now you can deploy with `rake deploy` ##"
 +    else
@@ -534,7 +526,7 @@ index 81a03df..02ff2da 100644
  end
  
  def ok_failed(condition)
-@@ -378,9 +638,22 @@ def get_stdin(message)
+@@ -378,9 +635,22 @@ def get_stdin(message)
    STDIN.gets.chomp
  end
  
@@ -559,7 +551,7 @@ index 81a03df..02ff2da 100644
    else
      answer = get_stdin(message)
    end
-@@ -402,3 +675,109 @@ task :list do
+@@ -402,3 +672,109 @@ task :list do
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end
