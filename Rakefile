@@ -501,7 +501,7 @@ task :set_root_dir, :dir do |t, args|
       dir = "/" + args.dir.sub(/(\/*)(.+)/, "\\2").sub(/\/$/, '');
     end
     rakefile = IO.read(__FILE__)
-    rakefile.sub!(/public_dir(\s*)=(\s*)(["'])[\w\-\/]*["']/, "public_dir\\1=\\2\\3public#{dir}\\3")
+    rakefile.sub!(/public_dir(\s*)=(\s*)(["'])[^"']*public[^"']*(["'])/, "public_dir\\1=\\2\\3\#{tmp_dir}public#{dir}\\3")
     File.open(__FILE__, 'w') do |f|
       f.write rakefile
     end
