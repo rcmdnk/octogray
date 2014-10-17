@@ -55,4 +55,3 @@ script:
   - cat $post
   - rake gen
   - rake deploy
-
