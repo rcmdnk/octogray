@@ -15,7 +15,7 @@ before_install:
   - openssl aes-256-cbc -K $encrypted_4c26257df17f_key -iv $encrypted_4c26257df17f_iv -in .octogray_rsa.enc -out .octogray_rsa -d
   - mkdir -p ~/.ssh
   - cp .octogray_rsa ~/.ssh/id_rsa
-  - chmdo 600 ~/.ssh/id_rsa
+  - chmod 600 ~/.ssh/id_rsa
   #- |
   #  if sed --version 2>/dev/null |grep -q GNU;then
   #    function sedi () {
