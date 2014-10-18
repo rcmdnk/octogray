@@ -568,6 +568,7 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
   system "rake set_root_dir[#{project}]"
   jekyll_config = IO.read('_config.yml')
   jekyll_config.sub!(/^url:.*$/, "url: #{blog_url(user, project)}")
+  jekyll_config.sub!(/^feedly_atom:.*$/, "feedly_atom: #{blog_url(user, project)}%2Fatom.xml")
   File.open('_config.yml', 'w') do |f|
     f.write jekyll_config
   end
