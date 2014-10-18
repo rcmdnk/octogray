@@ -23,7 +23,7 @@
     <a href="{{site.subscribe_rss}}" title="RSS"><i class="fa fa-rss fa-2x"></i></a>
     {% endif %}
     {% if site.feedly_mark %}
-    <a href='http://cloud.feedly.com/#subscription%2Ffeed%2Fhttp%3A%2F%2F{{site.feedly_atom}}'><img id='feedlyFollow' src='/images/feedly.png' alt='follow us in feedly' title="feedly" class="feedly"></a>
+    <a href='http://cloud.feedly.com/#subscription%2Ffeed%2Fhttp%3A%2F%2F{{site.feedly_atom}}'><img id='feedlyFollow' src='{{root_url}}/images/feedly.png' alt='follow us in feedly' title="feedly" class="feedly"></a>
     {% endif %}
     {% if site.bookmark_mark %}
     <a href="#" class="add_bookmark" title="Favorite" data-page_title="{{site.title}}" data-page_url="{{site.url}}"><i class="fa fa-star-o fa-2x"></i></a>
