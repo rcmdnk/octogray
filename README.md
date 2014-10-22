@@ -59,3 +59,8 @@ watch_only | Watch only specified post.
 ![20131006_blog.jpg](http://rcmdnk.github.io/images/post/20131006_blog.jpg)
 ![20130707_codeblock1.jpg](http://rcmdnk.github.io/images/post/20130707_codeblock1.jpg)
 
+## Memo
+
+Current version is based on:
+
+> [imathis/octopress at c434de5977c316c8406c00bb24221fa61ca8fe88](https://github.com/imathis/octopress/tree/c434de5977c316c8406c00bb24221fa61ca8fe88)
