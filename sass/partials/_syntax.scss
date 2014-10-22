@@ -51,6 +51,7 @@ html .gist .gist-file {
     }
     .highlight pre {
       @extend .pre-code;
+      font-size: 1em;
       padding: 0;
     }
   }
