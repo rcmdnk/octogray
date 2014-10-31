@@ -500,6 +500,7 @@ task :set_root_dir, :dir do |t, args|
     else
       dir = "/" + args.dir.sub(/(\/*)(.+)/, "\\2").sub(/\/$/, '');
     end
+    rm_rf "#{public_dir}"
     rakefile = IO.read(__FILE__)
     rakefile.sub!(/public_dir(\s*)=(\s*)(["'])[^"']*public[^"']*(["'])/, "public_dir\\1=\\2\\3\#{tmp_dir}public#{dir}\\3")
     File.open(__FILE__, 'w') do |f|
@@ -514,14 +515,12 @@ task :set_root_dir, :dir do |t, args|
       f.write compass_config
     end
     jekyll_config = IO.read('_config.yml')
-    jekyll_config.sub!(/^destination:.+$/, "destination: public#{dir}")
+    jekyll_config.sub!(/^destination:.+$/, "destination: #{tmp_dir}public#{dir}")
     jekyll_config.sub!(/^subscribe_rss:\s*\/.+$/, "subscribe_rss: #{dir}/atom.xml")
     jekyll_config.sub!(/^root:.*$/, "root: /#{dir.sub(/^\//, '')}")
     File.open('_config.yml', 'w') do |f|
       f.write jekyll_config
     end
-    rm_rf "public"
-    mkdir_p "public#{dir}"
     puts "## Site's root directory is now '/#{dir.sub(/^\//, '')}' ##"
   end
 end
@@ -565,10 +564,11 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
       puts "Master branch renamed to 'source' for committing your blog source files"
     end
   end
+  url = blog_url(user, project)
   system "rake set_root_dir[#{project}]"
   jekyll_config = IO.read('_config.yml')
-  jekyll_config.sub!(/^url:.*$/, "url: #{blog_url(user, project)}")
-  jekyll_config.sub!(/^feedly_atom:.*$/, "feedly_atom: #{blog_url(user, project)}%2Fatom.xml")
+  jekyll_config.sub!(/^url:.*$/, "url: #{url}")
+  jekyll_config.sub!(/^feedly_atom:.*$/, "feedly_atom: #{url}%2Fatom.xml")
   File.open('_config.yml', 'w') do |f|
     f.write jekyll_config
   end
@@ -662,7 +662,7 @@ def blog_url(user, project)
   url = if File.exists?('source/CNAME')
     "http://#{IO.read('source/CNAME').strip}"
   else
-    "http://#{user}.github.io"
+    "http://#{user.downcase}.github.io"
   end
   url += "/#{project}" unless project == ''
   url

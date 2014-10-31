@@ -1,7 +1,7 @@
-diff --git a/master:Rakefile b/hoge:Rakefile
-index f7084da..1e73c3e 100644
---- a/master:Rakefile
-+++ b/hoge:Rakefile
+diff --git a/Rakefile b/Rakefile
+index 02df13b..f694e47 100644
+--- a/Rakefile
++++ b/Rakefile
 @@ -9,27 +9,33 @@ ssh_port       = "22"
  document_root  = "~/website.com/"
  rsync_delete   = false
@@ -346,7 +346,7 @@ index f7084da..1e73c3e 100644
  
  desc "copy dot files for deployment"
  task :copydot, :source, :dest do |t, args|
-@@ -265,14 +454,46 @@ multitask :push do
+@@ -265,22 +454,55 @@ multitask :push do
      puts "\n## Committing: #{message}"
      system "git commit -m \"#{message}\""
      puts "\n## Pushing generated #{deploy_dir} website"
@@ -395,23 +395,29 @@ index f7084da..1e73c3e 100644
    if args.dir
      if args.dir == "/"
        dir = ""
-@@ -280,7 +501,7 @@ task :set_root_dir, :dir do |t, args|
+     else
        dir = "/" + args.dir.sub(/(\/*)(.+)/, "\\2").sub(/\/$/, '');
      end
++    rm_rf "#{public_dir}"
      rakefile = IO.read(__FILE__)
 -    rakefile.sub!(/public_dir(\s*)=(\s*)(["'])[\w\-\/]*["']/, "public_dir\\1=\\2\\3public#{dir}\\3")
 +    rakefile.sub!(/public_dir(\s*)=(\s*)(["'])[^"']*public[^"']*(["'])/, "public_dir\\1=\\2\\3\#{tmp_dir}public#{dir}\\3")
      File.open(__FILE__, 'w') do |f|
        f.write rakefile
      end
-@@ -299,20 +520,21 @@ task :set_root_dir, :dir do |t, args|
+@@ -293,26 +515,25 @@ task :set_root_dir, :dir do |t, args|
+       f.write compass_config
+     end
+     jekyll_config = IO.read('_config.yml')
+-    jekyll_config.sub!(/^destination:.+$/, "destination: public#{dir}")
++    jekyll_config.sub!(/^destination:.+$/, "destination: #{tmp_dir}public#{dir}")
+     jekyll_config.sub!(/^subscribe_rss:\s*\/.+$/, "subscribe_rss: #{dir}/atom.xml")
+     jekyll_config.sub!(/^root:.*$/, "root: /#{dir.sub(/^\//, '')}")
      File.open('_config.yml', 'w') do |f|
        f.write jekyll_config
      end
 -    rm_rf public_dir
 -    mkdir_p "#{public_dir}#{dir}"
-+    rm_rf "public"
-+    mkdir_p "public#{dir}"
      puts "## Site's root directory is now '/#{dir.sub(/^\//, '')}' ##"
    end
  end
@@ -431,7 +437,7 @@ index f7084da..1e73c3e 100644
      repo_url = get_stdin("Repository url: ")
    end
    protocol = (repo_url.match(/(^git)@/).nil?) ? 'https' : 'git'
-@@ -322,7 +544,9 @@ task :setup_github_pages, :repo do |t, args|
+@@ -322,7 +543,9 @@ task :setup_github_pages, :repo do |t, args|
      user = repo_url.match(/github\.com\/([^\/]+)/)[1]
    end
    branch = (repo_url.match(/\/[\w-]+\.github\.(?:io|com)/).nil?) ? 'gh-pages' : 'master'
@@ -442,7 +448,7 @@ index f7084da..1e73c3e 100644
    unless (`git remote -v` =~ /origin.+?octopress(?:\.git)?/).nil?
      # If octopress is still the origin remote (from cloning) rename it to octopress
      system "git remote rename origin octopress"
-@@ -330,39 +554,73 @@ task :setup_github_pages, :repo do |t, args|
+@@ -330,40 +553,74 @@ task :setup_github_pages, :repo do |t, args|
        # If this is a user/organization pages repository, add the correct origin remote
        # and checkout the source branch for committing changes to the blog source.
        system "git remote add origin #{repo_url}"
@@ -462,10 +468,11 @@ index f7084da..1e73c3e 100644
 -      end
      end
    end
+   url = blog_url(user, project)
 +  system "rake set_root_dir[#{project}]"
    jekyll_config = IO.read('_config.yml')
-   jekyll_config.sub!(/^url:.*$/, "url: #{blog_url(user, project)}")
-+  jekyll_config.sub!(/^feedly_atom:.*$/, "feedly_atom: #{blog_url(user, project)}%2Fatom.xml")
+   jekyll_config.sub!(/^url:.*$/, "url: #{url}")
++  jekyll_config.sub!(/^feedly_atom:.*$/, "feedly_atom: #{url}%2Fatom.xml")
    File.open('_config.yml', 'w') do |f|
      f.write jekyll_config
    end
@@ -536,7 +543,7 @@ index f7084da..1e73c3e 100644
  end
  
  def ok_failed(condition)
-@@ -378,9 +636,22 @@ def get_stdin(message)
+@@ -379,9 +636,22 @@ def get_stdin(message)
    STDIN.gets.chomp
  end
  
@@ -561,7 +568,7 @@ index f7084da..1e73c3e 100644
    else
      answer = get_stdin(message)
    end
-@@ -402,3 +673,109 @@ task :list do
+@@ -403,3 +673,109 @@ task :list do
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end
