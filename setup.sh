@@ -74,7 +74,7 @@ fi
 echo
 
 # patch plugins (image_tag.rb, include_array.rb, octopress_filter.rb)
-yesno "Do you want to patch _config.yml?"
+yesno "Do you want to patch plugins (image_tag.rb, include_array.rb, octopress_filter.rb)?"
 ret=$?
 if [ $ret -eq 0 ];then
   cd plugins;patch < ../.themes/octogray/patches/plugins.patch;cd ../
