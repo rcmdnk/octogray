@@ -565,7 +565,6 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
     end
   end
   url = blog_url(user, project)
-  system "rake set_root_dir[#{project}]"
   jekyll_config = IO.read('_config.yml')
   jekyll_config.sub!(/^url:.*$/, "url: #{url}")
   jekyll_config.sub!(/^feedly_atom:.*$/, "feedly_atom: #{url}%2Fatom.xml")
@@ -621,6 +620,7 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
   File.open(__FILE__, 'w') do |f|
     f.write rakefile
   end
+  system "rake set_root_dir[#{project}]"
 end
 
 def ok_failed(condition)

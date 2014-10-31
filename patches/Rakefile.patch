@@ -1,5 +1,5 @@
 diff --git a/Rakefile b/Rakefile
-index 02df13b..f694e47 100644
+index 02df13b..12ee69e 100644
 --- a/Rakefile
 +++ b/Rakefile
 @@ -9,27 +9,33 @@ ssh_port       = "22"
@@ -469,7 +469,6 @@ index 02df13b..f694e47 100644
      end
    end
    url = blog_url(user, project)
-+  system "rake set_root_dir[#{project}]"
    jekyll_config = IO.read('_config.yml')
    jekyll_config.sub!(/^url:.*$/, "url: #{url}")
 +  jekyll_config.sub!(/^feedly_atom:.*$/, "feedly_atom: #{url}%2Fatom.xml")
@@ -540,6 +539,7 @@ index 02df13b..f694e47 100644
 +    f.write rakefile
    end
 -  puts "\n---\n## Now you can deploy to #{repo_url} with `rake deploy` ##"
++  system "rake set_root_dir[#{project}]"
  end
  
  def ok_failed(condition)
