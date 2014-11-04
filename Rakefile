@@ -105,7 +105,8 @@ task :generate_only, :filename do |t, args|
     Rake::Task[:check].invoke("new")
     puts "## Generating Site with Jekyll"
     system "compass compile --css-dir #{source_dir}/stylesheets"
-    system({"OCTOPRESS_ENV"=>"preview"},"jekyll build --unpublished")
+    system "touch .preview-mode"
+    system("jekyll build --unpublished")
     puts "## Restoring stashed posts"
     Rake::Task[:integrate].execute
   rescue
@@ -130,12 +131,12 @@ task :watch do
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
   puts "Starting to watch source with Jekyll and Compass."
   system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
-  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch --unpublished")
+  system "touch .preview-mode"
+  jekyllPid = Process.spawn("jekyll build --watch --unpublished")
   compassPid = Process.spawn("compass watch")
 
   trap("INT") {
     [jekyllPid, compassPid].each { |pid| Process.kill(9, pid) rescue Errno::ESRCH }
-    exit 0
   }
 
   [jekyllPid, compassPid].each { |pid| Process.wait(pid) }
@@ -151,6 +152,11 @@ task :watch_only, :filename do |t, args|
   else
     filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.reverse[0]
   end
+  if filename == nil
+    puts ""
+    puts "There is no markdown file in #{source_dir}/#{posts_dir}."
+    exit 1
+  end
   puts ""
   puts "## Test for #{filename}"
   puts ""
@@ -158,24 +164,13 @@ task :watch_only, :filename do |t, args|
   Rake::Task[:isolate].invoke(filename)
 
   begin
-    puts "Starting to watch source with Jekyll and Compass."
-    system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
-    jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch --unpublished")
-    compassPid = Process.spawn("compass watch")
-
-    trap("INT") {
-      [jekyllPid, compassPid].each { |pid| Process.kill(9, pid) rescue Errno::ESRCH }
-      puts "## Restoring stashed posts"
-      Rake::Task[:integrate].execute
-      exit 0
-    }
-
-    [jekyllPid, compassPid].each { |pid| Process.wait(pid) }
+    Rake::Task[:watch].execute
   rescue
-    puts $1
-    Rake::Task[:integrate].execute
-    exit 1
   end
+
+  puts ""
+  puts "## Bringing back other posts"
+  Rake::Task[:integrate].execute
 end
 
 desc "preview the site in a web browser"
@@ -183,13 +178,13 @@ task :preview do
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
   puts "Starting to watch source with Jekyll and Compass. Starting Rack on port #{server_port}"
   system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
-  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch --unpublished")
+  system "touch .preview-mode"
+  jekyllPid = Process.spawn("jekyll build --watch --unpublished")
   compassPid = Process.spawn("compass watch")
   rackupPid = Process.spawn("rackup --port #{server_port}")
 
   trap("INT") {
     [jekyllPid, compassPid, rackupPid].each { |pid| Process.kill(9, pid) rescue Errno::ESRCH }
-    exit 0
   }
 
   [jekyllPid, compassPid, rackupPid].each { |pid| Process.wait(pid) }
@@ -205,6 +200,11 @@ task :preview_only, :filename do |t, args|
   else
     filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.reverse[0]
   end
+  if filename == nil
+    puts ""
+    puts "There is no markdown file in #{source_dir}/#{posts_dir}."
+    exit 1
+  end
   puts ""
   puts "## Test for #{filename}"
   puts ""
@@ -212,25 +212,13 @@ task :preview_only, :filename do |t, args|
   Rake::Task[:isolate].invoke(filename)
 
   begin
-    puts "## Starting to watch source with Jekyll and Compass. Starting Rack on port #{server_port}"
-    system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
-    jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch --unpublished")
-    compassPid = Process.spawn("compass watch")
-    rackupPid = Process.spawn("rackup --port #{server_port}")
-
-    trap("INT") {
-      [jekyllPid, compassPid, rackupPid].each { |pid| Process.kill(9, pid) rescue Errno::ESRCH }
-      puts "## Restoring stashed posts"
-      Rake::Task[:integrate].execute
-      exit 0
-    }
-
-    [jekyllPid, compassPid, rackupPid].each { |pid| Process.wait(pid) }
+    Rake::Task[:preview].execute
   rescue
-    puts $1
-    Rake::Task[:integrate].execute
-    exit 1
   end
+
+  puts ""
+  puts "## Bringing back other posts"
+  Rake::Task[:integrate].execute
 end
 
 
