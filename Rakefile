@@ -447,8 +447,8 @@ multitask :push do
     puts "\n## Committing: #{message}"
     system "git commit -m \"#{message}\""
     puts "\n## Pushing generated #{deploy_dir} website"
-    quiet = (use_token)? " --quiet ":""
-    Bundler.with_clean_env { system "git push #{quiet} origin #{deploy_branch}" }
+    output = (use_token)? " >/dev/null 2>&1":""
+    Bundler.with_clean_env { system "git push origin #{deploy_branch} #{output}" }
     puts "\n## Github Pages deploy complete"
   end
 end
@@ -478,8 +478,8 @@ multitask :push_ex do
     system "git commit -m \"#{message}\" >/dev/null"
     system "git branch -m #{deploy_branch}" unless deploy_branch == 'master'
     puts "\n## Pushing generated #{deploy_dir} website"
-    quiet = (use_token)? " --quiet ":""
-    system "git push #{quiet} -f origin #{deploy_branch} > /dev/null 2>&1"
+    output = (use_token)? " >/dev/null 2>&1":""
+    Bundler.with_clean_env { system "git push -f origin #{deploy_branch} #{output}" }
     puts "\n## Github Pages deploy complete"
   end
 end
