@@ -51,7 +51,7 @@ html .gist .gist-file {
     }
     .highlight pre {
       @extend .pre-code;
-      font-size: 1em;
+      font-size: 1.0em;
       padding: 0;
     }
   }
@@ -108,7 +108,7 @@ p, li, td{
     display: inline-block;
     white-space: no-wrap;
     background: $code-mainbg;
-    font-size: 0.9em;
+    font-size: $code-font-size;
     line-height: 1.2em;
     color: $code-color;
     border: 1px solid $pre-border;
@@ -256,7 +256,7 @@ figure.code {
   @include hover-link;
   color: #666 !important;
   z-index: 1;
-  font-size: 0.9em;
+  font-size: $code-font-size;
   text-shadow: #cbcccc 0 1px 0;
   padding-left: 3em;
 }

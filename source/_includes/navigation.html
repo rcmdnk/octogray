@@ -75,11 +75,6 @@
     </form>
   </p>
   {%endif%}
-  {% unless site.affiliate == false or site.affiliate_link_unit == false or page.affiliate == false %}
-  <p>
-    {% include custom/affiliate/google_linkshort1.html %}
-  </p>
-  {% endunless %}
   {% if site.google_translate_layout and page.translate != false %}
   <p>
     <div id="google_translate_element"></div>

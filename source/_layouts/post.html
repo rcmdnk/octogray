@@ -34,21 +34,14 @@ single: true
   </footer>
 </article>
 {% include custom/after_article.html %}
-{% if site.linkwithin_show == true and page.footer != false %}
-<section>
-  {% include linkwithin.html %}
-</section>
+{% if site.disqus_short_name and page.comments == true %}
+{% include post/disqus_thread.html %}
 {% endif %}
 {% if site.zenback_show == true and page.comments == true %}
-<section>
-  {% include custom/zenback.html %}
-</section>
+{% include custom/zenback.html %}
 {% endif %}
-{% include custom/before_disqus.html %}
-{% if site.disqus_short_name and page.comments == true %}
-<section>
-  <div id="disqus_thread" aria-live="polite">{% include post/disqus_thread.html %}</div>
-</section>
+{% if site.linkwithin_show == true and page.footer != false %}
+{% include linkwithin.html %}
 {% endif %}
 {% include custom/endofpost.html %}
 </div><!-- post -->
