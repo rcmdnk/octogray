@@ -77,7 +77,7 @@ echo
 yesno "Do you want to patch plugins (image_tag.rb, include_array.rb, octopress_filter.rb)?"
 ret=$?
 if [ $ret -eq 0 ];then
-  cd plugins;patch < ../.themes/octogray/patches/plugins.patch;cd ../
+  patch < .themes/octogray/patches/plugins.patch
 else
   printf "\n\e[31mPlease update plugins by following .themes/octogray/plugins\e[m\n"
 fi

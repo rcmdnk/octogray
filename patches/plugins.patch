@@ -1,7 +1,20 @@
-diff --git a/image_tag.rb b/image_tag.rb
+diff --git a/plugins/category_generator.rb b/plugins/category_generator.rb
+index c55d62f..0fa32f8 100644
+--- a/plugins/category_generator.rb
++++ b/plugins/category_generator.rb
+@@ -173,7 +173,7 @@ ERR
+     #
+     def category_link(category)
+       dir = @context.registers[:site].config['category_dir']
+-      "<a class='category' href='/#{dir}/#{category.to_url}/'>#{category}</a>"
++      "<a class='category' itemprop='articleSection keywaords' href='/#{dir}/#{category.to_url}/'>#{category}</a>"
+     end
+ 
+     # Outputs the post.date as formatted html, with hooks for CSS styling.
+diff --git a/plugins/image_tag.rb b/plugins/image_tag.rb
 index 4567000..15adef5 100644
---- a/image_tag.rb
-+++ b/image_tag.rb
+--- a/plugins/image_tag.rb
++++ b/plugins/image_tag.rb
 @@ -24,7 +24,7 @@ module Jekyll
      def initialize(tag_name, markup, tokens)
        attributes = ['class', 'src', 'width', 'height', 'title']
@@ -24,10 +37,10 @@ index 4567000..15adef5 100644
          "<img #{@img.collect {|k,v| "#{k}=\"#{v}\"" if v}.join(" ")}>"
        else
          "Error processing input, expected syntax: {% img [class name(s)] [http[s]:/]/path/to/image [width [height]] [title text | \"title text\" [\"alt text\"]] %}"
-diff --git a/include_array.rb b/include_array.rb
+diff --git a/plugins/include_array.rb b/plugins/include_array.rb
 index 000040f..5c744c2 100644
---- a/include_array.rb
-+++ b/include_array.rb
+--- a/plugins/include_array.rb
++++ b/plugins/include_array.rb
 @@ -31,6 +31,11 @@ module Jekyll
        end
  
@@ -60,10 +73,10 @@ index 000040f..5c744c2 100644
          end
        end
        rtn
-diff --git a/octopress_filters.rb b/octopress_filters.rb
+diff --git a/plugins/octopress_filters.rb b/plugins/octopress_filters.rb
 index 9c7fa6c..da25c52 100644
---- a/octopress_filters.rb
-+++ b/octopress_filters.rb
+--- a/plugins/octopress_filters.rb
++++ b/plugins/octopress_filters.rb
 @@ -56,6 +56,14 @@ module OctopressLiquidFilters
      end
    end
