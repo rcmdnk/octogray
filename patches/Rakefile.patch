@@ -1,5 +1,5 @@
 diff --git a/Rakefile b/Rakefile
-index 02df13b..33adfb7 100644
+index 02df13b..02e7ab5 100644
 --- a/Rakefile
 +++ b/Rakefile
 @@ -9,27 +9,33 @@ ssh_port       = "22"
@@ -41,7 +41,7 @@ index 02df13b..33adfb7 100644
  end
  
  desc "Initial setup for Octopress: copies the default theme into the path of Jekyll's generator. Rake install defaults to rake install[classic] to install a different theme run rake install[some_theme_name]"
-@@ -52,12 +58,72 @@ end
+@@ -52,12 +58,77 @@ end
  # Working with Jekyll #
  #######################
  
@@ -83,6 +83,11 @@ index 02df13b..33adfb7 100644
 +  else
 +    filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.reverse[0]
 +  end
++  if filename == nil
++    puts ""
++    puts "There is no markdown file in #{source_dir}/#{posts_dir}."
++    exit 1
++  end
 +  puts ""
 +  puts "## Test build for #{filename}"
 +  puts ""
@@ -114,7 +119,7 @@ index 02df13b..33adfb7 100644
  end
  
  desc "Watch the site and regenerate when it changes"
-@@ -65,34 +131,97 @@ task :watch do
+@@ -65,34 +136,97 @@ task :watch do
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
    puts "Starting to watch source with Jekyll and Compass."
    system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
@@ -216,7 +221,7 @@ index 02df13b..33adfb7 100644
  # usage rake new_post[my-new-post] or rake new_post['my new post'] or rake new_post (defaults to "new-post")
  desc "Begin a new post in #{source_dir}/#{posts_dir}"
  task :new_post, :title do |t, args|
-@@ -102,20 +231,47 @@ task :new_post, :title do |t, args|
+@@ -102,20 +236,47 @@ task :new_post, :title do |t, args|
      title = get_stdin("Enter a title for your post: ")
    end
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
@@ -265,7 +270,7 @@ index 02df13b..33adfb7 100644
    end
  end
  
-@@ -125,6 +281,8 @@ task :new_page, :filename do |t, args|
+@@ -125,6 +286,8 @@ task :new_page, :filename do |t, args|
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
    args.with_defaults(:filename => 'new-page')
    page_dir = [source_dir]
@@ -274,7 +279,7 @@ index 02df13b..33adfb7 100644
    if args.filename.downcase =~ /(^.+\/)?(.+)/
      filename, dot, extension = $2.rpartition('.').reject(&:empty?)         # Get filename and extension
      title = filename
-@@ -147,10 +305,12 @@ task :new_page, :filename do |t, args|
+@@ -147,10 +310,12 @@ task :new_page, :filename do |t, args|
        page.puts "---"
        page.puts "layout: page"
        page.puts "title: \"#{title}\""
@@ -287,7 +292,7 @@ index 02df13b..33adfb7 100644
        page.puts "---"
      end
    else
-@@ -161,16 +321,18 @@ end
+@@ -161,16 +326,18 @@ end
  # usage rake isolate[my-post]
  desc "Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly."
  task :isolate, :filename do |t, args|
@@ -311,7 +316,7 @@ index 02df13b..33adfb7 100644
  end
  
  desc "Clean out caches: .pygments-cache, .gist-cache, .sass-cache"
-@@ -222,14 +384,29 @@ task :deploy do
+@@ -222,14 +389,29 @@ task :deploy do
      File.delete(".preview-mode")
      Rake::Task[:generate].execute
    end
@@ -343,7 +348,7 @@ index 02df13b..33adfb7 100644
  
  desc "copy dot files for deployment"
  task :copydot, :source, :dest do |t, args|
-@@ -265,22 +442,55 @@ multitask :push do
+@@ -265,22 +447,55 @@ multitask :push do
      puts "\n## Committing: #{message}"
      system "git commit -m \"#{message}\""
      puts "\n## Pushing generated #{deploy_dir} website"
@@ -402,7 +407,7 @@ index 02df13b..33adfb7 100644
      File.open(__FILE__, 'w') do |f|
        f.write rakefile
      end
-@@ -293,26 +503,25 @@ task :set_root_dir, :dir do |t, args|
+@@ -293,26 +508,25 @@ task :set_root_dir, :dir do |t, args|
        f.write compass_config
      end
      jekyll_config = IO.read('_config.yml')
@@ -434,7 +439,7 @@ index 02df13b..33adfb7 100644
      repo_url = get_stdin("Repository url: ")
    end
    protocol = (repo_url.match(/(^git)@/).nil?) ? 'https' : 'git'
-@@ -322,7 +531,9 @@ task :setup_github_pages, :repo do |t, args|
+@@ -322,7 +536,9 @@ task :setup_github_pages, :repo do |t, args|
      user = repo_url.match(/github\.com\/([^\/]+)/)[1]
    end
    branch = (repo_url.match(/\/[\w-]+\.github\.(?:io|com)/).nil?) ? 'gh-pages' : 'master'
@@ -445,7 +450,7 @@ index 02df13b..33adfb7 100644
    unless (`git remote -v` =~ /origin.+?octopress(?:\.git)?/).nil?
      # If octopress is still the origin remote (from cloning) rename it to octopress
      system "git remote rename origin octopress"
-@@ -330,40 +541,74 @@ task :setup_github_pages, :repo do |t, args|
+@@ -330,40 +546,74 @@ task :setup_github_pages, :repo do |t, args|
        # If this is a user/organization pages repository, add the correct origin remote
        # and checkout the source branch for committing changes to the blog source.
        system "git remote add origin #{repo_url}"
@@ -540,7 +545,7 @@ index 02df13b..33adfb7 100644
  end
  
  def ok_failed(condition)
-@@ -379,9 +624,22 @@ def get_stdin(message)
+@@ -379,9 +629,22 @@ def get_stdin(message)
    STDIN.gets.chomp
  end
  
@@ -565,7 +570,7 @@ index 02df13b..33adfb7 100644
    else
      answer = get_stdin(message)
    end
-@@ -403,3 +661,109 @@ task :list do
+@@ -403,3 +666,109 @@ task :list do
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end

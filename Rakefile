@@ -96,6 +96,11 @@ task :generate_only, :filename do |t, args|
   else
     filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.reverse[0]
   end
+  if filename == nil
+    puts ""
+    puts "There is no markdown file in #{source_dir}/#{posts_dir}."
+    exit 1
+  end
   puts ""
   puts "## Test build for #{filename}"
   puts ""
