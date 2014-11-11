@@ -41,7 +41,7 @@ function googleTranslateElementInit() {
   a('//apis.google.com/js/plusone.js','plusone-js');
   {% endif %}
   {% if site.facebook_like or site.facebook_share %}
-  a('//connect.facebook.net/{% if site.facebook_lang %}{{ site.facebook_lang }}{% else %}en_US{% endif %}/all.js#{% if site.facebook_app_id %}appId={{ site.facebook_app_id }}&{% endif %}xfbml=1','facebook-jssdk');
+  a('//connect.facebook.net/{% if site.facebook_lang %}{{ site.facebook_lang }}{% else %}en_US{% endif %}/sdk.js#{% if site.facebook_app_id %}appId={{ site.facebook_app_id }}&{% endif %}xfbml=1&version=v2.0','facebook-jssdk');
   {% endif %}
   {% if site.pocket_button %}
   a('//widgets.getpocket.com/v1/j/btn.js?v=1','pocket-btn-js');
