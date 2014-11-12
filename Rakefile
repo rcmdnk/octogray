@@ -82,6 +82,7 @@ task :generate do
   system "compass compile --css-dir #{source_dir}/stylesheets"
   system "jekyll build"
   system "rm -f .integrated"
+  system "rm -f .preview-mode"
 end
 
 desc "Same as generate"
