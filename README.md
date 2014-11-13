@@ -52,6 +52,11 @@ push_ex | Deploy public directory to github pages through temporary deploy dir.
 superfeedr | Send to Superfeedr.
 watch_only | Watch only specified post.
 
+## More Information
+
+* [GitHub PageのProject siteを使って英語用ブログを作った](http://rcmdnk.github.io/blog/2014/11/12/blog-octopress/)
+* [New blog with Octopress + Octogray, in GitHub Pages](http://rcmdnk.github.io/en/blog/2014/11/12/blog-octopress/)
+
 ## Previews
 
 * [preview (my blog)](http://rcmdnk.github.io/).
