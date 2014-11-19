@@ -26,7 +26,7 @@ function googleTranslateElementInit() {
       _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
   w._gaq.push(['_setAccount', '{{site.google_analytics_tracking_id}}']);
   w._gaq.push(['_trackPageview']);
-  a(('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js', 'ga');
+  a(('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js', 'ga');
   {% endif %}
   {% if site.twitter_follow_button or site.twitter_tweet_button %}
   a('//platform.twitter.com/widgets.js', 'twitter-wjs');
