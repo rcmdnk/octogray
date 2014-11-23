@@ -1,5 +1,5 @@
 diff --git a/Rakefile b/Rakefile
-index 02df13b..2c5efbb 100644
+index c7ad504..71ef7ed 100644
 --- a/Rakefile
 +++ b/Rakefile
 @@ -9,27 +9,33 @@ ssh_port       = "22"
@@ -399,7 +399,8 @@ index 02df13b..2c5efbb 100644
      if args.dir == "/"
        dir = ""
      else
-       dir = "/" + args.dir.sub(/(\/*)(.+)/, "\\2").sub(/\/$/, '');
+-      dir = "/" + args.dir.sub(/(\/*)(.+)/, "\\2").sub(/\/$/, '');
++      dir = "/" + args.dir.sub(/(\/*)(.+)/, "\\2").sub(/\/$/, '') + "/";
      end
 +    rm_rf "#{public_dir}"
      rakefile = IO.read(__FILE__)
@@ -408,13 +409,13 @@ index 02df13b..2c5efbb 100644
      File.open(__FILE__, 'w') do |f|
        f.write rakefile
      end
-@@ -293,26 +509,25 @@ task :set_root_dir, :dir do |t, args|
+@@ -293,26 +509,24 @@ task :set_root_dir, :dir do |t, args|
        f.write compass_config
      end
      jekyll_config = IO.read('_config.yml')
 -    jekyll_config.sub!(/^destination:.+$/, "destination: public#{dir}")
+-    jekyll_config.sub!(/^subscribe_rss:\s*\/.+$/, "subscribe_rss: #{dir}/atom.xml")
 +    jekyll_config.sub!(/^destination:.+$/, "destination: #{tmp_dir}public#{dir}")
-     jekyll_config.sub!(/^subscribe_rss:\s*\/.+$/, "subscribe_rss: #{dir}/atom.xml")
      jekyll_config.sub!(/^root:.*$/, "root: /#{dir.sub(/^\//, '')}")
      File.open('_config.yml', 'w') do |f|
        f.write jekyll_config
@@ -440,7 +441,7 @@ index 02df13b..2c5efbb 100644
      repo_url = get_stdin("Repository url: ")
    end
    protocol = (repo_url.match(/(^git)@/).nil?) ? 'https' : 'git'
-@@ -322,7 +537,9 @@ task :setup_github_pages, :repo do |t, args|
+@@ -322,7 +536,9 @@ task :setup_github_pages, :repo do |t, args|
      user = repo_url.match(/github\.com\/([^\/]+)/)[1]
    end
    branch = (repo_url.match(/\/[\w-]+\.github\.(?:io|com)/).nil?) ? 'gh-pages' : 'master'
@@ -451,7 +452,7 @@ index 02df13b..2c5efbb 100644
    unless (`git remote -v` =~ /origin.+?octopress(?:\.git)?/).nil?
      # If octopress is still the origin remote (from cloning) rename it to octopress
      system "git remote rename origin octopress"
-@@ -330,40 +547,74 @@ task :setup_github_pages, :repo do |t, args|
+@@ -330,40 +546,75 @@ task :setup_github_pages, :repo do |t, args|
        # If this is a user/organization pages repository, add the correct origin remote
        # and checkout the source branch for committing changes to the blog source.
        system "git remote add origin #{repo_url}"
@@ -474,7 +475,8 @@ index 02df13b..2c5efbb 100644
    url = blog_url(user, project)
    jekyll_config = IO.read('_config.yml')
    jekyll_config.sub!(/^url:.*$/, "url: #{url}")
-+  jekyll_config.sub!(/^feedly_atom:.*$/, "feedly_atom: #{url}%2Fatom.xml")
++  jekyll_config.sub!(/^subscribe_rss:.*$/, "subscribe_rss: #{url}/atom.xml")
++  jekyll_config.sub!(/^feedly_atom:.*$/, "feedly_atom: #{url}/atom.xml")
    File.open('_config.yml', 'w') do |f|
      f.write jekyll_config
    end
@@ -482,7 +484,7 @@ index 02df13b..2c5efbb 100644
 -  mkdir deploy_dir
 -  cd "#{deploy_dir}" do
 -    system "git init"
--    system "echo 'My Octopress Page is coming soon &hellip;' > index.html"
+-    system 'echo "My Octopress Page is coming soon &hellip;" > index.html'
 -    system "git add ."
 -    system "git commit -m \"Octopress init\""
 -    system "git branch -m gh-pages" unless branch == 'master'
