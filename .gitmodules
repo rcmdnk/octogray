@@ -10,9 +10,6 @@
 [submodule ".plugins/octopress-gemoji"]
 	path = .plugins/octopress-gemoji
 	url = git@github.com:rcmdnk/octopress-gemoji.git
-[submodule ".plugins/octopress-responsive-video-embed"]
-	path = .plugins/octopress-responsive-video-embed
-	url = git@github.com:optikfluffel/octopress-responsive-video-embed.git
 [submodule ".plugins/octopress-postscript"]
 	path = .plugins/octopress-postscript
 	url = git@github.com:rcmdnk/octopress-postscript.git
