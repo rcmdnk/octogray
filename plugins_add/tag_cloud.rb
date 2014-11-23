@@ -59,7 +59,7 @@ module Jekyll
       lists = {}
       max, min = 1, 1
       config = context.registers[:site].config
-      tag_dir = config['root'] + config['tag_dir'] + '/'
+      tag_dir = File.join(config['tag_dir'], '/')
       tags = context.registers[:site].tags
       tags.keys.sort_by{ |str| str.downcase }.each do |tag|
         count = tags[tag].count
@@ -95,7 +95,7 @@ module Jekyll
     def render(context)
       html = ""
       config = context.registers[:site].config
-      category_dir = config['root'] + config['category_dir'] + '/'
+      category_dir = File.join(config['category_dir'], '/')
       categories = context.registers[:site].categories
       categories.keys.sort_by{ |str| str.downcase }.each do |category|
         url = category_dir + category.gsub(/_|\P{Word}/, '-').gsub(/-{2,}/, '-').downcase
