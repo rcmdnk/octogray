@@ -95,46 +95,48 @@ cd ../../
 # install submodules
 
 ## [Octopress-Slideshare-Plugin](https://github.com/petehamilton/Octopress-Slideshare-Plugin)
-ln -s .themes/octogray/.plugins/Octopress-Slideshare-Plugin/slideshare.rb ./plugins/
+ln -s ../.themes/octogray/.plugins/Octopress-Slideshare-Plugin/slideshare.rb ./plugins/
 
 ## [footnote-inline](http://rcmdnk.github.io/blog/2013/10/12/blog-octopress/)
-ln -s .themes/octogray/.plugins/footnote-inline/plugins/footnote_inline.rb ./plugins/
-ln -s .themes/octogray/.plugins/footnote-inline/source/javascripts/footnote.js ./source/javascripts/
-ln -s .themes/octogray/.plugins/footnote-inline/sass/plugins/_footnote.scss ./sass/plugins/
+ln -s ../.themes/octogray/.plugins/footnote-inline/plugins/footnote_inline.rb ./plugins/
+ln -s ../../.themes/octogray/.plugins/footnote-inline/source/javascripts/footnote.js ./source/javascripts/
+ln -s ../../.themes/octogray/.plugins/footnote-inline/sass/plugins/_footnote.scss ./sass/plugins/
 
 ## [octopress-postscript](https://github.com/rcmdnk/octopress-postscript)
-ln -s .themes/octogray/.plugins/octopress-postscript/plugins/postscript.rb ./plugins/
-ln -s .themes/octogray/.plugins/octopress-postscript/sass/plugins/_postscript.scss ./sass/plugins/
+ln -s ../.themes/octogray/.plugins/octopress-postscript/plugins/postscript.rb ./plugins/
+ln -s ../../.themes/octogray/.plugins/octopress-postscript/sass/plugins/_postscript.scss ./sass/plugins/
 
 ## [jquery--ex-flex-fiex](http://github.com/cyokodog/jquery.ex-flex-fixed)
-ln -s .themes/octogray/.plugins/jquery.ex-flex-fixed/jquery.exflexfixed-0.3.0.js ./source/javascripts/
+ln -s ../../.themes/octogray/.plugins/jquery.ex-flex-fixed/jquery.exflexfixed-0.3.0.js ./source/javascripts/
 
 ## [keyboardkey](http://rcmdnk.github.io/blog/2013/06/19/blog-octopress/)
-ln -s .themes/octogray/.plugins/keyboardkey/plugins/keyboardkey.rb ./plugins/
-ln -s .themes/octogray/.plugins/keyboardkey/sass/plugins/_keyboardkey.scss ./sass/plugins/
+ln -s ../.themes/octogray/.plugins/keyboardkey/plugins/keyboardkey.rb ./plugins/
+ln -s ../../.themes/octogray/.plugins/keyboardkey/sass/plugins/_keyboardkey.scss ./sass/plugins/
 
 ## [monthly-archive](http://rcmdnk.github.io/blog/2013/10/01/blog-octopress/)
-ln -s .themes/octogray/.plugins/monthly-archive/plugins/monthly_archive.rb ./plugins/
-ln -s .themes/octogray/.plugins/monthly-archive/plugins/monthly_generator.rb ./plugins/
-ln -s .themes/octogray/.plugins/monthly-archive/source/_layouts/monthly_index.html ./source/_layouts/
-ln -s .themes/octogray/.plugins/monthly-archive/source/_includes/custom/asides/monthly_archive.html ./source/_includes/custom/asides/
-ln -s .themes/octogray/.plugins/monthly-archive/source/javascripts/monthly_archive.js ./source/javascripts/
-ln -s .themes/octogray/.plugins/monthly-archive/sass/plugins/_monthly_archive.scss ./sass/plugins/
+ln -s ../.themes/octogray/.plugins/monthly-archive/plugins/monthly_archive.rb ./plugins/
+ln -s ../.themes/octogray/.plugins/monthly-archive/plugins/monthly_generator.rb ./plugins/
+ln -s ../../.themes/octogray/.plugins/monthly-archive/source/_layouts/monthly_index.html ./source/_layouts/
+ln -s ../../../../.themes/octogray/.plugins/monthly-archive/source/_includes/custom/asides/monthly_archive.html ./source/_includes/custom/asides/
+ln -s ../../.themes/octogray/.plugins/monthly-archive/source/javascripts/monthly_archive.js ./source/javascripts/
+ln -s ../../.themes/octogray/.plugins/monthly-archive/sass/plugins/_monthly_archive.scss ./sass/plugins/
 
 ## [octopress-gemoji](http://rcmdnk.github.io/blog/2013/09/28/blog-octopress/)
-ln -s .themes/octogray/.plugins/octopress-gemoji/plugins/gemoji.rb ./plugins/
-ln -s .themes/octogray/.plugins/octopress-gemoji/sass/plugins/_gemoji.scss ./sass/plugins/
+ln -s ../.themes/octogray/.plugins/octopress-gemoji/plugins/gemoji.rb ./plugins/
+ln -s ../../.themes/octogray/.plugins/octopress-gemoji/sass/plugins/_gemoji.scss ./sass/plugins/
 
 ## [octopress-responsive-video-embed](https://github.com/optikfluffel/octopress-responsive-video-embed)
-ln -s .themes/octogray/.plugins/octopress-responsive-video-embed/*.rb ./plugins/
-ln -s .themes/octogray/.plugins/octopress-responsive-video-embed/_rve.scss ./sass/plugins/
+cd plugins
+ln -s ../.themes/octogray/.plugins/octopress-responsive-video-embed/*.rb ./plugins/
+cd ../
+ln -s ../../.themes/octogray/.plugins/octopress-responsive-video-embed/_rve.scss ./sass/plugins/
 
 ## [jekyll-tweet-tag.git](https://github.com/scottwb/jekyll-tweet-tag.git)
-ln -s .themes/octogray/.plugins/jekyll-tweet-tag/tweet_tag.rb ./plugins
+ln -s ../.themes/octogray/.plugins/jekyll-tweet-tag/tweet_tag.rb ./plugins
 
 ## [githubrepo-octopress](https://github.com/sotsy/githubrepo-octopress)
-ln -s .themes/octogray/.plugins/githubrepo-octopress/githubwidget.rb plugins/
-ln -s .themes/octogray/.plugins/GitHub-jQuery-Repo-Widget/jquery.githubRepoWidget.min.js source/javascripts/
+ln -s ../.themes/octogray/.plugins/githubrepo-octopress/githubwidget.rb plugins/
+ln -s ../../.themes/octogray/.plugins/GitHub-jQuery-Repo-Widget/jquery.githubRepoWidget.min.js source/javascripts/
 
 # install downloaded plugins
 
@@ -161,7 +163,10 @@ rm -rf .themes/octogray/.plugins/scrolltopcontrol/
 echo
 
 # other plugins
-ln -s .themes/octogray/plugins_add/*rb ./plugins/
+cd plugins
+ln -s ../.themes/octogray/plugins_add/*rb ./
+cd ../
+
 
 # other files
 ln -s .themes/octogray/ping.yml .

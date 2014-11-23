@@ -12,7 +12,7 @@ for f in \
 .themes/octogray/.plugins/githubrepo-octopress/githubwidget.rb \
 .themes/octogray/plugins_add/*rb;do
   rm plugins/$(basename $f)
-  ln -s $f plugins/$(basename $f)
+  ln -s ../$f plugins/$(basename $f)
 done
 
 for f in \
@@ -23,7 +23,7 @@ for f in \
 .themes/octogray/.plugins/octopress-gemoji/sass/plugins/_gemoji.scss \
 .themes/octogray/.plugins/octopress-responsive-video-embed/_rve.scss;do
   rm sass/plugins/$(basename $f)
-  ln -s $f sass/plugins/$(basename $f)
+  ln -s ../../$f sass/plugins/$(basename $f)
 done
 
 for f in \
@@ -32,13 +32,13 @@ for f in \
 .themes/octogray/.plugins/monthly-archive/source/javascripts/monthly_archive.js \
 .themes/octogray/.plugins/GitHub-jQuery-Repo-Widget/jquery.githubRepoWidget.min.js;do
   rm source/javascripts/$(basename $f)
-  ln -s $f source/javascripts/$(basename $f)
+  ln -s ../../$f source/javascripts/$(basename $f)
 done
 
 rm source/_layouts/monthly_index.html
-ln -s .themes/octogray/.plugins/monthly-archive/source/_layouts/monthly_index.html source/_layouts/monthly_index.html
+ln -s ../../.themes/octogray/.plugins/monthly-archive/source/_layouts/monthly_index.html source/_layouts/monthly_index.html
 rm source/_includes/custom/asides/monthly_archive.html
-ln -s .themes/octogray/.plugins/monthly-archive/source/_includes/custom/asides/monthly_archive.html source/_includes/custom/asides/monthly_archive.html
+ln -s ../../../../.themes/octogray/.plugins/monthly-archive/source/_includes/custom/asides/monthly_archive.html source/_includes/custom/asides/monthly_archive.html
 
 rm ./ping.yml
 ln -s .themes/octogray/ping.yml ./ping.yml
