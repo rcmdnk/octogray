@@ -28,3 +28,6 @@
 [submodule ".plugins/githubrepo-octopress"]
 	path = .plugins/githubrepo-octopress
 	url = git@github.com:sotsy/githubrepo-octopress.git
+[submodule ".plugins/octopress-responsive-video-embed"]
+	path = .plugins/octopress-responsive-video-embed
+	url = git://github.com/rcmdnk/octopress-responsive-video-embed.git
