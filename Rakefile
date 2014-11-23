@@ -491,8 +491,10 @@ task :set_root_dir, :dir do |t, args|
   if args.dir
     if args.dir == "/"
       dir = ""
+      dir_root = "/"
     else
-      dir = "/" + args.dir.sub(/(\/*)(.+)/, "\\2").sub(/\/$/, '') + "/";
+      dir = "/" + args.dir.sub(/(\/*)(.+)/, "\\2").sub(/\/$/, '')
+      dir_root = "/" + args.dir.sub(/(\/*)(.+)/, "\\2").sub(/\/$/, '') + "/"
     end
     rm_rf "#{public_dir}"
     rakefile = IO.read(__FILE__)
@@ -510,11 +512,11 @@ task :set_root_dir, :dir do |t, args|
     end
     jekyll_config = IO.read('_config.yml')
     jekyll_config.sub!(/^destination:.+$/, "destination: #{tmp_dir}public#{dir}")
-    jekyll_config.sub!(/^root:.*$/, "root: /#{dir.sub(/^\//, '')}")
+    jekyll_config.sub!(/^root:.*$/, "root: #{dir_root}")
     File.open('_config.yml', 'w') do |f|
       f.write jekyll_config
     end
-    puts "## Site's root directory is now '/#{dir.sub(/^\//, '')}' ##"
+    puts "## Site's root directory is now '#{dir_root}' ##"
   end
 end
 
