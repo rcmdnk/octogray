@@ -490,33 +490,31 @@ task :set_root_dir, :dir do |t, args|
   puts ">>> !! Please provide a directory, eg. rake set_root_dir[publishing/subdirectory]" unless args.dir
   if args.dir
     if args.dir == "/"
-      dir = ""
-      dir_root = "/"
+      dir = "/"
     else
-      dir = "/" + args.dir.sub(/(\/*)(.+)/, "\\2").sub(/\/$/, '')
-      dir_root = "/" + args.dir.sub(/(\/*)(.+)/, "\\2").sub(/\/$/, '') + "/"
+      dir = "/" + args.dir.sub(/(\/*)(.+)/, "\\2").sub(/\/$/, '') + "/"
     end
     rm_rf "#{public_dir}"
     rakefile = IO.read(__FILE__)
-    rakefile.sub!(/public_dir(\s*)=(\s*)(["'])[^"']*public[^"']*(["'])/, "public_dir\\1=\\2\\3\#{tmp_dir}public#{dir}\\3")
+    rakefile.sub!(/public_dir(\s*)=(\s*)(["'])[^"']*public[^"']*(["'])/, "public_dir\\1=\\2\\3\#{File.join(tmp_dir, 'public', dir)}\\3")
     File.open(__FILE__, 'w') do |f|
       f.write rakefile
     end
     compass_config = IO.read('config.rb')
-    compass_config.sub!(/http_path(\s*)=(\s*)(["'])[\w\-\/]*["']/, "http_path\\1=\\2\\3#{dir}/\\3")
-    compass_config.sub!(/http_images_path(\s*)=(\s*)(["'])[\w\-\/]*["']/, "http_images_path\\1=\\2\\3#{dir}/images\\3")
-    compass_config.sub!(/http_fonts_path(\s*)=(\s*)(["'])[\w\-\/]*["']/, "http_fonts_path\\1=\\2\\3#{dir}/fonts\\3")
-    compass_config.sub!(/css_dir(\s*)=(\s*)(["'])[\w\-\/]*["']/, "css_dir\\1=\\2\\3public#{dir}/stylesheets\\3")
+    compass_config.sub!(/http_path(\s*)=(\s*)(["'])[\w\-\/]*["']/, "http_path\\1=\\2\\3#{File.join(dir, '/')}\\3")
+    compass_config.sub!(/http_images_path(\s*)=(\s*)(["'])[\w\-\/]*["']/, "http_images_path\\1=\\2\\3#{File.join(dir, '/images')}\\3")
+    compass_config.sub!(/http_fonts_path(\s*)=(\s*)(["'])[\w\-\/]*["']/, "http_fonts_path\\1=\\2\\3#{File.join(dir, '/fonts')}\\3")
+    compass_config.sub!(/css_dir(\s*)=(\s*)(["'])[\w\-\/]*["']/, "css_dir\\1=\\2\\3public#{File.join(dir, '/stylesheets')}\\3")
     File.open('config.rb', 'w') do |f|
       f.write compass_config
     end
     jekyll_config = IO.read('_config.yml')
-    jekyll_config.sub!(/^destination:.+$/, "destination: #{tmp_dir}public#{dir}")
-    jekyll_config.sub!(/^root:.*$/, "root: #{dir_root}")
+    jekyll_config.sub!(/^destination:.+$/, "destination: #{File.join(tmp_dir, "public", dir)}")
+    jekyll_config.sub!(/^root:.*$/, "root: #{dir}")
     File.open('_config.yml', 'w') do |f|
       f.write jekyll_config
     end
-    puts "## Site's root directory is now '#{dir_root}' ##"
+    puts "## Site's root directory is now '#{dir}' ##"
   end
 end
 
