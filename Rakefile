@@ -492,7 +492,7 @@ task :set_root_dir, :dir do |t, args|
     if args.dir == "/"
       dir = ""
     else
-      dir = "/" + args.dir.sub(/(\/*)(.+)/, "\\2").sub(/\/$/, '');
+      dir = "/" + args.dir.sub(/(\/*)(.+)/, "\\2").sub(/\/$/, '') + "/";
     end
     rm_rf "#{public_dir}"
     rakefile = IO.read(__FILE__)
@@ -510,7 +510,6 @@ task :set_root_dir, :dir do |t, args|
     end
     jekyll_config = IO.read('_config.yml')
     jekyll_config.sub!(/^destination:.+$/, "destination: #{tmp_dir}public#{dir}")
-    jekyll_config.sub!(/^subscribe_rss:\s*\/.+$/, "subscribe_rss: #{dir}/atom.xml")
     jekyll_config.sub!(/^root:.*$/, "root: /#{dir.sub(/^\//, '')}")
     File.open('_config.yml', 'w') do |f|
       f.write jekyll_config
@@ -561,7 +560,8 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
   url = blog_url(user, project)
   jekyll_config = IO.read('_config.yml')
   jekyll_config.sub!(/^url:.*$/, "url: #{url}")
-  jekyll_config.sub!(/^feedly_atom:.*$/, "feedly_atom: #{url}%2Fatom.xml")
+  jekyll_config.sub!(/^subscribe_rss:.*$/, "subscribe_rss: #{url}/atom.xml")
+  jekyll_config.sub!(/^feedly_atom:.*$/, "feedly_atom: #{url}/atom.xml")
   File.open('_config.yml', 'w') do |f|
     f.write jekyll_config
   end
