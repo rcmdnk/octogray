@@ -161,7 +161,7 @@ rm -rf .themes/octogray/.plugins/scrolltopcontrol/
 echo
 
 # other plugins
-cp ../.themes/octogray/plugins_add/*rb ./plugins
+cp .themes/octogray/plugins_add/*rb ./plugins
 
 
 # other files
