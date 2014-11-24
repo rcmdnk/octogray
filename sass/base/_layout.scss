@@ -7,7 +7,7 @@
   margin: 0;
   padding: 0 $pad-medium 1px;
   //background-color: lighten($sidebar-bg, 2);
-  //border-top: 1px solid lighten($sidebar-border, 4);
+  border-top: 0px;
   section {
     &.odd, &.even { float: left; width: 48%; }
     &.odd { margin-left: 0; }
@@ -69,14 +69,16 @@ body {
 }
 
 aside.sidebar {
-  text-align: center;
-  background-color: $sidebar-bg;
-  border-top: 1px solid $sidebar-border;
-  padding: 0 $sidebar-pad-medium $sidebar-pad-medium;
-  background: none;
-  //@extend .group;
+  float: none;
   //clear: none;
   //float: left;
+  padding: 0 $pad-min 1px;
+  //padding: 0 $sidebar-pad-medium $sidebar-pad-medium;
+  //background-color: lighten($sidebar-bg, 2);
+  background-color: $sidebar-bg;
+  border-top: 0px;
+  background: none;
+  @extend .group;
   .only-footer {
     display: block;
   }
@@ -99,7 +101,8 @@ aside.sidebar {
 .basic-alignment {
   &.left { float: left; margin-right: 1.5em; }
   &.right { float: right; margin-left: 1.5em; }
-  &.center { display:block; margin-left: auto; margin-right: auto; }
+  &.center { display:block; margin: 0 auto 1.5em; }
+  &.left, &.right { margin-bottom: .8em; }
 }
 
 .center_wrapper {

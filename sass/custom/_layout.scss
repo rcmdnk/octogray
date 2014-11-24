@@ -5,7 +5,6 @@ $sidebar-remain: false;
 $indented-lists: true;
 
 $max-width: 1200px;
-$body-border: 0px;
 
 // Followings are temporary variables
 $content-min-width: 0px;
@@ -21,6 +20,7 @@ $sidebar-width-medium: 0px;
 $sidebar-pad-medium: 0px;
 $sidebar-pad-wide: 0px;
 $sidebar-width-wide: 0px;
+$body-border: 0px;
 
 // Set variables for siedebar-remain/no-remain mode
 @if $sidebar-remain == true {
@@ -39,6 +39,8 @@ $sidebar-width-wide: 0px;
   $header-font-size: 1.3em;
   $header-padding-top: 1.2em;
   $header-padding-bottom: 1em;
+
+  $body-border: 0px;
 } @else { // Collapse sidebar
   // Padding used for layout margins
   $pad-min: 10px;
@@ -55,4 +57,6 @@ $sidebar-width-wide: 0px;
   $header-font-size: 1em;
   $header-padding-top: 1.2em;
   $header-padding-bottom: 1em;
+
+  $body-border: 1px;
 }
