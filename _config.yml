@@ -93,7 +93,7 @@ aside_width: 336 # set sass/base/_layout.scss: $sidebar-width-min as 350px
 # page_asides:
 
 # scroll-fixed
-n_scroll_fixed: 2
+n_scroll_fixed: 0
 
 # scrolltop
 scrolltop: false

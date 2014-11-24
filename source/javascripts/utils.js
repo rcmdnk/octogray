@@ -56,10 +56,12 @@ jQuery(function($){
 });
 
 jQuery(function($){
-  $('.scroll-fixed').exFlexFixed({
-    watchPosition: true,
-    container : '#content'
-  });
+  if(!$('body').hasClass('collapse-sidebar')) {
+    $('.scroll-fixed').exFlexFixed({
+      watchPosition: true,
+      container : '#content'
+    });
+  }
 });
 
 jQuery(function($){

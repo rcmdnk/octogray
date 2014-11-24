@@ -56,7 +56,7 @@
   <script>!window.jQuery && document.write(unescape('%3Cscript src="{{root_url}}/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="{{root_url}}/javascripts/footnote.js"></script>
   {%if site.scrolltop%}<script src="{{root_url}}/javascripts/scrolltopcontrol.js"></script>{%endif%}
-  <script src="{{root_url}}/javascripts/jquery.exflexfixed-0.3.0.js"></script>
+  {%if site.n_scroll_fixed > 0%}<script src="{{root_url}}/javascripts/jquery.exflexfixed-0.3.0.js"></script>{%endif%}
   <script src="{{root_url}}/javascripts/jquery.nailthumb.1.1.min.js"></script>
   <script src="{{root_url}}/javascripts/jquery.githubRepoWidget.min.js"></script>
   <script src="{{root_url}}/javascripts/monthly_archive.js"></script>

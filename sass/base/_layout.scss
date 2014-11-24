@@ -13,14 +13,14 @@
     &.odd { margin-left: 0; }
     &.even { margin-left: 4%; }
   }
-  &.thirds section {
-    width: 30%;
-    margin-left: 5%;
-    &.first {
-      margin-left: 0;
-      clear: both;
-    }
-  }
+  //&.thirds section {
+  //  width: 30%;
+  //  margin-left: 5%;
+  //  &.first {
+  //    margin-left: 0;
+  //    clear: both;
+  //  }
+  //}
   .only-footer {
     display: none;
   }
@@ -152,7 +152,7 @@ body.sidebar-footer {
     }
     aside.sidebar {
       width: $sidebar-width-medium - $sidebar-pad-medium*2;
-      padding: 0 $sidebar-pad-medium $sidebar-pad-medium;
+      padding: 2em $sidebar-pad-medium $sidebar-pad-medium;
       background: none;
       clear: none;
       float: left;
@@ -177,7 +177,7 @@ body.sidebar-footer {
     }
     aside.sidebar {
       width: $sidebar-width-wide - $sidebar-pad-wide*2;
-      padding: 1.2em $sidebar-pad-wide $sidebar-pad-wide;
+      padding: 2em $sidebar-pad-wide $sidebar-pad-wide;
       .collapse-sidebar & {
         padding: { left: $pad-wide; right: $pad-wide; }
       }

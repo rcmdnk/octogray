@@ -97,7 +97,7 @@ index c1d56f4..f0af8f1 100644
  # page_asides:
  
 +# scroll-fixed
-+n_scroll_fixed: 2
++n_scroll_fixed: 0
 +
 +# scrolltop
 +scrolltop: false
