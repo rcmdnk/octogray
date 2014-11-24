@@ -62,8 +62,6 @@ $page-border-bottom: $main-bg !default;
 
 /* Core theme application */
 
-$body-border: 0px !default;
-
 a {
   @include link-colors($link-color, $hover: $link-color-hover, $focus: $link-color-hover, $visited: $link-color-visited, $active: $link-color-active);
 }

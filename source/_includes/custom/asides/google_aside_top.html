@@ -1,5 +1,10 @@
 {% unless site.affiliate == false or page.affiliate == false %}
 <section>
-{% include custom/affiliate/google_aside_top.html %}
+  <div class="center_wrapper">
+    <div class='only-footer'>{{site.sponsored_links}}</div>
+    <div>
+      {% include custom/affiliate/google_aside_top.html %}
+    </div>
+  </div>
 </section>
 {% endunless %}

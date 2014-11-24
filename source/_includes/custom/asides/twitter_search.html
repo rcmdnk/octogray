@@ -1,7 +1,9 @@
 {% if site.twitter_search %}
 <section>
   <h1>Tweets about {{ site.twitter_search }} </h1>
+  <div class='center_wrapper'>
   <a class="twitter-timeline" data-chrome="transparent" width="{{site.aside_width}}" height="400"  href="https://twitter.com/search?q={{site.twitter_search}}"  data-widget-id="373008330047770624">Tweet about {{site.twitter_search}}</a>
   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+  </div>
 </section>
 {% endif %}

@@ -1,16 +1,58 @@
 // Here you can easily change your sites's layout.
 // To give it a try, uncomment some of the lines below, make changes, rebuild your blog, and see how it works.
 
-//$header-font-size: 1.3em;
-//$header-padding-top: 1.2em;
-//$header-padding-bottom: 1em;
+$sidebar-remain: false;
+$indented-lists: true;
 
-//$max-width: 1350px;
-//$indented-lists: true;
+$max-width: 1200px;
+$body-border: 0px;
 
-// Padding used for layout margins
-//$pad-min: 18px;
-//$pad-medium: 35px;
+// Followings are temporary variables
+$content-min-width: 0px;
+$pad-min: 0px;
+$pad-narrow: 0px;
+$pad-medium: 0px;
+$pad-wide: 0px;
+$min-width: 0px;
+$header-font-size: 0px;
+$header-padding-top: 0px;
+$header-padding-bottom: 0px;
+$sidebar-width-medium: 0px;
+$sidebar-pad-medium: 0px;
+$sidebar-pad-wide: 0px;
+$sidebar-width-wide: 0px;
 
-// Sidebar widths used in media queries
-//$sidebar-width-medium: 240px;
+// Set variables for siedebar-remain/no-remain mode
+@if $sidebar-remain == true {
+  $content-min-width: 356px;
+
+  // Padding used for layout margins
+  $pad-min: 10px;
+
+  // Sidebar widths used in media queries
+  $sidebar-pad-medium: $pad-min;
+  // sidebar width must be smaller than content width,
+  // if it should be remained in smaller window.
+  // Otherwise the side bar will go under the content.
+  $sidebar-width-medium: $content-min-width;
+
+  $header-font-size: 1.3em;
+  $header-padding-top: 1.2em;
+  $header-padding-bottom: 1em;
+} @else { // Collapse sidebar
+  // Padding used for layout margins
+  $pad-min: 10px;
+  $pad-narrow: 10px;
+  $pad-medium: 10px;
+  $pad-wide: 10px;
+
+  // Sidebar widths used in media queries
+  $sidebar-width-medium: 356px;
+  $sidebar-pad-medium: 10px;
+  $sidebar-pad-wide: 10px;
+  $sidebar-width-wide: 356px;
+
+  $header-font-size: 1em;
+  $header-padding-top: 1.2em;
+  $header-padding-bottom: 1em;
+}
