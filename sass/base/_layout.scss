@@ -21,9 +21,6 @@
   //    clear: both;
   //  }
   //}
-  .only-footer {
-    display: none;
-  }
 }
 
 body {
@@ -72,7 +69,7 @@ aside.sidebar {
   float: none;
   //clear: none;
   //float: left;
-  padding: 0 $pad-min 1px;
+  padding: 2em $pad-min 1px;
   //padding: 0 $sidebar-pad-medium $sidebar-pad-medium;
   //background-color: lighten($sidebar-bg, 2);
   background-color: $sidebar-bg;
@@ -80,6 +77,9 @@ aside.sidebar {
   background: none;
   @extend .group;
   .only-footer {
+    font-family: $serif;
+    color: $text-color;
+    font-size: 1.25em;
     display: block;
   }
   section {
@@ -113,7 +113,12 @@ aside.sidebar {
 
 body.sidebar-footer {
   @media only screen and (min-width: 750px) {
-    aside.sidebar{ @include collapse-sidebar; }
+    aside.sidebar{
+      @include collapse-sidebar;
+      .only-footer {
+        display: none;
+      }
+    }
   }
   #content { margin-right: 0px; }
   .toggle-sidebar { display: none; }
@@ -124,7 +129,12 @@ body.sidebar-footer {
     body > header { font-size: $header-font-size; }
   }
   @media only screen and (min-width: 750px) {
-    aside.sidebar { @include collapse-sidebar; }
+    aside.sidebar {
+      @include collapse-sidebar;
+      .only-footer {
+        display: none;
+      }
+    }
   }
 }
 #main, #content, .sidebar {
@@ -163,6 +173,12 @@ body.sidebar-footer {
       }
       .collapse-sidebar & {
         @include collapse-sidebar;
+        .only-footer {
+          font-family: $serif;
+          color: $text-color;
+          font-size: 1.25em;
+          display: block;
+        }
       }
     }
   }
