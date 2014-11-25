@@ -57,10 +57,12 @@ jQuery(function($){
 
 jQuery(function($){
   if(!$('body').hasClass('collapse-sidebar')) {
-    $('.scroll-fixed').exFlexFixed({
-      watchPosition: true,
-      container : '#content'
-    });
+    if($('.scroll-fixed').length > 0){
+      $('.scroll-fixed').exFlexFixed({
+        watchPosition: true,
+        container : '#content'
+      });
+    }
   }
 });
 
