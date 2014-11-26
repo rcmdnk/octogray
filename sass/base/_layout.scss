@@ -113,12 +113,7 @@ aside.sidebar {
 
 body.sidebar-footer {
   @media only screen and (min-width: 750px) {
-    aside.sidebar{
-      @include collapse-sidebar;
-      .only-footer {
-        display: none;
-      }
-    }
+    aside.sidebar{@include collapse-sidebar; }
   }
   #content { margin-right: 0px; }
   .toggle-sidebar { display: none; }
@@ -133,6 +128,11 @@ body.sidebar-footer {
       @include collapse-sidebar;
       .only-footer {
         display: none;
+      }
+      .collapse-sidebar & {
+        .only-footer {
+          display: block;
+        }
       }
     }
   }
@@ -173,12 +173,6 @@ body.sidebar-footer {
       }
       .collapse-sidebar & {
         @include collapse-sidebar;
-        .only-footer {
-          font-family: $serif;
-          color: $text-color;
-          font-size: 1.25em;
-          display: block;
-        }
       }
     }
   }
