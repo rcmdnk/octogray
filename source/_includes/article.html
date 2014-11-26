@@ -31,8 +31,10 @@
 <div class="entry-content index_click_box">
   <div class="group">
     {% if post.ogimage and post.no_ogimage != true %}
-    <div class="nailthumb-container title-thumb">
-      {%img pic val:ogimage%}
+    <div class="titlle-thumb-wrap">
+      <div class="nailthumb-container title-thumb">
+        {%img val:ogimage%}
+      </div>
     </div>
     {% endif %}
     {{ content | excerpt }}
@@ -49,8 +51,10 @@
 <div class="entry-content">
   <div class="group">
     {% if page.ogimage and page.no_ogimage != true %}
-    <div class="nailthumb-container title-thumb">
-      {%img pic val:ogimage%}
+    <div class="titlle-thumb-wrap">
+      <div class="nailthumb-container title-thumb">
+        {%img val:ogimage%}
+      </div>
     </div>
     {% endif %}
     {{ content | excerpt }}

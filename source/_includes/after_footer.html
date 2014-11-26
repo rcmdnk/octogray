@@ -67,6 +67,11 @@ function googleTranslateElementInit() {
   {% if site.google_translate_layout and page.translate != false %}
   a('//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit','translate-js');
   {% endif %}
+  {% unless site.affiliate == false or page.affiliate == false %}
+  {% if site.linkplaza_key %}
+  a('//static.linkplaza.jp/api/replace.js?key={{site.linkplaza_key}}','linkplaza-jssdk');
+  {% endif %}
+  {% endunless %}
 })(this, document);
 </script>
 {% endif %}

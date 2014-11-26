@@ -3,16 +3,32 @@
   Imported. Load order is alphabetical and styles can be overriden in
   custom/_style.scss which is loaded after all plugin stylesheets.
 */
-// NailThumb
+
+//// NailThumb
 .square-thumb {
   width: 200px;
   height: 200px;
 }
 .title-thumb {
-  width: 200px;
-  height: 200px;
-  float: left;
-  margin: 0 20px 20px 0;
+  @extend .square-thumb;
+  margin: 0 auto;
+  margin-bottom: 1em;
+  @include shadow-box;
+  float: center;
+  text-align: center;
+}
+.title-thumb-warp {
+  text-align: center;
+}
+@media only screen and (min-width: 450px) {
+  .title-thumb {
+    float: left;
+    text-align: left;
+    margin: 0px 20px 20px 0px;
+  }
+  .title-thumb-warp {
+    text-align: left;
+  }
 }
 
 // scrolltopcontrol
@@ -43,8 +59,7 @@
   @extend .group;
 }
 .amazon-img{
-  float: left; margin-right: 1.5em;
-  margin-bottom: .8em;
+  @extend .title-thumb;
 }
 .amazon-txt{
   float: left; margin-right: 1.5em;
@@ -56,26 +71,26 @@
   width: $sidebar-width-medium;
 }
 
-.imgres0 {
+.google-img-wide {
   width: 320px;
   height: 50px;
 }
 @media(min-width: 468px+$sidebar-width-medium+$body-border) {
-  .imgres0 {
+  .google-img-wide {
     width: 468px;
     height: 60px;
   }
 }
 @media(min-width: 728px+$sidebar-width-medium+$body-border) {
-  .imgres0 {
+  .google-img-wide {
     width: 728px;
     height: 90px;
   }
 }
-.imgresrec0, .imgresrec1, .imgresrecmid {
+.google-img-rect {
   width: 300px;
   height: 250px;
 }
 @media(min-width: 336px+$sidebar-width-medium+$body-border) {
-  .imgresrec0, .imgresrec1, .imgresrecmid { width: 336px; height: 280px;}
+  .google-img-rect { width: 336px; height: 280px;}
 }
