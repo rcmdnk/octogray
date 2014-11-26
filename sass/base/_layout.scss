@@ -10,8 +10,8 @@
   border-top: 0px;
   section {
     &.odd, &.even { float: left; width: 48%; }
-    &.odd { margin-left: 0; }
-    &.even { margin-left: 4%; }
+    &.odd { margin-left: 2%; }
+    &.even { margin-left: 2%; }
   }
   //&.thirds section {
   //  width: 30%;
