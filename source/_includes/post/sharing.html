@@ -2,55 +2,67 @@
 <div class="sharing">
   <ul>
     {% if site.hatena_button %}
-    <li class="hatena">
+    <li class="hatebu">
+    <div class="hatebu">
       <a href="http://b.hatena.ne.jp/entry/{{share_url}}"
           class="hatena-bookmark-button"
           data-hatena-bookmark-layout="standard"
       ><img src="http://b.st-hatena.com/images/entry-button/button-only.gif"
             alt="{{hatena_add}}"/></a>
+    </div>
     </li>
     {% endif %}
     {% if site.twitter_tweet_button %}
     <li class="twitter">
+    <div class="twitter">
       <a href="http://twitter.com/share"
           class="twitter-share-button"
           data-url="{{share_url}}"
           data-via="{{ site.twitter_user }}"
           data-counturl="{{share_url}}">Tweet</a>
+    </div>
     </li>
     {% endif %}
     {% if site.google_plus_one %}
     <li class="googleplus">
+    <div class="googleplus">
       <div class="g-plusone"
           data-size="{{ site.google_plus_one_size }}"
           data-href="{{share_url}}"></div>
+    </div>
     </li>
     {% endif %}
     {% if site.facebook_like %}
     <li class="facebook">
+    <div class="facebook">
       <div class="fb-like"
           data-share="false"
           data-layout="button_count"
           data-show-faces="false"
           data-font="verdana"
           data-href="{{share_url}}"></div>
+    </div>
     </li>
     {% endif %}
     {% if site.facebook_share %}
     <li class="facebook_share">
+    <div class="facebook_share">
       <div class="fb-share-button"
           data-type="button_count"
           data-font="verdana"
           data-href="{{share_url}}"></div>
+    </div>
     </li>
     {% endif %}
     {% if site.pocket_button %}
     <li class="pocket">
+    <div class="pocket">
       <a href="https://getpocket.com/save"
           class="pocket-btn" data-lang="en"
           data-save-url="{{share_url}}"
           data-pocket-count="horizontal"
           data-pocket-align="left">Pocket</a>
+    </div>
     </li>
     {% endif %}
     {% if site.tumblr_button %}
@@ -71,18 +83,24 @@
     {% endif %}
     {% capture description %}{{ description | strip_html | codense_spaces | truncate:150 }}{% endcapture %}
     <li class="tumblr">
+    <div class="tumblr">
       <a href="http://www.tumblr.com/share/link?url={{share_url|cgi_escape}}&name={{share_title|cgi_escape}}&description={{description|cgi_escape}}"
           title="Share on Tumblr"
           class="tumblr_button"
           style="">Tumblr</a>
+    </div>
     </li>
     {% endif %}
     {% if site.bookmark %}
-    <li class="bookmark"><input class="link_btn add_bookmark"
+    <li class="bookmark">
+    <div class="bookmark">
+      <input class="link_btn add_bookmark"
           type="button"
           value="{{site.favorite}}"
           data-page_title="{{share_title}} - {{site.title}}"
-          data-page_url="{{share_url}}"/></li>
+          data-page_url="{{share_url}}"/>
+    </div>
+    </li>
     {% endif %}
   </ul>
 </div>

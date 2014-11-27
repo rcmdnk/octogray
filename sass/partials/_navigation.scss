@@ -97,6 +97,9 @@ body > nav {
     margin-bottom: -5px;
   }
 
+  span {
+    white-space: nowrap;
+  }
 }
 .no-placeholder {
   body > nav .search {
