@@ -496,7 +496,6 @@ task :set_root_dir, :dir do |t, args|
     end
     rm_rf "#{public_dir}"
     rakefile = IO.read(__FILE__)
-public_dir      = "#{tmp_dir}public"  # compiled site directory
     rakefile.sub!(/public_dir(\s*)=(\s*)(["'])[^"']*public[^"']*(["'])/, "public_dir\\1=\\2\\3\#{tmp_dir}#{File.join('public', dir)}\\3")
     File.open(__FILE__, 'w') do |f|
       f.write rakefile
