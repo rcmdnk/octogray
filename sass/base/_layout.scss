@@ -124,17 +124,7 @@ body.sidebar-footer {
     body > header { font-size: $header-font-size; }
   }
   @media only screen and (min-width: 750px) {
-    aside.sidebar {
-      @include collapse-sidebar;
-      .only-footer {
-        display: none;
-      }
-      .collapse-sidebar & {
-        .only-footer {
-          display: block;
-        }
-      }
-    }
+    aside.sidebar { @include collapse-sidebar; }
   }
 }
 #main, #content, .sidebar {
@@ -171,8 +161,14 @@ body.sidebar-footer {
         width: auto; margin-left: 0;
         &.odd, &.even { float: none; width: auto; margin-left: 0; }
       }
+      .only-footer {
+        display: none;
+      }
       .collapse-sidebar & {
         @include collapse-sidebar;
+        .only-footer {
+          display: block;
+        }
       }
     }
   }

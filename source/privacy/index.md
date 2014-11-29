@@ -1,9 +1,9 @@
 ---
 layout: page
 title: "Privacy Policy"
-comments: false
+comments: true
 sharing: true
-footer: false
+footer: true
 date: 2013-03-07 12:00
 published: true
 

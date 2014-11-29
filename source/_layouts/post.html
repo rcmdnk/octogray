@@ -4,46 +4,46 @@ single: true
 ---
 
 <div><!-- post -->
-<article class="hentry" role="article" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-  {% include custom/pagetop.html %}
-  <!-- google_ad_section_start -->
-  {% include article.html %}
-  <!-- google_ad_section_end -->
-  <footer>
-    {% include custom/footertop.html %}
-    <p class="meta">
-      {% include post/author.html %}
-      {% include post/datenopub.html %}{% if updated %}{{ updated }}{% else %}{{ time }}{% endif %}
-      {% include post/categories.html %}
-      {% include post/tags.html %}
-    </p>
-    {% unless site.related_posts == false %}
-    {% include post/related_posts.html %}
-    {% endunless %}
-    {% unless page.sharing == false %}
-    {% include post/sharing.html %}
-    {% endunless %}
-    <p class="meta">
-      {% if page.previous.url %}
-      <a class="basic-alignment left" href="{{page.previous.url}}" title="Previous Post: {{page.previous.title}}">&laquo; {{page.previous.title}}</a>
-      {% endif %}
-      {% if page.next.url %}
-      <a class="basic-alignment right" href="{{page.next.url}}" title="Next Post: {{page.next.title}}">{{page.next.title}} &raquo;</a>
-      {% endif %}
-    </p>
-  </footer>
-</article>
-{% include custom/after_article.html %}
-{% if site.disqus_short_name and page.comments == true %}
-{% include post/disqus_thread.html %}
-{% endif %}
-{% if site.zenback_show == true and page.comments == true %}
-{% include custom/zenback.html %}
-{% endif %}
-{% if site.linkwithin_show == true and page.footer != false %}
-{% include linkwithin.html %}
-{% endif %}
-{% include custom/endofpost.html %}
+  <article class="hentry" role="article" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+    {% include custom/pagetop.html %}
+    <!-- google_ad_section_start -->
+    {% include article.html %}
+    <!-- google_ad_section_end -->
+    <footer>
+      {% include custom/footertop.html %}
+      <p class="meta">
+        {% include post/author.html %}
+        {% include post/datenopub.html %}{% if updated %}{{ updated }}{% else %}{{ time }}{% endif %}
+        {% include post/categories.html %}
+        {% include post/tags.html %}
+      </p>
+      {% unless site.related_posts == false %}
+      {% include post/related_posts.html %}
+      {% endunless %}
+      {% unless page.sharing == false %}
+      {% include post/sharing.html %}
+      {% endunless %}
+      <p class="meta">
+        {% if page.previous.url %}
+        <a class="basic-alignment left" href="{{page.previous.url}}" title="Previous Post: {{page.previous.title}}">&laquo; {{page.previous.title}}</a>
+        {% endif %}
+        {% if page.next.url %}
+        <a class="basic-alignment right" href="{{page.next.url}}" title="Next Post: {{page.next.title}}">{{page.next.title}} &raquo;</a>
+        {% endif %}
+      </p>
+    </footer>
+  </article>
+  {% include custom/after_article.html %}
+  {% if site.disqus_short_name and page.comments == true %}
+  {% include post/disqus_thread.html %}
+  {% endif %}
+  {% if site.zenback_show == true and page.comments == true %}
+  {% include custom/zenback.html %}
+  {% endif %}
+  {% if site.linkwithin_show == true and page.footer != false %}
+  {% include linkwithin.html %}
+  {% endif %}
+  {% include custom/endofpost.html %}
 </div><!-- post -->
 {% unless page.sidebar == false %}
 <aside class="sidebar">

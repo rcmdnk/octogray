@@ -20,6 +20,7 @@ layout: default
     {% endif %}
     <div class="entry-content">
     {{ content }}
+    {% include custom/endofcontent.html %}
     </div>
     {% if site.zenback_show == true and page.comments == true %}
     <!-- zenback_body_end -->
@@ -38,6 +39,7 @@ layout: default
     </footer>
     {% endunless %}
   </article>
+  {% include custom/after_article.html %}
   {% if site.disqus_short_name and page.comments == true %}
   {% include post/disqus_thread.html %}
   {% endif %}
