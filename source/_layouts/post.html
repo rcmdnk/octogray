@@ -13,7 +13,7 @@ single: true
       {% include custom/footertop.html %}
       <p class="meta">
         {% include post/author.html %}
-        {% include post/datenopub.html %}{% if updated %}{{ updated }}{% else %}{{ time }}{% endif %}
+        {% include post/date.html %}{{ time }}{% if updated %}{{ updated }} Updated.{% endif %}
         {% include post/categories.html %}
         {% include post/tags.html %}
       </p>

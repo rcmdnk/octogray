@@ -31,8 +31,8 @@ layout: default
       {% include custom/footertop.html %}
       {% if page.date or page.author %}
       <p class="meta">
-        {% if page.author %}{% include post/author.html %}{% endif %}
-        {% include post/datenopub.html %}{% if updated %}{{ updated }}{% else %}{{ time }}{% endif %}
+        {% include post/author.html %}
+        {% include post/date.html %}{{ time }}{% if updated %}{{ updated }} Updated.{% endif %}
         {% if page.categories %}{% include post/categories.html %}{% endif %}
         {% if page.tags %}{% include post/tags.html %}{% endif %}
       </p>{% endif %}
