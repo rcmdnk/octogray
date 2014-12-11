@@ -30,4 +30,4 @@
 	url = git@github.com:sotsy/githubrepo-octopress.git
 [submodule ".plugins/octopress-responsive-video-embed"]
 	path = .plugins/octopress-responsive-video-embed
-	url = git://github.com/rcmdnk/octopress-responsive-video-embed.git
+	url = git@github.com:optikfluffel/octopress-responsive-video-embed
