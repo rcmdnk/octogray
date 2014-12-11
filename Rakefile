@@ -25,6 +25,9 @@ blog_index_dir  = 'source'    # directory for your blog's index page (if you put
 deploy_dir      = "#{tmp_dir}_deploy" # deploy directory (for Github pages deployment)
 stash_dir       = "_stash"    # directory to stash posts for speedy generation
 full_stash_dir  = "#{source_dir}/#{stash_dir}"    # full path for stash dir
+stash_root_dir  = "_stash_root" # directory to stash pages (in /source/)
+full_stash_root_dir = "#{source_dir}/#{stash_root_dir}" # full path for stash_root dir
+root_stashes    = [] # directories to be stashed in /source/
 posts_dir       = "_posts"    # directory for blog files
 themes_dir      = ".themes"   # directory for blog files
 new_post_ext    = "markdown"  # default new post file extension when using the new_post task
@@ -77,7 +80,7 @@ end
 desc "Generate jekyll site"
 task :generate do
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
-  Rake::Task[:check].invoke("new")
+  Rake::Task[:check].invoke()
   puts "## Generating Site with Jekyll"
   system "compass compile --css-dir #{source_dir}/stylesheets"
   system "jekyll build"
@@ -92,33 +95,20 @@ task :gen => :generate
 desc "Generate only specified post (much faster)"
 task :generate_only, :filename do |t, args|
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
-  if args.filename
-    filename = args.filename
-  else
-    filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.reverse[0]
+  trap(:INT) do
+    raise "Stopped by SIGINT"
   end
-  if filename == nil
-    puts ""
-    puts "There is no markdown file in #{source_dir}/#{posts_dir}."
-    exit 1
-  end
-  puts ""
-  puts "## Test build for #{filename}"
-  puts ""
-  puts "## Stashing other posts"
-  Rake::Task[:isolate].invoke(filename)
   begin
-    Rake::Task[:check].invoke("new")
+    Rake::Task[:isolate].invoke(args.filename)
+    Rake::Task[:check].invoke()
     puts "## Generating Site with Jekyll"
-    system "compass compile --css-dir #{source_dir}/stylesheets"
-    system "touch .preview-mode"
-    system("jekyll build --unpublished")
-    puts "## Restoring stashed posts"
+    ok_failed_raise(system("compass compile --css-dir #{source_dir}/stylesheets"), false)
+    ok_failed_raise(system("jekyll build --unpublished"), false)
+    puts "## Restoring stashed posts/pages"
     Rake::Task[:integrate].execute
   rescue
-    puts $!
     Rake::Task[:integrate].execute
-    exit 1
+    raise $!
   end
 end
 
@@ -152,22 +142,7 @@ end
 desc "watch only specified post"
 task :watch_only, :filename do |t, args|
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
-
-  if args.filename
-    filename = args.filename
-  else
-    filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.reverse[0]
-  end
-  if filename == nil
-    puts ""
-    puts "There is no markdown file in #{source_dir}/#{posts_dir}."
-    exit 1
-  end
-  puts ""
-  puts "## Test for #{filename}"
-  puts ""
-  puts "## Stashing other posts"
-  Rake::Task[:isolate].invoke(filename)
+  Rake::Task[:isolate].invoke(args.filename)
 
   begin
     Rake::Task[:watch].execute
@@ -175,7 +150,7 @@ task :watch_only, :filename do |t, args|
   end
 
   puts ""
-  puts "## Bringing back other posts"
+  puts "## Restoring stashed posts/pages"
   Rake::Task[:integrate].execute
 end
 
@@ -200,22 +175,7 @@ end
 desc "preview only specified post"
 task :preview_only, :filename do |t, args|
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
-
-  if args.filename
-    filename = args.filename
-  else
-    filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.reverse[0]
-  end
-  if filename == nil
-    puts ""
-    puts "There is no markdown file in #{source_dir}/#{posts_dir}."
-    exit 1
-  end
-  puts ""
-  puts "## Test for #{filename}"
-  puts ""
-  puts "## Stashing other posts"
-  Rake::Task[:isolate].invoke(filename)
+  Rake::Task[:isolate].invoke(args.filename)
 
   begin
     Rake::Task[:preview].execute
@@ -223,7 +183,7 @@ task :preview_only, :filename do |t, args|
   end
 
   puts ""
-  puts "## Bringing back other posts"
+  puts "## Restoring stashed posts/pages"
   Rake::Task[:integrate].execute
 end
 
@@ -327,9 +287,32 @@ end
 # usage rake isolate[my-post]
 desc "Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly."
 task :isolate, :filename do |t, args|
+  if args.filename
+    filename = args.filename
+  else
+    filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.last
+  end
+  if filename == nil
+    raise "\nThere is no markdown file (*.#{new_post_ext}) in #{source_dir}/#{posts_dir}."
+  end
+  puts "## Stashing other posts than #{filename}"
   FileUtils.mkdir(full_stash_dir) unless File.exist?(full_stash_dir)
   Dir.glob("#{source_dir}/#{posts_dir}/*") do |post|
-    FileUtils.mv post, full_stash_dir unless post.end_with?(args.filename)
+    if post.include?(filename)
+      p "Remaining #{post}..."
+    else
+      FileUtils.mv post, full_stash_dir
+    end
+  end
+  FileUtils.mkdir(full_stash_root_dir) unless File.exist?(full_stash_root_dir)
+  if defined? root_stashes == nil
+    if root_stashes.class == String
+      FileUtils.mv "#{source_dir}/#{root_stashes}", full_stash_root_dir
+    elsif root_stashes.class == Array
+      for d in root_stashes do
+        FileUtils.mv "#{source_dir}/#{d}", full_stash_root_dir if File.exist?("#{source_dir}/#{d}")
+      end
+    end
   end
   system "touch .isolated"
 end
@@ -337,6 +320,7 @@ end
 desc "Move all stashed posts back into the posts directory, ready for site generation."
 task :integrate do
   FileUtils.mv Dir.glob("#{full_stash_dir}/*"), "#{source_dir}/#{posts_dir}/"
+  FileUtils.mv Dir.glob("#{full_stash_root_dir}/*"), "#{source_dir}/"
   system "rm -f .isolated"
   system "touch .integrated"
 end
@@ -385,22 +369,22 @@ end
 desc "Default deploy task"
 task :deploy do
   # Check if preview posts exist, which should not be published
-  if File.exists?(".preview-mode")
-    puts "## Found posts in preview mode, regenerating files ..."
-    File.delete(".preview-mode")
-    Rake::Task[:generate].execute
-  end
   if File.exists?(".integrated") or File.exists?(".isolated")
     puts "## Found isolated history, regenerating files ..."
     system "rm -f .integrated .isolated"
     Rake::Task[:integrate].execute
     Rake::Task[:generate].execute
   end
+  if File.exists?(".preview-mode")
+    puts "## Found posts in preview mode, regenerating files ..."
+    File.delete(".preview-mode")
+    Rake::Task[:generate].execute
+  end
 
   Rake::Task[:copydot].invoke(source_dir, public_dir)
 
   # Check if files are fine or not
-  ok_failed_stop system("if [ -f #{word_avoid} ];then while read a;do if ret=`grep -i -r -q $a #{public_dir}`;then echo \"A word $a is included, must be avoided!!!\"; echo $ret; exit 1;fi; done < #{word_avoid};fi")
+  ok_failed_raise system("if [ -f #{word_avoid} ];then while read a;do if ret=`grep -i -r -q $a #{public_dir}`;then echo \"A word $a is included, must be avoided!!!\"; echo $ret; exit 1;fi; done < #{word_avoid};fi")
 
   Rake::Task["#{deploy_default}"].execute
 
@@ -683,8 +667,8 @@ def grep_check(word, grep_option, opt)
     grep_option = "-A1 #{grep_option}"
     comment = "An empty line is required after \\\"#{word}\\\"!"
   end
-  puts "\nChecking \"#{word}\"...\n\n"
-  ok_failed_stop system("\
+  print "Checking \"#{word}\"... "
+  ok_failed_raise system("\
       if grep -H -n -e \"#{word}\" #{grep_option} 2>/dev/null|\
           grep -v \"#{vword}\";then \
         printf \"\\\\n\\\\e[31m\";\
@@ -712,8 +696,8 @@ task :check, :opt do |t, args|
   grep_check("^- - -$", grep_option, 1)
   #grep_check("^<hr>$", grep_option, 1)
 
-  puts "\nChecking words to be avoided...\n\n"
-  ok_failed_stop system("\
+  print "Checking words to be avoided... "
+  ok_failed_raise system("\
       if [ -f #{word_avoid} ];then \
         while read a;do \
           if ret=$(grep -i -q $a #{grep_files} 2>/dev/null);then \
@@ -766,9 +750,17 @@ task :ping do
   end
 end
 
-def ok_failed_stop(condition)
+task :test do
+  #ok_failed_raise system("if [ -f #{word_avoid} ];then while read a;do if ret=`grep -i -r -q $a #{public_dir}`;then echo \"A word $a is included, must be avoided!!!\"; echo $ret; exit 1;fi; done < #{word_avoid};fi")
+  #ok_failed_raise system("cd #{public_dir};pwd;cd -")
+  #print "hoge"
+  #raise "eror"
+  system "git ls >& log"
+end
+
+def ok_failed_raise(condition, print_ok = true)
   if (condition)
-    puts "OK"
+    puts "OK" if print_ok
   else
     raise "FAILD"
   end

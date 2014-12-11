@@ -1,8 +1,8 @@
 diff --git a/Rakefile b/Rakefile
-index c7ad504..72ebfe3 100644
+index c7ad504..fa66056 100644
 --- a/Rakefile
 +++ b/Rakefile
-@@ -9,27 +9,33 @@ ssh_port       = "22"
+@@ -9,27 +9,36 @@ ssh_port       = "22"
  document_root  = "~/website.com/"
  rsync_delete   = false
  rsync_args     = ""  # Any extra arguments to pass to rsync
@@ -26,6 +26,9 @@ index c7ad504..72ebfe3 100644
 +deploy_dir      = "#{tmp_dir}_deploy" # deploy directory (for Github pages deployment)
  stash_dir       = "_stash"    # directory to stash posts for speedy generation
 +full_stash_dir  = "#{source_dir}/#{stash_dir}"    # full path for stash dir
++stash_root_dir  = "_stash_root" # directory to stash pages (in /source/)
++full_stash_root_dir = "#{source_dir}/#{stash_root_dir}" # full path for stash_root dir
++root_stashes    = [] # directories to be stashed in /source/
  posts_dir       = "_posts"    # directory for blog files
  themes_dir      = ".themes"   # directory for blog files
  new_post_ext    = "markdown"  # default new post file extension when using the new_post task
@@ -41,7 +44,7 @@ index c7ad504..72ebfe3 100644
  end
  
  desc "Initial setup for Octopress: copies the default theme into the path of Jekyll's generator. Rake install defaults to rake install[classic] to install a different theme run rake install[some_theme_name]"
-@@ -52,12 +58,78 @@ end
+@@ -52,12 +61,65 @@ end
  # Working with Jekyll #
  #######################
  
@@ -64,7 +67,7 @@ index c7ad504..72ebfe3 100644
  desc "Generate jekyll site"
  task :generate do
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
-+  Rake::Task[:check].invoke("new")
++  Rake::Task[:check].invoke()
    puts "## Generating Site with Jekyll"
    system "compass compile --css-dir #{source_dir}/stylesheets"
    system "jekyll build"
@@ -79,33 +82,20 @@ index c7ad504..72ebfe3 100644
 +desc "Generate only specified post (much faster)"
 +task :generate_only, :filename do |t, args|
 +  raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
-+  if args.filename
-+    filename = args.filename
-+  else
-+    filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.reverse[0]
++  trap(:INT) do
++    raise "Stopped by SIGINT"
 +  end
-+  if filename == nil
-+    puts ""
-+    puts "There is no markdown file in #{source_dir}/#{posts_dir}."
-+    exit 1
-+  end
-+  puts ""
-+  puts "## Test build for #{filename}"
-+  puts ""
-+  puts "## Stashing other posts"
-+  Rake::Task[:isolate].invoke(filename)
 +  begin
-+    Rake::Task[:check].invoke("new")
++    Rake::Task[:isolate].invoke(args.filename)
++    Rake::Task[:check].invoke()
 +    puts "## Generating Site with Jekyll"
-+    system "compass compile --css-dir #{source_dir}/stylesheets"
-+    system "touch .preview-mode"
-+    system("jekyll build --unpublished")
-+    puts "## Restoring stashed posts"
++    ok_failed_raise(system("compass compile --css-dir #{source_dir}/stylesheets"), false)
++    ok_failed_raise(system("jekyll build --unpublished"), false)
++    puts "## Restoring stashed posts/pages"
 +    Rake::Task[:integrate].execute
 +  rescue
-+    puts $!
 +    Rake::Task[:integrate].execute
-+    exit 1
++    raise $!
 +  end
 +end
 +
@@ -120,7 +110,7 @@ index c7ad504..72ebfe3 100644
  end
  
  desc "Watch the site and regenerate when it changes"
-@@ -65,34 +137,97 @@ task :watch do
+@@ -65,34 +127,67 @@ task :watch do
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
    puts "Starting to watch source with Jekyll and Compass."
    system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
@@ -141,22 +131,7 @@ index c7ad504..72ebfe3 100644
 +desc "watch only specified post"
 +task :watch_only, :filename do |t, args|
 +  raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
-+
-+  if args.filename
-+    filename = args.filename
-+  else
-+    filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.reverse[0]
-+  end
-+  if filename == nil
-+    puts ""
-+    puts "There is no markdown file in #{source_dir}/#{posts_dir}."
-+    exit 1
-+  end
-+  puts ""
-+  puts "## Test for #{filename}"
-+  puts ""
-+  puts "## Stashing other posts"
-+  Rake::Task[:isolate].invoke(filename)
++  Rake::Task[:isolate].invoke(args.filename)
 +
 +  begin
 +    Rake::Task[:watch].execute
@@ -164,7 +139,7 @@ index c7ad504..72ebfe3 100644
 +  end
 +
 +  puts ""
-+  puts "## Bringing back other posts"
++  puts "## Restoring stashed posts/pages"
 +  Rake::Task[:integrate].execute
 +end
 +
@@ -191,22 +166,7 @@ index c7ad504..72ebfe3 100644
 +desc "preview only specified post"
 +task :preview_only, :filename do |t, args|
 +  raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
-+
-+  if args.filename
-+    filename = args.filename
-+  else
-+    filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.reverse[0]
-+  end
-+  if filename == nil
-+    puts ""
-+    puts "There is no markdown file in #{source_dir}/#{posts_dir}."
-+    exit 1
-+  end
-+  puts ""
-+  puts "## Test for #{filename}"
-+  puts ""
-+  puts "## Stashing other posts"
-+  Rake::Task[:isolate].invoke(filename)
++  Rake::Task[:isolate].invoke(args.filename)
 +
 +  begin
 +    Rake::Task[:preview].execute
@@ -214,7 +174,7 @@ index c7ad504..72ebfe3 100644
 +  end
 +
 +  puts ""
-+  puts "## Bringing back other posts"
++  puts "## Restoring stashed posts/pages"
 +  Rake::Task[:integrate].execute
 +end
 +
@@ -222,7 +182,7 @@ index c7ad504..72ebfe3 100644
  # usage rake new_post[my-new-post] or rake new_post['my new post'] or rake new_post (defaults to "new-post")
  desc "Begin a new post in #{source_dir}/#{posts_dir}"
  task :new_post, :title do |t, args|
-@@ -102,20 +237,47 @@ task :new_post, :title do |t, args|
+@@ -102,20 +197,47 @@ task :new_post, :title do |t, args|
      title = get_stdin("Enter a title for your post: ")
    end
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
@@ -271,7 +231,7 @@ index c7ad504..72ebfe3 100644
    end
  end
  
-@@ -125,6 +287,8 @@ task :new_page, :filename do |t, args|
+@@ -125,6 +247,8 @@ task :new_page, :filename do |t, args|
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
    args.with_defaults(:filename => 'new-page')
    page_dir = [source_dir]
@@ -280,7 +240,7 @@ index c7ad504..72ebfe3 100644
    if args.filename.downcase =~ /(^.+\/)?(.+)/
      filename, dot, extension = $2.rpartition('.').reject(&:empty?)         # Get filename and extension
      title = filename
-@@ -147,10 +311,12 @@ task :new_page, :filename do |t, args|
+@@ -147,10 +271,12 @@ task :new_page, :filename do |t, args|
        page.puts "---"
        page.puts "layout: page"
        page.puts "title: \"#{title}\""
@@ -293,7 +253,7 @@ index c7ad504..72ebfe3 100644
        page.puts "---"
      end
    else
-@@ -161,16 +327,18 @@ end
+@@ -161,16 +287,42 @@ end
  # usage rake isolate[my-post]
  desc "Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly."
  task :isolate, :filename do |t, args|
@@ -301,10 +261,33 @@ index c7ad504..72ebfe3 100644
 -  FileUtils.mkdir(stash_dir) unless File.exist?(stash_dir)
 -  Dir.glob("#{source_dir}/#{posts_dir}/*.*") do |post|
 -    FileUtils.mv post, stash_dir unless post.include?(args.filename)
++  if args.filename
++    filename = args.filename
++  else
++    filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.last
+   end
++  if filename == nil
++    raise "\nThere is no markdown file (*.#{new_post_ext}) in #{source_dir}/#{posts_dir}."
++  end
++  puts "## Stashing other posts than #{filename}"
 +  FileUtils.mkdir(full_stash_dir) unless File.exist?(full_stash_dir)
 +  Dir.glob("#{source_dir}/#{posts_dir}/*") do |post|
-+    FileUtils.mv post, full_stash_dir unless post.end_with?(args.filename)
-   end
++    if post.include?(filename)
++      p "Remaining #{post}..."
++    else
++      FileUtils.mv post, full_stash_dir
++    end
++  end
++  FileUtils.mkdir(full_stash_root_dir) unless File.exist?(full_stash_root_dir)
++  if defined? root_stashes == nil
++    if root_stashes.class == String
++      FileUtils.mv "#{source_dir}/#{root_stashes}", full_stash_root_dir
++    elsif root_stashes.class == Array
++      for d in root_stashes do
++        FileUtils.mv "#{source_dir}/#{d}", full_stash_root_dir if File.exist?("#{source_dir}/#{d}")
++      end
++    end
++  end
 +  system "touch .isolated"
  end
  
@@ -312,26 +295,32 @@ index c7ad504..72ebfe3 100644
  task :integrate do
 -  FileUtils.mv Dir.glob("#{source_dir}/#{stash_dir}/*.*"), "#{source_dir}/#{posts_dir}/"
 +  FileUtils.mv Dir.glob("#{full_stash_dir}/*"), "#{source_dir}/#{posts_dir}/"
++  FileUtils.mv Dir.glob("#{full_stash_root_dir}/*"), "#{source_dir}/"
 +  system "rm -f .isolated"
 +  system "touch .integrated"
  end
  
  desc "Clean out caches: .pygments-cache, .gist-cache, .sass-cache"
-@@ -222,14 +390,29 @@ task :deploy do
-     File.delete(".preview-mode")
-     Rake::Task[:generate].execute
-   end
+@@ -217,6 +369,12 @@ end
+ desc "Default deploy task"
+ task :deploy do
+   # Check if preview posts exist, which should not be published
 +  if File.exists?(".integrated") or File.exists?(".isolated")
 +    puts "## Found isolated history, regenerating files ..."
 +    system "rm -f .integrated .isolated"
 +    Rake::Task[:integrate].execute
 +    Rake::Task[:generate].execute
 +  end
+   if File.exists?(".preview-mode")
+     puts "## Found posts in preview mode, regenerating files ..."
+     File.delete(".preview-mode")
+@@ -224,12 +382,21 @@ task :deploy do
+   end
  
    Rake::Task[:copydot].invoke(source_dir, public_dir)
 +
 +  # Check if files are fine or not
-+  ok_failed_stop system("if [ -f #{word_avoid} ];then while read a;do if ret=`grep -i -r -q $a #{public_dir}`;then echo \"A word $a is included, must be avoided!!!\"; echo $ret; exit 1;fi; done < #{word_avoid};fi")
++  ok_failed_raise system("if [ -f #{word_avoid} ];then while read a;do if ret=`grep -i -r -q $a #{public_dir}`;then echo \"A word $a is included, must be avoided!!!\"; echo $ret; exit 1;fi; done < #{word_avoid};fi")
 +
    Rake::Task["#{deploy_default}"].execute
 +
@@ -349,7 +338,7 @@ index c7ad504..72ebfe3 100644
  
  desc "copy dot files for deployment"
  task :copydot, :source, :dest do |t, args|
-@@ -265,54 +448,85 @@ multitask :push do
+@@ -265,54 +432,85 @@ multitask :push do
      puts "\n## Committing: #{message}"
      system "git commit -m \"#{message}\""
      puts "\n## Pushing generated #{deploy_dir} website"
@@ -453,7 +442,7 @@ index c7ad504..72ebfe3 100644
      repo_url = get_stdin("Repository url: ")
    end
    protocol = (repo_url.match(/(^git)@/).nil?) ? 'https' : 'git'
-@@ -322,7 +536,9 @@ task :setup_github_pages, :repo do |t, args|
+@@ -322,7 +520,9 @@ task :setup_github_pages, :repo do |t, args|
      user = repo_url.match(/github\.com\/([^\/]+)/)[1]
    end
    branch = (repo_url.match(/\/[\w-]+\.github\.(?:io|com)/).nil?) ? 'gh-pages' : 'master'
@@ -464,7 +453,7 @@ index c7ad504..72ebfe3 100644
    unless (`git remote -v` =~ /origin.+?octopress(?:\.git)?/).nil?
      # If octopress is still the origin remote (from cloning) rename it to octopress
      system "git remote rename origin octopress"
-@@ -330,40 +546,75 @@ task :setup_github_pages, :repo do |t, args|
+@@ -330,40 +530,75 @@ task :setup_github_pages, :repo do |t, args|
        # If this is a user/organization pages repository, add the correct origin remote
        # and checkout the source branch for committing changes to the blog source.
        system "git remote add origin #{repo_url}"
@@ -560,7 +549,7 @@ index c7ad504..72ebfe3 100644
  end
  
  def ok_failed(condition)
-@@ -379,9 +630,22 @@ def get_stdin(message)
+@@ -379,9 +614,22 @@ def get_stdin(message)
    STDIN.gets.chomp
  end
  
@@ -585,7 +574,7 @@ index c7ad504..72ebfe3 100644
    else
      answer = get_stdin(message)
    end
-@@ -403,3 +667,109 @@ task :list do
+@@ -403,3 +651,117 @@ task :list do
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end
@@ -605,8 +594,8 @@ index c7ad504..72ebfe3 100644
 +    grep_option = "-A1 #{grep_option}"
 +    comment = "An empty line is required after \\\"#{word}\\\"!"
 +  end
-+  puts "\nChecking \"#{word}\"...\n\n"
-+  ok_failed_stop system("\
++  print "Checking \"#{word}\"... "
++  ok_failed_raise system("\
 +      if grep -H -n -e \"#{word}\" #{grep_option} 2>/dev/null|\
 +          grep -v \"#{vword}\";then \
 +        printf \"\\\\n\\\\e[31m\";\
@@ -634,8 +623,8 @@ index c7ad504..72ebfe3 100644
 +  grep_check("^- - -$", grep_option, 1)
 +  #grep_check("^<hr>$", grep_option, 1)
 +
-+  puts "\nChecking words to be avoided...\n\n"
-+  ok_failed_stop system("\
++  print "Checking words to be avoided... "
++  ok_failed_raise system("\
 +      if [ -f #{word_avoid} ];then \
 +        while read a;do \
 +          if ret=$(grep -i -q $a #{grep_files} 2>/dev/null);then \
@@ -688,9 +677,17 @@ index c7ad504..72ebfe3 100644
 +  end
 +end
 +
-+def ok_failed_stop(condition)
++task :test do
++  #ok_failed_raise system("if [ -f #{word_avoid} ];then while read a;do if ret=`grep -i -r -q $a #{public_dir}`;then echo \"A word $a is included, must be avoided!!!\"; echo $ret; exit 1;fi; done < #{word_avoid};fi")
++  #ok_failed_raise system("cd #{public_dir};pwd;cd -")
++  #print "hoge"
++  #raise "eror"
++  system "git ls >& log"
++end
++
++def ok_failed_raise(condition, print_ok = true)
 +  if (condition)
-+    puts "OK"
++    puts "OK" if print_ok
 +  else
 +    raise "FAILD"
 +  end
