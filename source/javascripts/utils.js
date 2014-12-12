@@ -80,3 +80,46 @@ jQuery(function($){
     }
   });
 });
+
+//jQuery(function($){
+//  $(document).on('copy', function(e) {
+//
+//    //var selected = document.getSelection().toString();
+//    var selected = "";
+//    if (typeof window.getSelection != "undefined") {
+//        var sel = window.getSelection();
+//        if (sel.rangeCount) {
+//            var container = document.createElement("div");
+//            for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+//                container.appendChild(sel.getRangeAt(i).cloneContents());
+//            }
+//            selected = container.innerHTML;
+//        }
+//    } else if (typeof document.selection != "undefined") {
+//        if (document.selection.type == "Text") {
+//            selected = document.selection.createRange().htmlText;
+//        }
+//    }
+//    var title = document.title;
+//    var  url = location.href;
+//    $.ajax({
+//      type: "POST",
+//      url: "https://mandrillapp.com/api/1.0/messages/send.json",
+//      data: {
+//        'key': 'YOUR_MANDRILL_KEY',
+//        'message': {
+//          'from_email': 'YOUR_SENDER@example.com',
+//          'to': [
+//            {
+//              'email': 'YOUR_RECEIVER@example.com',
+//              'name': 'YOUR RECEIVER',
+//              'type': 'to'
+//            }
+//          ],
+//          'subject': 'Copied at ' + title,
+//          'html': '<div><a href="' + url + '">' + title + '</a></div><br><br><div>' + selected + '</div>'
+//        }
+//      }
+//    });
+//  });
+//});
