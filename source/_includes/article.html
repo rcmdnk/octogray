@@ -25,7 +25,14 @@
   {% endif %}
 </header>
 {% endunless %}
-{% unless page.sharing == false %}{% include post/sharing.html %}{% endunless %}
+{% unless page.sharing == false %}
+{% unless site.share_official == false %}
+{% include post/sharing.html %}
+{% endunless %}
+{% if site.share_custom == true %}
+{% include post/sharing_custom.html %}
+{% endif %}
+{% endunless %}
 {% if index %}{% assign ogimage=post.ogimage %}{% else %}{% assign ogimage=page.ogimage %}{% endif %}
 {% if index %}
 <div class="entry-content index_click_box">

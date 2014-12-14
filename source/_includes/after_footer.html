@@ -28,27 +28,6 @@ function googleTranslateElementInit() {
   w._gaq.push(['_trackPageview']);
   a(('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js', 'ga');
   {% endif %}
-  {% if site.twitter_follow_button or site.twitter_tweet_button %}
-  a('//platform.twitter.com/widgets.js', 'twitter-wjs');
-  {% endif %}
-  {% if site.hatena_button %}
-  a('//b.st-hatena.com/js/bookmark_button.js','hatebu-js');
-  {% endif %}
-  {% if site.google_plus_one %}
-  {% if site.google_plus_one_lang %}
-  w.___gcfg={lang:'{{site.google_plus_one_lang}}'};
-  {% endif %}
-  a('//apis.google.com/js/plusone.js','plusone-js');
-  {% endif %}
-  {% if site.facebook_like or site.facebook_share %}
-  a('//connect.facebook.net/{% if site.facebook_lang %}{{ site.facebook_lang }}{% else %}en_US{% endif %}/sdk.js#{% if site.facebook_app_id %}appId={{ site.facebook_app_id }}&{% endif %}xfbml=1&version=v2.0','facebook-jssdk');
-  {% endif %}
-  {% if site.pocket_button %}
-  a('//widgets.getpocket.com/v1/j/btn.js?v=1','pocket-btn-js');
-  {% endif %}
-  {% if site.tumblr_button %}
-  a('//platform.tumblr.com/v1/share.js','tumblr-share-js');
-  {% endif %}
   {% if site.linkwithin_show == true and page.footer != false %}
   a('//www.linkwithin.com/widget.js','linkwithin-wjs');
   {% endif %}
@@ -71,6 +50,43 @@ function googleTranslateElementInit() {
   {% if site.linkplaza_key %}
   a('//static.linkplaza.jp/api/replace.js?key={{site.linkplaza_key}}','linkplaza-jssdk');
   {% endif %}
+  {% if site.twitter_follow_button or site.twitter_tweet_button %}
+  a('//platform.twitter.com/widgets.js', 'twitter-wjs');
+  {% endif %}
+  {% unless site.share_official == false %}
+  {% if site.hatena_button %}
+  a('//b.st-hatena.com/js/bookmark_button.js','hatebu-js');
+  {% endif %}
+  {% if site.google_plus_one %}
+  {% if site.google_plus_one_lang %}
+  w.___gcfg={lang:'{{site.google_plus_one_lang}}'};
+  {% endif %}
+  a('//apis.google.com/js/plusone.js','plusone-js');
+  {% endif %}
+  {% if site.facebook_like or site.facebook_share %}
+  a('//connect.facebook.net/{% if site.facebook_lang %}{{ site.facebook_lang }}{% else %}en_US{% endif %}/sdk.js#{% if site.facebook_app_id %}appId={{ site.facebook_app_id }}&{% endif %}xfbml=1&version=v2.0','facebook-jssdk');
+  {% endif %}
+  {% if site.pocket_button %}
+  a('//widgets.getpocket.com/v1/j/btn.js?v=1','pocket-btn-js');
+  {% endif %}
+  {% if site.linkedin_button %}
+  w.defaultLang = w.lang;
+  {% if site.linkedin_lang %}
+  w.lang = '{{site.linkedin_lang}}';
+  {% endif %}
+  a('//platform.linkedin.com/in.js','linkedin-btn-js');
+  w.lang = w.defaultLang;
+  {% endif %}
+  {% if site.stumble_button %}
+  a('//platform.stumbleupon.com/1/widgets.js', 'stumble-btn-js');
+  {% endif %}
+  {% if site.pinterest_button %}
+  a('//assets.pinterest.com/js/pinit.js','pinterest-btn-js');
+  {% endif %}
+  {% if site.tumblr_button %}
+  a('//platform.tumblr.com/v1/share.js','tumblr-share-js');
+  {% endif %}
+  {% endunless %}
   {% endunless %}
 })(this, document);
 </script>

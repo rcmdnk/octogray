@@ -65,6 +65,40 @@
     </div>
     </li>
     {% endif %}
+    {% if site.linkedin_button %}
+    <li class="linkedin">
+    <div class="linkedin">
+      <script type="IN/Share" data-url="{{share_url}}" data-counter="right"></script>
+    </div>
+    </li>
+    {% endif %}
+    {% if site.stumble_button %}
+    <li class="stumble">
+    <div class="stumble">
+      <su:badge layout="2" location="{{share_url}}"></su:badge>
+    </div>
+    </li>
+    {% endif %}
+    {% if site.pinterest_button %}
+    <li class="pinterest">
+    <div class="pinterest">
+      <a href="//jp.pinterest.com/pin/create/button/"
+        data-pin-url="{{share_url}}"
+        data-pin-do="buttonBookmark"
+        data-pin-color="red"
+        data-pin-height="20"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_red_20.png" alt="Pinterest"/></a>
+    </div>
+    </li>
+    {% endif %}
+    {% if site.delicious_button %}
+    <li class="delicious">
+    <div class="delicious">
+      <a href="#"
+        onclick="window.open('https://delicious.com/save?v=5&provider=rcmdnk&noui&jump=close&url={{share_url}}&title={{share_title|cgi_escape}}', 'delicious','toolbar=no,width=550,height=550'); return false;"
+        ><img src="https://delicious.com/img/logo.png" height="16" width="16" alt="Delicious"> Save this on Delicious</a>
+    </div>
+    </li>
+    {% endif %}
     {% if site.tumblr_button %}
     {% if index %}
       {% capture description %}

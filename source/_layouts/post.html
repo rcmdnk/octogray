@@ -21,7 +21,12 @@ single: true
       {% include post/related_posts.html %}
       {% endunless %}
       {% unless page.sharing == false %}
+      {% unless site.share_official == false %}
       {% include post/sharing.html %}
+      {% endunless %}
+      {% if site.share_custom == true %}
+      {% include post/sharing_custom.html %}
+      {% endif %}
       {% endunless %}
       <p class="meta">
         {% if page.previous.url %}

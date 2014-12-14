@@ -7,21 +7,21 @@
     margin-right: 5px;
     //border: 1px solid;
     height: 25px;
-    .hatebu {
-      //width: 90px;
-    }
+    //.hatebu {
+    //  width: 90px;
+    //}
     .twitter {
       width: 90px;
     }
     .googleplus {
       width: 58px;
     }
-    .facebook {
-      //width: 100px;
-    }
-    .facebook_share {
-      //width: 100px;
-    }
+    //.facebook {
+    //  width: 100px;
+    //}
+    //.facebook_share {
+    //  width: 100px;
+    //}
     div.facebook_share {
       margin-top: -4px;
     }
@@ -29,15 +29,15 @@
     .pocket {
       width: 90px;
     }
-    .bookmark {
-      //width: 100px;
-    }
+    //.bookmark {
+    //  width: 100px;
+    //}
     div.bookmark {
       margin-top: -4px;
     }
-    .tumblr {
-      //width: 60px;
-    }
+    //.tumblr {
+    //  width: 60px;
+    //}
     a.tumblr_button {
       display: inline-block;
       text-indent: -9999px;
@@ -46,6 +46,125 @@
       //background:url('http://platform.tumblr.com/v1/share_1.png') top left no-repeat transparent; withd: 81px;
       //background:url('http://platform.tumblr.com/v1/share_2.png') top left no-repeat transparent; width: 61px;
       background:url('http://platform.tumblr.com/v1/share_2T.png') top left no-repeat transparent; width: 61px;
+    }
+    //.linkedin {
+    //}
+    ////.pinterest {
+    ////}
+    //.stumble {
+    //}
+    //.delicious {
+    //}
+  }
+}
+
+$hatebu-color: #2C6ECD;
+$twitter-color: #00ACEE;
+$googleplus-color: #DD4C39;
+$facebook-color: #5776CE;
+$pocket-color: #EF4257;
+$linkedin-color: #4E8BBF;
+$stumble-color: #EB4823;
+$pinterest-color: #A70216;
+$delicious-color: #3399FF;
+$tumblr-color: #9DA6B0;
+
+.share-button {
+  @extend .group;
+  margin-bottom:20px;
+  li {
+    display: block;
+    p {
+      border: solid 1px;
+      border-radius: 3px;
+      float: left;
+      margin-right: 2px;
+      padding: 0px 10px 3px;
+      font-size: 13px;
+      height: 18px;
+      color: #FFFFFF;
+      text-decoration: none;
+      &:hover {color: darken(#FFFFFF, 10);}
+      &.hatebu_custom {
+        background-color: $hatebu-color;
+        border-color: $hatebu-color;
+        &:hover {
+          background-color: darken($hatebu-color, 10);
+          border-color: darken($hatebu-color, 10);
+        }
+      }
+      &.twitter_custom {
+        background-color: $twitter-color;
+        border-color: $twitter-color;
+        &:hover {
+          background-color: darken($twitter-color, 10);
+          border-color: darken($twitter-color, 10);
+        }
+      }
+      &.googleplus_custom {
+        background-color: $googleplus-color;
+        border-color: $googleplus-color;
+        &:hover {
+          background-color: darken($googleplus-color, 10);
+          border-color: darken($googleplus-color, 10);
+        }
+      }
+      &.facebook_custom {
+        background-color: $facebook-color;
+        border-color: $facebook-color;
+        &:hover {
+          background-color: darken($facebook-color, 10);
+          border-color: darken($facebook-color, 10);
+        }
+      }
+      &.pocket_custom {
+        background-color: $pocket-color;
+        border-color: $pocket-color;
+        &:hover {
+          background-color: darken($pocket-color, 10);
+          border-color: darken($pocket-color, 10);
+        }
+      }
+      &.linkedin_custom {
+        background-color: $linkedin-color;
+        border-color: $linkedin-color;
+        &:hover {
+          background-color: darken($linkedin-color, 10);
+          border-color: darken($linkedin-color, 10);
+        }
+      }
+      &.stumble_custom {
+        background-color: $stumble-color;
+        border-color: $stumble-color;
+        &:hover {
+          background-color: darken($stumble-color, 10);
+          border-color: darken($stumble-color, 10);
+        }
+      }
+      &.pinterest_custom {
+        background-color: $pinterest-color;
+        border-color: $pinterest-color;
+        &:hover {
+          background-color: darken($pinterest-color, 10);
+          border-color: darken($pinterest-color, 10);
+        }
+      }
+      &.delicious_custom {
+        background-color: $delicious-color;
+        border-color: $delicious-color;
+        &:hover {
+          background-color: darken($delicious-color, 10);
+          border-color: darken($delicious-color, 10);
+        }
+      }
+      &.tumblr_custom {
+        background-color: $tumblr-color;
+        border-color: $tumblr-color;
+        &:hover {
+          background-color: darken($tumblr-color, 10);
+          border-color: darken($tumblr-color, 10);
+        }
+      }
     }
   }
 }
