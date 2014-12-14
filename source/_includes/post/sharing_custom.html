@@ -1,0 +1,70 @@
+{% if index %}{% capture share_url %}{{ site.url }}{{ post.url }}{% endcapture %}{% capture slug_url %}{{ post.url | slugify}}{% endcapture %}{% capture share_title %}{{ post.title }}{% endcapture %}{% else %}{% capture share_url %}{{ site.url }}{{ page.url }}{% endcapture %}{% capture slug_url %}{{ page.url | slugify}}{% endcapture %}{% capture share_title %}{{ page.title }}{% endcapture %}{% endif %}
+<div class="share-button">
+  <ul>
+    {% if site.hatena_button %}
+    <li><a href="http://b.hatena.ne.jp/add?mode=confirm&url={{share_url}}"
+    title="Save to Hatebu"
+    target="_blank"><p class="hatebu_custom" >B! <span class="hatebuCount{{slug_url}}"></span></p></a></li>
+    {% endif %}
+    {% if site.twitter_tweet_button %}
+    <li><a href="http://twitter.com/intent/tweet?text={{share_title}}&url={{share_url}}&via={{site.author}}"
+    title="Share on Twitter"
+    target="_blacnk"><p class="twitter_custom"><i class="fa fa-twitter"></i> <span class="twitterCount{{slug_url}}"></span></p></a></li>
+    </li>
+    {% endif %}
+    {% if site.google_plus_one %}
+    <li><a href="https://plus.google.com/share?url={{share_url}}"
+    title="Share on Google+"
+    target="_blank"><p  class="googleplus_custom"><i class="fa fa-google-plus"></i> <span class="googleplusCount{{slug_url}}"></span></p></a></li>
+    {% endif %}
+    {% if site.facebook_share %}
+    <li><a href="http://www.facebook.com/sharer.php?src=bm&u={{share_url}}&amp;t={{share_title}}"
+    title="Share on Facebook+"
+    target="_blank"><p  class="facebook_custom"><i class="fa fa-facebook"></i> <span class="facebookCount{{slug_url}}"></span></p></a></li>
+    {% endif %}
+    {% if site.pocket_button %}
+    <li><a href="http://getpocket.com/edit?url={{share_url}}&title={{share_title}}"
+    title="Save to Pocket"
+    target="_blank"><p  class="pocket_custom">P <span class="pocketCount{{slug_url}}"></span></p></a></li>
+    {% endif %}
+    {% if site.linkedin_button %}
+    <li><a href="http://www.linkedin.com/shareArticle?mini=true&url={{share_url}}&title={{share_title}}&source={{site.author}}"
+    title="Share on LinkedIn"
+    target="_blank"><p  class="linkedin_custom"><i class="fa fa-linkedin"></i> <span class="linkedinCount{{slug_url}}"></span></p></a></li>
+    {% endif %}
+    {% if site.stumble_button %}
+    <li><a href="http://www.stumbleupon.com/badge/?url={{share_url}}"
+    title="Save to StumbleUpon"
+    target="_blank"><p  class="stumble_custom"><i class="fa fa-stumbleupon"></i> <span class="stumbleCount{{slug_url}}"></span></p></a></li>
+    {% endif %}
+    {% if site.pinterest_button %}
+    <li><a href="http://pinterest.com/pin/create/button/?url={{share_url}}"
+    title="Save to Pinterest"
+    target="_blank"><p  class="pinterest_custom"><i class="fa fa-pinterest"></i> <span class="pinterestCount{{slug_url}}"></span></p></a></li>
+    {% endif %}
+    {% if site.delicious_button %}
+    <li><a href="https://delicious.com/save?v=5&provider={{site.author}}&noui&jump=close&url={{share_url}}&title={{share_title}}"
+    title="Save to Delicouns"
+    target="_blank"><p  class="delicious_custom"><i class="fa fa-delicious"></i> <span class="deliciousCount{{slug_url}}"></span></p></a></li>
+    {% endif %}
+    {% if site.tumblr_button %}
+    {% if index %}{% capture description %}{% if post.description %}{{ post.description }}{% endif %}{% endcapture %}{% else %}{% capture description %}{% if page.description %}{{ page.description }}{% else %}{{ content | excerpt }}{% endif %}{% endcapture %}{% endif %}
+    {% capture description %}{{ description | strip_html | codense_spaces | truncate:150 }}{% endcapture %}
+    <li><a
+    href="https://delicious.com/save?v=5&provider={{site.author}}&noui&jump=close&url={{share_url}}&title={{share_title}}"
+    title="Share on Tumblr"
+    target="_blank"><p  class="tumblr_custom"><i class="fa fa-tumblr"></i></p></a></li>
+    {% endif %}
+  </ul>
+</div>
+<script type="text/javascript">
+{%if site.hatena_button%}socialCount('hatebu', 'hatebuCount{{slug_url}}', '{{share_url}}');{%endif%}
+{%if site.hatena_button%}socialCount('twitter', 'twitterCount{{slug_url}}', '{{share_url}}');{%endif%}
+{%if site.hatena_button%}socialCount('googleplus', 'googleplusCount{{slug_url}}', '{{share_url}}');{%endif%}
+{%if site.hatena_button%}socialCount('facebook', 'facebookCount{{slug_url}}', '{{share_url}}');{%endif%}
+{%if site.hatena_button%}socialCount('pocket', 'pocketCount{{slug_url}}', '{{share_url}}');{%endif%}
+{%if site.hatena_button%}socialCount('linkedin', 'linkedinCount{{slug_url}}', '{{share_url}}');{%endif%}
+{%if site.hatena_button%}socialCount('stumble', 'stumbleCount{{slug_url}}', '{{share_url}}');{%endif%}
+{%if site.hatena_button%}socialCount('pinterest', 'pinterestCount{{slug_url}}', '{{share_url}}');{%endif%}
+{%if site.hatena_button%}socialCount('delicious', 'deliciousCount{{slug_url}}', '{{share_url}}');{%endif%}
+</script>
