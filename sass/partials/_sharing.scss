@@ -79,12 +79,15 @@ $tumblr-color: #9DA6B0;
       border-radius: 3px;
       float: left;
       margin-right: 2px;
-      padding: 0px 10px 3px;
+      padding: 0px 15px 3px;
       font-size: 13px;
       height: 18px;
       color: #FFFFFF;
       text-decoration: none;
       &:hover {color: darken(#FFFFFF, 10);}
+      span {
+        margin-left: 5px;
+      }
       &.hatebu_custom {
         background-color: $hatebu-color;
         border-color: $hatebu-color;
