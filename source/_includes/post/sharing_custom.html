@@ -2,7 +2,7 @@
 <div class="share-button">
   <ul>
     {% if site.hatena_button %}
-    <li><a href="http://b.hatena.ne.jp/add?mode=confirm&url={{share_url}}"
+    <li><a href="http://b.hatena.ne.jp/add?mode=confirm&url={{share_url}}&title={{share_title}}"
     title="Save to Hatebu"
     target="_blank"><p class="hatebu_custom" >B! <span class="hatebuCount{{slug_url}}"></span></p></a></li>
     {% endif %}
@@ -13,7 +13,7 @@
     </li>
     {% endif %}
     {% if site.google_plus_one %}
-    <li><a href="https://plus.google.com/share?url={{share_url}}"
+    <li><a href="https://plus.google.com/share?url={{share_url}}&title={{share_title}}"
     title="Share on Google+"
     target="_blank"><p  class="googleplus_custom"><i class="fa fa-google-plus"></i> <span class="googleplusCount{{slug_url}}"></span></p></a></li>
     {% endif %}
@@ -33,12 +33,12 @@
     target="_blank"><p  class="linkedin_custom"><i class="fa fa-linkedin"></i> <span class="linkedinCount{{slug_url}}"></span></p></a></li>
     {% endif %}
     {% if site.stumble_button %}
-    <li><a href="http://www.stumbleupon.com/badge/?url={{share_url}}"
+    <li><a href="http://www.stumbleupon.com/badge/?url={{share_url}}&title={{share_title}}"
     title="Save to StumbleUpon"
     target="_blank"><p  class="stumble_custom"><i class="fa fa-stumbleupon"></i> <span class="stumbleCount{{slug_url}}"></span></p></a></li>
     {% endif %}
     {% if site.pinterest_button %}
-    <li><a href="http://pinterest.com/pin/create/button/?url={{share_url}}"
+    <li><a href="http://pinterest.com/pin/create/button/?url={{share_url}}&title={{share_title}}"
     title="Save to Pinterest"
     target="_blank"><p  class="pinterest_custom"><i class="fa fa-pinterest"></i> <span class="pinterestCount{{slug_url}}"></span></p></a></li>
     {% endif %}
