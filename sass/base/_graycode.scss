@@ -6,37 +6,29 @@ $code-mainbg: #fafafa !default; //white
 $code-subbg: #cdcdcd !default; //gray
 $code-color: #1a1a1a !default; // black
 $code-subcolor: #3f3f3f !default; //gray-white
-$code-comment: #a9a9a9 !default; // gray
+//$code-comment: #a9a9a9 !default; // gray
+$code-comment: #969896 !default;
 $code-operator: #0a0a0a !default; //black
-$code-name: #3232ff !default; //blue
+//$code-name: #3232ff !default; //blue
+$code-name: #333333 !default;
 $code-reserved: #3232ff !default; // blue
 $code-inserted: #ffff00 !default; // yellow
-$code-builtin: #4F4F1D !default; // yellow
-$code-literal: #dc322f !default; // red
-$code-variable: #3232ff !default; // blue
+//$code-builtin: #4F4F1D !default; // yellow
+$code-builtin: #0086B3 !default;
+//$code-literal: #dc322f !default; // red
+$code-literal: #E05000 !default;
+//$code-variable: #3232ff !default; // blue
+$code-variable: #A71D5C !default;
 $code-error: #dc322f !default; // red
 $code-subheading: #6c71c4 !default; //violet
 $code-type: #006f00 !default; // green
-
-$graycode: light !default;
-
-@if $graycode == dark {
-  $code-mainbg: #141414 !default; //black
-  $code-subbg: #323232 !default; //gray
-  $code-color: #e1e1e1 !default; // white
-  $code-subcolor: #cdcdcd !default; //gray-white
-  $code-comment: #0080ff !default; // blue
-  $code-operator: #ffff32 !default; //yellow
-  $code-name: #f5f500 !default; //yellow
-  $code-reserved: #ffff28 !default; // yellow
-  $code-inserted: #ffff00 !default; // yellow
-  $code-builtin: #ffff00 !default; // yellow
-  $code-literal: #ff32ff !default; // magenta
-  $code-variable: #00fbfb !default; // light blue
-  $code-error: #dc322f !default; // red
-  $code-subheading: #6c71c4 !default; //violet
-  $code-type: #00ff55 !default; // green
-}
+$code-nametag: #63A35B !default;
+$code-interpol: #DF5000 !default;
+$code-attribute: #7966C2 !default;
+$code-diff0: #BD2C00 !default;
+$code-diff0back: #FFECEC !default;
+$code-diff1: #55A532 !default;
+$code-diff1back: #EAFFEA !default;
 
 $pre-bg: $code-mainbg !default;
 $pre-border: darken($code-subbg, 5) !default;
