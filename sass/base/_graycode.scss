@@ -8,7 +8,8 @@ $code-color: #1a1a1a !default; // black
 $code-subcolor: #3f3f3f !default; //gray-white
 //$code-comment: #a9a9a9 !default; // gray
 $code-comment: #969896 !default;
-$code-operator: #0a0a0a !default; //black
+//$code-operator: #0a0a0a !default; //black
+$code-operator: #A71D5D !default;
 //$code-name: #3232ff !default; //blue
 $code-name: #333333 !default;
 $code-reserved: #3232ff !default; // blue
@@ -29,6 +30,7 @@ $code-diff0: #BD2C00 !default;
 $code-diff0back: #FFECEC !default;
 $code-diff1: #55A532 !default;
 $code-diff1back: #EAFFEA !default;
+$code-function: #795DA3 !default;
 
 $pre-bg: $code-mainbg !default;
 $pre-border: darken($code-subbg, 5) !default;
