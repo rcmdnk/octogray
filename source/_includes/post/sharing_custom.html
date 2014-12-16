@@ -2,7 +2,10 @@
 <div class="share-button">
   <ul>
     {% if site.hatena_button %}
+    {%comment%}
     <li><a href="http://b.hatena.ne.jp/add?mode=confirm&url={{share_url}}&title={{share_title}}"
+    {%endcomment%}
+    <li><a href="http://b.hatena.ne.jp/entry/{{share_url}}"
     title="Save to Hatebu"
     target="_blank"><p class="hatebu_custom" >B! <span class="hatebuCount{{slug_url}}"></span></p></a></li>
     {% endif %}
