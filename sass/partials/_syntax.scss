@@ -147,7 +147,7 @@ p, li, td{
   line-height: $code-line-height;
   background: $code-mainbg $noise-bg !important;
   color: $code-color !important;
-  span { color: $code-color !important; }
+  //span { color: $code-color !important; }
   span { font-style: normal !important; font-weight: normal !important; }
 
   .c      { color: $code-comment !important; font-style: italic !important; }                     /* Comment */
