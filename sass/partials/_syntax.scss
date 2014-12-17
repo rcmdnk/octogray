@@ -6,15 +6,15 @@
       border: 0px;
     }
   }
-  border: 0px solid $pre-border !important;
+  border: 1px solid $pre-border !important;
 }
 
 .highlight .line-numbers {
   text-align: right;
   background: $code-subbg $noise-bg !important;
   border-right: 1px solid darken($code-mainbg, 2) !important;
-  @include box-shadow(lighten($code-subbg, 2) -1px 0 inset);
-  text-shadow: darken($code-subbg, 10) 0 -1px;
+  //@include box-shadow(lighten($code-subbg, 2) -1px 0 inset);
+  //text-shadow: darken($code-subbg, 10) 0 -1px;
   span { color: $code-subcolor !important; }
   padding: .8em !important;
   @include border-radius(0);
@@ -26,7 +26,7 @@ figure.code .highlight .line-numbers {
 }
 
 figure.code, .gist-file, pre {
-  @include box-shadow(rgba(#000, .06) 0 0 1em);
+  //@include box-shadow(rgba(#000, .06) 0 0 1em);
   .highlight pre { @include box-shadow(none); }
 }
 
@@ -34,35 +34,45 @@ figure.code, .gist-file, pre {
   @include selection(adjust-color($code-mainbg, $lightness: -23%, $saturation: -65%), $text-shadow: $code-mainbg 0 1px);
 }
 html .gist .gist-file {
-  font-size: $code-font-size !important;
+  //font-size: $code-font-size !important;
   line-height: $code-line-height;
   margin-bottom: 1.8em;
   position: relative;
-  border: 1px solid $pre-border !important;
+  //border: 1px solid $pre-border !important;
+  border: 0px solid $pre-border !important;
   padding-top: image-height("code_bg.png") !important;
   .highlight {
     margin-bottom: 0;
   }
   .gist-syntax {
-    border-border: 1px solid $pre-border !important;
+    //border: 1px solid $pre-border !important;
+    border: 0px solid $pre-border !important;
     background: $code-mainbg !important;
+    font-size: 1em;
+    .file-data {
+      font-size: 1em;
+    }
     .gist-highlight {
       background: $code-mainbg !important;
     }
-    .highlight pre {
+    .highlight {
+      font-size: $code-font-size;
+    }
+    .highlight pre .line-pre {
       @extend .pre-code;
-      font-size: 1.0em;
+      font-size: $code-font-size;
       padding: 0;
     }
   }
   .gist-meta {
-   padding: .3em .8em;
-   border: 1px solid lighten($code-subbg, 2) !important;
-   color: $code-subcolor;
-   //font-size: 1em !important;
-   //line-height: $code-line-height;
-   background: $code-subbg $noise-bg;
-   @extend .sans;
+    padding: .3em .8em;
+    //border: 1px solid lighten($code-subbg, 2) !important;
+    border: 1px solid $pre-border !important;
+    color: $code-subcolor;
+    font-size: 0.8em !important;
+    //line-height: $code-line-height;
+    background: $code-subbg $noise-bg;
+    @extend .sans;
     a {
       color: mix($code-color, $code-subcolor) !important;
       @include hover-link;
@@ -76,13 +86,21 @@ html .gist .gist-file {
     }
     a[href*=raw]{
       @extend .download-source;
-      top: 0.8em;
+      top: 0.6em;
     }
   }
 }
+
+html div.gist div.gist-file div.gist-meta a[href*='#file'] {
+  font-size: 1.25*0.9em;
+}
+html div.gist div.gist-file td.line-data pre.line-pre {
+  @extend .pre-code;
+}
+
 pre {
   background: $pre-bg $noise-bg;
-  @include border-radius(.4em);
+  //@include border-radius(.4em);
   @extend .mono;
   border: 1px solid $pre-border;
   line-height: $code-line-height;
@@ -196,7 +214,7 @@ p, li, td{
   .s1     { color: $code-literal !important; }                                             /* Literal.String.Single */
   .ss     { color: $code-builtin !important;}                                          /* Literal.String.Symbol */
   //.il     { color: #009999 }                                          /* Literal.Number.Integer.Long */
-  .line     { color: $code-name !important; }
+  //.line     { color: $code-name !important; }
   div { .gd, .gd .x, .gi, .gi .x { display: inline-block; width: 100%; }}
 }
 
@@ -229,6 +247,7 @@ figure.code {
     position: relative;
     @extend .code-title;
     a { @extend .download-source; }
+    border: 1px solid $pre-border !important;
   }
   .highlight {
     margin-bottom: 0;
@@ -238,19 +257,20 @@ figure.code {
 .code-title {
   text-align: center;
   font-size: $code-font-size;
-  line-height: 2.5*$code-font-size;
-  text-shadow: #cbcccc 0 1px 0;
+  line-height: 2.0*$code-font-size;
+  //text-shadow: #cbcccc 0 1px 0;
   color: #474747;
   font-weight: normal;
   margin-bottom: 0;
-  @include border-top-radius(0.5em);
+  //@include border-top-radius(0.5em);
   font-family: "Helvetica Neue", Arial, "Lucida Grande", "Lucida Sans Unicode", Lucida, sans-serif;
-  background: #aaaaaa image-url("code_bg.png") top repeat-x;
-  border: 1px solid #565656;
-  border-top-color: #cbcbcb;
-  border-left-color: #a5a5a5;
-  border-right-color: #a5a5a5;
-  border-bottom: 0;
+  //background: #aaaaaa image-url("code_bg.png") top repeat-x;
+  background-color: darken($code-mainbg, 10);
+  //border: 1px solid #565656;
+  //border-top-color: #cbcbcb;
+  //border-left-color: #a5a5a5;
+  //border-right-color: #a5a5a5;
+  //border-bottom: 0;
 }
 
 .download-source {
@@ -259,6 +279,6 @@ figure.code {
   color: #666 !important;
   z-index: 1;
   font-size: $code-font-size;
-  text-shadow: #cbcccc 0 1px 0;
+  //text-shadow: #cbcccc 0 1px 0;
   padding-left: 3em;
 }

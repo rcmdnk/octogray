@@ -15,14 +15,14 @@ var socialCount = function (social, cname, url) {
       $('.' + cname).text(data||0);
     };
   }else if (social == 'twitter'){
-    socialData.url = 'http://urls.api.twitter.com/1/urls/count.json';
+    socialData.url = '//urls.api.twitter.com/1/urls/count.json';
     socialData.data.url = url;
     socialData.success = function(data){
       $('.' + cname).text(data.count||0);
     };
   }else if(social == 'googleplus'){
-    socialData.url = "http://query.yahooapis.com/v1/public/yql";
-    socialData.data.q = "SELECT content FROM data.headers WHERE url='https://plusone.google.com/_/+1/fastbutton?hl=ja&url=" + url + "'";
+    socialData.url = "//query.yahooapis.com/v1/public/yql";
+    socialData.data.q = "SELECT content FROM data.headers WHERE url='https://plusone.google.com/_/+1/fastbutton?url=" + url + "'";
     socialData.data.format = "json";
     socialData.data.env = "http://datatables.org/alltables.env";
     socialData.success = function (data) {
@@ -30,13 +30,13 @@ var socialCount = function (social, cname, url) {
       $('.' + cname).text((m != null)? m[1] : 0);
     };
   }else if(social == 'facebook'){
-    socialData.url = 'http://graph.facebook.com/';
+    socialData.url = '//graph.facebook.com/';
     socialData.data.id = url;
     socialData.success = function(data){
       $('.' + cname).text(data.shares||0);
     };
   }else if(social == 'pocket'){
-    socialData.url = "http://query.yahooapis.com/v1/public/yql";
+    socialData.url = "//query.yahooapis.com/v1/public/yql";
     socialData.data.q = "SELECT content FROM data.headers WHERE url='https://widgets.getpocket.com/v1/button?label=pocket&count=vertical&v=1&url=" + url + "'";
     socialData.data.format = "json";
     socialData.data.env = "http://datatables.org/alltables.env";
@@ -45,13 +45,13 @@ var socialCount = function (social, cname, url) {
       $('.' + cname).text(data.query.results.resources.content.match(/<em id="cnt">(\d+)<\/em>/)[1]||0);
     };
   }else if(social == 'linkedin'){
-    socialData.url = 'http://www.linkedin.com/countserv/count/share';
+    socialData.url = '//www.linkedin.com/countserv/count/share';
     socialData.data.url = url;
     socialData.success = function(data){
       $('.' + cname).text(data.count||0);
     };
   }else if(social == 'stumble'){
-    socialData.url = 'http://www.stumbleupon.com/services/1.01/badge.getinfo';
+    socialData.url = '//www.stumbleupon.com/services/1.01/badge.getinfo';
     socialData.data.url = url;
     socialData.success = function(data){
       $('.' + cname).text(data.result.views||0);
@@ -60,13 +60,13 @@ var socialCount = function (social, cname, url) {
       $('.' + cname).text(0);
     };
   }else if(social == 'delicious'){
-    socialData.url = 'http://feeds.delicious.com/v2/json/urlinfo/data';
+    socialData.url = '//feeds.delicious.com/v2/json/urlinfo/data';
     socialData.data.url = url;
     socialData.success = function(data){
       $('.' + cname).text((data.length>0)? data[0].total_posts : 0);
     };
   }else if(social == 'pinterest'){
-    socialData.url = 'http://api.pinterest.com/v1/urls/count.json';
+    socialData.url = '//api.pinterest.com/v1/urls/count.json';
     socialData.data.url = url;
     socialData.success = function(data){
       $('.' + cname).text(data.count||0);

@@ -3,9 +3,11 @@ $code-line-height: 1.0em !default;
 
 //$code-mainbg: #eaeaea !default; //white
 $code-mainbg: #fafafa !default; //white
-$code-subbg: #cdcdcd !default; //gray
+//$code-subbg: #cdcdcd !default; //gray
+$code-subbg: darken($code-mainbg, 2) !default;
 $code-color: #1a1a1a !default; // black
-$code-subcolor: #3f3f3f !default; //gray-white
+//$code-subcolor: #3f3f3f !default; //gray-white
+$code-subcolor: #AAA !default;
 //$code-comment: #a9a9a9 !default; // gray
 $code-comment: #969896 !default;
 //$code-operator: #0a0a0a !default; //black
