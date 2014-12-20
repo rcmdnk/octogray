@@ -1,0 +1,46 @@
+{% if site.google_translate_layout and page.translate != false %}<script type="text/javascript">
+{% capture analytics %}{% if site.google_analytics_tracking_id %}, gaTrack: true, gaId: '{{site.google_analytics_tracking_id}}'{% endif %}{% endcapture %}
+{% capture layout %}{% if site.google_translate_layout == 'SIMPLE' %}InlineLayout.SIMPLE{% else %}FloatPosition.{{site.google_translate_layout}}{% endif %}{% endcapture %}
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: '{{site.google_translate_lang}}', layout: google.translate.TranslateElement.{{layout}}, autoDisplay: false, multilanguagePage: true{{analytics}}}, 'google_translate_element');
+}
+</script>{% endif %}
+{% if site.google_analytics_tracking_id %}<script src="//www.google-analytics.com/analytics.js" async></script>
+<script>
+ga = function() {
+  ga.q.push(arguments);
+};
+ga.q = [['create', '{{site.google_analytics_tracking_id}}', 'auto'], ['send', 'pageview']];
+//ga('require', 'linkid', 'linkid.js'}; // Load the plug-in. Note: this call will block until the plug-in is loaded.
+ga.l = 1 * new Date();
+</script>{%endif%}
+{% if site.linkwithin_show == true and page.footer != false %}<script src="//www.linkwithin.com/widget.js" async></script>{% endif %}
+{% if site.disqus_short_name %}
+{% if page.comments == true %}
+<script>
+var disqus_shortname = '{{ site.disqus_short_name }}';
+var disqus_identifier = '{{ site.url }}{{ page.url }}';
+var disqus_url = '{{ site.url }}{{ page.url }}';
+</script>
+<script src="//{{site.disqus_short_name}}.disqus.com/embed.js" async></script>
+{% endif %}
+{% if site.disqus_show_comment_count and page.disqus_show_comment_count %}
+<script>
+var disqus_shortname = '{{ site.disqus_short_name }}';
+</script>
+<script src="//{{site.disqus_short_name}}.disqus.com/count.js" async></script>
+{% endif %}
+{% endif %}
+{% if site.google_translate_layout and page.translate != false %}<script src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit' async></script>{% endif %}
+{% unless site.affiliate == false or page.affiliate == false %}{% if site.linkplaza_key %}<script src='//static.linkplaza.jp/api/replace.js?key={{site.linkplaza_key}}' async></script>{% endif %}{% endunless %}
+{% if site.twitter_follow_button or site.twitter_tweet_button %}<script src='//platform.twitter.com/widgets.js' async></script>{% endif %}
+{% unless site.share_official == false %}
+{% if site.hatena_button %}<script src='//b.st-hatena.com/js/bookmark_button.js' async></script>{% endif %}
+{% if site.google_plus_one %}{% if site.google_plus_one_lang %}<script>window.___gcfg={lang:'{{site.google_plus_one_lang}}'};</script>{% endif %}<script src='//apis.google.com/js/plusone.js' async></script>{% endif %}
+{% if site.facebook_like or site.facebook_share %}<script src='//connect.facebook.net/{% if site.facebook_lang %}{{ site.facebook_lang }}{% else %}en_US{% endif %}/sdk.js#{% if site.facebook_app_id %}appId={{ site.facebook_app_id }}&{% endif %}xfbml=1&version=v2.0' async></script>{% endif %}
+{% if site.pocket_button %}<script src='//widgets.getpocket.com/v1/j/btn.js?v=1' async></script>{% endif %}
+{% if site.linkedin_button %}<script src='//platform.linkedin.com/in.js' async></script>{% endif %}
+{% if site.stumble_button %}<script src='//platform.stumbleupon.com/1/widgets.js' async></script>{% endif %}
+{% if site.pinterest_button %}<script src='//assets.pinterest.com/js/pinit.js' async></script>{% endif %}
+{% if site.tumblr_button %}<script src='//platform.tumblr.com/v1/share.js' async></script>{% endif %}
+{% endunless %}
