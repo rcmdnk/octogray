@@ -1,14 +1,14 @@
-{% if site.google_analytics_tracking_id or page.sharing != false or (site.disqus_short_name and page.comments != false) or (site.linkwithin_show == true and page.footer != false or site.google_translate_lang %}
-<script type="text/javascript">
+{%comment%}
 {% if site.google_translate_layout and page.translate != false %}
+<script type="text/javascript">
 {% capture analytics %}{% if site.google_analytics_tracking_id %}, gaTrack: true, gaId: '{{site.google_analytics_tracking_id}}'{% endif %}{% endcapture %}
 {% capture layout %}{% if site.google_translate_layout == 'SIMPLE' %}InlineLayout.SIMPLE{% else %}FloatPosition.{{site.google_translate_layout}}{% endif %}{% endcapture %}
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({pageLanguage: '{{site.google_translate_lang}}', layout: google.translate.TranslateElement.{{layout}}, autoDisplay: false, multilanguagePage: true{{analytics}}}, 'google_translate_element');
 }
 </script>
-<script type="text/javascript">
 {% endif %}
+<script type="text/javascript">
 (function (w, d) {
   var j, s = d.getElementsByTagName('script')[0],
   a = function (u, i) {
@@ -31,17 +31,17 @@ function googleTranslateElementInit() {
   {% if site.linkwithin_show == true and page.footer != false %}
   a('//www.linkwithin.com/widget.js','linkwithin-wjs');
   {% endif %}
-  {% if site.disqus_short_name and page.comments != false %}
-  var disqus_shortname = '{{ site.disqus_short_name }}';
-  var disqus_script = '';
+  {% if site.disqus_short_name %}
   {% if page.comments == true %}
+  var disqus_shortname = '{{ site.disqus_short_name }}';
   var disqus_identifier = '{{ site.url }}{{ page.url }}';
   var disqus_url = '{{ site.url }}{{ page.url }}';
-  disqus_script = 'embed.js';
-  {% elsif site.disqus_short_name and site.disqus_show_comment_count == true %}
-  disqus_script = 'count.js';
+  a('//'+disqus_shortname+'.disqus.com/embed.js');
   {% endif %}
-  a('//'+disqus_shortname+'.disqus.com/'+disqus_script);
+  {% if site.disqus_show_comment_count and page.disqus_show_comment_count %}
+  {% elsif site.disqus_short_name and site.disqus_show_comment_count == true %}
+  a('//'+disqus_shortname+'.disqus.com/count.js');
+  {% endif %}
   {% endif %}
   {% if site.google_translate_layout and page.translate != false %}
   a('//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit','translate-js');
@@ -50,6 +50,7 @@ function googleTranslateElementInit() {
   {% if site.linkplaza_key %}
   a('//static.linkplaza.jp/api/replace.js?key={{site.linkplaza_key}}','linkplaza-jssdk');
   {% endif %}
+  {% endunless %}
   {% if site.twitter_follow_button or site.twitter_tweet_button %}
   a('//platform.twitter.com/widgets.js', 'twitter-wjs');
   {% endif %}
@@ -70,12 +71,7 @@ function googleTranslateElementInit() {
   a('//widgets.getpocket.com/v1/j/btn.js?v=1','pocket-btn-js');
   {% endif %}
   {% if site.linkedin_button %}
-  w.defaultLang = w.lang;
-  {% if site.linkedin_lang %}
-  w.lang = '{{site.linkedin_lang}}';
-  {% endif %}
   a('//platform.linkedin.com/in.js','linkedin-btn-js');
-  w.lang = w.defaultLang;
   {% endif %}
   {% if site.stumble_button %}
   a('//platform.stumbleupon.com/1/widgets.js', 'stumble-btn-js');
@@ -87,8 +83,7 @@ function googleTranslateElementInit() {
   a('//platform.tumblr.com/v1/share.js','tumblr-share-js');
   {% endif %}
   {% endunless %}
-  {% endunless %}
 })(this, document);
 </script>
-{% endif %}
+{%endcomment%}
 {% include custom/after_footer.html %}
