@@ -4,7 +4,8 @@
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({pageLanguage: '{{site.google_translate_lang}}', layout: google.translate.TranslateElement.{{layout}}, autoDisplay: false, multilanguagePage: true{{analytics}}}, 'google_translate_element');
 }
-</script>{% endif %}
+</script>
+{% endif %}
 {% if site.google_analytics_tracking_id %}<script src="//www.google-analytics.com/analytics.js" async></script>
 <script>
 ga = function() {
@@ -13,23 +14,14 @@ ga = function() {
 ga.q = [['create', '{{site.google_analytics_tracking_id}}', 'auto'], ['send', 'pageview']];
 //ga('require', 'linkid', 'linkid.js'}; // Load the plug-in. Note: this call will block until the plug-in is loaded.
 ga.l = 1 * new Date();
-</script>{%endif%}
-{% if site.linkwithin_show == true and page.footer != false %}<script src="//www.linkwithin.com/widget.js" async></script>{% endif %}
-{% if site.disqus_short_name %}
-{% if page.comments == true %}
-<script>
-var disqus_shortname = '{{ site.disqus_short_name }}';
-var disqus_identifier = '{{ site.url }}{{ page.url }}';
-var disqus_url = '{{ site.url }}{{ page.url }}';
 </script>
-<script src="//{{site.disqus_short_name}}.disqus.com/embed.js" async></script>
-{% endif %}
-{% if site.disqus_show_comment_count and page.disqus_show_comment_count %}
+{%endif%}
+{% if site.linkwithin_show == true and page.footer != false %}
 <script>
-var disqus_shortname = '{{ site.disqus_short_name }}';
+var linkwithin_site_id = {{site.linkwithin_id}};
+linkwithin_text='{{site.linkwithin_text}}'
 </script>
-<script src="//{{site.disqus_short_name}}.disqus.com/count.js" async></script>
-{% endif %}
+<script src="//www.linkwithin.com/widget.js" async></script>
 {% endif %}
 {% if site.google_translate_layout and page.translate != false %}<script src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit' async></script>{% endif %}
 {% unless site.affiliate == false or page.affiliate == false %}{% if site.linkplaza_key %}<script src='//static.linkplaza.jp/api/replace.js?key={{site.linkplaza_key}}' async></script>{% endif %}{% endunless %}
@@ -44,3 +36,16 @@ var disqus_shortname = '{{ site.disqus_short_name }}';
 {% if site.pinterest_button %}<script src='//assets.pinterest.com/js/pinit.js' async></script>{% endif %}
 {% if site.tumblr_button %}<script src='//platform.tumblr.com/v1/share.js' async></script>{% endif %}
 {% endunless %}
+{% if site.disqus_short_name %}
+{% if page.comments == true %}
+{% elsif site.disqus_show_comment_count and page.disqus_show_comment_count %}
+<script>
+(function() {
+var disqus_shortname = '{{ site.disqus_short_name }}';
+var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+{% endif %}
+{% endif %}

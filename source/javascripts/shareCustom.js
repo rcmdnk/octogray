@@ -7,32 +7,28 @@ var socialCount = function (social, cname, url) {
     type: 'GET',
     dataType: 'jsonp',
     data: {noncache: new Date().getTime()},
-    success: function(data) {
+    always: function(data) {
       timing.end = (new Date()).getTime();
       var t = timing.end - timing.start;
       ga('send', 'timing', 'social', social,  t);
     }
   };
   if(social == 'hatebu'){
-//    if('https:' == document.location.protocol){
-//      return;
-//    //  socialData.url = "//query.yahooapis.com/v1/public/yql";
-//    //  socialData.data.q = "SELECT content FROM data.headers WHERE url='http://api.b.st-hatena.com/entry.count&url=" + url + "'";
-//    //  socialData.data.format = "json";
-//    //  socialData.data.env = "http://datatables.org/alltables.env";
-//    //  socialData.success = function (data) {
-//    //    $('.' + cname).text(data.query.results.resources||0);
-//    //    var m = data.query.results.resources.content.match(/window\.__SSR = {c: ([\d]+)/);
-//    //    $('.' + cname).text(data||0);
-//    //    $('.' + cname).text((m != null)? m[1] : 0);
-//    //  };
-//    }else{
+    if('https:' == document.location.protocol){
+      socialData.url = "//query.yahooapis.com/v1/public/yql";
+      socialData.data.q = "SELECT content FROM data.headers WHERE url='http://api.b.st-hatena.com/entry.count?url=" + url + "'";
+      socialData.data.format = "json";
+      socialData.data.env = "http://datatables.org/alltables.env";
+      socialData.success = function (data) {
+        $('.' + cname).text(data.query.results.resources.content||0);
+      };
+    }else{
       socialData.url = 'http://api.b.st-hatena.com/entry.count';
       socialData.data.url = url;
       socialData.success = function(data){
         $('.' + cname).text(data||0);
       };
-//    }
+    }
   }else if (social == 'twitter'){
     socialData.url = '//urls.api.twitter.com/1/urls/count.json';
     socialData.data.url = url;

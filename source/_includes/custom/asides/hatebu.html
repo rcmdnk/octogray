@@ -1,6 +1,7 @@
 {% if site.hatena_popular_posts %}
 <section>
   <h1>Popular Posts</h1>
+{%comment%}
   <script language="javascript" type="text/javascript" src="//b.hatena.ne.jp/js/widget.js" charset="utf-8"></script>
   <script language="javascript" type="text/javascript">
   Hatena.BookmarkWidget.url   = "{{site.url}}";
@@ -9,6 +10,63 @@
   Hatena.BookmarkWidget.num   = 10;
   Hatena.BookmarkWidget.theme = "notheme";
   Hatena.BookmarkWidget.load();
+  </script>
+{%endcomment%}
+  <div id="hatena-bookmark-widget" class="hatena-bookmark hatena-bookmark-widget-notheme"><div>
+    <div class="hatena-bookmark-widget-body">
+       <ul>
+       </ul>
+     </div>
+  </div>
+  <script>
+    (function() {
+      var url = '{{site.url}}';
+      var sort = '{% if site.hatena_popular_sort %}{{site.hatena_popular_sort}}{% else %}count{% endif %}';
+      var num = {% if site.hatena_popular_num %}{{site.hatena_popular_num}}{% else %}10{% endif %};
+      hatebuCallback = function (data) {
+        var f = document.createDocumentFragment();
+        if(data && data.length>0){
+          for(var i=0; i<num&&i<data.length; i++) {
+            var j = data[i];
+            var l = document.createElement('li');
+            var title = document.createElement('a');
+            title.href = j.link.replace('%23', '#');
+            title.className = 'hatena-bookmark-entrytitle';
+            title.appendChild(document.createTextNode(j.title));
+            l.appendChild(title);
+            var s = document.createElement('span');
+            s.className = 'hatena-bookmark-count';
+            var count = document.createElement('a');
+            count.href = '//b.hatena.ne.jp/entry/' + j.link.replace('%23', '#');
+            count.appendChild(document.createTextNode(j.count + 'users'));
+            if(j.count > 10){
+              var st = document.createElement('strong');
+              st.appendChild(count);
+              s.appendChild(st);
+            }else if(j.count >= 5){
+              var em = document.createElement('em');
+              em.appendChild(count);
+              s.appendChild(em);
+            }else{
+              s.appendChild(count);
+            }
+            l.appendChild(s);
+            f.appendChild(l);
+          }
+        }else{
+          var l = document.createElement('li');
+          var tx = document.cerateTextNdoe('No Hatena Bookmarks');
+          l.appendChild(tx);
+          f.appendChild(l);
+        }
+        var t = document.getElementById('hatena-bookmark-widget').getElementsByTagName('ul')[0];
+        t.appendChild(f);
+      };
+      var s = document.getElementsByTagName('script')[0];
+      var news = document.createElement('script');
+      news.src = '//b.hatena.ne.jp/entrylist/json?callback=hatebuCallback&url='+url+'&sort='+sort;
+      s.parentNode.insertBefore(news, s);
+    }());
   </script>
 </section>
 {% endif %}
