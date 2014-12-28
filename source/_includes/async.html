@@ -1,4 +1,4 @@
-{% if site.google_translate_layout and page.translate != false %}<script type="text/javascript">
+{% if site.google_translate_layout and page.translate != false %}<script>
 {% capture analytics %}{% if site.google_analytics_tracking_id %}, gaTrack: true, gaId: '{{site.google_analytics_tracking_id}}'{% endif %}{% endcapture %}
 {% capture layout %}{% if site.google_translate_layout == 'SIMPLE' %}InlineLayout.SIMPLE{% else %}FloatPosition.{{site.google_translate_layout}}{% endif %}{% endcapture %}
 function googleTranslateElementInit() {
@@ -43,7 +43,7 @@ linkwithin_text='{{site.linkwithin_text}}'
 <script>
 (function() {
 var disqus_shortname = '{{ site.disqus_short_name }}';
-var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+var dsq = document.createElement('script'); dsq.async = true;
 dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
 (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
