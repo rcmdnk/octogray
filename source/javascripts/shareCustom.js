@@ -92,6 +92,6 @@ var socialCount = function (social, cname, url) {
   $.ajax(socialData);
 
   $('.' + cname).on('click', function() {
-      ga('send', 'event', 'button', 'click', cname);
+      ga('send', 'event', social, 'click', cname);
   });
 }
