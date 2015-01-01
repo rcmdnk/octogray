@@ -194,7 +194,7 @@ p, li, td{
   //.vc     { color: #008080 }                                          /* Name.Variable.Class */
   .vg     { color: $code-variable !important; }                                          /* Name.Variable.Global */
   .vi     { color: $code-variable !important; }                                          /* Name.Variable.Instance */
-  .nv     { color: $code-variable !important; }                                          /* Name.Variable */
+  .nv     { color: $code-color !important; }                                          /* Name.Variable */
   //.w      { color: #bbbbbb }                                          /* Text.Whitespace */
   .mf     { color: $code-literal !important; }                                          /* Literal.Number.Float */
   .m      { color: $code-literal !important; }                                          /* Literal.Number */
