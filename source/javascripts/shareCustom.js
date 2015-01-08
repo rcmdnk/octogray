@@ -1,97 +1,104 @@
-var socialCount = function (social, cname, url) {
-  var vname = cname.replace(/-/g, "");
-  if((new Function('return (typeof ' + vname + '!= "undefined");'))())return;
-  (new Function('window.' + vname + ' = "defined";'))();
-  url = (url)? encodeURI(url): encodeURI(location.href);
-  socialData = {
-    type: 'GET',
-    dataType: 'jsonp',
-    data: {noncache: new Date().getTime()},
-    always: function(data) {
-      timing.end = (new Date()).getTime();
-      var t = timing.end - timing.start;
-      ga('send', 'timing', 'social', social,  t);
-    }
-  };
-  if(social == 'hatebu'){
+var socialCount = function (socials) {
+  var socialFunc = [];
+  socialFunc.hatebu = function(socialData, url){
     if('https:' == document.location.protocol){
       socialData.url = "//query.yahooapis.com/v1/public/yql";
       socialData.data.q = "SELECT content FROM data.headers WHERE url='http://api.b.st-hatena.com/entry.count?url=" + url + "'";
       socialData.data.format = "json";
       socialData.data.env = "http://datatables.org/alltables.env";
       socialData.success = function (data) {
-        $('.' + cname).text(data.query.results.resources.content||0);
+        $('.hatebuCount[data-share-url="'+url+'"]').text(data.query.results.resources.content||0);
       };
     }else{
       socialData.url = 'http://api.b.st-hatena.com/entry.count';
       socialData.data.url = url;
       socialData.success = function(data){
-        $('.' + cname).text(data||0);
+        $('.hatebuCount[data-share-url="'+url+'"]').text(data||0);
       };
     }
-  }else if (social == 'twitter'){
+  };
+  socialFunc.twitter = function(socialData, url){
     socialData.url = '//urls.api.twitter.com/1/urls/count.json';
     socialData.data.url = url;
     socialData.success = function(data){
-      $('.' + cname).text(data.count||0);
+      $('.twitterCount[data-share-url="'+url+'"]').text(data.count||0);
     };
-  }else if(social == 'googleplus'){
+  };
+  socialFunc.googleplus = function(socialData, url){
     socialData.url = "//query.yahooapis.com/v1/public/yql";
     socialData.data.q = "SELECT content FROM data.headers WHERE url='https://plusone.google.com/_/+1/fastbutton?url=" + url + "'";
     socialData.data.format = "json";
     socialData.data.env = "http://datatables.org/alltables.env";
     socialData.success = function (data) {
       var m = data.query.results.resources.content.match(/window\.__SSR = {c: ([\d]+)/);
-      $('.' + cname).text((m != null)? m[1] : 0);
+      $('.googleplusCount[data-share-url="'+url+'"]').text((m != null)? m[1] : 0);
     };
-  }else if(social == 'facebook'){
+  };
+  socialFunc.facebook = function(socialData, url){
     socialData.url = '//graph.facebook.com/';
     socialData.data.id = url;
     socialData.success = function(data){
-      $('.' + cname).text(data.shares||0);
+      $('.facebookCount[data-share-url="'+url+'"]').text(data.shares||0);
     };
-  }else if(social == 'pocket'){
+  };
+  socialFunc.pocket = function(socialData, url){
     socialData.url = "//query.yahooapis.com/v1/public/yql";
     socialData.data.q = "SELECT content FROM data.headers WHERE url='https://widgets.getpocket.com/v1/button?label=pocket&count=vertical&v=1&url=" + url + "'";
     socialData.data.format = "json";
     socialData.data.env = "http://datatables.org/alltables.env";
     socialData.success = function (data) {
-      //$('.' + cname).text(data.toSource());
-      $('.' + cname).text(data.query.results.resources.content.match(/<em id="cnt">(\d+)<\/em>/)[1]||0);
+      //$('.pocketCount[data-share-url="'+url+'"]').text(data.toSource());
+      $('.pocketCount[data-share-url="'+url+'"]').text(data.query.results.resources.content.match(/<em id="cnt">(\d+)<\/em>/)[1]||0);
     };
-  }else if(social == 'linkedin'){
+  };
+  socialFunc.linkedin = function(socialData, url){
     socialData.url = '//www.linkedin.com/countserv/count/share';
     socialData.data.url = url;
     socialData.success = function(data){
-      $('.' + cname).text(data.count||0);
+      $('.linkedinCount[data-share-url="'+url+'"]').text(data.count||0);
     };
-  }else if(social == 'stumble'){
+  };
+  socialFunc.stumble = function(socialData, url){
     socialData.url = '//www.stumbleupon.com/services/1.01/badge.getinfo';
     socialData.data.url = url;
     socialData.success = function(data){
-      $('.' + cname).text(data.result.views||0);
+      $('.stumbleCount[data-share-url="'+url+'"]').text(data.result.views||0);
     };
     socialData.error = function(data){
-      $('.' + cname).text(0);
+      $('.stumbleCount[data-share-url="'+url+'"]').text(0);
     };
-  }else if(social == 'delicious'){
+  };
+  socialFunc.delicious = function(socialData, url){
     socialData.url = '//feeds.delicious.com/v2/json/urlinfo/data';
     socialData.data.url = url;
     socialData.success = function(data){
-      $('.' + cname).text((data.length>0)? data[0].total_posts : 0);
+      $('.deliciousCount[data-share-url="'+url+'"]').text((data.length>0)? data[0].total_posts : 0);
     };
-  }else if(social == 'pinterest'){
+  };
+  socialFunc.pinterest = function(socialData, url){
     socialData.url = '//api.pinterest.com/v1/urls/count.json';
     socialData.data.url = url;
     socialData.success = function(data){
-      $('.' + cname).text(data.count||0);
+      $('.pinterestCount[data-share-url="'+url+'"]').text(data.count||0);
     };
-  }else {
-    return;
-  }
-  $.ajax(socialData);
-
-  $('.' + cname).on('click', function() {
-      ga('send', 'event', social, 'click', cname);
+  };
+  socials.forEach(function(s){
+    var urls = [];
+    $("."+s+"Count").each(function(){
+      var url = $(this).attr("data-share-url");
+      console.log(s + " " + url);
+      if ($.inArray(url, urls) != -1)return;
+      urls.push(url);
+      socialData = {
+        type: 'GET',
+        dataType: 'jsonp',
+        data: {noncache: new Date().getTime()},
+      };
+      socialFunc[s](socialData, url);
+      $.ajax(socialData);
+      $(this).on('click', function() {
+          ga('send', 'event', social, 'click', url);
+      });
+    });
   });
-}
+};

@@ -1,4 +1,4 @@
-{% if index %}{% capture share_url %}{{ site.url }}{{ post.url }}{% endcapture %}{% capture share_title %}{{ post.title }}{% endcapture %}{% else %}{% capture share_url %}{{ site.url }}{{ page.url }}{% endcapture %}{% capture share_title %}{{ page.title }}{% endcapture %}{% endif %}
+{% if index %}{% capture share_url %}{{ site.url }}{{ post.url | remove:'index.html'}}{% endcapture %}{% capture share_title %}{{ post.title }}{% endcapture %}{% else %}{% capture share_url %}{{ site.url }}{{ page.url | remove:'index.html'}}{% endcapture %}{% capture share_title %}{{ page.title }}{% endcapture %}{% endif %}
 <div class="sharing">
   <ul>
     {% if site.hatena_button %}

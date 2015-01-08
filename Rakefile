@@ -293,12 +293,13 @@ task :isolate, :filename do |t, args|
     filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.last
   end
   if filename == nil
-    raise "\nThere is no markdown file (*.#{new_post_ext}) in #{source_dir}/#{posts_dir}."
+    puts "## Stashing all posts"
+  else
+    puts "## Stashing other posts than #{filename}"
   end
-  puts "## Stashing other posts than #{filename}"
   FileUtils.mkdir(full_stash_dir) unless File.exist?(full_stash_dir)
   Dir.glob("#{source_dir}/#{posts_dir}/*") do |post|
-    if post.include?(filename)
+    if filename != nil && post.include?(filename)
       p "Remaining #{post}..."
     else
       FileUtils.mv post, full_stash_dir
@@ -637,8 +638,9 @@ def ask(message, valid_options, yn = "")
 end
 
 def blog_url(user, project)
-  url = if File.exists?('source/CNAME')
-    "http://#{IO.read('source/CNAME').strip}"
+  cname = "#{source_dir}/CNAME"
+  url = if File.exists?(cname)
+    "http://#{IO.read(cname).strip}"
   else
     "http://#{user.downcase}.github.io"
   end

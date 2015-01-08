@@ -74,4 +74,22 @@ function googleTranslateElementInit() {
 })(this, document);
 </script>
 {%endcomment%}
+<script>
+(function () {
+  var socials = [];
+  {%if site.hatena_button%}socials.push('hatebu');{%endif%}
+  {%if site.twitter_tweet_button%}socials.push('twitter');{%endif%}
+  {%if site.google_plus_one%}socials.push('googleplus');{%endif%}
+  {%if site.facebook_share%}socials.push('facebook');{%endif%}
+  {%if site.pocket_button%}socials.push('pocket');{%endif%}
+  {%if site.linkedin_button%}socials.push('linkedin');{%endif%}
+  {%if site.stumble_button%}socials.push('stumble');{%endif%}
+  {%if site.pinterest_button%}socials.push('pinterest');{%endif%}
+  {%if site.delicious_button%}socials.push('delicious');{%endif%}
+  if(socials.length > 0)socialCount(socials);
+})();
+</script>
+{% if site.linkwithin_show == true and page.footer != false %}
+<script src="//www.linkwithin.com/widget.js" async defer></script>
+{% endif %}
 {% include custom/after_footer.html %}

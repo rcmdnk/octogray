@@ -1,5 +1,5 @@
 diff --git a/Rakefile b/Rakefile
-index c7ad504..fa66056 100644
+index 099f564..1aec015 100644
 --- a/Rakefile
 +++ b/Rakefile
 @@ -9,27 +9,36 @@ ssh_port       = "22"
@@ -253,7 +253,7 @@ index c7ad504..fa66056 100644
        page.puts "---"
      end
    else
-@@ -161,16 +287,42 @@ end
+@@ -161,16 +287,43 @@ end
  # usage rake isolate[my-post]
  desc "Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly."
  task :isolate, :filename do |t, args|
@@ -267,12 +267,13 @@ index c7ad504..fa66056 100644
 +    filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.last
    end
 +  if filename == nil
-+    raise "\nThere is no markdown file (*.#{new_post_ext}) in #{source_dir}/#{posts_dir}."
++    puts "## Stashing all posts"
++  else
++    puts "## Stashing other posts than #{filename}"
 +  end
-+  puts "## Stashing other posts than #{filename}"
 +  FileUtils.mkdir(full_stash_dir) unless File.exist?(full_stash_dir)
 +  Dir.glob("#{source_dir}/#{posts_dir}/*") do |post|
-+    if post.include?(filename)
++    if filename != nil && post.include?(filename)
 +      p "Remaining #{post}..."
 +    else
 +      FileUtils.mv post, full_stash_dir
@@ -301,7 +302,7 @@ index c7ad504..fa66056 100644
  end
  
  desc "Clean out caches: .pygments-cache, .gist-cache, .sass-cache"
-@@ -217,6 +369,12 @@ end
+@@ -217,6 +370,12 @@ end
  desc "Default deploy task"
  task :deploy do
    # Check if preview posts exist, which should not be published
@@ -314,7 +315,7 @@ index c7ad504..fa66056 100644
    if File.exists?(".preview-mode")
      puts "## Found posts in preview mode, regenerating files ..."
      File.delete(".preview-mode")
-@@ -224,12 +382,21 @@ task :deploy do
+@@ -224,12 +383,21 @@ task :deploy do
    end
  
    Rake::Task[:copydot].invoke(source_dir, public_dir)
@@ -338,7 +339,7 @@ index c7ad504..fa66056 100644
  
  desc "copy dot files for deployment"
  task :copydot, :source, :dest do |t, args|
-@@ -265,54 +432,85 @@ multitask :push do
+@@ -265,54 +433,85 @@ multitask :push do
      puts "\n## Committing: #{message}"
      system "git commit -m \"#{message}\""
      puts "\n## Pushing generated #{deploy_dir} website"
@@ -442,7 +443,7 @@ index c7ad504..fa66056 100644
      repo_url = get_stdin("Repository url: ")
    end
    protocol = (repo_url.match(/(^git)@/).nil?) ? 'https' : 'git'
-@@ -322,7 +520,9 @@ task :setup_github_pages, :repo do |t, args|
+@@ -322,7 +521,9 @@ task :setup_github_pages, :repo do |t, args|
      user = repo_url.match(/github\.com\/([^\/]+)/)[1]
    end
    branch = (repo_url.match(/\/[\w-]+\.github\.(?:io|com)/).nil?) ? 'gh-pages' : 'master'
@@ -453,7 +454,7 @@ index c7ad504..fa66056 100644
    unless (`git remote -v` =~ /origin.+?octopress(?:\.git)?/).nil?
      # If octopress is still the origin remote (from cloning) rename it to octopress
      system "git remote rename origin octopress"
-@@ -330,40 +530,75 @@ task :setup_github_pages, :repo do |t, args|
+@@ -330,40 +531,75 @@ task :setup_github_pages, :repo do |t, args|
        # If this is a user/organization pages repository, add the correct origin remote
        # and checkout the source branch for committing changes to the blog source.
        system "git remote add origin #{repo_url}"
@@ -473,7 +474,8 @@ index c7ad504..fa66056 100644
 -      end
      end
    end
-   url = blog_url(user, project)
+-  url = blog_url(user, project, source_dir)
++  url = blog_url(user, project)
    jekyll_config = IO.read('_config.yml')
    jekyll_config.sub!(/^url:.*$/, "url: #{url}")
 +  jekyll_config.sub!(/^subscribe_rss:.*$/, "subscribe_rss: #{url}/atom.xml")
@@ -549,7 +551,7 @@ index c7ad504..fa66056 100644
  end
  
  def ok_failed(condition)
-@@ -379,9 +614,22 @@ def get_stdin(message)
+@@ -379,16 +615,29 @@ def get_stdin(message)
    STDIN.gets.chomp
  end
  
@@ -574,7 +576,15 @@ index c7ad504..fa66056 100644
    else
      answer = get_stdin(message)
    end
-@@ -403,3 +651,117 @@ task :list do
+   answer
+ end
+ 
+-def blog_url(user, project, source_dir)
++def blog_url(user, project)
+   cname = "#{source_dir}/CNAME"
+   url = if File.exists?(cname)
+     "http://#{IO.read(cname).strip}"
+@@ -404,3 +653,117 @@ task :list do
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end

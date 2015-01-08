@@ -100,6 +100,7 @@ jQuery(function($){
 //            selected = document.selection.createRange().htmlText;
 //        }
 //    }
+//    if (!selected) return;
 //    var title = document.title;
 //    var  url = location.href;
 //    $.ajax({
@@ -119,6 +120,8 @@ jQuery(function($){
 //          'subject': 'Copied at ' + title,
 //          'html': '<div><a href="' + url + '">' + title + '</a></div><br><br><div>' + selected + '</div>'
 //        }
+//        // if you are using Google Analytics, you can use it, too.
+//        //ga('send', 'event', 'copy', url + ':' + title, selected);
 //      }
 //    });
 //  });
