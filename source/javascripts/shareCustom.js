@@ -84,21 +84,29 @@ var socialCount = function (socials) {
   };
   socials.forEach(function(s){
     var urls = [];
+    var n = 0;
     $("."+s+"Count").each(function(){
       var url = $(this).attr("data-share-url");
-      console.log(s + " " + url);
-      if ($.inArray(url, urls) != -1)return;
-      urls.push(url);
-      socialData = {
-        type: 'GET',
-        dataType: 'jsonp',
-        data: {noncache: new Date().getTime()},
-      };
-      socialFunc[s](socialData, url);
-      $.ajax(socialData);
-      $(this).on('click', function() {
-          ga('send', 'event', social, 'click', url);
+      if ($.inArray(url, urls) == -1){
+        urls.push(url);
+        socialData = {
+          type: 'GET',
+          dataType: 'jsonp',
+          data: {noncache: new Date().getTime()},
+        };
+        socialFunc[s](socialData, url);
+        $.ajax(socialData);
+      }
+      var pos = n;
+      if(n==0){
+        pos = "above";
+      }else if(n==1){
+        pos = "bottom";
+      }
+      $(this).parent().on('click', function() {
+        ga('send', 'event', s, pos, url);
       });
+      n++;
     });
   });
 };
