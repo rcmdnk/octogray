@@ -1,5 +1,5 @@
 diff --git a/Gemfile b/Gemfile
-index b02ee4b..96d0454 100644
+index 153dd3d..96d0454 100644
 --- a/Gemfile
 +++ b/Gemfile
 @@ -8,12 +8,16 @@ group :development do
@@ -8,7 +8,7 @@ index b02ee4b..96d0454 100644
    gem 'RedCloth', '~> 4.2.9'
 +  gem 'coderay', '~> 1.1.0'
    gem 'haml', '~> 4.0'
-   gem 'compass', '~> 0.12.2'
+   gem 'compass', '~> 1.0.1'
    gem 'sass-globbing', '~> 1.0.0'
    gem 'rubypants', '~> 0.2.0'
    gem 'rb-fsevent', '~> 0.9'
