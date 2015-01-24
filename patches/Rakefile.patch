@@ -474,8 +474,7 @@ index 9367ea1..1aec015 100644
 -      end
      end
    end
--  url = blog_url(user, project, source_dir)
-+  url = blog_url(user, project)
+   url = blog_url(user, project, source_dir)
    jekyll_config = IO.read('_config.yml')
    jekyll_config.sub!(/^url:.*$/, "url: #{url}")
 +  jekyll_config.sub!(/^subscribe_rss:.*$/, "subscribe_rss: #{url}/atom.xml")
@@ -576,14 +575,6 @@ index 9367ea1..1aec015 100644
    else
      answer = get_stdin(message)
    end
-   answer
- end
- 
--def blog_url(user, project, source_dir)
-+def blog_url(user, project)
-   cname = "#{source_dir}/CNAME"
-   url = if File.exists?(cname)
-     "http://#{IO.read(cname).strip}"
 @@ -404,3 +653,117 @@ task :list do
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"

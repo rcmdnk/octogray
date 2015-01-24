@@ -542,7 +542,7 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
       puts "Master branch renamed to 'source' for committing your blog source files"
     end
   end
-  url = blog_url(user, project)
+  url = blog_url(user, project, source_dir)
   jekyll_config = IO.read('_config.yml')
   jekyll_config.sub!(/^url:.*$/, "url: #{url}")
   jekyll_config.sub!(/^subscribe_rss:.*$/, "subscribe_rss: #{url}/atom.xml")
@@ -637,7 +637,7 @@ def ask(message, valid_options, yn = "")
   answer
 end
 
-def blog_url(user, project)
+def blog_url(user, project, source_dir)
   cname = "#{source_dir}/CNAME"
   url = if File.exists?(cname)
     "http://#{IO.read(cname).strip}"
