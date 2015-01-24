@@ -1,5 +1,5 @@
 diff --git a/Rakefile b/Rakefile
-index 9367ea1..1aec015 100644
+index 9367ea1..c663738 100644
 --- a/Rakefile
 +++ b/Rakefile
 @@ -9,27 +9,36 @@ ssh_port       = "22"
@@ -550,7 +550,7 @@ index 9367ea1..1aec015 100644
  end
  
  def ok_failed(condition)
-@@ -379,16 +615,29 @@ def get_stdin(message)
+@@ -379,9 +615,22 @@ def get_stdin(message)
    STDIN.gets.chomp
  end
  
