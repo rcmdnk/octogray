@@ -8,8 +8,10 @@ google.setOnLoadCallback(function() {
   var customSearchControl =   new google.search.CustomSearchControl('partner-pub-{{site.google_custom_search_pub}}', customSearchOptions);
   customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
   var options = new google.search.DrawOptions();
-  options.enableSearchboxOnly('http://rcmdnk.github.io/search.html', 'q');
+  options.enableSearchboxOnly('{{site.google_result_page}}', 'q');
+  options.setAutoComplete(true);
   customSearchControl.draw('cse-search-form', options);
+  $(".gsc-search-button .gsc-search-button").val(eval("'\\uf00e'"));
 }, true);
 </script>
 {% endif %}

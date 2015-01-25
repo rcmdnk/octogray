@@ -1,5 +1,5 @@
 {% if site.google_custom_search_pub %}
-<div id='cse-search-form' style='width: 100%;'>Loading</div>
+<div id='cse' style='width: 100%;'>Loading</div>
 <script src='//www.google.com/jsapi' type='text/javascript'></script>
 <script type='text/javascript'>
 google.load('search', '1', {language: '{{site.google_custom_search_lang}}', style: google.loader.themes.MINIMALIST});
@@ -8,8 +8,8 @@ google.setOnLoadCallback(function() {
   var customSearchControl =   new google.search.CustomSearchControl('partner-pub-{{site.google_custom_search_pub}}', customSearchOptions);
   customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
   var options = new google.search.DrawOptions();
-  options.setSearchFormRoot('cse-search-form');
   customSearchControl.draw('cse', options);
+  $(".gsc-search-button .gsc-search-button").val(eval("'\\uf00e'"));
 }, true);
 </script>
 {% endif %}

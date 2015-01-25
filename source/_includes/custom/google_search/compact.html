@@ -9,6 +9,7 @@ google.setOnLoadCallback(function() {
   customSearchControl.setResultSetSize(google.search.Search.SMALL_RESULTSET);
   var options = new google.search.DrawOptions();
   customSearchControl.draw('cse', options);
+  $(".gsc-search-button .gsc-search-button").val(eval("'\\uf00e'"));
 }, true);
 </script>
 {% endif %}

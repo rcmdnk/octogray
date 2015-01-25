@@ -1,8 +1,8 @@
-diff --git a/master:_config.yml b/source:_config.yml
-index c1d56f4..f0af8f1 100644
---- a/master:_config.yml
-+++ b/source:_config.yml
-@@ -6,20 +6,38 @@ url: http://yoursite.com
+diff --git a/_config.yml b/_config.yml
+index c1d56f4..3f021bc 100644
+--- a/_config.yml
++++ b/_config.yml
+@@ -6,20 +6,39 @@ url: http://yoursite.com
  title: My Octopress Blog
  subtitle: A blogging framework for hackers.
  author: Your Name
@@ -14,7 +14,8 @@ index c1d56f4..f0af8f1 100644
 +#sitelogo: /images/logo.png
  simple_search: https://www.google.com/search
  description:
-+google_custom_search: overlay_simple
++google_custom_search: twopages
++google_result_page: /search.html
 +google_search: false
 +imgpath: /images
  
@@ -41,7 +42,7 @@ index c1d56f4..f0af8f1 100644
  
  # ----------------------- #
  #    Jekyll & Plugins     #
-@@ -33,25 +51,40 @@ destination: public
+@@ -33,25 +52,40 @@ destination: public
  plugins: plugins
  code_dir: downloads/code
  category_dir: blog/categories
@@ -92,7 +93,7 @@ index c1d56f4..f0af8f1 100644
  
  # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
  # and add an array with the asides you want to use.
-@@ -59,6 +92,25 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
+@@ -59,6 +93,25 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
  # post_asides:
  # page_asides:
  
@@ -118,7 +119,7 @@ index c1d56f4..f0af8f1 100644
  # ----------------------- #
  #   3rd Party Settings    #
  # ----------------------- #
-@@ -68,20 +120,32 @@ github_user:
+@@ -68,20 +121,32 @@ github_user:
  github_repo_count: 0
  github_show_profile_link: true
  github_skip_forks: true
@@ -151,7 +152,7 @@ index c1d56f4..f0af8f1 100644
  # Pinboard
  pinboard_user:
  pinboard_count: 3
-@@ -99,3 +163,66 @@ google_analytics_tracking_id:
+@@ -99,3 +164,66 @@ google_analytics_tracking_id:
  
  # Facebook Like
  facebook_like: false

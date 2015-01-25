@@ -71,26 +71,3 @@
   width: $sidebar-width-medium;
 }
 
-.google-img-wide {
-  width: 320px;
-  height: 50px;
-}
-@media(min-width: 468px+$sidebar-width-medium+$body-border) {
-  .google-img-wide {
-    width: 468px;
-    height: 60px;
-  }
-}
-@media(min-width: 728px+$sidebar-width-medium+$body-border) {
-  .google-img-wide {
-    width: 728px;
-    height: 90px;
-  }
-}
-.google-img-rect {
-  width: 300px;
-  height: 250px;
-}
-@media(min-width: 336px+$sidebar-width-medium+$body-border) {
-  .google-img-rect { width: 336px; height: 280px;}
-}

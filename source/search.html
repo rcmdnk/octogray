@@ -6,6 +6,40 @@ footer: false
 
 <div>
 <article>
+{%if site.google_custom_search == 'twopages'%}
+  <div id='cse' style='width: 100%;'>Loading</div>
+  <script src='//www.google.com/jsapi' type='text/javascript'></script>
+  <script type='text/javascript'>
+  google.load('search', '1', {language: '{{site.google_custom_search_lang}}', style: google.loader.themes.MINIMALIST});
+  google.setOnLoadCallback(function() {
+    var customSearchOptions = {};
+    var customSearchControl =   new google.search.CustomSearchControl('partner-pub-{{site.google_custom_search_pub}}', customSearchOptions);
+    customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+    var options = new google.search.DrawOptions();
+    options.enableSearchResultsOnly();
+    customSearchControl.draw('cse', options);
+    function parseParamsFromUrl() {
+      var params = {};
+      var parts = window.location.search.substr(1).split('&');
+      for (var i = 0; i < parts.length; i++) {
+        var keyValuePair = parts[i].split('=');
+        var key = decodeURIComponent(keyValuePair[0]);
+        params[key] = keyValuePair[1] ?
+            decodeURIComponent(keyValuePair[1].replace(/\+/g, ' ')) :
+            keyValuePair[1];
+      }
+      return params;
+    }
+    var urlParams = parseParamsFromUrl();
+    var queryParamName = 'q';
+    if (urlParams[queryParamName]) {
+      customSearchControl.execute(urlParams[queryParamName]);
+    }
+  }, true);
+  </script>
+{%elsif site.google_custom_search == 'twolines'%}
+  <div id='cse' style='width: 100%;'></div>
+{%else%}
   <div id="cse-search-results"></div>
   <script type="text/javascript">
     var googleSearchIframeName = "cse-search-results";
@@ -15,5 +49,13 @@ footer: false
     var googleSearchPath = "/cse";
   </script>
   <script type="text/javascript" src="http://www.google.com/afsonline/show_afs_search.js"></script>
+{%endif%}
 </article>
 </div>
+<aside class="sidebar">
+  {% if site.blog_index_asides.size %}
+  {% include_array blog_index_asides %}
+  {% else %}
+  {% include_array default_asides %}
+  {% endif %}
+</aside>

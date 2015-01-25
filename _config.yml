@@ -14,7 +14,8 @@ nav_marks: true
 #sitelogo: /images/logo.png
 simple_search: https://www.google.com/search
 description:
-google_custom_search: overlay_simple
+google_custom_search: twopages
+google_result_page: /search.html
 google_search: false
 imgpath: /images
 
