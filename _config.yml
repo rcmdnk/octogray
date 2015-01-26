@@ -55,18 +55,18 @@ category_dir: blog/categories
 tag_dir: blog/tags
 emoji_dir: /images/emoji
 monthly_format: January
-ps_title: P.S.
+ps_title: Edit
 ps_close:
 
 markdown: kramdown
 kramdown:
   #parse_block_html: true # need jekyll 1.1.0 or later (they are completely different from  0.12)
+  # Use coderay, for  PHP Markdown Extra's code syntax (e.g. ~~~.ruby)
   use_coderay: true
   coderay:
     coderay_line_number: table
     coderay_css: class
 
-#pygments: false # default python pygments have been replaced by pygments.rb
 highlighter: pygments # default python pygments have been replaced by pygments.rb
 
 paginate: 10          # Posts per page on the blog index
@@ -116,6 +116,10 @@ unpublished: false
 #   3rd Party Settings    #
 # ----------------------- #
 
+# Share
+share_official: false
+share_custom: true
+
 # Github repositories
 github_user:
 github_repo_count: 0
@@ -146,6 +150,14 @@ googleplus_hidden: false
 # LinkedIn
 linkedin_user:
 linkedin_mark: false
+linkedin_button: false
+linkedin_lang: ja_JP
+
+# Pinterest
+pinterest_button: false
+
+# StumbleUpon
+stumble_button: false
 
 # Pinboard
 pinboard_user:
@@ -154,6 +166,7 @@ pinboard_count: 3
 # Delicious
 delicious_user:
 delicious_count: 3
+delicious_button: false
 
 # Disqus Comments
 disqus_short_name:
@@ -181,6 +194,8 @@ hatena_button: true
 hatena_user:
 hatena_add: "Add to Hatena Bookmark"
 hatena_popular_posts: false
+hatena_popular_sort: "count"
+hatena_popular_num: 10
 
 # Pocket
 pocket_button: true
@@ -201,7 +216,7 @@ coderwall_user:
 
 # feedly
 feedly_mark: false
-feedly_atom: yoursite.github.io%2Fatom.xml
+feedly_atom: http://yoursite/atom.xml
 
 # Tumblr
 tumblr_button: true
