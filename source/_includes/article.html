@@ -25,6 +25,16 @@
   {% endif %}
 </header>
 {% endunless %}
+{% if index %}
+  {% capture ref_url %}{{ post.ref_url }}{% endcapture %}
+  {% capture ref_title %}{{ post.ref_title }}{% endcapture %}
+{% else %}
+  {% capture ref_url %}{{ page.ref_url }}{% endcapture %}
+  {% capture ref_title %}{{ page.ref_title }}{% endcapture %}
+{% endif %}
+{% if ref_url != "" %}
+<a href="{{ref_url}}"><i class="fa fa-language"></i> {{ref_title}}</a>
+{% endif %}
 {% unless page.sharing == false %}
 {% unless site.share_official == false %}
 {% include post/sharing.html %}

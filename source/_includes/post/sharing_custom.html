@@ -1,4 +1,10 @@
-{% if index %}{% capture share_url %}{{ site.url | uri_escape}}{{ post.url | uri_escape}}{% endcapture %}{% capture share_title %}{{ post.title }}{% endcapture %}{% else %}{% capture share_url %}{{ site.url | uri_escape}}{{ page.url | uri_escape}}{% endcapture %}{% capture share_title %}{{ page.title }}{% endcapture %}{% endif %}
+{% if index %}
+  {% capture share_url %}{{ site.url | uri_escape}}{{ post.url | uri_escape}}{% endcapture %}
+  {% capture share_title %}{{ post.title }}{% endcapture %}
+{% else %}
+  {% capture share_url %}{{ site.url | uri_escape}}{{ page.url | uri_escape}}{% endcapture %}
+  {% capture share_title %}{{ page.title }}{% endcapture %}
+{% endif %}
 <div class="share-button">
   <ul>
     {% if site.hatena_button %}

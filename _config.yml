@@ -10,13 +10,10 @@ lang: en
 titlelogo:
 nav_marks: true
 # Please add your images to there
-#aboutme_logo: /images/about.png
+#aboutme_logo: https://github.com/rcmdnk.png
 #sitelogo: /images/logo.png
 simple_search: https://www.google.com/search
 description:
-google_custom_search: twopages
-google_result_page: /search.html
-google_search: false
 imgpath: /images
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
@@ -235,9 +232,14 @@ google_translate_lang: en
 #google_translate_layout: SIMPLE
 #google_translate_customize:
 
-# Google Custom Search
-#google_custom_search_pub:
-google_custom_search_lang: en
+# Search
+simple_search: https://www.google.com/search
+google_search: false
+google_custom_search: twopages
+google_result_page: /search.html
+google_search_query: s
+google_search_pub:
+google_search_lang: en
 
 # Amazon tag
 #amazon_ad_tag: xxxxxx0c-22

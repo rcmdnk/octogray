@@ -82,8 +82,8 @@ task :generate do
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
   Rake::Task[:check].invoke()
   puts "## Generating Site with Jekyll"
-  system "compass compile --css-dir #{source_dir}/stylesheets"
-  system "jekyll build"
+  ok_failed_raise system("compass compile --css-dir #{source_dir}/stylesheets")
+  ok_failed_raise system("jekyll build")
   system "rm -f .integrated"
   system "rm -f .preview-mode"
 end
@@ -386,6 +386,10 @@ task :deploy do
 
   # Check if files are fine or not
   ok_failed_raise system("if [ -f #{word_avoid} ];then while read a;do if ret=`grep -i -r -q $a #{public_dir}`;then echo \"A word $a is included, must be avoided!!!\"; echo $ret; exit 1;fi; done < #{word_avoid};fi")
+
+  # Compress
+  Rake::Task[:minify_js].execute
+  Rake::Task[:minify_html].execute
 
   Rake::Task["#{deploy_default}"].execute
 
@@ -765,5 +769,48 @@ def ok_failed_raise(condition, print_ok = true)
     puts "OK" if print_ok
   else
     raise "FAILD"
+  end
+end
+
+
+require "yui/compressor"
+require "html_compressor"
+
+desc "Minify CSS"
+task :minify_css do
+  puts "## Minifying CSS"
+  compressor = YUI::CssCompressor.new
+  Dir.glob("#{public_dir}/**/*.css").each do |name|
+    puts "Minifying #{name}"
+    input = File.read(name)
+    output = File.open("#{name}", "w")
+    output << compressor.compress(input)
+    output.close
+  end
+end
+
+desc "Minify JS"
+task :minify_js do
+  puts "## Minifying JS"
+  compressor = YUI::JavaScriptCompressor.new
+  Dir.glob("#{public_dir}/javascripts/**/*.js").each do |name|
+    puts "Minifying #{name}"
+    input = File.read(name)
+    output = File.open("#{name}", "w")
+    output << compressor.compress(input)
+    output.close
+  end
+end
+
+desc "Minify HTML"
+task :minify_html do
+  puts "## Minifying HTML"
+  compressor = HtmlCompressor::HtmlCompressor.new
+  Dir.glob("#{public_dir}/**/*.html").each do |name|
+    puts "Minifying #{name}"
+    input = File.read(name)
+    output = File.open("#{name}", "w")
+    output << compressor.compress(input)
+    output.close
   end
 end

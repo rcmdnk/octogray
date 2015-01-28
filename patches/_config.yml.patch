@@ -1,8 +1,8 @@
 diff --git a/_config.yml b/_config.yml
-index c1d56f4..00b5c75 100644
+index c1d56f4..75ffc26 100644
 --- a/_config.yml
 +++ b/_config.yml
-@@ -6,20 +6,39 @@ url: http://yoursite.com
+@@ -6,20 +6,36 @@ url: http://yoursite.com
  title: My Octopress Blog
  subtitle: A blogging framework for hackers.
  author: Your Name
@@ -10,13 +10,10 @@ index c1d56f4..00b5c75 100644
 +titlelogo:
 +nav_marks: true
 +# Please add your images to there
-+#aboutme_logo: /images/about.png
++#aboutme_logo: https://github.com/rcmdnk.png
 +#sitelogo: /images/logo.png
  simple_search: https://www.google.com/search
  description:
-+google_custom_search: twopages
-+google_result_page: /search.html
-+google_search: false
 +imgpath: /images
  
  # Default date format is "ordinal" (resulting in "July 22nd 2007")
@@ -42,7 +39,7 @@ index c1d56f4..00b5c75 100644
  
  # ----------------------- #
  #    Jekyll & Plugins     #
-@@ -33,25 +52,40 @@ destination: public
+@@ -33,25 +49,40 @@ destination: public
  plugins: plugins
  code_dir: downloads/code
  category_dir: blog/categories
@@ -93,7 +90,7 @@ index c1d56f4..00b5c75 100644
  
  # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
  # and add an array with the asides you want to use.
-@@ -59,29 +93,72 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
+@@ -59,29 +90,72 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
  # post_asides:
  # page_asides:
  
@@ -166,7 +163,7 @@ index c1d56f4..00b5c75 100644
  # Pinboard
  pinboard_user:
  pinboard_count: 3
-@@ -89,6 +166,7 @@ pinboard_count: 3
+@@ -89,6 +163,7 @@ pinboard_count: 3
  # Delicious
  delicious_user:
  delicious_count: 3
@@ -174,7 +171,7 @@ index c1d56f4..00b5c75 100644
  
  # Disqus Comments
  disqus_short_name:
-@@ -99,3 +177,68 @@ google_analytics_tracking_id:
+@@ -99,3 +174,73 @@ google_analytics_tracking_id:
  
  # Facebook Like
  facebook_like: false
@@ -236,9 +233,14 @@ index c1d56f4..00b5c75 100644
 +#google_translate_layout: SIMPLE
 +#google_translate_customize:
 +
-+# Google Custom Search
-+#google_custom_search_pub:
-+google_custom_search_lang: en
++# Search
++simple_search: https://www.google.com/search
++google_search: false
++google_custom_search: twopages
++google_result_page: /search.html
++google_search_query: s
++google_search_pub:
++google_search_lang: en
 +
 +# Amazon tag
 +#amazon_ad_tag: xxxxxx0c-22

@@ -1,8 +1,8 @@
 diff --git a/Gemfile b/Gemfile
-index 153dd3d..96d0454 100644
+index 153dd3d..f89f809 100644
 --- a/Gemfile
 +++ b/Gemfile
-@@ -8,12 +8,16 @@ group :development do
+@@ -8,12 +8,19 @@ group :development do
    gem 'jekyll-sitemap'
    gem 'rdiscount', '~> 2.0'
    gem 'RedCloth', '~> 4.2.9'
@@ -16,6 +16,9 @@ index 153dd3d..96d0454 100644
 +  gem 'thin', '~> 1.6.3'
 +  gem 'gemoji', '~> 2.1.0'
 +  gem 'json', '~> 1.8.1'
++  gem 'octopress-asset-pipeline'
++  gem 'yui-compressor'
++  gem 'html_compressor'
  end
  
  gem 'sinatra', '~> 1.4.2'

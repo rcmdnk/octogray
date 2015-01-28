@@ -16,7 +16,8 @@ function googleTranslateElementInit() {
   new google.translate.TranslateElement({pageLanguage: '{{site.google_translate_lang}}', layout: google.translate.TranslateElement.{{layout}}, autoDisplay: false, multilanguagePage: true{{analytics}}}, 'google_translate_element');
 }
 </script>
-<script src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit' async defer></script>{% endif %}
+{%comment%}<script src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit' async defer></script>{% endcomment %}
+<script src='{{root_url}}/javascripts/translate/element.js' async defer></script>{% endif %}
 {% unless site.affiliate == false or page.affiliate == false %}{% if site.linkplaza_key %}<script src='//static.linkplaza.jp/api/replace.js?key={{site.linkplaza_key}}' async defer></script>{% endif %}{% endunless %}
 {% if site.twitter_follow_button or site.twitter_tweet_button %}<script src='//platform.twitter.com/widgets.js' async defer></script>{% endif %}
 {% unless site.share_official == false %}

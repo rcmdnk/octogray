@@ -23,7 +23,8 @@
     <a href="{{site.subscribe_rss}}" title="RSS"><i class="fa fa-rss fa-2x"></i></a>
     {% endif %}
     {% if site.feedly_mark %}
-    <a href='http://cloud.feedly.com/#subscription%2Ffeed%2F{{site.feedly_atom|cgi_escape}}'><img id='feedlyFollow' src='{{root_url}}/images/feedly.png' alt='follow us in feedly' title="feedly" class="feedly"></a>
+    {%comment%}<a href='http://cloud.feedly.com/#subscription%2Ffeed%2F{{site.feedly_atom|cgi_escape}}'><img id='feedlyFollow' src='{{root_url}}/images/feedly.png' alt='follow us in feedly' title="feedly" class="feedly"></a>{%endcomment%}
+    <a href='http://feedly.com/i/subscription/feed/{{site.feedly_atom}}'><img id='feedlyFollow' src='{{root_url}}/images/feedly.png' alt='follow us in feedly' title="feedly" class="feedly"></a>
     {% endif %}
     {% if site.bookmark_mark %}
     <a href="#" class="add_bookmark" title="Favorite" data-page_title="{{site.title}}" data-page_url="{{site.url}}"><i class="fa fa-star-o fa-2x"></i></a>
@@ -38,9 +39,6 @@
     {% include custom/google_search/compact.html %}
   </p>
   {% elsif site.google_custom_search == 'onlyresults' %}
-  <p>
-    {% include custom/google_search/onlyresults.html %}
-  </p>
   {% elsif site.google_custom_search == 'overlay' %}
   <p>
     {% include custom/google_search/overlay.html %}

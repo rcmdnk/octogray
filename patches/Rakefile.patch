@@ -1,5 +1,5 @@
 diff --git a/Rakefile b/Rakefile
-index 9367ea1..c663738 100644
+index 9367ea1..b7c82f8 100644
 --- a/Rakefile
 +++ b/Rakefile
 @@ -9,27 +9,36 @@ ssh_port       = "22"
@@ -69,8 +69,10 @@ index 9367ea1..c663738 100644
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
 +  Rake::Task[:check].invoke()
    puts "## Generating Site with Jekyll"
-   system "compass compile --css-dir #{source_dir}/stylesheets"
-   system "jekyll build"
+-  system "compass compile --css-dir #{source_dir}/stylesheets"
+-  system "jekyll build"
++  ok_failed_raise system("compass compile --css-dir #{source_dir}/stylesheets")
++  ok_failed_raise system("jekyll build")
 +  system "rm -f .integrated"
 +  system "rm -f .preview-mode"
 +end
@@ -315,13 +317,17 @@ index 9367ea1..c663738 100644
    if File.exists?(".preview-mode")
      puts "## Found posts in preview mode, regenerating files ..."
      File.delete(".preview-mode")
-@@ -224,12 +383,21 @@ task :deploy do
+@@ -224,12 +383,25 @@ task :deploy do
    end
  
    Rake::Task[:copydot].invoke(source_dir, public_dir)
 +
 +  # Check if files are fine or not
 +  ok_failed_raise system("if [ -f #{word_avoid} ];then while read a;do if ret=`grep -i -r -q $a #{public_dir}`;then echo \"A word $a is included, must be avoided!!!\"; echo $ret; exit 1;fi; done < #{word_avoid};fi")
++
++  # Compress
++  Rake::Task[:minify_js].execute
++  Rake::Task[:minify_html].execute
 +
    Rake::Task["#{deploy_default}"].execute
 +
@@ -339,7 +345,7 @@ index 9367ea1..c663738 100644
  
  desc "copy dot files for deployment"
  task :copydot, :source, :dest do |t, args|
-@@ -265,54 +433,85 @@ multitask :push do
+@@ -265,54 +437,85 @@ multitask :push do
      puts "\n## Committing: #{message}"
      system "git commit -m \"#{message}\""
      puts "\n## Pushing generated #{deploy_dir} website"
@@ -443,7 +449,7 @@ index 9367ea1..c663738 100644
      repo_url = get_stdin("Repository url: ")
    end
    protocol = (repo_url.match(/(^git)@/).nil?) ? 'https' : 'git'
-@@ -322,7 +521,9 @@ task :setup_github_pages, :repo do |t, args|
+@@ -322,7 +525,9 @@ task :setup_github_pages, :repo do |t, args|
      user = repo_url.match(/github\.com\/([^\/]+)/)[1]
    end
    branch = (repo_url.match(/\/[\w-]+\.github\.(?:io|com)/).nil?) ? 'gh-pages' : 'master'
@@ -454,7 +460,7 @@ index 9367ea1..c663738 100644
    unless (`git remote -v` =~ /origin.+?octopress(?:\.git)?/).nil?
      # If octopress is still the origin remote (from cloning) rename it to octopress
      system "git remote rename origin octopress"
-@@ -330,40 +531,75 @@ task :setup_github_pages, :repo do |t, args|
+@@ -330,40 +535,75 @@ task :setup_github_pages, :repo do |t, args|
        # If this is a user/organization pages repository, add the correct origin remote
        # and checkout the source branch for committing changes to the blog source.
        system "git remote add origin #{repo_url}"
@@ -550,7 +556,7 @@ index 9367ea1..c663738 100644
  end
  
  def ok_failed(condition)
-@@ -379,9 +615,22 @@ def get_stdin(message)
+@@ -379,9 +619,22 @@ def get_stdin(message)
    STDIN.gets.chomp
  end
  
@@ -575,7 +581,7 @@ index 9367ea1..c663738 100644
    else
      answer = get_stdin(message)
    end
-@@ -404,3 +653,117 @@ task :list do
+@@ -404,3 +657,160 @@ task :list do
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end
@@ -691,5 +697,48 @@ index 9367ea1..c663738 100644
 +    puts "OK" if print_ok
 +  else
 +    raise "FAILD"
++  end
++end
++
++
++require "yui/compressor"
++require "html_compressor"
++
++desc "Minify CSS"
++task :minify_css do
++  puts "## Minifying CSS"
++  compressor = YUI::CssCompressor.new
++  Dir.glob("#{public_dir}/**/*.css").each do |name|
++    puts "Minifying #{name}"
++    input = File.read(name)
++    output = File.open("#{name}", "w")
++    output << compressor.compress(input)
++    output.close
++  end
++end
++
++desc "Minify JS"
++task :minify_js do
++  puts "## Minifying JS"
++  compressor = YUI::JavaScriptCompressor.new
++  Dir.glob("#{public_dir}/javascripts/**/*.js").each do |name|
++    puts "Minifying #{name}"
++    input = File.read(name)
++    output = File.open("#{name}", "w")
++    output << compressor.compress(input)
++    output.close
++  end
++end
++
++desc "Minify HTML"
++task :minify_html do
++  puts "## Minifying HTML"
++  compressor = HtmlCompressor::HtmlCompressor.new
++  Dir.glob("#{public_dir}/**/*.html").each do |name|
++    puts "Minifying #{name}"
++    input = File.read(name)
++    output = File.open("#{name}", "w")
++    output << compressor.compress(input)
++    output.close
 +  end
 +end
