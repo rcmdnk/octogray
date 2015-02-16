@@ -1,0 +1,42 @@
+<section>
+  <h1 id="random-link">Random Posts</h1>
+{% comment  %}
+  <ul class="posts">
+    {% for post in page.random_posts %}
+    {% include post_list.html%}
+    {% endfor %}
+  </ul>
+{% endcomment %}
+  <div id="random-posts"><div>
+     <ul>
+     </ul>
+  </div>
+  <script type="text/javascript">
+  $(function(){
+    $.ajax({
+      url:'/posts.html',
+      type:'GET',
+      dataType:'html'
+    }).done(function(data){
+      var entry_list = $(data).find('li');
+      var nentries = entry_list.length;
+      var rand = [];
+      var f = document.createDocumentFragment();
+      while(rand.length < {% if site.random_posts %}{{site.random_posts}}{% else %}10{% endif %} && rand.length < nentries){
+        var r = Math.floor(Math.random()*nentries);
+        if(rand.indexOf(r)!=-1)continue;
+        f.appendChild(entry_list[r]);
+        rand.push(r);
+      }
+      var t = document.getElementById('random-posts').getElementsByTagName('ul')[0];
+      t.appendChild(f);
+      var random_url=$(entry_list[Math.floor(Math.random()*nentries)]).find('.click_box_link')[0].href;
+      $('#random-link').wrap($('<a href="Random Fly!"/>'));
+      $('#random-link').click(function(){
+        window.location=random_url;
+        return false;
+      });
+    });
+  });
+  </script>
+</section>
