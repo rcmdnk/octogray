@@ -74,6 +74,8 @@ function googleTranslateElementInit() {
 })(this, document);
 </script>
 {%endcomment%}
+{%comment%}
+{%if site.share_custom%}<script src="{{root_url}}/javascripts/shareCustom.js"></script>
 <script>
 (function () {
   var socials = [];
@@ -88,7 +90,8 @@ function googleTranslateElementInit() {
   {%if site.delicious_button%}socials.push('delicious');{%endif%}
   if(socials.length > 0)socialCount(socials);
 })();
-</script>
+</script>{%endif%}
+{%endcomment%}
 {% if site.linkwithin_show == true and page.footer != false %}
 <script src="//www.linkwithin.com/widget.js" async defer></script>
 {% endif %}

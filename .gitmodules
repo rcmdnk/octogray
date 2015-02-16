@@ -31,3 +31,6 @@
 [submodule ".plugins/octopress-responsive-video-embed"]
 	path = .plugins/octopress-responsive-video-embed
 	url = git@github.com:optikfluffel/octopress-responsive-video-embed
+[submodule "plugins/jekyll-var-to-js"]
+	path = plugins/jekyll-var-to-js
+	url = git@github.com:rcmdnk/jekyll-var-to-js

@@ -69,6 +69,15 @@ module OctopressLiquidFilters
     input =~ /<!--\s*more\s*-->/i ? true : false
   end
 
+  # Get first amazon-img
+  def amazon_img(input)
+    if input.match(/<div class="amazon-img">.*<\/div>/) != nil
+      input.match(/<div class="amazon-img">.*<\/div>/)[0].sub("_SS200_", "_SS90_CR0,0,120,90")
+    else
+      #"no amazon-img"
+    end
+  end
+
   # Summary is used on the Archive pages to return the first block of content from a post.
   def summary(input)
     if input.index(/\n\n/)

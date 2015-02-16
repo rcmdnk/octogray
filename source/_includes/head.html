@@ -3,6 +3,7 @@
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="{{site.lang}}"><!--<![endif]-->
 <head>
+  {{if page.jekyll_var}}{{page.jekyll_var}}{{endif%}}
   <meta charset="utf-8">
   {% capture title %}{% if page.title %}{% if site.titlecase %}{{ page.title | titlecase }}{% else %}{{ page.title }}{% endif %}{% else %}{{ site.title }}{% endif %}{% endcapture %}
   <title>{{title}}</title>
@@ -53,15 +54,6 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <!--<![endif]-->
   <script>!window.jQuery && document.write(unescape('%3Cscript src="{{root_url}}/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="{{root_url}}/javascripts/octopress.js"></script>
-  <script src="{{root_url}}/javascripts/footnote.js"></script>
-  {%if site.scrolltop%}<script src="{{root_url}}/javascripts/scrolltopcontrol.js"></script>{%endif%}
-  {%if site.n_scroll_fixed > 0%}<script src="{{root_url}}/javascripts/jquery.exflexfixed-0.3.0.js"></script>{%endif%}
-  <script src="{{root_url}}/javascripts/jquery.nailthumb.1.1.min.js"></script>
-  <script src="{{root_url}}/javascripts/jquery.githubRepoWidget.min.js"></script>
-  <script src="{{root_url}}/javascripts/monthly_archive.js"></script>
-  {%if site.share_custom%}<script src="{{root_url}}/javascripts/shareCustom.js"></script>{%endif%}
-  <script src="{{root_url}}/javascripts/utils.js"></script>
   {% include async.html %}
   {% include custom/licenses.html %}
 </head>

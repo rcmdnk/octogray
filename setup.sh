@@ -102,6 +102,9 @@ cp .themes/octogray/.plugins/footnote-inline/plugins/footnote_inline.rb ./plugin
 cp .themes/octogray/.plugins/footnote-inline/source/javascripts/footnote.js ./source/javascripts/
 cp .themes/octogray/.plugins/footnote-inline/sass/plugins/_footnote.scss ./sass/plugins/
 
+## [jekyll-var-to-js](https://github.com/rcmdnk/jekyll-var-to-js)
+cp .themes/octogray/.plugins/jekeyll-var-to-js/plugins/jekyll-var-to-js.rb ./plugins/
+
 ## [octopress-postscript](https://github.com/rcmdnk/octopress-postscript)
 cp .themes/octogray/.plugins/octopress-postscript/plugins/postscript.rb ./plugins/
 cp .themes/octogray/.plugins/octopress-postscript/sass/plugins/_postscript.scss ./sass/plugins/
@@ -139,14 +142,14 @@ cp .themes/octogray/.plugins/GitHub-jQuery-Repo-Widget/jquery.githubRepoWidget.m
 # install downloaded plugins
 
 ## [NailThumb](http://www.garralab.com/nailthumb.php)
-wget -O nailthumb.1.1.zip http://sourceforge.net/projects/nailthumb/files/nailthumb.1.1.zip/download
-unzip nailthumb.1.1.zip
-rm -f nailthumb.1.1.zip
-mv nailthumb .themes/octogray/.plugins/
-cp .themes/octogray/.plugins/nailthumb/jquery.nailthumb.1.1.css ./sass/plugins/_nailthumb.scss
-cp .themes/octogray/.plugins/nailthumb/jquery.nailthumb.1.1.min.js ./source/javascripts/
-rm -rf .themes/octogray/.plugins/nailthumb/
-echo
+#wget -O nailthumb.1.1.zip http://sourceforge.net/projects/nailthumb/files/nailthumb.1.1.zip/download
+#unzip nailthumb.1.1.zip
+#rm -f nailthumb.1.1.zip
+#mv nailthumb .themes/octogray/.plugins/
+#cp .themes/octogray/.plugins/nailthumb/jquery.nailthumb.1.1.css ./sass/plugins/_nailthumb.scss
+#cp .themes/octogray/.plugins/nailthumb/jquery.nailthumb.1.1.min.js ./source/javascripts/
+#rm -rf .themes/octogray/.plugins/nailthumb/
+#echo
 
 ## [jQuery SCroll to Top Control](http://www.dynamicdrive.com/dynamicindex3/scrolltop.htm)
 wget -O scrolltopcontrol.js http://www.dynamicdrive.com/dynamicindex3/scrolltopcontrol.js

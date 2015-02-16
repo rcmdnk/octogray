@@ -39,7 +39,7 @@ jQuery(function($){
 
 jQuery(function($){
   $(".index_click_box").click(function(){
-    window.location=$(this).parent().find("a").eq(-1).attr("href");
+    window.location=$(this).find(".click_box_link").eq(-1).attr("href");
     return false;
   });
 });
@@ -50,79 +50,78 @@ jQuery(function($){
 });
 
 jQuery(function($){
-  $('body').on('click', '#my_introjs', function(){
-    introJs().start();
-  });
-});
-
-jQuery(function($){
-  if(!$('body').hasClass('collapse-sidebar')) {
-    if($('.scroll-fixed').length > 0){
-      $('.scroll-fixed').exFlexFixed({
-        watchPosition: true,
-        container : '#content'
-      });
-    }
-  }
-});
-
-jQuery(function($){
-  $('.nailthumb-container').nailthumb({width:200,height:200,fitDirection:'left top'});
-  $('.nailthumb-container-center').nailthumb({width:200,height:200,fitDirection:'center'});
-});
-
-jQuery(function($){
   $("img").each(function(){
     if( $(this).parent()[0].nodeName.toLowerCase() != "a"){
-      if($(this).hasClass("imglink") || $(this).attr("src").startsWith('/images/post/')){
+      if($(this).hasClass("imglink") || $(this).attr('src').indexOf('/images/post/')==0){
         $(this).wrap($('<a href="'+$(this).attr('src')+'" />'));
       }
     }
   });
 });
 
-//jQuery(function($){
-//  $(document).on('copy', function(e) {
-//
-//    //var selected = document.getSelection().toString();
-//    var selected = "";
-//    if (typeof window.getSelection != "undefined") {
-//        var sel = window.getSelection();
-//        if (sel.rangeCount) {
-//            var container = document.createElement("div");
-//            for (var i = 0, len = sel.rangeCount; i < len; ++i) {
-//                container.appendChild(sel.getRangeAt(i).cloneContents());
-//            }
-//            selected = container.innerHTML;
-//        }
-//    } else if (typeof document.selection != "undefined") {
-//        if (document.selection.type == "Text") {
-//            selected = document.selection.createRange().htmlText;
-//        }
-//    }
-//    if (!selected) return;
-//    var title = document.title;
-//    var  url = location.href;
-//    $.ajax({
-//      type: "POST",
-//      url: "https://mandrillapp.com/api/1.0/messages/send.json",
-//      data: {
-//        'key': 'YOUR_MANDRILL_KEY',
-//        'message': {
-//          'from_email': 'YOUR_SENDER@example.com',
-//          'to': [
-//            {
-//              'email': 'YOUR_RECEIVER@example.com',
-//              'name': 'YOUR RECEIVER',
-//              'type': 'to'
-//            }
-//          ],
-//          'subject': 'Copied at ' + title,
-//          'html': '<div><a href="' + url + '">' + title + '</a></div><br><br><div>' + selected + '</div>'
-//        }
-//        // if you are using Google Analytics, you can use it, too.
-//        //ga('send', 'event', 'copy', url + ':' + title, selected);
-//      }
-//    });
-//  });
-//});
+jQuery(function($){
+  if("jekyll_var" in window && jekyll_var("n_scroll_fixed")!=null &&
+      jekyll_var("n_scroll_fixed") > 0){
+    if(!$('body').hasClass('collapse-sidebar')) {
+      if($('.scroll-fixed').length > 0){
+        $('.scroll-fixed').exFlexFixed({
+          watchPosition: true,
+          container : '#content'
+        });
+      }
+    }
+  }
+});
+
+jQuery(function($){
+  if((! "jekyll_var" in window || ! jekyll_var("mandrill")) && ! 'ga' in window){
+    return
+  }
+  $(document).on('copy', function(e) {
+
+    var selected = "";
+    if (typeof window.getSelection != "undefined") {
+        var sel = window.getSelection();
+        if (sel.rangeCount) {
+            var container = document.createElement("div");
+            for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+                container.appendChild(sel.getRangeAt(i).cloneContents());
+            }
+            selected = container.innerHTML;
+        }
+    } else if (typeof document.selection != "undefined") {
+        if (document.selection.type == "Text") {
+            selected = document.selection.createRange().htmlText;
+        }
+    }
+    if (!selected) return;
+    var title = document.title;
+    var  url = location.href;
+    if("jekyll_var" in window && jekyll_var("mandrill")){
+      $.ajax({
+        type: "POST",
+        url: "https://mandrillapp.com/api/1.0/messages/send.json",
+        data: {
+          'key': jekyll_var("mandrill_key"),
+          'message': {
+            'from_email': jekyll_var("mandrill_from"),
+            'to': [
+              {
+                'email': jekyll_var("mandrill_to_email"),
+                'name':  jekyll_var("mandrill_to_name"),
+                'type': 'to'
+              }
+            ],
+            'subject': 'Copied at ' + title,
+            'html': '<div><a href="' + url + '">' + title + '</a></div><br><br><div>' + selected + '</div>'
+          }
+        }
+      });
+    }
+    // if you are using Google Analytics, you can use it, too.
+    if ('ga' in window){
+      ga('send', 'event', 'copy', url + ':' + title, selected);
+    }
+  });
+});
+

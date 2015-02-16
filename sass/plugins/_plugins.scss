@@ -4,30 +4,52 @@
   custom/_style.scss which is loaded after all plugin stylesheets.
 */
 
-//// NailThumb
+// title thumb
 .square-thumb {
   width: 200px;
   height: 200px;
 }
+.square-smallthumb {
+  width: 120px;
+  height: 90px;
+}
 .title-thumb {
   @extend .square-thumb;
-  margin: 0 auto;
-  margin-bottom: 1em;
+  margin: 0 auto 1em auto;
   @include shadow-box;
   float: center;
   text-align: center;
+  overflow: hidden;
+  img {
+    min-width: 100%;
+    min-height: 100%;
+    max-width: 500%;
+    max-height: 500%;
+  }
 }
-.title-thumb-warp {
-  text-align: center;
+.title-smallthumb {
+  @extend .square-smallthumb;
+  margin: 0 1em 0 0;
+  @include shadow-box;
+  float: left;
+  text-align: left;
+  overflow: hidden;
+  img {
+    min-width: 100%;
+    min-height: 100%;
+  }
 }
 @media only screen and (min-width: 450px) {
   .title-thumb {
     float: left;
     text-align: left;
-    margin: 0px 20px 20px 0px;
-  }
-  .title-thumb-warp {
-    text-align: left;
+    margin: 0 1em 1em 0;
+    img {
+      min-width: 100%;
+      min-height: 100%;
+      max-width: 500%;
+      max-height: 500%;
+    }
   }
 }
 
@@ -71,3 +93,12 @@
   width: $sidebar-width-medium;
 }
 
+.views {
+  background-color: #ccccff;
+  font-weight: bold;
+  font-size: 0.9em;
+  font-style: normal;
+  display: inline;
+  color: blue;
+  text-decoration: underline;
+}

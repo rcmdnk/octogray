@@ -43,21 +43,20 @@
 {% include post/sharing_custom.html %}
 {% endif %}
 {% endunless %}
-{% if index %}{% assign ogimage=post.ogimage %}{% else %}{% assign ogimage=page.ogimage %}{% endif %}
 {% if index %}
 <div class="entry-content index_click_box">
   <div class="group">
     {% if post.ogimage and post.no_ogimage != true %}
     <div class="titlle-thumb-wrap">
-      <div class="nailthumb-container title-thumb">
-        {%img val:ogimage%}
+      <div class="title-thumb">
+        {%img val:post.ogimage%}
       </div>
     </div>
     {% endif %}
     {{ content | excerpt }}
     {% capture excerpted %}{{ content | has_excerpt }}{% endcapture %}
     {% if excerpted == 'true' %}
-    <a href="{{root_url}}{{post.url}}">{{site.excerpt_link}}</a>
+    <a class="click_box_link" href="{{root_url}}{{post.url}}">{{site.excerpt_link}}</a>
     {% endif %}
   </div>
 </div>
@@ -68,10 +67,8 @@
 <div class="entry-content">
   <div class="group">
     {% if page.ogimage and page.no_ogimage != true %}
-    <div class="titlle-thumb-wrap">
-      <div class="nailthumb-container title-thumb">
-        {%img val:ogimage%}
-      </div>
+    <div class="title-thumb">
+      {%img val:page.ogimage%}
     </div>
     {% endif %}
     {{ content | excerpt }}

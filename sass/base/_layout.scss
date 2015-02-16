@@ -299,6 +299,9 @@ i.icon-link-btn {
   //  z-index: -1;
   //  border-radius: 10px;
   //}
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .va_baseline { vertical-align: baseline; }

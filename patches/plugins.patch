@@ -1,16 +1,45 @@
 diff --git a/plugins/category_generator.rb b/plugins/category_generator.rb
-index c55d62f..0fa32f8 100644
+index 769a55b..18c1ba2 100644
 --- a/plugins/category_generator.rb
 +++ b/plugins/category_generator.rb
-@@ -173,7 +173,7 @@ ERR
+@@ -153,7 +153,16 @@ ERR
+     # Returns string
+     #
+     def category_links(categories)
+-      categories.sort.map { |c| category_link c }.join(', ')
++      categories = categories.sort!.map { |c| category_link c }
++
++      case categories.length
++      when 0
++        ""
++      when 1
++        categories[0].to_s
++      else
++        "#{categories[0...-1].join(', ')}, #{categories[-1]}"
++      end
+     end
+ 
+     # Outputs a single category as an <a> link.
+@@ -164,7 +173,7 @@ ERR
      #
      def category_link(category)
        dir = @context.registers[:site].config['category_dir']
 -      "<a class='category' href='/#{dir}/#{category.to_url}/'>#{category}</a>"
-+      "<a class='category' itemprop='articleSection keywaords' href='/#{dir}/#{category.to_url}/'>#{category}</a>"
++      "<a class='category' itemprop='articleSection keywords' href='/#{dir}/#{category.to_url}/'>#{category}</a>"
      end
  
      # Outputs the post.date as formatted html, with hooks for CSS styling.
+@@ -174,8 +183,8 @@ ERR
+     # Returns string
+     def date_to_html_string(date)
+       result = '<span class="month">' + date.strftime('%b').upcase + '</span> '
+-      result << date.strftime('<span class="day">%d</span> ')
+-      result << date.strftime('<span class="year">%Y</span> ')
++      result += date.strftime('<span class="day">%d</span> ')
++      result += date.strftime('<span class="year">%Y</span> ')
+       result
+     end
+ 
 diff --git a/plugins/image_tag.rb b/plugins/image_tag.rb
 index 4567000..15adef5 100644
 --- a/plugins/image_tag.rb
@@ -74,10 +103,10 @@ index 000040f..5c744c2 100644
        end
        rtn
 diff --git a/plugins/octopress_filters.rb b/plugins/octopress_filters.rb
-index 9c7fa6c..da25c52 100644
+index 48413a8..5e75176 100644
 --- a/plugins/octopress_filters.rb
 +++ b/plugins/octopress_filters.rb
-@@ -56,6 +56,14 @@ module OctopressLiquidFilters
+@@ -56,11 +56,28 @@ module OctopressLiquidFilters
      end
    end
  
@@ -92,7 +121,21 @@ index 9c7fa6c..da25c52 100644
    # Checks for excerpts (helpful for template conditionals)
    def has_excerpt(input)
      input =~ /<!--\s*more\s*-->/i ? true : false
-@@ -73,6 +81,11 @@ module OctopressLiquidFilters
+   end
+ 
++  # Get first amazon-img
++  def amazon_img(input)
++    if input.match(/<div class="amazon-img">.*<\/div>/) != nil
++      input.match(/<div class="amazon-img">.*<\/div>/)[0].sub("_SS200_", "_SS90_CR0,0,120,90")
++    else
++      #"no amazon-img"
++    end
++  end
++
+   # Summary is used on the Archive pages to return the first block of content from a post.
+   def summary(input)
+     if input.index(/\n\n/)
+@@ -73,6 +90,11 @@ module OctopressLiquidFilters
    # Extracts raw content DIV from template, used for page description as {{ content }}
    # contains complete sub-template code on main page level
    def raw_content(input)
@@ -103,4 +146,13 @@ index 9c7fa6c..da25c52 100644
 +
      /<div class="entry-content">(?<content>[\s\S]*?)<\/div>\s*<(footer|\/article)>/ =~ input
      return (content.nil?) ? input : content
+   end
+@@ -85,7 +107,7 @@ module OctopressLiquidFilters
+   # Replaces relative urls with full urls
+   def expand_urls(input, url='')
+     url ||= '/'
+-    input.gsub /(\s+(href|src|poster)\s*=\s*["|']{1})(\/[^\/>]{1}[^\"'>]*)/ do
++    input.gsub /(\s+(href|src)\s*=\s*["|']{1})(\/[^\/>]{1}[^\"'>]*)/ do
+       $1+url+$3
+     end
    end

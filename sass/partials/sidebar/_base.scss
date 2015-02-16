@@ -57,6 +57,9 @@ aside.sidebar {
     height: 30px;
     margin-bottom: -5px;
   }
+  .amazon-img{
+    @extend .title-smallthumb;
+  }
 }
 .aside-alt-link {
   color: $sidebar-link-color-subdued;

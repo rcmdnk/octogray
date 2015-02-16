@@ -110,3 +110,18 @@ var socialCount = function (socials) {
     });
   });
 };
+
+jQuery(function($){
+  if(! "jekyll_var" in window)return;
+  var socials=[];
+  var snames = ["hatena_button", "twitter_tweet_button", "google_plus_one",
+                "facebook_share", "pocket_button", "linkedin_button",
+                "stumble_button", "pinterest_button", "delicious_button"]
+  var smarks = ["hatebu", "twitter", "googleplus",
+               "facebook", "pocket", "linkedin",
+               "stumble", "pinterest", "delicious"]
+  for(var i=0;i<snames.length;i++){
+    if(jekyll_var(snames[i]))socials.push(smarks[i]);
+  }
+  socialCount(socials);
+});
