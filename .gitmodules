@@ -1,36 +1,36 @@
 [submodule ".plugins/Octopress-Slideshare-Plugin"]
 	path = .plugins/Octopress-Slideshare-Plugin
-	url = git@github.com:PeterHamilton/Octopress-Slideshare-Plugin.git
+	url = https://github.com/PeterHamilton/Octopress-Slideshare-Plugin.git
 [submodule ".plugins/keyboardkey"]
 	path = .plugins/keyboardkey
-	url = git@github.com:rcmdnk/keyboardkey.git
+	url = https://github.com/rcmdnk/keyboardkey.git
 [submodule ".plugins/monthly-archive"]
 	path = .plugins/monthly-archive
-	url = git@github.com:rcmdnk/monthly-archive.git
+	url = https://github.com/rcmdnk/monthly-archive.git
 [submodule ".plugins/octopress-gemoji"]
 	path = .plugins/octopress-gemoji
-	url = git@github.com:rcmdnk/octopress-gemoji.git
+	url = https://github.com/rcmdnk/octopress-gemoji.git
 [submodule ".plugins/octopress-postscript"]
 	path = .plugins/octopress-postscript
-	url = git@github.com:rcmdnk/octopress-postscript.git
+	url = https://github.com/rcmdnk/octopress-postscript.git
 [submodule ".plugins/GitHub-jQuery-Repo-Widget"]
 	path = .plugins/GitHub-jQuery-Repo-Widget
-	url = git@github.com:JoelSutherland/GitHub-jQuery-Repo-Widget.git
+	url = https://github.com/JoelSutherland/GitHub-jQuery-Repo-Widget.git
 [submodule ".plugins/footnote-inline"]
 	path = .plugins/footnote-inline
-	url = git@github.com:rcmdnk/footnote-inline
+	url = https://github.com/rcmdnk/footnote-inline
 [submodule ".plugins/jekyll-tweet-tag"]
 	path = .plugins/jekyll-tweet-tag
-	url = git@github.com:scottwb/jekyll-tweet-tag.git
+	url = https://github.com/scottwb/jekyll-tweet-tag.git
 [submodule ".plugins/jquery.ex-flex-fixed"]
 	path = .plugins/jquery.ex-flex-fixed
-	url = git@github.com:cyokodog/jquery.ex-flex-fixed.git
+	url = https://github.com/cyokodog/jquery.ex-flex-fixed.git
 [submodule ".plugins/githubrepo-octopress"]
 	path = .plugins/githubrepo-octopress
-	url = git@github.com:sotsy/githubrepo-octopress.git
+	url = https://github.com/sotsy/githubrepo-octopress.git
 [submodule ".plugins/octopress-responsive-video-embed"]
 	path = .plugins/octopress-responsive-video-embed
-	url = git@github.com:optikfluffel/octopress-responsive-video-embed
+	url = https://github.com/optikfluffel/octopress-responsive-video-embed
 [submodule ".plugins/jekyll-var-to-js"]
 	path = .plugins/jekyll-var-to-js
-	url = git@github.com:rcmdnk/jekyll-var-to-js
+	url = https://github.com/rcmdnk/jekyll-var-to-js
