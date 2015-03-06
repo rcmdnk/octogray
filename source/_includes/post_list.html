@@ -1,14 +1,18 @@
 <div class="group">
   {% if post.ogimage and post.no_ogimage != true %}
+  {% if site.sitelogo %}
   <div class="title-smallthumb">
     <a href="{{ root_url }}{{ post.url }}">{%img val:post.ogimage%}</a>
   </div>
+  {% endif %}
   {% else %}
   {%capture postimg%}{{ post.content | amazon_img }}{%endcapture%}
   {% if postimg == "" %}
+  {% if site.sitelogo %}
   <div class="title-smallthumb">
     <a href="{{ root_url }}{{ post.url }}">{%img val:site.sitelogo%}</a>
   </div>
+  {% endif %}
   {% else %}
   {{postimg}}
   {% endif %}
