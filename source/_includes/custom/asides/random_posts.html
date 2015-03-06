@@ -1,0 +1,18 @@
+<section>
+  <h1 id="random-link">Random Posts</h1>
+  <span id="random-shuffle" class="link_btn">Shuffle!</span>
+{% if site.random_local  %}
+  <ul class="posts">
+    {% for post in page.random_posts %}
+    <li class="post index_click_box">
+      {% include post_list.html%}
+    </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <div id="random-posts">
+    <ul class="posts">
+    </ul>
+  </div>
+{% endif %}
+</section>

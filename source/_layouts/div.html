@@ -1,4 +1,8 @@
+{% include head.html %}
+<body>
 {% capture root_url %}{{ site.root | strip_slash }}{% endcapture %}
 <div>
 {{ content | expand_urls: root_url }}
 </div>
+</body>
+</html>

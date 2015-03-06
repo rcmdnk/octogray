@@ -2,7 +2,9 @@
   <h1>Popular Posts</h1>
   <ul class="posts">
     {% for post in page.popular_posts %}
-    {% include post_list.html%}
+    <li class="post index_click_box">
+      {% include post_list.html%}
+    </li>
     {% endfor %}
   </ul>
 </section>

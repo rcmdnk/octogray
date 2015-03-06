@@ -1,0 +1,59 @@
+{% if index %}
+  {% assign p = post %}
+{% else %}
+  {% assign p = page %}
+{% endif %}
+{% capture share_url %}{{ site.url | uri_escape}}{{ p.url | uri_escape}}{% endcapture %}
+{% capture share_title %}{{ p.title }}{% endcapture %}
+{% capture n_views1d %}{% if p._pv_1-day-ago-to-now %}{{p._pv_1-day-ago-to-now}}{% else %}0{% endif %}{% endcapture %}
+{% capture n_views1w %}{% if p._pv_1-week-ago-to-now %}{{p._pv_1-week-ago-to-now}}{% else %}0{% endif %}{% endcapture %}
+{% capture n_views1m %}{% if p._pv_1-month-ago-to-now %}{{p._pv_1-month-ago-to-now}}{% else %}0{% endif %}{% endcapture %}
+{% capture n_views1y %}{% if p._pv_1-year-ago-to-now %}{{p._pv_1-year-ago-to-now}}{% else %}0{% endif %}{% endcapture %}
+{% capture n_views10y %}{% if p._pv_10-years-ago-to-now %}{{p._pv_10-years-ago-to-now}}{% else %}0{% endif %}{% endcapture %}
+
+<div class="share-button">
+  <ul>
+    <li><a href="{{share_url}}"
+    title="1 day views by Analytics"
+    target="_blank"><p class="views1d_custom" >1d <span class="views1dCount" data-share-url="{{share_url}}" data-count="{{n_views1d}}">{{n_views1d}}</span></p></a></li>
+    <li><a href="{{share_url}}"
+    title="1 week views by Analytics"
+    target="_blank"><p class="views1w_custom" >1w <span class="views1wCount" data-share-url="{{share_url}}" data-count="{{n_views1w}}">{{n_views1w}}</span></p></a></li>
+    <li><a href="{{share_url}}"
+    title="1 month views by Analytics"
+    target="_blank"><p class="views1m_custom" >1m <span class="views1mCount" data-share-url="{{share_url}}" data-count="{{n_views1m}}">{{n_views1m}}</span></p></a></li>
+    <li><a href="{{share_url}}"
+    title="1 year views by Analytics"
+    target="_blank"><p class="views1y_custom" >1y <span class="views1yCount" data-share-url="{{share_url}}" data-count="{{n_views1y}}">{{n_views1y}}</span></p></a></li>
+    <li><a href="{{share_url}}"
+    title="10 years views by Analytics"
+    target="_blank"><p class="views10y_custom" >10y <span class="views10yCount" data-share-url="{{share_url}}" data-count="{{n_views10y}}">{{n_views10y}}</span></p></a></li>
+    <li><a href="http://b.hatena.ne.jp/entry/{{share_url}}"
+    title="Save to Hatebu"
+    target="_blank"><p class="hatebu_custom" >B! <span class="hatebuCount" data-share-url="{{share_url}}"></span></p></a></li>
+    <li><a href="http://twitter.com/intent/tweet?text={{share_title}}&url={{share_url}}&via={{site.author}}"
+    title="Share on Twitter"
+    target="_blacnk"><p class="twitter_custom"><i class="fa fa-twitter"></i> <span class="twitterCount" data-share-url="{{share_url}}"></span></p></a></li>
+    <li><a href="https://plus.google.com/share?url={{share_url}}&title={{share_title}}"
+    title="Share on Google+"
+    target="_blank"><p  class="googleplus_custom"><i class="fa fa-google-plus"></i> <span class="googleplusCount"  data-share-url="{{share_url}}"></span></p></a></li>
+    <li><a href="http://www.facebook.com/sharer.php?src=bm&u={{share_url}}&amp;t={{share_title}}"
+    title="Share on Facebook"
+    target="_blank"><p  class="facebook_custom"><i class="fa fa-facebook"></i> <span class="facebookCount" data-share-url="{{share_url}}"></span></p></a></li>
+    <li><a href="http://getpocket.com/edit?url={{share_url}}&title={{share_title}}"
+    title="Save to Pocket"
+    target="_blank"><p  class="pocket_custom">P <span class="pocketCount" data-share-url="{{share_url}}"></span></p></a></li>
+    <li><a href="http://www.linkedin.com/shareArticle?mini=true&url={{share_url}}&title={{share_title}}&source={{site.author}}"
+    title="Share on LinkedIn"
+    target="_blank"><p  class="linkedin_custom"><i class="fa fa-linkedin"></i> <span class="linkedinCount" data-share-url="{{share_url}}"></span></p></a></li>
+    <li><a href="http://www.stumbleupon.com/badge/?url={{share_url}}&title={{share_title}}"
+    title="Save to StumbleUpon"
+    target="_blank"><p  class="stumble_custom"><i class="fa fa-stumbleupon"></i> <span class="stumbleCount" data-share-url="{{share_url}}"></span></p></a></li>
+    <li><a href="http://pinterest.com/pin/create/button/?url={{share_url}}&title={{share_title}}"
+    title="Save to Pinterest"
+    target="_blank"><p  class="pinterest_custom"><i class="fa fa-pinterest"></i> <span class="pinterestCount" data-share-url="{{share_url}}"></span></p></a></li>
+    <li><a href="https://delicious.com/save?v=5&provider={{site.author}}&noui&jump=close&url={{share_url}}&title={{share_title}}"
+    title="Save to Delicious"
+    target="_blank"><p  class="delicious_custom"><i class="fa fa-delicious"></i> <span class="deliciousCount" data-share-url="{{share_url}}"></span></p></a></li>
+  </ul>
+</div>

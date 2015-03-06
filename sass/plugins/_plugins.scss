@@ -102,3 +102,17 @@
   color: blue;
   text-decoration: underline;
 }
+
+li.post {
+  list-style: none;
+  padding: .5em 0;
+  margin: 0;
+  border-bottom: 1px solid $sidebar-border;
+  @extend .side-shadow-border;
+  p:last-child {
+    margin-bottom: 0;
+  }
+  .amazon-img{
+    @extend .title-smallthumb;
+  }
+}

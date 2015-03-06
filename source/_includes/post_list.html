@@ -1,19 +1,17 @@
-<li class="post index_click_box">
-  <div class="group">
-    {% if post.ogimage and post.no_ogimage != true %}
-    <div class="title-smallthumb">
-      <a href="{{ root_url }}{{ post.url }}">{%img val:post.ogimage%}</a>
-    </div>
-    {% else %}
-    {%capture postimg%}{{ post.content | amazon_img }}{%endcapture%}
-    {% if postimg == "" %}
-    <div class="title-smallthumb">
-      <a href="{{ root_url }}{{ post.url }}">{%img val:site.sitelogo%}</a>
-    </div>
-    {% else %}
-    {{postimg}}
-    {% endif %}
-    {% endif %}
-    <a class="click_box_link" href="{{ root_url }}{{ post.url }}">{% if site.titlecase %}{{ post.title | titlecase }}{% else %}{{ post.title }}{% endif %}</a>{%if site.page-view.show_views and post._pv %}<br><span class="views">{{post._pv}} views</span>{%endif%}
+<div class="group">
+  {% if post.ogimage and post.no_ogimage != true %}
+  <div class="title-smallthumb">
+    <a href="{{ root_url }}{{ post.url }}">{%img val:post.ogimage%}</a>
   </div>
-</li>
+  {% else %}
+  {%capture postimg%}{{ post.content | amazon_img }}{%endcapture%}
+  {% if postimg == "" %}
+  <div class="title-smallthumb">
+    <a href="{{ root_url }}{{ post.url }}">{%img val:site.sitelogo%}</a>
+  </div>
+  {% else %}
+  {{postimg}}
+  {% endif %}
+  {% endif %}
+  <a class="click_box_link" href="{{ root_url }}{{ post.url }}">{% if site.titlecase %}{{ post.title | titlecase }}{% else %}{{ post.title }}{% endif %}</a>{%if site.page-view.show_views and post._pv %}<br><span class="views">{{post._pv}} views</span>{%endif%}
+</div>

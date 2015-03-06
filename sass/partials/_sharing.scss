@@ -58,6 +58,12 @@
   }
 }
 
+$views-color: #2FCDB4;
+$views1d-color: lighten($views-color,10);
+$views1w-color: lighten($views-color,5);
+$views1m-color: $views-color;
+$views1y-color: darken($views-color,5);
+$views10y-color: darken($views-color,10);
 $hatebu-color: #2C6ECD;
 $twitter-color: #00ACEE;
 $googleplus-color: #DD4C39;
@@ -72,6 +78,9 @@ $tumblr-color: #9DA6B0;
 .share-button {
   @extend .group;
   margin-bottom:20px;
+  ul {
+    margin-left: 0;
+  }
   li {
     display: block;
     p {
@@ -89,6 +98,54 @@ $tumblr-color: #9DA6B0;
       &:hover {color: darken(#FFFFFF, 10);}
       span {
         margin-left: 5px;
+      }
+      &.views_custom {
+        background-color: $views-color;
+        border-color: $views-color;
+        &:hover {
+          background-color: darken($views-color, 10);
+          border-color: darken($views-color, 10);
+        }
+      }
+      &.views1d_custom {
+        background-color: $views1d-color;
+        border-color: $views1d-color;
+        &:hover {
+          background-color: darken($views1d-color, 2);
+          border-color: darken($views1d-color, 2);
+        }
+      }
+      &.views1w_custom {
+        background-color: $views1w-color;
+        border-color: $views1w-color;
+        &:hover {
+          background-color: darken($views1w-color, 2);
+          border-color: darken($views1w-color, 2);
+        }
+      }
+      &.views1m_custom {
+        background-color: $views1m-color;
+        border-color: $views1m-color;
+        &:hover {
+          background-color: darken($views1m-color, 2);
+          border-color: darken($views1m-color, 2);
+        }
+      }
+      &.views1y_custom {
+        background-color: $views1y-color;
+        border-color: $views1y-color;
+        &:hover {
+          background-color: darken($views1y-color, 2);
+          border-color: darken($views1y-color, 2);
+        }
+      }
+      &.views10y_custom {
+        background-color: $views10y-color;
+        border-color: $views10y-color;
+        &:hover {
+          background-color: darken($views10y-color, 2);
+          border-color: darken($views10y-color, 2);
+        }
       }
       &.hatebu_custom {
         background-color: $hatebu-color;

@@ -275,7 +275,13 @@ i.icon-link-btn {
   text-decoration: none;
 }
 
+.btn {
+  &:hover {
+    cursor: pointer;
+  }
+}
 .link_btn {
+  @extend .btn;
   background-color: $nav-bg;
   padding: 1px 5px 0px;
   position: relative;
@@ -285,22 +291,6 @@ i.icon-link-btn {
   &:active {
     padding: 0px 5px 1px;
     top: 1px;
-  }
-  //&::before {
-  //  background-color: $nav-bg;
-  //  content: "";
-  //  display: block;
-  //  position: absolute;
-  //  width: 100%;
-  //  height: 100%;
-  //  padding: 1px;
-  //  left: -1px;
-  //  top: -1px;
-  //  z-index: -1;
-  //  border-radius: 10px;
-  //}
-  &:hover {
-    cursor: pointer;
   }
 }
 
