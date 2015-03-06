@@ -19,9 +19,6 @@
 [submodule ".plugins/footnote-inline"]
 	path = .plugins/footnote-inline
 	url = https://github.com/rcmdnk/footnote-inline
-[submodule ".plugins/jekyll-tweet-tag"]
-	path = .plugins/jekyll-tweet-tag
-	url = https://github.com/scottwb/jekyll-tweet-tag.git
 [submodule ".plugins/jquery.ex-flex-fixed"]
 	path = .plugins/jquery.ex-flex-fixed
 	url = https://github.com/cyokodog/jquery.ex-flex-fixed.git

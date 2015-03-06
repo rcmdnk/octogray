@@ -132,9 +132,6 @@ cp .themes/octogray/.plugins/octopress-gemoji/sass/plugins/_gemoji.scss ./sass/p
 cp .themes/octogray/.plugins/octopress-responsive-video-embed/*.rb ./plugins/
 cp .themes/octogray/.plugins/octopress-responsive-video-embed/_rve.scss ./sass/plugins/
 
-## [jekyll-tweet-tag.git](https://github.com/scottwb/jekyll-tweet-tag.git)
-cp .themes/octogray/.plugins/jekyll-tweet-tag/tweet_tag.rb ./plugins
-
 ## [githubrepo-octopress](https://github.com/sotsy/githubrepo-octopress)
 cp .themes/octogray/.plugins/githubrepo-octopress/githubwidget.rb plugins/
 cp .themes/octogray/.plugins/GitHub-jQuery-Repo-Widget/jquery.githubRepoWidget.min.js source/javascripts/
