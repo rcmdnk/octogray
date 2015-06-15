@@ -40,3 +40,6 @@
 [submodule ".plugins/octopress-random-posts"]
 	path = .plugins/octopress-random-posts
 	url = https://github.com/rcmdnk/octopress-random-posts.git
+[submodule ".plugins/octopress-popular-posts"]
+	path = .plugins/octopress-popular-posts
+	url = https://github.com/rcmdnk/octopress-popular-posts.git

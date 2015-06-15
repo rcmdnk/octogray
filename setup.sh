@@ -92,7 +92,7 @@ rake install['octogray']
 
 # initialize submodules
 cd .themes/octogray
-git submodule update --init
+git submodule update --init --recursive
 cd ../../
 
 ## install submodules
@@ -124,6 +124,11 @@ ln -s ../../.themes/octogray/.plugins/octopress-random-posts/source/javascripts/
 #ln -s ../../.themes/octogray/.plugins/octopress-random-posts/source/_includes/post_list.html ./source/_includes/
 #ln -s ../.themes/octogray/.plugins/octopress-random-posts/source/post_light.html ./source/_includes/
 ln -s ../../../../.themes/octogray/.plugins/octopress-random-posts/source/_includes/custom/asides/random_posts.html ./source/_includes/custom/asides/
+
+## [octopress-popular-posts](https://github.com/rcmdnk/octopress-popular-posts)
+ln -s ../.themes/octogray/.plugins/octopress-popular-posts/plugins/popular_posts.rb ./plugins/
+ln -s ../.themes/octogray/.plugins/octopress-popular-posts/octopress-page-view/plugins/page_view.rb ./plugins/
+ln -s ../../../../.themes/octogray/.plugins/octopress-popular-posts/source/_includes/custom/asides/popular_posts.html ./source/_includes/custom/asides/
 
 ## [octopress-thumbnail](https://github.com/rcmdnk/octopress-thumbnail)
 ln -s ../.themes/octogray/.plugins/octopress-thumbnail/plugins/thumbnail.rb ./plugins/
