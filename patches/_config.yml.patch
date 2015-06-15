@@ -1,8 +1,8 @@
 diff --git a/_config.yml b/_config.yml
-index c1d56f4..f99d99d 100644
+index c1d56f4..7915693 100644
 --- a/_config.yml
 +++ b/_config.yml
-@@ -6,20 +6,38 @@ url: http://yoursite.com
+@@ -6,20 +6,45 @@ url: http://yoursite.com
  title: My Octopress Blog
  subtitle: A blogging framework for hackers.
  author: Your Name
@@ -38,10 +38,17 @@ index c1d56f4..f99d99d 100644
 +
 +# sidebar
 +aboutme_marks: false
++
++# jQuery
++jquery_version: 2.1.4
++jquery_ie8_version: 1.9.1
++
++# Font Awesome
++fontawesome_version: 4.3.0
  
  # ----------------------- #
  #    Jekyll & Plugins     #
-@@ -33,25 +51,37 @@ destination: public
+@@ -33,25 +58,37 @@ destination: public
  plugins: plugins
  code_dir: downloads/code
  category_dir: blog/categories
@@ -89,7 +96,7 @@ index c1d56f4..f99d99d 100644
  
  # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
  # and add an array with the asides you want to use.
-@@ -59,29 +89,84 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
+@@ -59,29 +96,84 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
  # post_asides:
  # page_asides:
  
@@ -175,7 +182,7 @@ index c1d56f4..f99d99d 100644
  # Pinboard
  pinboard_user:
  pinboard_count: 3
-@@ -89,6 +174,10 @@ pinboard_count: 3
+@@ -89,6 +181,10 @@ pinboard_count: 3
  # Delicious
  delicious_user:
  delicious_count: 3
@@ -186,7 +193,7 @@ index c1d56f4..f99d99d 100644
  
  # Disqus Comments
  disqus_short_name:
-@@ -99,3 +188,158 @@ google_analytics_tracking_id:
+@@ -99,3 +195,158 @@ google_analytics_tracking_id:
  
  # Facebook Like
  facebook_like: false
