@@ -18,7 +18,7 @@
 	url = https://github.com/JoelSutherland/GitHub-jQuery-Repo-Widget.git
 [submodule ".plugins/footnote-inline"]
 	path = .plugins/footnote-inline
-	url = https://github.com/rcmdnk/footnote-inline
+	url = https://github.com/rcmdnk/footnote-inline.git
 [submodule ".plugins/jquery.ex-flex-fixed"]
 	path = .plugins/jquery.ex-flex-fixed
 	url = https://github.com/cyokodog/jquery.ex-flex-fixed.git
@@ -27,16 +27,16 @@
 	url = https://github.com/sotsy/githubrepo-octopress.git
 [submodule ".plugins/octopress-responsive-video-embed"]
 	path = .plugins/octopress-responsive-video-embed
-	url = https://github.com/optikfluffel/octopress-responsive-video-embed
+	url = https://github.com/optikfluffel/octopress-responsive-video-embed.git
 [submodule ".plugins/jekyll-var-to-js"]
 	path = .plugins/jekyll-var-to-js
-	url = https://github.com/rcmdnk/jekyll-var-to-js
+	url = https://github.com/rcmdnk/jekyll-var-to-js.git
 [submodule ".plugins/octopress-share-numbers"]
 	path = .plugins/octopress-share-numbers
 	url = https://github.com/rcmdnk/octopress-share-numbers.git
 [submodule ".plugins/octopress-thumbnail"]
 	path = .plugins/octopress-thumbnail
-	url = https://github.com/rcmdnk/octopress-thumbnail
+	url = https://github.com/rcmdnk/octopress-thumbnail.git
 [submodule ".plugins/octopress-random-posts"]
 	path = .plugins/octopress-random-posts
-	url = git@github.com:rcmdnk/octopress-random-posts.git
+	url = https://github.com:rcmdnk/octopress-random-posts.git
