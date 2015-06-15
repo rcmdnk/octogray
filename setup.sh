@@ -113,6 +113,10 @@ rm -f ./source/_includes/post/sharing.html
 ln -s ../../../.themes/octogray/.plugins/octopress-share-numbers/source/_includes/post/sharing.html ./source/_includes/post/
 ln -s ../../../.themes/octogray/.plugins/octopress-share-numbers/source/_includes/post/sharing_custom.html ./source/_includes/post/
 
+## [octopress-thumbnail](https://github.com/rcmdnk/octopress-thumbnail)
+ln -s ../.themes/octogray/.plugins/octopress-thumbnail/plugins/thumbnail.rb ./plugins/
+ln -s ../../.themes/octogray/.plugins/octopress-thumbnail/sass/plugins/_thumbnail.scss ./sass/plugins/
+
 ## [octopress-postscript](https://github.com/rcmdnk/octopress-postscript)
 ln -s ../.themes/octogray/.plugins/octopress-postscript/plugins/postscript.rb ./plugins/
 ln -s ../../.themes/octogray/.plugins/octopress-postscript/sass/plugins/_postscript.scss ./sass/plugins/
