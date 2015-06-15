@@ -110,8 +110,8 @@ ln -s ../.themes/octogray/.plugins/octopress-share-numbers/plugins/share-numbers
 ln -s ../../.themes/octogray/.plugins/octopress-share-numbers/sass/plugins/_share-numbers.scss ./sass/plugins/
 ln -s ../../.themes/octogray/.plugins/octopress-share-numbers/source/javascripts/share-custom.js ./source/javascripts/
 rm -f ./source/_includes/post/sharing.html
-ln -s ../../.themes/octogray/.plugins/octopress-share-numbers/source/_includes/post/sharing.html ./source/_includes/post/
-ln -s ../../.themes/octogray/.plugins/octopress-share-numbers/source/_includes/post/sharing_custom.html ./source/_includes/post/
+ln -s ../../../.themes/octogray/.plugins/octopress-share-numbers/source/_includes/post/sharing.html ./source/_includes/post/
+ln -s ../../../.themes/octogray/.plugins/octopress-share-numbers/source/_includes/post/sharing_custom.html ./source/_includes/post/
 
 ## [octopress-postscript](https://github.com/rcmdnk/octopress-postscript)
 ln -s ../.themes/octogray/.plugins/octopress-postscript/plugins/postscript.rb ./plugins/
