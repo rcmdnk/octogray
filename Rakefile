@@ -1,6 +1,7 @@
 require "rubygems"
 require "bundler/setup"
 require "stringex"
+require 'ruby-progressbar'
 
 ## -- Rsync Deploy config -- ##
 # Be sure your public key is listed in your server's ~/.ssh/authorized_keys file
@@ -35,6 +36,16 @@ new_page_ext    = "markdown"  # default new page file extension when using the n
 server_port     = "4000"      # port for preview server eg. localhost:4000
 word_avoid      = "~/.gitavoid"  # words which must be avoided to be published
 ping_file       = "ping.yml"  # file of site list for ping
+js_for_combine  = ['footnote.js', 'jquery.githubRepoWidget.min.js', 'monthly_archive.js', 'utils.js', 'randomposts.js']
+js_output       = "all.js"
+js_minify_others = false
+#html_for_minify = "all"
+html_for_minify = ["*.html", "blog/*/*/*/*/*.html"]
+html_not_minify = []
+precheck        = false
+common_words    = ["COMMON_SIDEBAR", "COMMON_HEADER"]
+common_dir      = "#{public_dir}/common"
+n_cores         = 8
 
 if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
   puts '## Set the codepage to 65001 for Windows machines'
@@ -61,29 +72,46 @@ end
 # Working with Jekyll #
 #######################
 
-desc "Update stylesheets"
-task :css do
+desc "Update stylesheets. Give an argument as nested, expanded, compact or compressed (default) to the output style."
+task :css, :style do |t, args|
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
   puts "## Update stylesheets"
-  system "compass compile --css-dir #{source_dir}/stylesheets"
-  cp_r "#{source_dir}/stylesheets/.", "#{public_dir}/stylesheets/"
-end
-
-desc "Update stylesheets with nested style"
-task :css_nested do
-  raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
-  puts "## Update stylesheets"
-  system "compass compile -s nested --css-dir #{source_dir}/stylesheets"
+  style = ""
+  if args.style
+    style = "-s #{args.style}"
+  end
+  system "compass compile #{style} --css-dir #{source_dir}/stylesheets"
   cp_r "#{source_dir}/stylesheets/.", "#{public_dir}/stylesheets/"
 end
 
 desc "Generate jekyll site"
-task :generate do
+task :generate, :opt do |t, args|
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
-  Rake::Task[:check].invoke()
+  if precheck
+    Rake::Task[:check].invoke()
+  end
+
   puts "## Generating Site with Jekyll"
-  ok_failed_raise system("compass compile --css-dir #{source_dir}/stylesheets")
-  ok_failed_raise system("jekyll build")
+
+  jekyll_opt = Rake.application.options.trace ? "--trace" : ""
+  if args.opt and args.opt.include?("unpublished")
+    jekyll_opt += " --unpublished"
+  end
+  ok_failed_raise system("jekyll build #{jekyll_opt}")
+
+  Rake::Task[:css].execute
+  Rake::Task[:minify_js].execute
+
+  # Fix double dash problem
+  Rake::Task[:fix_double_dash].execute
+
+  # Replace common words
+  Rake::Task[:common].execute
+
+  # Compress
+  if not args.opt or not args.opt.include?('no_minify')
+    Rake::Task[:minify_html].execute
+  end
   system "rm -f .integrated"
   system "rm -f .preview-mode"
 end
@@ -94,16 +122,17 @@ task :gen => :generate
 # usage rake generate_only[my-post]
 desc "Generate only specified post (much faster)"
 task :generate_only, :filename do |t, args|
-  raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
   trap(:INT) do
     raise "Stopped by SIGINT"
   end
   begin
+    if precheck
+      Rake::Task[:check].invoke()
+    end
+
     Rake::Task[:isolate].invoke(args.filename)
-    Rake::Task[:check].invoke()
-    puts "## Generating Site with Jekyll"
-    ok_failed_raise(system("compass compile --css-dir #{source_dir}/stylesheets"), false)
-    ok_failed_raise(system("jekyll build --unpublished"), false)
+    Rake::Task[:generate].invoke("unpublished no_minify")
+
     puts "## Restoring stashed posts/pages"
     Rake::Task[:integrate].execute
   rescue
@@ -223,21 +252,11 @@ task :new_post, :title do |t, args|
     #post.puts "description: "
     post.puts "ogimage:"
     post.puts "published: false"
-    post.puts ""
     post.puts "---"
     post.puts ""
     post.puts "<!-- more -->"
     post.puts "{%include after_excerpt.html%}"
     post.puts ""
-    post.puts ""
-    post.puts ""
-    post.puts "{%comment%}"
-    post.puts "![xxxxx]({{site.imgpath}}/post/xxxxx){:class=\"pic\"}"
-    post.puts "<i class=\"fa fa-arrow-right\"></i>"
-    post.puts "<hr class=\"dotted-border\">"
-    post.puts "{%endcomment%}"
-    post.puts ""
-    post.puts "{%include custom/endofcontent.html%}"
   end
 end
 
@@ -250,7 +269,7 @@ task :new_page, :filename do |t, args|
   site_config = YAML.load(IO.read('_config.yml'))
   author = site_config['author']
   if args.filename.downcase =~ /(^.+\/)?(.+)/
-    filename, dot, extension = $2.rpartition('.').reject(&:empty?)         # Get filename and extension
+    filename, extension = $2.rpartition('.').reject(&:empty?)         # Get filename and extension
     title = filename
     page_dir.concat($1.downcase.sub(/^\//, '').split('/')) unless $1.nil?  # Add path to page_dir Array
     if extension.nil?
@@ -300,7 +319,7 @@ task :isolate, :filename do |t, args|
   FileUtils.mkdir(full_stash_dir) unless File.exist?(full_stash_dir)
   Dir.glob("#{source_dir}/#{posts_dir}/*") do |post|
     if filename != nil && post.include?(filename)
-      p "Remaining #{post}..."
+      puts "Remaining #{post}..."
     else
       FileUtils.mv post, full_stash_dir
     end
@@ -326,9 +345,10 @@ task :integrate do
   system "touch .integrated"
 end
 
-desc "Clean out caches: .pygments-cache, .gist-cache, .sass-cache"
+desc "Clean out caches: .pygments-cache, .gist-cache, .sass-cache, thumbnail"
 task :clean do
-  rm_rf [Dir.glob(".pygments-cache/**"), Dir.glob(".gist-cache/**"), Dir.glob(".sass-cache/**"), "source/stylesheets/screen.css"]
+  rm_rf [Dir.glob(".pygments-cache/**"), Dir.glob(".gist-cache/**"), Dir.glob(".sass-cache/**"), "#{source_dir}/stylesheets/screen.css"]
+  rm_rf [Dir.glob("#{source_dir}/images/**/thumbnail")]
 end
 
 desc "Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom"
@@ -368,8 +388,8 @@ end
 ##############
 
 desc "Default deploy task"
-task :deploy do
-  # Check if preview posts exist, which should not be published
+task :deploy, :deploy_method do |t, args|
+  # Check if preview posts exists, which should not be published
   if File.exists?(".integrated") or File.exists?(".isolated")
     puts "## Found isolated history, regenerating files ..."
     system "rm -f .integrated .isolated"
@@ -387,21 +407,29 @@ task :deploy do
   # Check if files are fine or not
   ok_failed_raise system("if [ -f #{word_avoid} ];then while read a;do if ret=`grep -i -r -q $a #{public_dir}`;then echo \"A word $a is included, must be avoided!!!\"; echo $ret; exit 1;fi; done < #{word_avoid};fi")
 
-  # Compress
-  Rake::Task[:minify_js].execute
-  Rake::Task[:minify_html].execute
-
-  Rake::Task["#{deploy_default}"].execute
+  if args.deploy_method
+    deploy_method = args.deploy_method;
+  else
+    deploy_method = deploy_default;
+  end
+  puts "use #{deploy_method} to push"
+  Rake::Task["#{deploy_method}"].execute
 
   Rake::Task[:ping].execute
   Rake::Task[:superfeedr].execute
 end
 
 desc "Generate website and deploy"
-task :gen_deploy => [:integrate, :generate, :deploy]
+task :gen_deploy, :deploy_method do |t, args|
+  Rake::Task[:integrate].execute
+  Rake::Task[:generate].execute
+  Rake::Task[:deploy].invoke(args.deploy_method)
+end
 
 desc "Same as gen_deploy"
-task :gd => [:integrate, :generate, :deploy]
+task :gd, :deploy_method do |t, args|
+  Rake::Task[:gen_deploy].invoke(args.deploy_method)
+end
 
 desc "copy dot files for deployment"
 task :copydot, :source, :dest do |t, args|
@@ -469,7 +497,7 @@ multitask :push_ex do
     system "git branch -m #{deploy_branch}" unless deploy_branch == 'master'
     puts "\n## Pushing generated #{deploy_dir} website"
     output = (use_token)? " >/dev/null 2>&1":""
-    Bundler.with_clean_env { system "git push -f origin #{deploy_branch} #{output}" }
+    Bundler.with_clean_env { system "git push -u -f origin #{deploy_branch} #{output}" }
     puts "\n## Github Pages deploy complete"
   end
 end
@@ -774,43 +802,142 @@ end
 
 
 require "yui/compressor"
-require "html_compressor"
+require "htmlcompressor"
+require "parallel"
 
 desc "Minify CSS"
 task :minify_css do
   puts "## Minifying CSS"
   compressor = YUI::CssCompressor.new
-  Dir.glob("#{public_dir}/**/*.css").each do |name|
+  Parallel.map(Dir.glob("#{source_dir}/stylesheets/**/*css"), :in_threads=> n_cores) do |name|
     puts "Minifying #{name}"
     input = File.read(name)
     output = File.open("#{name}", "w")
     output << compressor.compress(input)
     output.close
   end
+  cp_r "#{source_dir}/stylesheets/.", "#{public_dir}/stylesheets/"
 end
 
 desc "Minify JS"
 task :minify_js do
   puts "## Minifying JS"
+  Rake::Task[:combine_js].execute
+  if js_minify_others
+    Rake::Task[:minify_other_js].execute
+  end
+end
+
+
+desc "Minify JS and combine"
+task :combine_js do
+  puts "## Combining JS"
   compressor = YUI::JavaScriptCompressor.new
-  Dir.glob("#{public_dir}/javascripts/**/*.js").each do |name|
-    puts "Minifying #{name}"
-    input = File.read(name)
-    output = File.open("#{name}", "w")
+  if File.exist?("#{source_dir}/javascripts/#{js_output}")
+    t_alljs = File.mtime("#{source_dir}/javascripts/#{js_output}")
+    time_check = false
+    js_for_combine.each do |j|
+      if File.mtime("#{source_dir}/javascripts/#{j}") > t_alljs
+        puts "newer file #{j} is found"
+        time_check = true
+        break
+      end
+    end
+    if not time_check
+      next
+    end
+  end
+  output = File.open("#{source_dir}/javascripts/#{js_output}", "w")
+  js_for_combine.each do |j|
+    input = File.read("#{source_dir}/javascripts/#{j}")
+    output << compressor.compress(input)
+  end
+  output.close
+  cp_r "#{source_dir}/javascripts/#{js_output}", "#{public_dir}/javascripts/"
+end
+
+desc "Minify other JS"
+task :minify_other_js do
+  puts "## Minifying other JS"
+  n = 0
+  compressor = YUI::JavaScriptCompressor.new
+  Parallel.map(Dir.glob("#{source_dir}/javascripts/**/*.js"), :in_threads => n_cores)  do |j|
+    if (js_for_combine+[js_output]).include?(j.sub("#{source_dir}/javascripts/", "")) or\
+       j.include?("compressed")
+      next
+    end
+    dir = j.split('/')[0..-2].join('/')
+    name = j.split('/')[-1]
+    compressed = dir + "/compressed/" + name
+    if File.directory?(dir+"/compressed/")
+      if File.file?(compressed) and File.mtime(compressed) > File.mtime(j)
+        next
+      end
+    else
+      mkdir_p compressed.split('/')[0..-2].join('/')
+    end
+
+    puts "Minifying #{j}"
+    input = File.read(j)
+    output = File.open(compressed, "w")
     output << compressor.compress(input)
     output.close
+    n+=1
+  end
+  if n > 0
+    cp_r "#{source_dir}/javascripts/.", "#{public_dir}/javascripts/"
   end
 end
 
 desc "Minify HTML"
 task :minify_html do
   puts "## Minifying HTML"
-  compressor = HtmlCompressor::HtmlCompressor.new
-  Dir.glob("#{public_dir}/**/*.html").each do |name|
-    puts "Minifying #{name}"
-    input = File.read(name)
-    output = File.open("#{name}", "w")
+
+  option={
+     :remove_comments => false,
+     :compress_css => true,
+     :css_compressor => :yui,
+     :compress_javascript => true,
+     :javascript_compressor => :yui
+  }
+  compressor = HtmlCompressor::Compressor.new(option)
+
+  posts = []
+  if html_for_minify == "all" or html_for_minify[0] == "all"
+    posts = Dir.glob("#{public_dir}/**/*.html")
+  else
+    posts_tmp = html_for_minify
+    if html_for_minify.is_a?(String)
+      posts_tmp = [posts_tmp]
+    end
+    posts_tmp.each do |p|
+      f = "#{public_dir}/#{p}"
+      if f.scan("\*").length > 0
+        posts += Dir.glob(f)
+      elsif File.file?(f)
+        posts.push(f)
+      elsif File.directory?(f)
+        posts += Dir.glob("#{f}/**/*.html")
+      end
+    end
+  end
+  if html_not_minify != nil
+    if html_not_minify.is_a?(String)
+      html_not_minify = [html_not_minify]
+    end
+    html_not_minify.each  do |p|
+      posts.delete_if {|post| post.start_with?("#{public_dir}/#{p}")}
+    end
+  end
+
+  progressbar = ProgressBar.create(:title => "Minify HTML", :starting_at => 0,
+                                   :total => posts.size,
+                                   :format => '%t, %a |%b%i| %p%')
+  Parallel.map(posts, :in_threads => n_cores)  do |p|
+    input = File.read(p)
+    output = File.open(p, "w")
     output << compressor.compress(input)
     output.close
+    progressbar.increment
   end
 end

@@ -1,16 +1,18 @@
 diff --git a/_config.yml b/_config.yml
-index c1d56f4..75ffc26 100644
+index c1d56f4..f99d99d 100644
 --- a/_config.yml
 +++ b/_config.yml
-@@ -6,20 +6,36 @@ url: http://yoursite.com
+@@ -6,20 +6,38 @@ url: http://yoursite.com
  title: My Octopress Blog
  subtitle: A blogging framework for hackers.
  author: Your Name
 +lang: en
 +titlelogo:
++#titlelogocss: true
 +nav_marks: true
 +# Please add your images to there
 +#aboutme_logo: https://github.com/rcmdnk.png
++#aboutme_logo_css: true
 +#sitelogo: /images/logo.png
  simple_search: https://www.google.com/search
  description:
@@ -39,7 +41,7 @@ index c1d56f4..75ffc26 100644
  
  # ----------------------- #
  #    Jekyll & Plugins     #
-@@ -33,25 +49,40 @@ destination: public
+@@ -33,25 +51,37 @@ destination: public
  plugins: plugins
  code_dir: downloads/code
  category_dir: blog/categories
@@ -50,10 +52,6 @@ index c1d56f4..75ffc26 100644
 -    - footnotes
 -    - smart
 +tag_dir: blog/tags
-+emoji_dir: /images/emoji
-+monthly_format: January
-+ps_title: Edit
-+ps_close:
 +
 +markdown: kramdown
 +kramdown:
@@ -80,25 +78,24 @@ index c1d56f4..75ffc26 100644
  # list each of the sidebar modules you want to include, in the order you want them to appear.
  # To add custom asides, create files in /source/_includes/custom/asides/ and add them to the list like 'custom/asides/custom_aside_name.html'
 -default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
-+default_asides: [custom/asides/google_aside_top.html, custom/asides/about.html, custom/asides/amazon_wishlist.html, custom/asides/monthly_archive.html, custom/asides/category_list.html, custom/asides/tag_cloud.html, custom/asides/twitter_search.html, custom/asides/hatebu.html, asides/recent_posts.html]
-+# custom/asides/calendar.html
-+# custom/asides/coderwall.html
-+
-+# Width of the aside
-+#aside_width: 300 # set sass/base/_layout.scss: $sidebar-width-min as 320px
-+aside_width: 336 # set sass/base/_layout.scss: $sidebar-width-min as 350px
++default_asides:
++  - custom/asides/about.html
++  - asides/recent_posts.html
++  - custom/asides/monthly_archive.html
++  - custom/asides/category_list.html
++  - custom/asides/tag_cloud.html
++  - custom/asides/popular_posts.html
++  - custom/asides/random_posts.html
  
  # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
  # and add an array with the asides you want to use.
-@@ -59,29 +90,72 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
+@@ -59,29 +89,84 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
  # post_asides:
  # page_asides:
  
-+# scroll-fixed
-+n_scroll_fixed: 0
-+
-+# scrolltop
-+scrolltop: false
++# Width of the aside
++#aside_width: 300 # set sass/custom/_layout.scss: $sidebar-width-medium as 330px
++aside_width: 336 # set sass/custom/_layout.scss: $sidebar-width-medium as 360px
 +
 +# Related post
 +related_posts_limit: 5
@@ -113,13 +110,25 @@ index c1d56f4..75ffc26 100644
 +future:      true
 +unpublished: false
 +
++# Set n-cores for Parallel job
++n_cores: 8
++
  # ----------------------- #
  #   3rd Party Settings    #
  # ----------------------- #
  
++# jQuery
++jquery_version: 2.1.4
++jquery_ie8_version: 1.9.1
++
++# Font Awesome
++fontawesome_version: 4.3.0
++
 +# Share
 +share_official: false
 +share_custom: true
++share_static: true
++share_check_all: true
 +
  # Github repositories
  github_user:
@@ -132,12 +141,15 @@ index c1d56f4..75ffc26 100644
  twitter_user:
 +twitter_follow_button: true
  twitter_tweet_button: true
++twitter_button: true
 +twitter_tweet_lang: en
 +twitter_mark: false
 +twitter_search:
++twitter_only_page: true
  
  # Google +1
- google_plus_one: false
+-google_plus_one: false
++googleplus_button: true
  google_plus_one_size: medium
 +google_plus_one_lang: en
 +google_plus_one_user:
@@ -163,21 +175,25 @@ index c1d56f4..75ffc26 100644
  # Pinboard
  pinboard_user:
  pinboard_count: 3
-@@ -89,6 +163,7 @@ pinboard_count: 3
+@@ -89,6 +174,10 @@ pinboard_count: 3
  # Delicious
  delicious_user:
  delicious_count: 3
 +delicious_button: false
++
++# Buffer
++buffer_button: false
  
  # Disqus Comments
  disqus_short_name:
-@@ -99,3 +174,73 @@ google_analytics_tracking_id:
+@@ -99,3 +188,158 @@ google_analytics_tracking_id:
  
  # Facebook Like
  facebook_like: false
 +facebook_share: true
 +facebook_lang: en_US
 +facebook_app_id:
++facebook_user:
 +facebook_user:
 +facebook_mark: false
 +facebook_admins_id:
@@ -245,3 +261,87 @@ index c1d56f4..75ffc26 100644
 +# Amazon tag
 +#amazon_ad_tag: xxxxxx0c-22
 +amazon_wishlist: false
++# page-view settings
++page-view:
++  service_account_email:
++  key_file: # service account private key file
++  key_secret: notasecret    # service account private key's password
++  profileID:  #ga:XXXXXXXX
++  start:                    # Beginning of report
++    - 1 month ago
++    - 10 years ago
++    - 1 year ago
++    - 1 week ago
++    - 1 day ago
++  end: now                  # End of report
++  metric: ga:pageviews      # Metric code
++  segment: gaid::-1         # all visits
++  filters:                  # optional
++  n_posts: 5                # Number of popular posts
++  show_views: false         # If n_views is shown or not
++
++# Random posts
++random_posts: 5
++random_local: false
++random_url: '/posts_light.html'
++
++# Copy check
++mandrill: true
++mandrill_key:
++mandrill_from:
++mandrill_to_email:
++mandrill_to_name:
++
++# Thumbnails
++thumbnails:
++  - square-thumbnail
++  - small-thumbnail
++square-thumbnail-width: 200
++square-thumbnail-height: 200
++small-thumbnail-width: 120
++small-thumbnail-height: 90
++
++# Monthly Archive
++monthly_archive_count: true
++monthly_archive_open: first
++monthly_archive_format: JAN
++monthly_format: January
++
++# scroll-fixed
++n_scroll_fixed: 0
++
++# scrolltop
++scrolltop: false
++
++# Postscript
++ps_title: Edit
++ps_close:
++
++# gemoji
++emoji_dir: /images/emoji
++
++# jekyll-var
++jekyll_var:
++  include:
++    - n_scroll_fixed
++    - hatebu_button
++    - twitter_button
++    - googleplus_button
++    - facebook_button
++    - pocket_button
++    - linkedin_button
++    - stumble_button
++    - pinterest_button
++    - buffer_button
++    - delicious_button
++    - tumblr_button
++    - share_all
++    - mandrill
++    - mandrill_key
++    - mandrill_from
++    - mandrill_to_email
++    - mandrill_to_name
++    - random_posts
++    - random_local
++    - random_url
++  exclude:

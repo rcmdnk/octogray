@@ -73,11 +73,14 @@ else
 fi
 echo
 
-# patch plugins (image_tag.rb, include_array.rb, octopress_filter.rb)
-yesno "Do you want to patch plugins (image_tag.rb, include_array.rb, octopress_filter.rb)?"
+# replace plugins (image_tag.rb, include_array.rb, octopress_filter.rb)
+yesno "Do you want to replace plugins (image_tag.rb, include_array.rb, octopress_filter.rb)?"
 ret=$?
 if [ $ret -eq 0 ];then
-  patch -p1 < .themes/octogray/patches/plugins.patch
+  for p in .themes/octogray/plugins/*rb;do
+    rm -f "./plugins/$(basename "$p")"
+    ln -s "../${p}" ./plugins/
+  done
 else
   printf "\n\e[31mPlease update plugins by following .themes/octogray/plugins\e[m\n"
 fi
@@ -174,7 +177,9 @@ rm -rf .themes/octogray/.plugins/scrolltopcontrol/
 echo
 
 # other plugins
-cp .themes/octogray/plugins_add/*rb ./plugins
+for p in .themes/octogray/plugins_add/*rb;do
+  ln -s "../${p}" ./plugins/
+done
 
 
 # other files

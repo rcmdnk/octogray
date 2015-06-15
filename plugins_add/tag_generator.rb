@@ -88,27 +88,32 @@ module Jekyll
     #
     #  +tag_dir+ is the String path to the tag folder.
     #  +tag+     is the tag currently being processed.
-    def write_tag_index(tag_dir, tag)
+    def write_tag_index(tag_dir, tag, m)
       index = TagIndex.new(self, self.source, tag_dir, tag)
       index.render(self.layouts, site_payload)
       index.write(self.dest)
       # Record the fact that this page has been added, otherwise Site::cleanup will remove it.
-      self.pages << index
+      m.synchronize do
+        self.pages << index
+      end
 
       # Create an Atom-feed for each index.
       feed = TagFeed.new(self, self.source, tag_dir, tag)
       feed.render(self.layouts, site_payload)
       feed.write(self.dest)
       # Record the fact that this page has been added, otherwise Site::cleanup will remove it.
-      self.pages << feed
+      m.synchronize do
+        self.pages << feed
+      end
     end
 
     # Loops through the list of tag pages and processes each one.
     def write_tag_indexes
       if self.layouts.key? 'tag_index'
         dir = self.config['tag_dir'] || 'tags'
-        self.tags.keys.each do |tag|
-          self.write_tag_index(File.join(dir, tag.to_url), tag)
+        m = Mutex.new
+        Parallel.map(self.tags.keys, :in_threads => self.config['n_cores'] ? self.config['n_cores'] : 1) do |tag|
+          self.write_tag_index(File.join(dir, tag.to_url), tag, m)
         end
 
       # Throw an exception if the layout couldn't be found.
@@ -153,16 +158,7 @@ ERR
     # Returns string
     #
     def tag_links(tags)
-      tags = tags.sort!.map { |c| tag_link c }
-
-      case tags.length
-      when 0
-        ""
-      when 1
-        tags[0].to_s
-      else
-        "#{tags[0...-1].join(', ')}, #{tags[-1]}"
-      end
+      tags.sort.map { |c| category_link c }.join(', ')
     end
 
     # Outputs a single tag as an <a> link.
@@ -173,7 +169,6 @@ ERR
     #
     def tag_link(tag)
       dir = @context.registers[:site].config['tag_dir']
-      "<a class='tag' href='/#{dir}/#{tag.to_url}/'>#{tag}</a>"
       "<a class='tag' itemprop='articleSection keywords' href='/#{dir}/#{tag.to_url}/'>#{tag}</a>"
     end
 
@@ -184,12 +179,11 @@ ERR
     # Returns string
     def date_to_html_string(date)
       result = '<span class="month">' + date.strftime('%b').upcase + '</span> '
-      result += date.strftime('<span class="day">%d</span> ')
-      result += date.strftime('<span class="year">%Y</span> ')
+      result << date.strftime('<span class="day">%d</span> ')
+      result << date.strftime('<span class="year">%Y</span> ')
       result
     end
 
   end
 
 end
-

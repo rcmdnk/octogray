@@ -38,11 +38,11 @@ module Jekyll
         context.registers[:site].config['n_scroll_fixed'] : 0
       (context.environments.first['site'][@array_name] || []).each do |file|
         if file !~ /^[a-zA-Z0-9_\/\.-]+$/ || file =~ /\.\// || file =~ /\/\./
-          rtn = rtn + "Include file '#{file}' contains invalid characters or sequences"
+          raise "#{rtn} Include file '#{file}' contains invalid characters or sequences"
         end
 
         Dir.chdir(includes_dir) do
-          choices = Dir['**/*'].reject { |x| File.symlink?(x) }
+          choices = Dir['**/*']
           if choices.include?(file)
             source = File.read(file)
             partial = Liquid::Template.parse(source)
@@ -57,7 +57,7 @@ module Jekyll
               end
             end
           else
-            rtn = rtn + "Included file '#{file}' not found in _includes directory"
+            raise "Included file '#{file}' not found in _includes directory"
           end
           n_files_count -= 1
         end
