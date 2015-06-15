@@ -39,4 +39,4 @@
 	url = https://github.com/rcmdnk/octopress-thumbnail.git
 [submodule ".plugins/octopress-random-posts"]
 	path = .plugins/octopress-random-posts
-	url = https://github.com:rcmdnk/octopress-random-posts.git
+	url = https://github.com/rcmdnk/octopress-random-posts.git
