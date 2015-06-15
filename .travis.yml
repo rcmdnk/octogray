@@ -49,7 +49,8 @@ script:
   - cd ~/octopress.gh-pages
   - ./.themes/octogray/setup.sh -y
   - ls -l sass/plugins
-  - cat sass/plugins/_thumbnails.scss
+  - cat sass/plugins/_thumbnail.scss
+  - cat sass/plugins/../../.themes/octogray/.plugins/octopress-thumbnail/sass/plugins/_thumbnail.scss
   - rake setup_github_pages["git@github.com:rcmdnk/octogray_test","yes"]
   - 'post=$(rake new_post["test"]|grep "Creating new post"|cut -d: -f2)'
   - 'sed -i"" "s/published: *false/published: true/" $post'
