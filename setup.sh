@@ -112,9 +112,18 @@ ln -s ../.themes/octogray/.plugins/jekyll-var-to-js/plugins/jekyll-var-to-js.rb 
 ln -s ../.themes/octogray/.plugins/octopress-share-numbers/plugins/share-numbers.rb ./plugins/
 ln -s ../../.themes/octogray/.plugins/octopress-share-numbers/sass/plugins/_share-numbers.scss ./sass/plugins/
 ln -s ../../.themes/octogray/.plugins/octopress-share-numbers/source/javascripts/share-custom.js ./source/javascripts/
-rm -f ./source/_includes/post/sharing.html
-ln -s ../../../.themes/octogray/.plugins/octopress-share-numbers/source/_includes/post/sharing.html ./source/_includes/post/
+#rm -f ./source/_includes/post/sharing.html
+#ln -s ../../../.themes/octogray/.plugins/octopress-share-numbers/source/_includes/post/sharing.html ./source/_includes/post/
 ln -s ../../../.themes/octogray/.plugins/octopress-share-numbers/source/_includes/post/sharing_custom.html ./source/_includes/post/
+
+## [octopress-share-numbers](https://github.com/rcmdnk/octopress-share-numbers)
+#ln -s ../.themes/octogray/.plugins/octopress-random-posts/plugins/random_posts.rb ./plugins/
+#ln -s ../../.themes/octogray/.plugins/octopress-random-posts/sass/plugins/_random-posts.scss ./sass/plugins/
+ln -s ../../.themes/octogray/.plugins/octopress-random-posts/source/javascripts/random-posts.js ./source/javascripts/
+#ln -s ../../.themes/octogray/.plugins/octopress-random-posts/source/javascripts/random-posts-html.js ./source/javascripts/
+ln -s ../../.themes/octogray/.plugins/octopress-share-numbers/source/_includes/post_list.html ./source/_includes/
+#ln -s ../.themes/octogray/.plugins/octopress-share-numbers/source/post_light.html ./source/_includes/
+ln -s ../../../../.themes/octogray/.plugins/octopress-share-numbers/source/_includes/custom/asides/random_posts.html ./source/_includes/custom/asides/
 
 ## [octopress-thumbnail](https://github.com/rcmdnk/octopress-thumbnail)
 ln -s ../.themes/octogray/.plugins/octopress-thumbnail/plugins/thumbnail.rb ./plugins/

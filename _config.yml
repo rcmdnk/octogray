@@ -288,7 +288,7 @@ page-view:
 # Random posts
 random_posts: 5
 random_local: false
-random_url: '/posts_light.html'
+#random_url: '/posts_light.html'
 
 # Copy check
 mandrill: true

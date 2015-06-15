@@ -37,3 +37,6 @@
 [submodule ".plugins/octopress-thumbnail"]
 	path = .plugins/octopress-thumbnail
 	url = https://github.com/rcmdnk/octopress-thumbnail
+[submodule ".plugins/octopress-random-posts"]
+	path = .plugins/octopress-random-posts
+	url = git@github.com:rcmdnk/octopress-random-posts.git
