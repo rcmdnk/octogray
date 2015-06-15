@@ -33,4 +33,4 @@
 	url = https://github.com/rcmdnk/jekyll-var-to-js
 [submodule ".plugins/octopress-share-numbers"]
 	path = .plugins/octopress-share-numbers
-	url = git@github.com:rcmdnk/octopress-share-numbers.git
+	url = https://github.com/rcmdnk/octopress-share-numbers.git
