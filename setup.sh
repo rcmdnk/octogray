@@ -92,61 +92,70 @@ cd .themes/octogray
 git submodule update --init
 cd ../../
 
-# install submodules
+## install submodules
 
 ## [Octopress-Slideshare-Plugin](https://github.com/petehamilton/Octopress-Slideshare-Plugin)
-cp .themes/octogray/.plugins/Octopress-Slideshare-Plugin/slideshare.rb ./plugins/
+ln -s ../.themes/octogray/.plugins/Octopress-Slideshare-Plugin/slideshare.rb ./plugins/
 
 ## [footnote-inline](http://rcmdnk.github.io/blog/2013/10/12/blog-octopress/)
-cp .themes/octogray/.plugins/footnote-inline/plugins/footnote_inline.rb ./plugins/
-cp .themes/octogray/.plugins/footnote-inline/source/javascripts/footnote.js ./source/javascripts/
-cp .themes/octogray/.plugins/footnote-inline/sass/plugins/_footnote.scss ./sass/plugins/
+ln -s ../.themes/octogray/.plugins/footnote-inline/plugins/footnote_inline.rb ./plugins/
+ln -s ../../.themes/octogray/.plugins/footnote-inline/source/javascripts/footnote.js ./source/javascripts/
+ln -s ../../.themes/octogray/.plugins/footnote-inline/sass/plugins/_footnote.scss ./sass/plugins/
 
 ## [jekyll-var-to-js](https://github.com/rcmdnk/jekyll-var-to-js)
-cp .themes/octogray/.plugins/jekeyll-var-to-js/plugins/jekyll-var-to-js.rb ./plugins/
+ln -s ../.themes/octogray/.plugins/jekyll-var-to-js/plugins/jekyll-var-to-js.rb ./plugins/
+
+## [octopress-share-numbers](https://github.com/rcmdnk/octopress-share-numbers)
+ln -s ../.themes/octogray/.plugins/octopress-share-numbers/plugins/share-numbers.rb ./plugins/
+ln -s ../../.themes/octogray/.plugins/octopress-share-numbers/sass/plugins/_sharing.scss ./sass/plugins/_sharing.scss
+ln -s ../../.themes/octogray/.plugins/octopress-share-numbers/source/javascripts/share-custom.js ./source/javascripts/
+rm -f ./source/_includes/post/sharing.html
+ln -s ../../.themes/octogray/.plugins/octopress-share-numbers/source/_includes/post/sharing.html ./source/_includes/post/
+ln -s ../../.themes/octogray/.plugins/octopress-share-numbers/source/_includes/post/sharing_custom.html ./source/_includes/post/
 
 ## [octopress-postscript](https://github.com/rcmdnk/octopress-postscript)
-cp .themes/octogray/.plugins/octopress-postscript/plugins/postscript.rb ./plugins/
-cp .themes/octogray/.plugins/octopress-postscript/sass/plugins/_postscript.scss ./sass/plugins/
+ln -s ../.themes/octogray/.plugins/octopress-postscript/plugins/postscript.rb ./plugins/
+ln -s ../../.themes/octogray/.plugins/octopress-postscript/sass/plugins/_postscript.scss ./sass/plugins/
 
 ## [jquery--ex-flex-fiex](http://github.com/cyokodog/jquery.ex-flex-fixed)
-cp .themes/octogray/.plugins/jquery.ex-flex-fixed/jquery.exflexfixed-0.3.0.js ./source/javascripts/
+ln -s ../../.themes/octogray/.plugins/jquery.ex-flex-fixed/jquery.exflexfixed-0.3.0.js ./source/javascripts/
 
 ## [keyboardkey](http://rcmdnk.github.io/blog/2013/06/19/blog-octopress/)
-cp .themes/octogray/.plugins/keyboardkey/plugins/keyboardkey.rb ./plugins/
-cp .themes/octogray/.plugins/keyboardkey/sass/plugins/_keyboardkey.scss ./sass/plugins/
+ln -s ../.themes/octogray/.plugins/keyboardkey/plugins/keyboardkey.rb ./plugins/
+ln -s ../../.themes/octogray/.plugins/keyboardkey/sass/plugins/_keyboardkey.scss ./sass/plugins/
 
 ## [monthly-archive](http://rcmdnk.github.io/blog/2013/10/01/blog-octopress/)
-cp .themes/octogray/.plugins/monthly-archive/plugins/monthly_archive.rb ./plugins/
-cp .themes/octogray/.plugins/monthly-archive/plugins/monthly_generator.rb ./plugins/
-cp .themes/octogray/.plugins/monthly-archive/source/_layouts/monthly_index.html ./source/_layouts/
-cp .themes/octogray/.plugins/monthly-archive/source/_includes/custom/asides/monthly_archive.html ./source/_includes/custom/asides/
-cp .themes/octogray/.plugins/monthly-archive/source/javascripts/monthly_archive.js ./source/javascripts/
-cp .themes/octogray/.plugins/monthly-archive/sass/plugins/_monthly_archive.scss ./sass/plugins/
+ln -s ../.themes/octogray/.plugins/monthly-archive/plugins/monthly_archive.rb ./plugins/
+ln -s ../.themes/octogray/.plugins/monthly-archive/plugins/monthly_generator.rb ./plugins/
+ln -s ../../.themes/octogray/.plugins/monthly-archive/source/_layouts/monthly_index.html ./source/_layouts/
+ln -s ../../../../.themes/octogray/.plugins/monthly-archive/source/_includes/custom/asides/monthly_archive.html ./source/_includes/custom/asides/
+ln -s ../../.themes/octogray/.plugins/monthly-archive/source/javascripts/monthly_archive.js ./source/javascripts/
+ln -s ../../.themes/octogray/.plugins/monthly-archive/sass/plugins/_monthly_archive.scss ./sass/plugins/
 
 ## [octopress-gemoji](http://rcmdnk.github.io/blog/2013/09/28/blog-octopress/)
-cp .themes/octogray/.plugins/octopress-gemoji/plugins/gemoji.rb ./plugins/
-cp .themes/octogray/.plugins/octopress-gemoji/sass/plugins/_gemoji.scss ./sass/plugins/
+ln -s ../.themes/octogray/.plugins/octopress-gemoji/plugins/gemoji.rb ./plugins/
+ln -s ../../.themes/octogray/.plugins/octopress-gemoji/sass/plugins/_gemoji.scss ./sass/plugins/
 
 ## [octopress-responsive-video-embed](https://github.com/optikfluffel/octopress-responsive-video-embed)
-cp .themes/octogray/.plugins/octopress-responsive-video-embed/*.rb ./plugins/
-cp .themes/octogray/.plugins/octopress-responsive-video-embed/_rve.scss ./sass/plugins/
+ln -s ../.themes/octogray/.plugins/octopress-responsive-video-embed/vimeo.rb ./plugins/
+ln -s ../.themes/octogray/.plugins/octopress-responsive-video-embed/youtube.rb ./plugins/
+ln -s ../../.themes/octogray/.plugins/octopress-responsive-video-embed/_rve.scss ./sass/plugins/
 
 ## [githubrepo-octopress](https://github.com/sotsy/githubrepo-octopress)
-cp .themes/octogray/.plugins/githubrepo-octopress/githubwidget.rb plugins/
-cp .themes/octogray/.plugins/GitHub-jQuery-Repo-Widget/jquery.githubRepoWidget.min.js source/javascripts/
+ln -s ../.themes/octogray/.plugins/githubrepo-octopress/githubwidget.rb ./plugins/
+ln -s ../../.themes/octogray/.plugins/GitHub-jQuery-Repo-Widget/jquery.githubRepoWidget.min.js ./source/javascripts/
 
 # install downloaded plugins
 
-## [NailThumb](http://www.garralab.com/nailthumb.php)
-#wget -O nailthumb.1.1.zip http://sourceforge.net/projects/nailthumb/files/nailthumb.1.1.zip/download
-#unzip nailthumb.1.1.zip
-#rm -f nailthumb.1.1.zip
-#mv nailthumb .themes/octogray/.plugins/
-#cp .themes/octogray/.plugins/nailthumb/jquery.nailthumb.1.1.css ./sass/plugins/_nailthumb.scss
-#cp .themes/octogray/.plugins/nailthumb/jquery.nailthumb.1.1.min.js ./source/javascripts/
-#rm -rf .themes/octogray/.plugins/nailthumb/
-#echo
+# [NailThumb](http://www.garralab.com/nailthumb.php)
+wget -O nailthumb.1.1.zip http://sourceforge.net/projects/nailthumb/files/nailthumb.1.1.zip/download
+unzip nailthumb.1.1.zip
+rm -f nailthumb.1.1.zip
+mv nailthumb .themes/octogray/.plugins/
+cp .themes/octogray/.plugins/nailthumb/jquery.nailthumb.1.1.css ./sass/plugins/_nailthumb.scss
+cp .themes/octogray/.plugins/nailthumb/jquery.nailthumb.1.1.min.js ./source/javascripts/
+rm -rf .themes/octogray/.plugins/nailthumb/
+echo
 
 ## [jQuery SCroll to Top Control](http://www.dynamicdrive.com/dynamicindex3/scrolltop.htm)
 wget -O scrolltopcontrol.js http://www.dynamicdrive.com/dynamicindex3/scrolltopcontrol.js
