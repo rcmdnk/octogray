@@ -34,6 +34,3 @@
 [submodule ".plugins/octopress-share-numbers"]
 	path = .plugins/octopress-share-numbers
 	url = https://github.com/rcmdnk/octopress-share-numbers.git
-[submodule ".plugins/octopress-thumbnail"]
-	path = .plugins/octopress-thumbnail
-	url = https://github.com/rcmdnk/octopress-thumbnail
