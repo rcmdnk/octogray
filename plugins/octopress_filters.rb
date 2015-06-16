@@ -87,18 +87,14 @@ module OctopressLiquidFilters
   # Extracts raw content DIV from template, used for page description as {{ content }}
   # contains complete sub-template code on main page level
   def raw_content(input)
-    /<div class="entry-content">(?<content>[\s\S]*?)<!--\s*more\s*-->/ =~ input
+    /(<div.*class="(blog-index|entry-content).*">)(?<content>[\s\S]*?)(<!--\s*more\s*-->|<\/div>\s*(<\/article|footer)|(<!-- *(|post|page|blog-index) *--))>/ =~ input
+    p 'description...'
     if ! (content.nil?)
+      p content
       return content
     end
-
-    /<div class="entry-content">(?<content2>[\s\S]*?)<\/div>\s*<(footer|\/article)>/ =~ input
-    if ! (content2.nil?)
-      return content2
-    end
-
-    /<article>(?<content3>[\s\S]*?)<\/article>/ =~ input
-    return (content3.nil?) ? input : content3
+    /(<article.*>)(?<content2>[\s\S]*?)(<!--\s*more\s*-->|<\/div>\s*(<\/article|footer)|(<!-- *(|post|page|blog-index) *--))>/ =~ input
+    p 'description...'
   end
 
   # Escapes CDATA sections in post content
