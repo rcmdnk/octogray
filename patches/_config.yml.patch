@@ -268,24 +268,24 @@ index c1d56f4..7915693 100644
 +# Amazon tag
 +#amazon_ad_tag: xxxxxx0c-22
 +amazon_wishlist: false
-+# page-view settings
-+page-view:
-+  service_account_email:
-+  key_file: # service account private key file
-+  key_secret: notasecret    # service account private key's password
-+  profileID:  #ga:XXXXXXXX
-+  start:                    # Beginning of report
-+    - 1 month ago
-+    - 10 years ago
-+    - 1 year ago
-+    - 1 week ago
-+    - 1 day ago
-+  end: now                  # End of report
-+  metric: ga:pageviews      # Metric code
-+  segment: gaid::-1         # all visits
-+  filters:                  # optional
-+  n_posts: 5                # Number of popular posts
-+  show_views: false         # If n_views is shown or not
++# page-view settings (need service account private key file (key_file). ref: https://github.com/developmentseed/jekyll-ga)
++#page-view:
++#  service_account_email:
++#  key_file: # service account private key file
++#  key_secret: notasecret    # service account private key's password
++#  profileID:  #ga:XXXXXXXX
++#  start:                    # Beginning of report
++#    - 1 month ago
++#    - 10 years ago
++#    - 1 year ago
++#    - 1 week ago
++#    - 1 day ago
++#  end: now                  # End of report
++#  metric: ga:pageviews      # Metric code
++#  segment: gaid::-1         # all visits
++#  filters:                  # optional
++#  n_posts: 5                # Number of popular posts
++#  show_views: false         # If n_views is shown or not
 +
 +# Random posts
 +random_posts: 5
