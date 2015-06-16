@@ -158,7 +158,7 @@ ERR
     # Returns string
     #
     def tag_links(tags)
-      tags.sort.map { |c| category_link c }.join(', ')
+      tags.sort.map { |c| tag_link c }.join(', ')
     end
 
     # Outputs a single tag as an <a> link.
