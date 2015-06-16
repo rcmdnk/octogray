@@ -36,7 +36,7 @@ new_page_ext    = "markdown"  # default new page file extension when using the n
 server_port     = "4000"      # port for preview server eg. localhost:4000
 word_avoid      = "~/.gitavoid"  # words which must be avoided to be published
 ping_file       = "ping.yml"  # file of site list for ping
-js_for_combine  = ['footnote.js', 'jquery.githubRepoWidget.min.js', 'monthly_archive.js', 'utils.js', 'randomposts.js']
+js_for_combine  = ['footnote.js', 'jquery.githubRepoWidget.min.js', 'monthly_archive.js', 'utils.js', 'random-posts.js']
 js_output       = "all.js"
 js_minify_others = false
 #html_for_minify = "all"
@@ -114,7 +114,9 @@ task :generate, :opt do |t, args|
 end
 
 desc "Same as generate"
-task :gen => :generate
+task :gen, :opt do |t, args|
+  Rake::Task[:generate].invoke(args.opt)
+end
 
 # usage rake generate_only[my-post]
 desc "Generate only specified post (much faster)"
@@ -938,3 +940,24 @@ task :minify_html do
     progressbar.increment
   end
 end
+
+# Replace common words
+desc "Replace common words"
+task :common do
+  puts "## Replace common words"
+  Parallel.map(Dir.glob("#{public_dir}/**/*.html"), :in_threads => n_cores) do |h|
+    if h.start_with?("#{common_dir}")
+      next
+    end
+    html = IO.read(h)
+    common_words.each do |c|
+      replace = IO.read("#{common_dir}/#{c.downcase}.html")
+      html.gsub!(c, replace)
+    end
+    File.open(h , 'w') do |f|
+      f.write html
+    end
+  end
+  rm_rf common_dir
+end
+
