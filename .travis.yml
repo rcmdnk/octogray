@@ -58,6 +58,8 @@ script:
   - 'sed -i"" "s/tags:/tags: tag/" $post'
   - sed -i"" "s/<\!-- *more *-->/This is test post."\\$'\n'"<\!-- more -->/" $post
   - sed -i"" "s/{%include after_excerpt.html%}/{%include after_excerpt.html%}"\\$'\n'"# Test Sectiontest"\\$'\n'"test $(date) test./" $post
-  - cat $post
+  - cat "" >> $post
+  - cat "" >> $post
+  - cat "[Code test](/others/codetest/) ">> $post
   - rake gen --trace
   - rake deploy
