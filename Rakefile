@@ -102,9 +102,6 @@ task :generate, :opt do |t, args|
   Rake::Task[:css].execute
   Rake::Task[:minify_js].execute
 
-  # Fix double dash problem
-  Rake::Task[:fix_double_dash].execute
-
   # Replace common words
   Rake::Task[:common].execute
 
