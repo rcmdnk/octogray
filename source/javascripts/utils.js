@@ -1,4 +1,25 @@
-jQuery(function($){
+// iOS scaling bug fix
+// Rewritten version
+// By @mathias, @cheeaun and @jdalton
+// Source url: https://gist.github.com/901295
+$(function(){
+  var addEvent = 'addEventListener',
+      type = 'gesturestart',
+      qsa = 'querySelectorAll',
+      scales = [1, 1],
+      meta = qsa in document ? document[qsa]('meta[name=viewport]') : [];
+  function fix() {
+    meta.content = 'width=device-width,minimum-scale=' + scales[0] + ',maximum-scale=' + scales[1];
+    document.removeEventListener(type, fix, true);
+  }
+  if ((meta = meta[meta.length - 1]) && addEvent in document) {
+    fix();
+    scales = [0.25, 1.6];
+    document[addEvent](type, fix, true);
+  }
+});
+
+$(function(){
   $(".add_bookmark").click(function () {
   if ( ! $(this).data('page_title') || ! $(this).data('page_url') ){
     return addBookmark(document.title, location.href)
@@ -37,7 +58,7 @@ jQuery(function($){
   }
 });
 
-jQuery(function($){
+$(function(){
   $(".index_click_box").click(function(){
     window.location=$(this).find(".click_box_link").eq(-1).attr("href");
     return false;
@@ -45,11 +66,12 @@ jQuery(function($){
 });
 
 // Open outside links with other window
-jQuery(function($){
+$(function(){
   $("a[href^='http']").attr('target', '_blank');
 });
 
-jQuery(function($){
+// Add link to images
+$(function(){
   $("img").each(function(){
     if( $(this).parent()[0].nodeName.toLowerCase() != "a"){
       if($(this).hasClass("imglink") || $(this).attr('src').indexOf('/images/post/')==0){
@@ -59,7 +81,8 @@ jQuery(function($){
   });
 });
 
-jQuery(function($){
+// helper function for scroll fixed
+$(function(){
   if("jekyll_var" in window && jekyll_var("n_scroll_fixed")!=null &&
       jekyll_var("n_scroll_fixed") > 0){
     if(!$('body').hasClass('collapse-sidebar')) {
@@ -73,7 +96,8 @@ jQuery(function($){
   }
 });
 
-jQuery(function($){
+// Mandrill helper
+$(function(){
   if((! "jekyll_var" in window || ! jekyll_var("mandrill")) && ! 'ga' in window){
     return
   }
@@ -124,4 +148,3 @@ jQuery(function($){
     }
   });
 });
-

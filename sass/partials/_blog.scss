@@ -15,7 +15,8 @@ article {
     p {
       font-size: .9em;
       color: $text-color-light;
-      margin: 0;
+      line-height: 1.8em;
+      margin-bottom: 0.5em;
       &.meta {
         @extend .sans;
         text-transform: uppercase;

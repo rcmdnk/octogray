@@ -9,10 +9,14 @@
   //background-color: lighten($sidebar-bg, 2);
   border-top: 0px;
   section {
-    &.odd, &.even { float: left; width: 48%; }
-    &.odd { margin-left: 2%; }
-    &.even { margin-left: 2%; }
+    float: left;
+    width: 48%;
   }
+  //section {
+  //  &.odd, &.even { float: left; width: 48%; }
+  //  &.odd { margin-left: 2%; }
+  //  &.even { margin-left: 2%; }
+  //}
   //&.thirds section {
   //  width: 30%;
   //  margin-left: 5%;
@@ -159,7 +163,7 @@ body.sidebar-footer {
       margin: 0 -100% 0 0;
       section {
         width: auto; margin-left: 0;
-        &.odd, &.even { float: none; width: auto; margin-left: 0; }
+        float: none;
       }
       .only-footer {
         display: none;
@@ -200,7 +204,7 @@ body.sidebar-footer {
 .dotted-border {
   border: 0 none;
   background-repeat:repeat-x;
-  background-image:url(/images/dotted-border.png)
+  background-image: $img-border;
 }
 
 // Table view
@@ -254,6 +258,7 @@ th[align="center"],  td[align="center"] {
   border: solid 2px darken($main-bg, 15);
   border-radius: 10px;
   li {
+    margin-top:0.2em;
     margin-left:1em;
   }
   float: left;

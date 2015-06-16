@@ -1,6 +1,6 @@
 <div class="main-navigation">
   {% if site.nav_marks %}
-  <p>
+  <p class="nav-marks">
     {% if site.email_mark %}
     <a href="mailto:{{site.email}}" title="Mail"><i class="fa fa-envelope fa-2x"></i></a>
     {% endif %}
@@ -23,8 +23,7 @@
     <a href="{{site.subscribe_rss}}" title="RSS"><i class="fa fa-rss fa-2x"></i></a>
     {% endif %}
     {% if site.feedly_mark %}
-    {%comment%}<a href='http://cloud.feedly.com/#subscription%2Ffeed%2F{{site.feedly_atom|cgi_escape}}'><img id='feedlyFollow' src='{{root_url}}/images/feedly.png' alt='follow us in feedly' title="feedly" class="feedly"></a>{%endcomment%}
-    <a href='http://feedly.com/i/subscription/feed/{{site.feedly_atom}}'><img id='feedlyFollow' src='{{root_url}}/images/feedly.png' alt='follow us in feedly' title="feedly" class="feedly"></a>
+    <a href='http://feedly.com/i/subscription/feed/{{site.feedly_atom}}'><span class="feedlyimg feedly"></span></a>
     {% endif %}
     {% if site.bookmark_mark %}
     <a href="#" class="add_bookmark" title="Favorite" data-page_title="{{site.title}}" data-page_url="{{site.url}}"><i class="fa fa-star-o fa-2x"></i></a>
@@ -34,35 +33,32 @@
   <p>
     {% include custom/navigation.html %}
   </p>
-  {% if site.google_custom_search == 'compact' %}
+  {% if site.google_custom_search == 'compact' or site.google_custom_search == 'overlay' or site.google_custom_search == 'overlay_simple' or site.google_custom_search == 'overlay_classic' or site.google_custom_search == 'twolines' %}
+  {% if site.google_search_pub %}
   <p>
-    {% include custom/google_search/compact.html %}
+    <div id='cse' style='width: 100%;'>Loading</div>
   </p>
-  {% elsif site.google_custom_search == 'onlyresults' %}
-  {% elsif site.google_custom_search == 'overlay' %}
-  <p>
-    {% include custom/google_search/overlay.html %}
-  </p>
-  {% elsif site.google_custom_search == 'overlay_simple' %}
-  <p>
-    {% include custom/google_search/overlay_simple.html %}
-  </p>
-  {% elsif site.google_custom_search == 'overlay_classic' %}
-  <p>
-    {% include custom/google_search/overlay_classic.html %}
-  </p>
-  {% elsif site.google_custom_search == 'twolines' %}
-  <p>
-    {% include custom/google_search/twolines.html %}
-  </p>
+  {% endif %}
   {% elsif site.google_custom_search == 'twopages' %}
+  {% if site.google_search_pub %}
   <p>
-    {% include custom/google_search/twopages.html %}
+    <div id='cse-search-form' style='width: 100%;'>Loading</div>
   </p>
+  {% endif %}
   {% elsif site.google_search %}
+  {% if site.google_search_pub %}
   <p>
-    {% include custom/affiliate/google_search.html %}
+    <form action="{{site.google_result_page}}" id="cse-search-box">
+      <div>
+        <input type="hidden" name="cx" value="partner-pub-{{site.google_search_pub}}" />
+        <input type="hidden" name="cof" value="FORID:10" />
+        <input type="hidden" name="ie" value="UTF-8" />
+        <input type="text" name="{%if site.google_search_query%}{{site.google_search_query}}{%else%}q{%endif%}" size="30" />
+        <input type="submit" name="sa" value="&#xf00e;" />
+      </div>
+    </form>
   </p>
+  {% endif %}
   {% elsif site.simple_search %}
   <p>
     <form action="{{ site.simple_search }}" method="get">
@@ -73,7 +69,7 @@
     </form>
   </p>
   {%endif%}
-  {% if site.google_translate_layout and page.translate != false %}
+  {% if site.google_translate_layout %}
   <p>
     <div id="google_translate_element"></div>
   </p>

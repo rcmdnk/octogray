@@ -1,7 +1,7 @@
-{% if site.hatena_popular_posts %}
+{% if site.hatena_popular_posts == 'orig' or site.hatena_popular_posts == 'light' or site.hatena_popular_posts == 'feed'%}
 <section>
-  <h1><a href="http://b.hatena.ne.jp/entrylist?mode=rss&sort=count&url={{site.url}}">Popular Posts</a></h1>
-{%comment%}
+  <h1><a href="http://b.hatena.ne.jp/entrylist?mode=rss&sort=count&url={{site.url}}">Hatebu Popular Posts</a></h1>
+{%if site.hatena_popular_posts == 'orig' %}
   <script language="javascript" type="text/javascript" src="//b.hatena.ne.jp/js/widget.js" charset="utf-8"></script>
   <script language="javascript" type="text/javascript">
   Hatena.BookmarkWidget.url   = "{{site.url}}";
@@ -11,8 +11,7 @@
   Hatena.BookmarkWidget.theme = "notheme";
   Hatena.BookmarkWidget.load();
   </script>
-{%endcomment%}
-{%comment%}
+{%elsif site.hatena_popular_posts == 'light' %}
   <div id="hatena-bookmark-widget" class="hatena-bookmark hatena-bookmark-widget-notheme"><div>
     <div class="hatena-bookmark-widget-body">
        <ul>
@@ -69,7 +68,7 @@
       s.parentNode.insertBefore(news, s);
     }());
   </script>
-{%endcomment%}
+{%elsif site.hatena_popular_posts == 'feed' %}
   <div id="hatena-bookmark-widget"><div>
      <ul>
      </ul>
@@ -89,7 +88,7 @@
             var d = document.createElement('div');
             d.className="group";
             var wrap = document.createElement('div');
-            wrap.className="title-smallthumb";
+            wrap.className="title-small-thumbnail";
             var imglink = document.createElement('a');
             imglink.href = entry.link;
             var img = document.createElement('img');
@@ -119,5 +118,6 @@
     }
     google.setOnLoadCallback(getHatebuEntries);
     </script>
+{%endif%}
 </section>
 {% endif %}

@@ -1,12 +1,16 @@
 $blockquote: $type-border !default;
 
-$sans: "Optima", sans-serif !default;
-$serif: "PT Serif", serif !default;
+//$sans: "Optima", sans-serif !default;
+$sans: "Gulim", sans-serif !default;
+//$serif: "PT Serif", serif !default;
+$serif: "Times New Roman", serif !default;
 $mono: "Courier", monospace !default;
 
-$heading-font-family: "Verdana", sans-serif !default;
-$header-title-font-family: "Black Ops One", cursive !default;
-$header-subtitle-font-family: "Libre Baskerville", sans-serif !default;
+//$heading-font-family: "Verdana", sans-serif !default;
+$heading-font-family: "Arial", sans-serif !default;
+//$header-title-font-family: "Black Ops One", cursive !default;
+$header-title-font-family: "Impact", "Arial Black", cursive !default;
+$header-subtitle-font-family: "Arial", sans-serif !default;
 
 
 // Fonts
@@ -60,7 +64,7 @@ h5, section h4, section section h3 {
 h6, section h5, section section h4, section section section h3 {
   font-size: .8em;
 }
-p, article blockquote, ul, ol { margin-bottom: 1.2em; }
+p, article blockquote, ul, ol { margin-bottom: 1.5em; }
 
 ul { list-style-type: disc;
   ul { list-style-type: circle; margin-bottom: 0px;
@@ -105,13 +109,13 @@ small { font-size: .8em; }
 big { font-size: 1.2em; }
 
 article blockquote {
-  $bq-margin: 1.0em;
+  $bq-margin: 1.2em;
   font-style: italic;
   position: relative;
-  font-size: 1.0em;
-  line-height: 1.2em;
+  font-size: 1.2em;
+  line-height: 1.5em;
   padding-left: 1em;
-  border-left: 2px solid rgba($text-color-light, .5);
+  border-left: 4px solid rgba($text-color-light, .5);
   cite {
     font-style: italic;
     a { color: $text-color-light !important; word-wrap: break-word; }

@@ -1,18 +1,18 @@
 {% if index %}{% capture share_url %}{{ site.url }}{{ post.url | remove:'index.html'}}{% endcapture %}{% capture share_title %}{{ post.title }}{% endcapture %}{% else %}{% capture share_url %}{{ site.url }}{{ page.url | remove:'index.html'}}{% endcapture %}{% capture share_title %}{{ page.title }}{% endcapture %}{% endif %}
 <div class="sharing">
   <ul>
-    {% if site.hatena_button %}
+    {% if site.hatebu_button %}
     <li class="hatebu">
     <div class="hatebu">
       <a href="http://b.hatena.ne.jp/entry/{{share_url}}"
           class="hatena-bookmark-button"
           data-hatena-bookmark-layout="standard"
       ><img src="http://b.st-hatena.com/images/entry-button/button-only.gif"
-            alt="{{hatena_add}}"/></a>
+            alt="{{site.hatena_add}}"/></a>
     </div>
     </li>
     {% endif %}
-    {% if site.twitter_tweet_button %}
+    {% if site.twitter_button %}
     <li class="twitter">
     <div class="twitter">
       <a href="http://twitter.com/share"
@@ -23,7 +23,7 @@
     </div>
     </li>
     {% endif %}
-    {% if site.google_plus_one %}
+    {% if site.googleplus_button %}
     <li class="googleplus">
     <div class="googleplus">
       <div class="g-plusone"
@@ -44,9 +44,9 @@
     </div>
     </li>
     {% endif %}
-    {% if site.facebook_share %}
-    <li class="facebook_share">
-    <div class="facebook_share">
+    {% if site.facebook_button %}
+    <li class="facebook_button">
+    <div class="facebook_button">
       <div class="fb-share-button"
           data-type="button_count"
           data-font="verdana"

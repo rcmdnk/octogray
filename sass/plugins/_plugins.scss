@@ -3,56 +3,6 @@
   Imported. Load order is alphabetical and styles can be overriden in
   custom/_style.scss which is loaded after all plugin stylesheets.
 */
-
-// title thumb
-.square-thumb {
-  width: 200px;
-  height: 200px;
-}
-.square-smallthumb {
-  width: 120px;
-  height: 90px;
-}
-.title-thumb {
-  @extend .square-thumb;
-  margin: 0 auto 1em auto;
-  @include shadow-box;
-  float: center;
-  text-align: center;
-  overflow: hidden;
-  img {
-    min-width: 100%;
-    min-height: 100%;
-    max-width: 500%;
-    max-height: 500%;
-  }
-}
-.title-smallthumb {
-  @extend .square-smallthumb;
-  margin: 0 1em 0 0;
-  @include shadow-box;
-  float: left;
-  text-align: left;
-  overflow: hidden;
-  img {
-    min-width: 100%;
-    min-height: 100%;
-  }
-}
-@media only screen and (min-width: 450px) {
-  .title-thumb {
-    float: left;
-    text-align: left;
-    margin: 0 1em 1em 0;
-    img {
-      min-width: 100%;
-      min-height: 100%;
-      max-width: 500%;
-      max-height: 500%;
-    }
-  }
-}
-
 // scrolltopcontrol
 .icon-scroll-up {
   font-size: 3em;
@@ -81,7 +31,10 @@
   @extend .group;
 }
 .amazon-img{
-  @extend .title-thumb;
+  @extend .title-thumbnail;
+}
+.title-small-thumbnail .amazon-img{
+  @extend .title-small-thumbnail;
 }
 .amazon-txt{
   float: left; margin-right: 1.5em;
@@ -111,8 +64,5 @@ li.post {
   @extend .side-shadow-border;
   p:last-child {
     margin-bottom: 0;
-  }
-  .amazon-img{
-    @extend .title-smallthumb;
   }
 }

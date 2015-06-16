@@ -41,25 +41,63 @@ aside.sidebar {
     p:last-child {
       margin-bottom: 0;
     }
+    &.index_click_box {
+      margin-top: 0.5em;
+    }
   }
   a {
     color: inherit;
     @include transition(color .5s);
   }
-  .aboutme_logo {
+  #aboutme-logo {
     float: left;
-    width: 2*$icon-link-btn-height*$icon-link-btn-font-size - 0.4em;
-    height: 2*$icon-link-btn-height*$icon-link-btn-font-size - 0.4em;
-    margin: 0.2em 0.5em 0 0.2em;
+    width: 2*$icon-link-btn-height*$icon-link-btn-font-size + 0.5em;
+    height: 2*$icon-link-btn-height*$icon-link-btn-font-size + 0.5em;
+    margin: 0.2em 0.2em 0 0.2em;
+
+    background-size: contain;
   }
-  img.feedly {
-    width: 30px;
-    height: 30px;
-    margin-bottom: -5px;
+  .sidebar-about {
+    line-height: 3.1em;
+    margin: 0 0.4em 0.5em 0.2em;
+    .fa-rss {
+      margin-left: 0.2em;
+    }
   }
-  .amazon-img{
-    @extend .title-smallthumb;
+  .feedly {
+    // with image
+    //width: 30px;
+    //height: 30px;
+    //margin-bottom: -5px;
+    //margin: 0em 0.2em -5px 0.2em;
+
+    // with css background
+    padding-top: 14px;
+    padding-right: 32px;
+    background-size: 30px 30px;
+    margin: 0 0.5em 0 0.6em;
   }
+  .amazon-img {
+    @extend .title-small-thumbnail;
+  }
+}
+
+#random-shuffle {
+  //margin-top: 0.5em;
+  line-height: 3em;
+}
+#random-link {
+  cursor: pointer;
+}
+#tag-cloud {
+  font-size: 0.8em;
+  a {
+    margin: 3px;
+    line-height: 32px;
+  }
+}
+.posts, #recent_posts {
+  margin-top: 0.5em;
 }
 .aside-alt-link {
   color: $sidebar-link-color-subdued;

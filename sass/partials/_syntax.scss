@@ -25,7 +25,7 @@ figure.code .highlight .line-numbers {
   line-height: $code-line-height;
 }
 
-figure.code, .gist-file, pre {
+figure.code, pre {
   //@include box-shadow(rgba(#000, .06) 0 0 1em);
   .highlight pre { @include box-shadow(none); }
 }
@@ -51,9 +51,6 @@ html .gist .gist-file {
     font-size: 1em;
     .file-data {
       font-size: 1em;
-    }
-    .gist-highlight {
-      background: $code-mainbg !important;
     }
     .highlight {
       font-size: $code-font-size;
@@ -218,7 +215,7 @@ p, li, td{
   div { .gd, .gd .x, .gi, .gi .x { display: inline-block; width: 100%; }}
 }
 
-.highlight, .gist-highlight {
+.highlight {
   pre { background: none; @include border-radius(0px); border: none; padding: 0; margin-bottom: 0; }
   margin-bottom: 1.8em;
   background: $code-mainbg;
@@ -229,7 +226,7 @@ p, li, td{
 $code-scroll-bg: $code-mainbg;
 $code-scroll-thumb: $code-subbg;
 
-pre, .highlight, .gist-highlight {
+pre, .highlightt {
   &::-webkit-scrollbar {  height: .5em; background: $code-scroll-bg; }
   &::-webkit-scrollbar-thumb:horizontal { background: $code-scroll-thumb;  -webkit-border-radius: 0.5em; border-radius: 0.5em }
 }

@@ -1,5 +1,4 @@
 {% if site.google_search_pub %}
-<div id='cse-search-form' style='width: 100%;'>Loading</div>
 <script src='//www.google.com/jsapi' type='text/javascript'></script>
 <script type='text/javascript'>
 google.load('search', '1', {language: '{%if site.google_search_lang%}{{site.google_search_lang}}{%else%}en{%endif%}', style: google.loader.themes.MINIMALIST});
@@ -11,7 +10,11 @@ google.setOnLoadCallback(function() {
   options.enableSearchboxOnly('{{site.google_result_page}}', '{%if site.google_search_query%}{{site.google_search_query}}{%else%}q{%endif%}');
   options.setAutoComplete(true);
   customSearchControl.draw('cse-search-form', options);
-  $(".gsc-search-button .gsc-search-button").val(eval("'\\uf00e'"));
+  var e = document.querySelectorAll(".gsc-search-button .gsc-search-button");
+  var i;
+  for(i=0;i<e.length;i++){
+    e[0].value = eval("'\\uf00e'");
+  }
 }, true);
 </script>
 {% endif %}
