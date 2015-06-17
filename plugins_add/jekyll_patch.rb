@@ -32,13 +32,13 @@ module Jekyll
       end
 
       payload = site_payload
-      #progressbar = ProgressBar.create(:title => "%-25s" % "render::posts-pages", :starting_at => 0,
-      #                                 :total => [posts, pages].flatten.size,
-      #                                 :format => '%t %a |%B| %p%')
+      progressbar = ProgressBar.create(:title => "%-25s" % "render::posts-pages", :starting_at => 0,
+                                       :total => [posts, pages].flatten.size,
+                                       :format => '%t %a |%B| %p%')
       #Parallel.map([posts, pages].flatten, :in_threads => self.config['n_cores'] ? self.config['n_cores'] : 1) do |page_or_post|
       [posts, pages].flatten.each { |page_or_post|
         page_or_post.render(layouts, payload)
-        #progressbar.increment
+        progressbar.increment
       }
     end
 
