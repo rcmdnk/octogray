@@ -3,12 +3,14 @@ require "ruby-progressbar"
 module Jekyll
   class Site
 
+    @@space = 35
+
     def diff_time(name, t_pre, t_now)
       t_diff = t_now - t_pre
       sec = t_diff % 60
       min = ((t_diff - sec) % 3600) / 60
       hour = (t_diff - sec - (min * 60)) / 3600
-      puts "%30s: %02d:%02d:%02d" % [name, hour, min, sec]
+      puts "%#{@@space}s: %02d:%02d:%02d" % [name, hour, min, sec]
     end
 
     def process
@@ -32,7 +34,7 @@ module Jekyll
       end
 
       payload = site_payload
-      progressbar = ProgressBar.create(:title => "%-25s" % "render::posts-pages", :starting_at => 0,
+      progressbar = ProgressBar.create(:title => "%#{@@space-5}s" % "render::posts-pages", :starting_at => 0,
                                        :total => [posts, pages].flatten.size,
                                        :format => '%t %a |%B| %p%')
       #Parallel.map([posts, pages].flatten, :in_threads => self.config['n_cores'] ? self.config['n_cores'] : 1) do |page_or_post|
