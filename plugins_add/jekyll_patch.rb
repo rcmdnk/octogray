@@ -39,7 +39,7 @@ module Jekyll
                                        :total => [posts, pages].flatten.size,
                                        :format => '%t %a |%B| %p%')
       Parallel.map([posts, pages].flatten, :in_threads => self.config['n_cores'] ? self.config['n_cores'] : 1) do |page_or_post|
-      [posts, pages].flatten.each do |page_or_post|
+      #[posts, pages].flatten.each do |page_or_post|
         page_or_post.render(layouts, payload)
         progressbar.increment
       end
