@@ -125,12 +125,12 @@ ln -s ../../.themes/octogray/.plugins/octopress-random-posts/source/_includes/po
 ln -s ../.themes/octogray/.plugins/octopress-random-posts/source/post_light.html ./source/_includes/
 ln -s ../../../../.themes/octogray/.plugins/octopress-random-posts/source/_includes/custom/asides/random_posts.html ./source/_includes/custom/asides/
 
-## [octopress-related-posts](https://github.com/rcmdnk/octopress-related-posts)
-ln -s ../.themes/octogray/.plugins/octopress-related-posts/plugins/related_posts.rb ./plugins/
-ln -s ../../.themes/octogray/.plugins/octopress-related-posts/sass/plugins/_related-posts.scss ./sass/plugins/
-ln -s ../../.themes/octogray/.plugins/octopress-related-posts/source/javascripts/related-posts.js ./source/javascripts/
-ln -s ../../../.themes/octogray/.plugins/octopress-related-posts/source/_includes/post/related_posts.html ./source/_includes/post/
-ln -s ../../../../.themes/octogray/.plugins/octopress-related-posts/source/_includes/custom/asides/related_posts.html ./source/_includes/custom/asides/
+## [related_posts-jekyll_plugin](https://github.com/rcmdnk/related_posts-jekyll_plugin)
+ln -s ../.themes/octogray/.plugins/related_posts-jekyll_plugin/plugins/related_posts.rb ./plugins/
+ln -s ../../.themes/octogray/.plugins/related_posts-jekyll_plugin/sass/plugins/_related-posts.scss ./sass/plugins/
+ln -s ../../.themes/octogray/.plugins/related_posts-jekyll_plugin/source/javascripts/related-posts.js ./source/javascripts/
+ln -s ../../../.themes/octogray/.plugins/related_posts-jekyll_plugin/source/_includes/post/related_posts.html ./source/_includes/post/
+ln -s ../../../../.themes/octogray/.plugins/related_posts-jekyll_plugin/source/_includes/custom/asides/related_posts.html ./source/_includes/custom/asides/
 
 ## [octopress-popular-posts](https://github.com/rcmdnk/octopress-popular-posts)
 ln -s ../.themes/octogray/.plugins/octopress-popular-posts/plugins/popular_posts.rb ./plugins/
