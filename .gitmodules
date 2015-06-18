@@ -43,3 +43,6 @@
 [submodule ".plugins/octopress-popular-posts"]
 	path = .plugins/octopress-popular-posts
 	url = https://github.com/rcmdnk/octopress-popular-posts.git
+[submodule ".plugins/related_posts-jekyll_plugin"]
+	path = .plugins/related_posts-jekyll_plugin
+	url = https://github.com/rcmdnk/related_posts-jekyll_plugin.git
