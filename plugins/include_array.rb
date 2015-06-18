@@ -41,10 +41,12 @@ module Jekyll
           raise "#{rtn} Include file '#{file}' contains invalid characters or sequences"
         end
 
-        Dir.chdir(includes_dir) do
-          choices = Dir['**/*']
-          if choices.include?(file)
-            source = File.read(file)
+        #Dir.chdir(includes_dir) do
+        file_inc = "#{includes_dir}/#{file}"
+        if File.directory?(includes_dir)
+          choices = Dir["#{includes_dir}/**/*"]
+          if choices.include?(file_inc)
+            source = File.read(file_inc)
             partial = Liquid::Template.parse(source)
             context.stack do
               if n_files_count == n_last_fixed
