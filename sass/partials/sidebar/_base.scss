@@ -49,14 +49,6 @@ aside.sidebar {
     color: inherit;
     @include transition(color .5s);
   }
-  #aboutme-logo {
-    float: left;
-    width: 2*$icon-link-btn-height*$icon-link-btn-font-size + 0.5em;
-    height: 2*$icon-link-btn-height*$icon-link-btn-font-size + 0.5em;
-    margin: 0.2em 0.2em 0 0.2em;
-
-    background-size: contain;
-  }
   .sidebar-about {
     line-height: 3.1em;
     margin: 0 0.4em 0.5em 0.2em;
@@ -82,23 +74,23 @@ aside.sidebar {
   }
 }
 
-#random-shuffle {
-  //margin-top: 0.5em;
-  line-height: 3em;
+#aboutme-logo {
+  float: left;
+  width: 2*$icon-link-btn-height*$icon-link-btn-font-size + 0.5em;
+  height: 2*$icon-link-btn-height*$icon-link-btn-font-size + 0.5em;
+  margin: 0.2em 0.2em 0 0.2em;
+
+  background-size: contain;
 }
-#random-link {
-  cursor: pointer;
-}
+
 #tag-cloud {
   font-size: 0.8em;
   a {
-    margin: 3px;
-    line-height: 32px;
+    margin: 2px;
+    line-height: 30px;
   }
 }
-.posts, #recent_posts {
-  margin-top: 0.5em;
-}
+
 .aside-alt-link {
   color: $sidebar-link-color-subdued;
   &:hover {
@@ -128,7 +120,7 @@ aside.sidebar {
         padding-bottom: .15em;
         @include border-bottom-right-radius(.3em);
         text-align: center;
-        background: $main-bg $noise-bg;
+        background: $main-bg;
         border-bottom: 1px solid $sidebar-border;
         border-right: 1px solid $sidebar-border;
         content: "\00BB";

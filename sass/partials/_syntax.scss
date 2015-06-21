@@ -11,7 +11,7 @@
 
 .highlight .line-numbers {
   text-align: right;
-  background: $code-subbg $noise-bg !important;
+  background: $code-subbg !important;
   border-right: 1px solid darken($code-mainbg, 2) !important;
   //@include box-shadow(lighten($code-subbg, 2) -1px 0 inset);
   //text-shadow: darken($code-subbg, 10) 0 -1px;
@@ -68,7 +68,7 @@ html .gist .gist-file {
     color: $code-subcolor;
     font-size: 0.8em !important;
     //line-height: $code-line-height;
-    background: $code-subbg $noise-bg;
+    background: $code-subbg;
     @extend .sans;
     a {
       color: mix($code-color, $code-subcolor) !important;
@@ -96,7 +96,7 @@ html div.gist div.gist-file td.line-data pre.line-pre {
 }
 
 pre {
-  background: $pre-bg $noise-bg;
+  background: $pre-bg;
   //@include border-radius(.4em);
   @extend .mono;
   border: 1px solid $pre-border;
@@ -142,7 +142,7 @@ p, li, td{
   padding: .8em;
   overflow-x: auto;
   line-height: $code-line-height;
-  background: $code-mainbg $noise-bg !important;
+  background: $code-mainbg !important;
   color: $code-color !important;
   //span { color: $code-color !important; }
   span { font-style: normal !important; font-weight: normal !important; }
