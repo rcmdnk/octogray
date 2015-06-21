@@ -13,13 +13,10 @@ single: true
       {% include custom/footertop.html %}
       <p class="meta">
         {% include post/author.html %}
-        {% include post/date.html %}{{ time }}{% if updated %}{{ updated }} Updated.{% endif %}
+        {% date_html Posted: %}{% date_updated_html Updated: %}
         {% include post/categories.html %}
         {% include post/tags.html %}
       </p>
-      {% unless site.related_posts == false %}
-      {% include post/related_posts.html %}
-      {% endunless %}
       {% unless page.sharing == false %}
       {% unless site.share_official == false %}
       {% include post/sharing.html %}
@@ -48,6 +45,9 @@ single: true
   {% if site.linkwithin_show == true and page.footer != false %}
   {% include linkwithin.html %}
   {% endif %}
+  {% unless site.related_posts == false %}
+  {% include post/related_posts.html %}
+  {% endunless %}
   {% include custom/endofpost.html %}
 </div><!-- post -->
 {% unless page.sidebar == false %}
