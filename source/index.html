@@ -8,7 +8,7 @@ footer: false
   {% include custom/pagetop.html %}
   {% for post in paginator.posts %}
   {% assign content = post.content %}
-  <article itemscope itemtype="http://schema.org/BlogPosting">
+  <article class="index-article" itemscope itemtype="http://schema.org/BlogPosting">
     {% include article.html %}
   </article>
   {% endfor %}

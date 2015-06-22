@@ -70,7 +70,7 @@ share_all: true
           }
         );
         for (var i=0;i<elements.length;i++) {
-          document.getElementById("posts").appendChild(elements[i]);
+          document.getElementsByClassName("posts")[0].appendChild(elements[i]);
         }
       };
     });

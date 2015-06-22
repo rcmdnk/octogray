@@ -4,7 +4,7 @@ single: true
 ---
 
 <div><!-- post -->
-  <article class="hentry" role="article" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+  <article role="article" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
     {% include custom/pagetop.html %}
     <!-- google_ad_section_start -->
     {% include article.html %}
@@ -14,8 +14,11 @@ single: true
       <p class="meta">
         {% include post/author.html %}
         {% date_html Posted: %}{% date_updated_html Updated: %}
+        {% comment %}
         {% include post/categories.html %}
         {% include post/tags.html %}
+        {% endcomment %}
+        {% include post/breadcrumbs.html %}
       </p>
       {% unless page.sharing == false %}
       {% unless site.share_official == false %}

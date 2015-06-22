@@ -58,12 +58,38 @@ $(function(){
   }
 });
 
-$(function(){
-  $(".index_click_box").click(function(){
-    window.location=$(this).find(".click_box_link").eq(-1).attr("href");
-    return false;
+var index_click_box = function() {
+  var url = this.getElementsByClassName("click_box_link")[0].href
+  var p = this.parentNode
+  var name = p.id;
+  if (typeof name == "undefined"){
+    name = p.classList[0];
+  }
+  if (typeof name != "undefined"){
+    ga('send', 'event', "click_box", name, url);
+  }
+  window.location = url
+  return false;
+};
+var add_index_click_box_link = function() {
+  [].forEach.call(document.getElementsByClassName('index_click_box'), function(b) {
+    b.onclick = function() {
+      var url = this.getElementsByClassName("click_box_link")[0].href
+      var p = this.parentNode
+      var name = p.id;
+      if (typeof name == "undefined" || name == ""){
+        name = p.classList[0];
+      }
+      if (typeof name == "undefined" || name == ""){
+        name = "no id or class";
+      }
+      ga('send', 'event', "click_box", name, url);
+      window.location = url
+      return false;
+    };
   });
-});
+};
+document.addEventListener('DOMContentLoaded', add_index_click_box_link);
 
 // Open outside links with other window
 $(function(){
