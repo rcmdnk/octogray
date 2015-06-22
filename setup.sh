@@ -127,7 +127,7 @@ ln -s ../../../../.themes/octogray/.plugins/octopress-random-posts/source/_inclu
 
 ## [related_posts-jekyll_plugin](https://github.com/rcmdnk/related_posts-jekyll_plugin)
 ln -s ../.themes/octogray/.plugins/related_posts-jekyll_plugin/plugins/related_posts.rb ./plugins/
-ln -s ../../.themes/octogray/.plugins/related_posts-jekyll_plugin/sass/plugins/_related-posts.scss ./sass/plugins/
+#ln -s ../../.themes/octogray/.plugins/related_posts-jekyll_plugin/sass/plugins/_related-posts.scss ./sass/plugins/ # included in octogray's scss
 ln -s ../../.themes/octogray/.plugins/related_posts-jekyll_plugin/source/javascripts/related-posts.js ./source/javascripts/
 ln -s ../../../.themes/octogray/.plugins/related_posts-jekyll_plugin/source/_includes/post/related_posts.html ./source/_includes/post/
 ln -s ../../../../.themes/octogray/.plugins/related_posts-jekyll_plugin/source/_includes/custom/asides/related_posts.html ./source/_includes/custom/asides/
