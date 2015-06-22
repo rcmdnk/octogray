@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
 
-yes=0
-if [ "$1" = "-y" ] || [ "$1" = "--yes" ];then
-  yes=1
-fi
+yes=false
+link=false
+
+OPTNUM=0
+while getopts yl OPT;do
+  ((OPTNUM++))
+  case $OPT in
+    "y" ) yes=true ;;
+    "l" ) link=true ;;
+  esac
+done
+shift $((OPTIND - 1))
 
 if [ ! -f _config.yml ];then
   echo "please call setup.sh from the top directory of octopress."
@@ -14,7 +22,7 @@ echo
 # yes/no helper function
 function yesno () {
   echo -n "$1 [y/n]: "
-  if [ $yes -eq 1 ];then
+  if $yes;then
     echo "y"
     return 0
   fi
@@ -30,6 +38,23 @@ function yesno () {
         ;;
     esac
   done
+}
+
+# copy
+function copy_link () {
+  orig=".themes/octogray/.plugins/$1"
+  dir="${1#*/}"
+  if [ $# -gt 2 ];then
+    dir="$2"
+  fi
+  if $link;then
+    for((i=0; i<$(echo "$dir"|sed "s/^.\///"|sed "s/\/$//"|awk '{print split($0, tmp, "/")}'); i++));do
+      repo="../$repo"
+    done
+    ln -s "$orig" "$dir/"
+  else
+    cp "$orig" "$dir/"
+  fi
 }
 
 # sed nobackup replace function
@@ -98,80 +123,80 @@ cd ../../
 ## install submodules
 
 ## [Octopress-Slideshare-Plugin](https://github.com/petehamilton/Octopress-Slideshare-Plugin)
-ln -s ../.themes/octogray/.plugins/Octopress-Slideshare-Plugin/slideshare.rb ./plugins/
+copy_link Octopress-Slideshare-Plugin/slideshare.rb plugins
 
 ## [footnote-inline](http://rcmdnk.github.io/blog/2013/10/12/blog-octopress/)
-ln -s ../.themes/octogray/.plugins/footnote-inline/plugins/footnote_inline.rb ./plugins/
-ln -s ../../.themes/octogray/.plugins/footnote-inline/source/javascripts/footnote.js ./source/javascripts/
-ln -s ../../.themes/octogray/.plugins/footnote-inline/sass/plugins/_footnote.scss ./sass/plugins/
+copy_link footnote-inline/plugins/footnote_inline.rb
+copy_link footnote-inline/source/javascripts/footnote.js
+copy_link footnote-inline/sass/plugins/_footnote.scss
 
 ## [jekyll-var-to-js](https://github.com/rcmdnk/jekyll-var-to-js)
-ln -s ../.themes/octogray/.plugins/jekyll-var-to-js/plugins/jekyll-var-to-js.rb ./plugins/
+copy_link jekyll-var-to-js/plugins/jekyll-var-to-js.rb
 
 ## [octopress-share-numbers](https://github.com/rcmdnk/octopress-share-numbers)
-ln -s ../.themes/octogray/.plugins/octopress-share-numbers/plugins/share-numbers.rb ./plugins/
-ln -s ../../.themes/octogray/.plugins/octopress-share-numbers/sass/plugins/_share-numbers.scss ./sass/plugins/
-ln -s ../../.themes/octogray/.plugins/octopress-share-numbers/source/javascripts/share-custom.js ./source/javascripts/
-ln -s ../../../.themes/octogray/.plugins/octopress-share-numbers/source/_includes/post/sharing.html ./source/_includes/post/
-ln -s ../../../.themes/octogray/.plugins/octopress-share-numbers/source/_includes/post/sharing_all.html ./source/_includes/post/
-ln -s ../../../.themes/octogray/.plugins/octopress-share-numbers/source/_includes/post/sharing_custom.html ./source/_includes/post/
+copy_link octopress-share-numbers/plugins/share-numbers.rb
+copy_link octopress-share-numbers/sass/plugins/_share-numbers.scss
+copy_link octopress-share-numbers/source/javascripts/share-custom.js
+copy_link octopress-share-numbers/source/_includes/post/sharing.html
+copy_link octopress-share-numbers/source/_includes/post/sharing_all.html
+copy_link octopress-share-numbers/source/_includes/post/sharing_custom.html
 
 ## [octopress-random-posts](https://github.com/rcmdnk/octopress-random-posts)
-ln -s ../.themes/octogray/.plugins/octopress-random-posts/plugins/random_posts.rb ./plugins/
-ln -s ../../.themes/octogray/.plugins/octopress-random-posts/sass/plugins/_random-posts.scss ./sass/plugins/
-ln -s ../../.themes/octogray/.plugins/octopress-random-posts/source/javascripts/random-posts.js ./source/javascripts/
-ln -s ../../.themes/octogray/.plugins/octopress-random-posts/source/javascripts/random-posts-html.js ./source/javascripts/
-ln -s ../../.themes/octogray/.plugins/octopress-random-posts/source/_includes/post_list.html ./source/_includes/
-ln -s ../.themes/octogray/.plugins/octopress-random-posts/source/post_light.html ./source/_includes/
-ln -s ../../../../.themes/octogray/.plugins/octopress-random-posts/source/_includes/custom/asides/random_posts.html ./source/_includes/custom/asides/
+copy_link octopress-random-posts/plugins/random_posts.rb
+copy_link octopress-random-posts/sass/plugins/_random-posts.scss
+copy_link octopress-random-posts/source/javascripts/random-posts.js
+copy_link octopress-random-posts/source/javascripts/random-posts-html.js
+copy_link octopress-random-posts/source/_includes/post_list.html
+copy_link octopress-random-posts/source/post_light.html
+copy_link octopress-random-posts/source/_includes/custom/asides/random_posts.html
 
 ## [related_posts-jekyll_plugin](https://github.com/rcmdnk/related_posts-jekyll_plugin)
-ln -s ../.themes/octogray/.plugins/related_posts-jekyll_plugin/plugins/related_posts.rb ./plugins/
-#ln -s ../../.themes/octogray/.plugins/related_posts-jekyll_plugin/sass/plugins/_related-posts.scss ./sass/plugins/ # included in octogray's scss
-ln -s ../../.themes/octogray/.plugins/related_posts-jekyll_plugin/source/javascripts/related-posts.js ./source/javascripts/
-ln -s ../../../.themes/octogray/.plugins/related_posts-jekyll_plugin/source/_includes/post/related_posts.html ./source/_includes/post/
-ln -s ../../../../.themes/octogray/.plugins/related_posts-jekyll_plugin/source/_includes/custom/asides/related_posts.html ./source/_includes/custom/asides/
+copy_link related_posts-jekyll_plugin/plugins/related_posts.rb
+copy_link related_posts-jekyll_plugin/sass/plugins/_related-posts.scss
+copy_link related_posts-jekyll_plugin/source/javascripts/related-posts.js
+copy_link related_posts-jekyll_plugin/source/_includes/post/related_posts.html
+copy_link related_posts-jekyll_plugin/source/_includes/custom/asides/related_posts.html
 
 ## [octopress-popular-posts](https://github.com/rcmdnk/octopress-popular-posts)
-ln -s ../.themes/octogray/.plugins/octopress-popular-posts/plugins/popular_posts.rb ./plugins/
-ln -s ../.themes/octogray/.plugins/octopress-popular-posts/octopress-page-view/plugins/page_view.rb ./plugins/
-ln -s ../../../../.themes/octogray/.plugins/octopress-popular-posts/source/_includes/custom/asides/popular_posts.html ./source/_includes/custom/asides/
+copy_link octopress-popular-posts/plugins/popular_posts.rb
+copy_link octopress-popular-posts/octopress-page-view/plugins/page_view.rb
+copy_link octopress-popular-posts/source/_includes/custom/asides/popular_posts.html
 
 ## [octopress-thumbnail](https://github.com/rcmdnk/octopress-thumbnail)
-ln -s ../.themes/octogray/.plugins/octopress-thumbnail/plugins/thumbnail.rb ./plugins/
-ln -s ../../.themes/octogray/.plugins/octopress-thumbnail/sass/plugins/_thumbnail.scss ./sass/plugins/
+copy_link octopress-thumbnail/plugins/thumbnail.rb
+copy_link octopress-thumbnail/sass/plugins/_thumbnail.scss
 
 ## [octopress-postscript](https://github.com/rcmdnk/octopress-postscript)
-ln -s ../.themes/octogray/.plugins/octopress-postscript/plugins/postscript.rb ./plugins/
-ln -s ../../.themes/octogray/.plugins/octopress-postscript/sass/plugins/_postscript.scss ./sass/plugins/
+copy_link octopress-postscript/plugins/postscript.rb
+copy_link octopress-postscript/sass/plugins/_postscript.scss
 
 ## [jquery--ex-flex-fiex](http://github.com/cyokodog/jquery.ex-flex-fixed)
-ln -s ../../.themes/octogray/.plugins/jquery.ex-flex-fixed/jquery.exflexfixed-0.3.0.js ./source/javascripts/
+copy_link jquery.ex-flex-fixed/jquery.exflexfixed-0.3.0.js source/javascripts
 
 ## [keyboardkey](http://rcmdnk.github.io/blog/2013/06/19/blog-octopress/)
-ln -s ../.themes/octogray/.plugins/keyboardkey/plugins/keyboardkey.rb ./plugins/
-ln -s ../../.themes/octogray/.plugins/keyboardkey/sass/plugins/_keyboardkey.scss ./sass/plugins/
+copy_link keyboardkey/plugins/keyboardkey.rb
+copy_link keyboardkey/sass/plugins/_keyboardkey.scss
 
 ## [monthly-archive](http://rcmdnk.github.io/blog/2013/10/01/blog-octopress/)
-ln -s ../.themes/octogray/.plugins/monthly-archive/plugins/monthly_archive.rb ./plugins/
-ln -s ../.themes/octogray/.plugins/monthly-archive/plugins/monthly_generator.rb ./plugins/
-ln -s ../../.themes/octogray/.plugins/monthly-archive/source/_layouts/monthly_index.html ./source/_layouts/
-ln -s ../../../../.themes/octogray/.plugins/monthly-archive/source/_includes/custom/asides/monthly_archive.html ./source/_includes/custom/asides/
-ln -s ../../.themes/octogray/.plugins/monthly-archive/source/javascripts/monthly_archive.js ./source/javascripts/
-ln -s ../../.themes/octogray/.plugins/monthly-archive/sass/plugins/_monthly_archive.scss ./sass/plugins/
+copy_link monthly-archive/plugins/monthly_archive.rb
+copy_link monthly-archive/plugins/monthly_generator.rb
+copy_link monthly-archive/source/_layouts/monthly_index.html
+copy_link monthly-archive/source/_includes/custom/asides/monthly_archive.html
+copy_link monthly-archive/source/javascripts/monthly_archive.js
+copy_link monthly-archive/sass/plugins/_monthly_archive.scss
 
 ## [octopress-gemoji](http://rcmdnk.github.io/blog/2013/09/28/blog-octopress/)
-ln -s ../.themes/octogray/.plugins/octopress-gemoji/plugins/gemoji.rb ./plugins/
-ln -s ../../.themes/octogray/.plugins/octopress-gemoji/sass/plugins/_gemoji.scss ./sass/plugins/
+copy_link octopress-gemoji/plugins/gemoji.rb
+copy_link octopress-gemoji/sass/plugins/_gemoji.scss
 
 ## [octopress-responsive-video-embed](https://github.com/optikfluffel/octopress-responsive-video-embed)
-ln -s ../.themes/octogray/.plugins/octopress-responsive-video-embed/vimeo.rb ./plugins/
-ln -s ../.themes/octogray/.plugins/octopress-responsive-video-embed/youtube.rb ./plugins/
-ln -s ../../.themes/octogray/.plugins/octopress-responsive-video-embed/_rve.scss ./sass/plugins/
+copy_link octopress-responsive-video-embed/vimeo.rb plugins
+copy_link octopress-responsive-video-embed/youtube.rb plugins
+copy_link octopress-responsive-video-embed/_rve.scss sass/plugins
 
 ## [githubrepo-octopress](https://github.com/sotsy/githubrepo-octopress)
-ln -s ../.themes/octogray/.plugins/githubrepo-octopress/githubwidget.rb ./plugins/
-ln -s ../../.themes/octogray/.plugins/GitHub-jQuery-Repo-Widget/jquery.githubRepoWidget.min.js ./source/javascripts/
+copy_link githubrepo-octopress/githubwidget.rb plugins
+copy_link GitHub-jQuery-Repo-Widget/jquery.githubRepoWidget.min.js source/javascripts
 
 # install downloaded plugins
 
@@ -201,7 +226,6 @@ echo
 for p in .themes/octogray/plugins_add/*rb;do
   ln -s "../${p}" ./plugins/
 done
-
 
 # other files
 cp .themes/octogray/ping.yml .

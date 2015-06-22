@@ -1,5 +1,5 @@
 diff --git a/Rakefile b/Rakefile
-index 9367ea1..2b58ec3 100644
+index 9367ea1..943e3ee 100644
 --- a/Rakefile
 +++ b/Rakefile
 @@ -1,6 +1,7 @@
@@ -44,7 +44,7 @@ index 9367ea1..2b58ec3 100644
  server_port     = "4000"      # port for preview server eg. localhost:4000
 +word_avoid      = "~/.gitavoid"  # words which must be avoided to be published
 +ping_file       = "ping.yml"  # file of site list for ping
-+js_for_combine  = ['footnote.js', 'jquery.githubRepoWidget.min.js', 'monthly_archive.js', 'utils.js', 'random-posts.js']
++js_for_combine  = ['footnote.js', 'jquery.githubRepoWidget.min.js', 'monthly_archive.js', 'random-posts.js', 'related-posts.js', 'utils.js']
 +js_output       = "all.js"
 +js_minify_others = false
 +#html_for_minify = "all"
@@ -62,7 +62,7 @@ index 9367ea1..2b58ec3 100644
  end
  
  desc "Initial setup for Octopress: copies the default theme into the path of Jekyll's generator. Rake install defaults to rake install[classic] to install a different theme run rake install[some_theme_name]"
-@@ -52,12 +72,82 @@ end
+@@ -52,12 +72,117 @@ end
  # Working with Jekyll #
  #######################
  
@@ -83,7 +83,11 @@ index 9367ea1..2b58ec3 100644
 +desc "Generate jekyll site"
 +task :generate, :opt do |t, args|
 +  raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
-+  if precheck
++
++  opt = args.opt ? args.opt : ""
++  p opt
++
++  if precheck and not opt.include?('test')
 +    Rake::Task[:check].invoke()
 +  end
 +
@@ -91,22 +95,44 @@ index 9367ea1..2b58ec3 100644
 -  system "compass compile --css-dir #{source_dir}/stylesheets"
 -  system "jekyll build"
 +
-+  jekyll_opt = Rake.application.options.trace ? "--trace" : ""
-+  if args.opt and args.opt.include?("unpublished")
++  jekyll_opt = ""
++  if Rake.application.options.trace or opt.include?('test')
++    jekyll_opt = "--trace"
++  end
++  if opt.include?("unpublished") or opt.include?('test')
 +    jekyll_opt += " --unpublished"
 +  end
++
++  if opt.include?('test')
++    jekyll_config = IO.read('_config.yml')
++    jekyll_config += "\nshare_static: false # OCTOPRESS_TEST"
++    jekyll_config += "\npage-view: false # OCTOPRESS_TEST"
++    File.open('_config.yml', 'w') do |f|
++      f.write jekyll_config
++    end
++  end
++
 +  ok_failed_raise system("jekyll build #{jekyll_opt}")
 +
-+  Rake::Task[:css].execute
-+  Rake::Task[:minify_js].execute
++  if args.opt.include?('test')
++    jekyll_config = IO.read('_config.yml')
++    jekyll_config.gsub!(/\n^.*OCTOPRESS_TEST$/, "")
++    File.open('_config.yml', 'w') do |f|
++      f.write jekyll_config
++    end
++  end
 +
-+  # Replace common words
 +  Rake::Task[:common].execute
 +
-+  # Compress
-+  if not args.opt or not args.opt.include?('no_minify')
-+    Rake::Task[:minify_html].execute
++  if not args.opt.include?('test')
++    Rake::Task[:css].execute
++    Rake::Task[:minify_js].invoke('force')
++
++    if not args.opt.include?('no_minify')
++      Rake::Task[:minify_html].execute
++    end
 +  end
++
 +  system "rm -f .integrated"
 +  system "rm -f .preview-mode"
 +end
@@ -114,6 +140,15 @@ index 9367ea1..2b58ec3 100644
 +desc "Same as generate"
 +task :gen, :opt do |t, args|
 +  Rake::Task[:generate].invoke(args.opt)
++end
++
++desc "Generate test (no css, js compiling)"
++task :gen_test, :opt do |t, args|
++  Rake::Task[:generate].invoke('test')
++end
++desc "Same as gen_test"
++task :gt, :opt do |t, args|
++  Rake::Task[:gen_test].invoke()
 +end
 +
 +# usage rake generate_only[my-post]
@@ -128,7 +163,7 @@ index 9367ea1..2b58ec3 100644
 +    end
 +
 +    Rake::Task[:isolate].invoke(args.filename)
-+    Rake::Task[:generate].invoke("unpublished no_minify")
++    Rake::Task[:generate].invoke('test')
 +
 +    puts "## Restoring stashed posts/pages"
 +    Rake::Task[:integrate].execute
@@ -149,7 +184,7 @@ index 9367ea1..2b58ec3 100644
  end
  
  desc "Watch the site and regenerate when it changes"
-@@ -65,34 +155,67 @@ task :watch do
+@@ -65,34 +190,67 @@ task :watch do
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
    puts "Starting to watch source with Jekyll and Compass."
    system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
@@ -221,7 +256,7 @@ index 9367ea1..2b58ec3 100644
  # usage rake new_post[my-new-post] or rake new_post['my new post'] or rake new_post (defaults to "new-post")
  desc "Begin a new post in #{source_dir}/#{posts_dir}"
  task :new_post, :title do |t, args|
-@@ -102,20 +225,37 @@ task :new_post, :title do |t, args|
+@@ -102,20 +260,37 @@ task :new_post, :title do |t, args|
      title = get_stdin("Enter a title for your post: ")
    end
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
@@ -260,7 +295,7 @@ index 9367ea1..2b58ec3 100644
    end
  end
  
-@@ -125,8 +265,10 @@ task :new_page, :filename do |t, args|
+@@ -125,8 +300,10 @@ task :new_page, :filename do |t, args|
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
    args.with_defaults(:filename => 'new-page')
    page_dir = [source_dir]
@@ -272,7 +307,7 @@ index 9367ea1..2b58ec3 100644
      title = filename
      page_dir.concat($1.downcase.sub(/^\//, '').split('/')) unless $1.nil?  # Add path to page_dir Array
      if extension.nil?
-@@ -147,10 +289,12 @@ task :new_page, :filename do |t, args|
+@@ -147,10 +324,12 @@ task :new_page, :filename do |t, args|
        page.puts "---"
        page.puts "layout: page"
        page.puts "title: \"#{title}\""
@@ -285,7 +320,7 @@ index 9367ea1..2b58ec3 100644
        page.puts "---"
      end
    else
-@@ -161,21 +305,49 @@ end
+@@ -161,21 +340,49 @@ end
  # usage rake isolate[my-post]
  desc "Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly."
  task :isolate, :filename do |t, args|
@@ -342,7 +377,7 @@ index 9367ea1..2b58ec3 100644
  end
  
  desc "Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom"
-@@ -215,8 +387,14 @@ end
+@@ -215,8 +422,14 @@ end
  ##############
  
  desc "Default deploy task"
@@ -359,7 +394,7 @@ index 9367ea1..2b58ec3 100644
    if File.exists?(".preview-mode")
      puts "## Found posts in preview mode, regenerating files ..."
      File.delete(".preview-mode")
-@@ -224,11 +402,32 @@ task :deploy do
+@@ -224,11 +437,32 @@ task :deploy do
    end
  
    Rake::Task[:copydot].invoke(source_dir, public_dir)
@@ -394,7 +429,7 @@ index 9367ea1..2b58ec3 100644
  end
  
  desc "copy dot files for deployment"
-@@ -265,54 +464,85 @@ multitask :push do
+@@ -265,54 +499,85 @@ multitask :push do
      puts "\n## Committing: #{message}"
      system "git commit -m \"#{message}\""
      puts "\n## Pushing generated #{deploy_dir} website"
@@ -498,7 +533,7 @@ index 9367ea1..2b58ec3 100644
      repo_url = get_stdin("Repository url: ")
    end
    protocol = (repo_url.match(/(^git)@/).nil?) ? 'https' : 'git'
-@@ -322,7 +552,9 @@ task :setup_github_pages, :repo do |t, args|
+@@ -322,7 +587,9 @@ task :setup_github_pages, :repo do |t, args|
      user = repo_url.match(/github\.com\/([^\/]+)/)[1]
    end
    branch = (repo_url.match(/\/[\w-]+\.github\.(?:io|com)/).nil?) ? 'gh-pages' : 'master'
@@ -509,7 +544,7 @@ index 9367ea1..2b58ec3 100644
    unless (`git remote -v` =~ /origin.+?octopress(?:\.git)?/).nil?
      # If octopress is still the origin remote (from cloning) rename it to octopress
      system "git remote rename origin octopress"
-@@ -330,40 +562,75 @@ task :setup_github_pages, :repo do |t, args|
+@@ -330,40 +597,75 @@ task :setup_github_pages, :repo do |t, args|
        # If this is a user/organization pages repository, add the correct origin remote
        # and checkout the source branch for committing changes to the blog source.
        system "git remote add origin #{repo_url}"
@@ -605,7 +640,7 @@ index 9367ea1..2b58ec3 100644
  end
  
  def ok_failed(condition)
-@@ -379,9 +646,22 @@ def get_stdin(message)
+@@ -379,9 +681,22 @@ def get_stdin(message)
    STDIN.gets.chomp
  end
  
@@ -630,7 +665,7 @@ index 9367ea1..2b58ec3 100644
    else
      answer = get_stdin(message)
    end
-@@ -404,3 +684,280 @@ task :list do
+@@ -404,3 +719,350 @@ task :list do
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end
@@ -710,6 +745,70 @@ index 9367ea1..2b58ec3 100644
 +  end
 +end
 +
++#desc 'Ping pingomatic'
++#task :ping do
++#  begin
++#    require 'xmlrpc/client'
++#    puts '* Pinging ping-o-matic'
++#    XMLRPC::Client.new('rpc.pingomatic.com', '/').call('weblogUpdates.extendedPing', 'Nothoughtcontrol.com' , 'http://www.nothoughtcontrol.com', 'http://www.nothoughtcontrol.com/atom.xml')
++#  rescue LoadError
++#    puts '! Could not ping ping-o-matic, because XMLRPC::Client could not be found.'
++#  end
++#end
++#
++#desc 'Notify Google of the new sitemap'
++#task :sitemapgoogle do
++#  begin
++#    require 'net/http'
++#    require 'uri'
++#    puts '* Pinging Google about our sitemap'
++#    Net::HTTP.get('www.google.com', '/webmasters/tools/ping?sitemap=' + URI.escape('http://www.nothoughtcontrol.com/sitemap.xml'))
++#  rescue LoadError
++#    puts '! Could not ping Google about our sitemap, because Net::HTTP or URI could not be found.'
++#  end
++#end
++#
++#desc 'Notify Bing of the new sitemap'
++#task :sitemapbing do
++#  begin
++#    require 'net/http'
++#    require 'uri'
++#    puts '* Pinging Bing about our sitemap'
++#    Net::HTTP.get('www.bing.com', '/webmaster/ping.aspx?siteMap=' + URI.escape('http://www.nothoughtcontrol.com/sitemap.xml'))
++#  rescue LoadError
++#    puts '! Could not ping Bing about our sitemap, because Net::HTTP or URI could not be found.'
++#  end
++#end
++#
++#desc "Notify various services about new content"
++#task :notify => [:pingomatic, :sitemapgoogle, :sitemapbing] do
++#end
++#
++
++#desc 'Ping PINGOO'
++#task :ping do
++#  begin
++#    require 'xmlrpc/client'
++#    puts '* Pinging PINGOO{'
++#    XMLRPC::Client.new('pingoo.jp', '/').call('weblogUpdates.extendedPing', 'rcmdnk.github.io' , 'http://rcmdnk.github.io', 'http://rcmdnk.github.io/atom.xml')
++#  rescue LoadError
++#    puts '! Could not ping PINGOO, because XMLRPC::Client could not be found.'
++#  end
++#end
++
++#desc 'Ping pingomatic'
++#task :ping do
++#  begin
++#    require 'xmlrpc/client'
++#    puts '## Pinging PINGOO'
++#    #XMLRPC::Client.new('rpc.pingomatic.com', '/').call('weblogUpdates.extendedPing', 'rcmdnk\'s blog' , 'http://rcmdnk.github.io', 'http://rcmdnk.github.io/atom.xml')
++#    XMLRPC::Client.new2('http://api.my.yahoo.co.jp/RPC2').call('weblogUpdates.ping', 'rcmdnk blog' , 'http://rcmdnk.github.io')
++#  rescue LoadError
++#    puts '! Could not ping ping-o-matic, because XMLRPC::Client could not be found.'
++#  end
++#end
++#
++
 +#-- sending ping --#
 +desc "Send ping to Web Search Engines"
 +task :ping do
@@ -769,20 +868,19 @@ index 9367ea1..2b58ec3 100644
 +end
 +
 +desc "Minify JS"
-+task :minify_js do
++task :minify_js, :opt do |t, args|
 +  puts "## Minifying JS"
-+  Rake::Task[:combine_js].execute
++  Rake::Task[:combine_js].invoke(args.opt)
 +  if js_minify_others
-+    Rake::Task[:minify_other_js].execute
++    Rake::Task[:minify_other_js].invoke(args.opt)
 +  end
 +end
 +
-+
 +desc "Minify JS and combine"
-+task :combine_js do
++task :combine_js, :opt do |t, args|
 +  puts "## Combining JS"
 +  compressor = YUI::JavaScriptCompressor.new
-+  if File.exist?("#{source_dir}/javascripts/#{js_output}")
++  if not args.opt == nil and (not args.opt and File.exist?("#{source_dir}/javascripts/#{js_output}"))
 +    t_alljs = File.mtime("#{source_dir}/javascripts/#{js_output}")
 +    time_check = false
 +    js_for_combine.each do |j|
@@ -799,14 +897,18 @@ index 9367ea1..2b58ec3 100644
 +  output = File.open("#{source_dir}/javascripts/#{js_output}", "w")
 +  js_for_combine.each do |j|
 +    input = File.read("#{source_dir}/javascripts/#{j}")
-+    output << compressor.compress(input)
++    if args.opt == nil or args.opt.include?("no")
++      output << input
++    else
++      output << compressor.compress(input)
++    end
 +  end
 +  output.close
 +  cp_r "#{source_dir}/javascripts/#{js_output}", "#{public_dir}/javascripts/"
 +end
 +
 +desc "Minify other JS"
-+task :minify_other_js do
++task :minify_other_js, :opt do |t, args|
 +  puts "## Minifying other JS"
 +  n = 0
 +  compressor = YUI::JavaScriptCompressor.new
@@ -819,7 +921,7 @@ index 9367ea1..2b58ec3 100644
 +    name = j.split('/')[-1]
 +    compressed = dir + "/compressed/" + name
 +    if File.directory?(dir+"/compressed/")
-+      if File.file?(compressed) and File.mtime(compressed) > File.mtime(j)
++      if not args.opt == nil and (not args.opt and File.file?(compressed) and File.mtime(compressed) > File.mtime(j))
 +        next
 +      end
 +    else
@@ -829,7 +931,11 @@ index 9367ea1..2b58ec3 100644
 +    puts "Minifying #{j}"
 +    input = File.read(j)
 +    output = File.open(compressed, "w")
-+    output << compressor.compress(input)
++    if args.opt and args.opt.include?("no")
++      output << input
++    else
++      output << compressor.compress(input)
++    end
 +    output.close
 +    n+=1
 +  end
@@ -910,4 +1016,3 @@ index 9367ea1..2b58ec3 100644
 +  end
 +  rm_rf common_dir
 +end
-+

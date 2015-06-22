@@ -36,7 +36,7 @@ new_page_ext    = "markdown"  # default new page file extension when using the n
 server_port     = "4000"      # port for preview server eg. localhost:4000
 word_avoid      = "~/.gitavoid"  # words which must be avoided to be published
 ping_file       = "ping.yml"  # file of site list for ping
-js_for_combine  = ['footnote.js', 'jquery.githubRepoWidget.min.js', 'monthly_archive.js', 'utils.js', 'random-posts.js']
+js_for_combine  = ['footnote.js', 'jquery.githubRepoWidget.min.js', 'monthly_archive.js', 'random-posts.js', 'related-posts.js', 'utils.js']
 js_output       = "all.js"
 js_minify_others = false
 #html_for_minify = "all"
@@ -87,28 +87,54 @@ end
 desc "Generate jekyll site"
 task :generate, :opt do |t, args|
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
-  if precheck
+
+  opt = args.opt ? args.opt : ""
+  p opt
+
+  if precheck and not opt.include?('test')
     Rake::Task[:check].invoke()
   end
 
   puts "## Generating Site with Jekyll"
 
-  jekyll_opt = Rake.application.options.trace ? "--trace" : ""
-  if args.opt and args.opt.include?("unpublished")
+  jekyll_opt = ""
+  if Rake.application.options.trace or opt.include?('test')
+    jekyll_opt = "--trace"
+  end
+  if opt.include?("unpublished") or opt.include?('test')
     jekyll_opt += " --unpublished"
   end
+
+  if opt.include?('test')
+    jekyll_config = IO.read('_config.yml')
+    jekyll_config += "\nshare_static: false # OCTOPRESS_TEST"
+    jekyll_config += "\npage-view: false # OCTOPRESS_TEST"
+    File.open('_config.yml', 'w') do |f|
+      f.write jekyll_config
+    end
+  end
+
   ok_failed_raise system("jekyll build #{jekyll_opt}")
 
-  Rake::Task[:css].execute
-  Rake::Task[:minify_js].execute
+  if args.opt.include?('test')
+    jekyll_config = IO.read('_config.yml')
+    jekyll_config.gsub!(/\n^.*OCTOPRESS_TEST$/, "")
+    File.open('_config.yml', 'w') do |f|
+      f.write jekyll_config
+    end
+  end
 
-  # Replace common words
   Rake::Task[:common].execute
 
-  # Compress
-  if not args.opt or not args.opt.include?('no_minify')
-    Rake::Task[:minify_html].execute
+  if not args.opt.include?('test')
+    Rake::Task[:css].execute
+    Rake::Task[:minify_js].invoke('force')
+
+    if not args.opt.include?('no_minify')
+      Rake::Task[:minify_html].execute
+    end
   end
+
   system "rm -f .integrated"
   system "rm -f .preview-mode"
 end
@@ -116,6 +142,15 @@ end
 desc "Same as generate"
 task :gen, :opt do |t, args|
   Rake::Task[:generate].invoke(args.opt)
+end
+
+desc "Generate test (no css, js compiling)"
+task :gen_test, :opt do |t, args|
+  Rake::Task[:generate].invoke('test')
+end
+desc "Same as gen_test"
+task :gt, :opt do |t, args|
+  Rake::Task[:gen_test].invoke()
 end
 
 # usage rake generate_only[my-post]
@@ -130,7 +165,7 @@ task :generate_only, :filename do |t, args|
     end
 
     Rake::Task[:isolate].invoke(args.filename)
-    Rake::Task[:generate].invoke("unpublished no_minify")
+    Rake::Task[:generate].invoke('test')
 
     puts "## Restoring stashed posts/pages"
     Rake::Task[:integrate].execute
@@ -760,6 +795,70 @@ task :superfeedr do
   end
 end
 
+#desc 'Ping pingomatic'
+#task :ping do
+#  begin
+#    require 'xmlrpc/client'
+#    puts '* Pinging ping-o-matic'
+#    XMLRPC::Client.new('rpc.pingomatic.com', '/').call('weblogUpdates.extendedPing', 'Nothoughtcontrol.com' , 'http://www.nothoughtcontrol.com', 'http://www.nothoughtcontrol.com/atom.xml')
+#  rescue LoadError
+#    puts '! Could not ping ping-o-matic, because XMLRPC::Client could not be found.'
+#  end
+#end
+#
+#desc 'Notify Google of the new sitemap'
+#task :sitemapgoogle do
+#  begin
+#    require 'net/http'
+#    require 'uri'
+#    puts '* Pinging Google about our sitemap'
+#    Net::HTTP.get('www.google.com', '/webmasters/tools/ping?sitemap=' + URI.escape('http://www.nothoughtcontrol.com/sitemap.xml'))
+#  rescue LoadError
+#    puts '! Could not ping Google about our sitemap, because Net::HTTP or URI could not be found.'
+#  end
+#end
+#
+#desc 'Notify Bing of the new sitemap'
+#task :sitemapbing do
+#  begin
+#    require 'net/http'
+#    require 'uri'
+#    puts '* Pinging Bing about our sitemap'
+#    Net::HTTP.get('www.bing.com', '/webmaster/ping.aspx?siteMap=' + URI.escape('http://www.nothoughtcontrol.com/sitemap.xml'))
+#  rescue LoadError
+#    puts '! Could not ping Bing about our sitemap, because Net::HTTP or URI could not be found.'
+#  end
+#end
+#
+#desc "Notify various services about new content"
+#task :notify => [:pingomatic, :sitemapgoogle, :sitemapbing] do
+#end
+#
+
+#desc 'Ping PINGOO'
+#task :ping do
+#  begin
+#    require 'xmlrpc/client'
+#    puts '* Pinging PINGOO{'
+#    XMLRPC::Client.new('pingoo.jp', '/').call('weblogUpdates.extendedPing', 'rcmdnk.github.io' , 'http://rcmdnk.github.io', 'http://rcmdnk.github.io/atom.xml')
+#  rescue LoadError
+#    puts '! Could not ping PINGOO, because XMLRPC::Client could not be found.'
+#  end
+#end
+
+#desc 'Ping pingomatic'
+#task :ping do
+#  begin
+#    require 'xmlrpc/client'
+#    puts '## Pinging PINGOO'
+#    #XMLRPC::Client.new('rpc.pingomatic.com', '/').call('weblogUpdates.extendedPing', 'rcmdnk\'s blog' , 'http://rcmdnk.github.io', 'http://rcmdnk.github.io/atom.xml')
+#    XMLRPC::Client.new2('http://api.my.yahoo.co.jp/RPC2').call('weblogUpdates.ping', 'rcmdnk blog' , 'http://rcmdnk.github.io')
+#  rescue LoadError
+#    puts '! Could not ping ping-o-matic, because XMLRPC::Client could not be found.'
+#  end
+#end
+#
+
 #-- sending ping --#
 desc "Send ping to Web Search Engines"
 task :ping do
@@ -819,20 +918,19 @@ task :minify_css do
 end
 
 desc "Minify JS"
-task :minify_js do
+task :minify_js, :opt do |t, args|
   puts "## Minifying JS"
-  Rake::Task[:combine_js].execute
+  Rake::Task[:combine_js].invoke(args.opt)
   if js_minify_others
-    Rake::Task[:minify_other_js].execute
+    Rake::Task[:minify_other_js].invoke(args.opt)
   end
 end
 
-
 desc "Minify JS and combine"
-task :combine_js do
+task :combine_js, :opt do |t, args|
   puts "## Combining JS"
   compressor = YUI::JavaScriptCompressor.new
-  if File.exist?("#{source_dir}/javascripts/#{js_output}")
+  if not args.opt == nil and (not args.opt and File.exist?("#{source_dir}/javascripts/#{js_output}"))
     t_alljs = File.mtime("#{source_dir}/javascripts/#{js_output}")
     time_check = false
     js_for_combine.each do |j|
@@ -849,14 +947,18 @@ task :combine_js do
   output = File.open("#{source_dir}/javascripts/#{js_output}", "w")
   js_for_combine.each do |j|
     input = File.read("#{source_dir}/javascripts/#{j}")
-    output << compressor.compress(input)
+    if args.opt == nil or args.opt.include?("no")
+      output << input
+    else
+      output << compressor.compress(input)
+    end
   end
   output.close
   cp_r "#{source_dir}/javascripts/#{js_output}", "#{public_dir}/javascripts/"
 end
 
 desc "Minify other JS"
-task :minify_other_js do
+task :minify_other_js, :opt do |t, args|
   puts "## Minifying other JS"
   n = 0
   compressor = YUI::JavaScriptCompressor.new
@@ -869,7 +971,7 @@ task :minify_other_js do
     name = j.split('/')[-1]
     compressed = dir + "/compressed/" + name
     if File.directory?(dir+"/compressed/")
-      if File.file?(compressed) and File.mtime(compressed) > File.mtime(j)
+      if not args.opt == nil and (not args.opt and File.file?(compressed) and File.mtime(compressed) > File.mtime(j))
         next
       end
     else
@@ -879,7 +981,11 @@ task :minify_other_js do
     puts "Minifying #{j}"
     input = File.read(j)
     output = File.open(compressed, "w")
-    output << compressor.compress(input)
+    if args.opt and args.opt.include?("no")
+      output << input
+    else
+      output << compressor.compress(input)
+    end
     output.close
     n+=1
   end
@@ -960,4 +1066,3 @@ task :common do
   end
   rm_rf common_dir
 end
-

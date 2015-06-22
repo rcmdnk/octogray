@@ -1,8 +1,8 @@
 diff --git a/Gemfile b/Gemfile
-index 5683812..77d5161 100644
+index 5683812..599353f 100644
 --- a/Gemfile
 +++ b/Gemfile
-@@ -8,11 +8,24 @@ group :development do
+@@ -8,11 +8,23 @@ group :development do
    gem 'jekyll-sitemap'
    gem 'rdiscount', '~> 2.0'
    gem 'RedCloth', '~> 4.2.9'
@@ -10,7 +10,6 @@ index 5683812..77d5161 100644
    gem 'haml', '~> 4.0'
    gem 'compass', '~> 1.0.1'
    gem 'sass-globbing', '~> 1.0.0'
-+  gem 'rubypants', '~> 0.2.0'
    gem 'rb-fsevent', '~> 0.9'
    gem 'stringex', '~> 1.4.0'
 +  gem 'thin'
