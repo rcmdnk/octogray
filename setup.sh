@@ -43,13 +43,13 @@ function yesno () {
 # copy
 function copy_link () {
   orig=".themes/octogray/.plugins/$1"
-  dir="${1#*/}"
-  if [ $# -gt 2 ];then
+  dir="$(dirname "${1#*/}")"
+  if [ $# -gt 1 ];then
     dir="$2"
   fi
   if $link;then
     for((i=0; i<$(echo "$dir"|sed "s/^.\///"|sed "s/\/$//"|awk '{print split($0, tmp, "/")}'); i++));do
-      repo="../$repo"
+      orig="../$orig"
     done
     ln -s "$orig" "$dir/"
   else
@@ -120,7 +120,7 @@ cd .themes/octogray
 git submodule update --init --recursive
 cd ../../
 
-## install submodules
+# install submodules
 
 ## [Octopress-Slideshare-Plugin](https://github.com/petehamilton/Octopress-Slideshare-Plugin)
 copy_link Octopress-Slideshare-Plugin/slideshare.rb plugins
@@ -159,7 +159,7 @@ copy_link related_posts-jekyll_plugin/source/_includes/custom/asides/related_pos
 
 ## [octopress-popular-posts](https://github.com/rcmdnk/octopress-popular-posts)
 copy_link octopress-popular-posts/plugins/popular_posts.rb
-copy_link octopress-popular-posts/octopress-page-view/plugins/page_view.rb
+copy_link octopress-popular-posts/octopress-page-view/plugins/page_view.rb plugins
 copy_link octopress-popular-posts/source/_includes/custom/asides/popular_posts.html
 
 ## [octopress-thumbnail](https://github.com/rcmdnk/octopress-thumbnail)
