@@ -89,7 +89,6 @@ task :generate, :opt do |t, args|
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
 
   opt = args.opt ? args.opt : ""
-  p opt
 
   if precheck and not opt.include?('test')
     Rake::Task[:check].invoke()
@@ -105,7 +104,7 @@ task :generate, :opt do |t, args|
     jekyll_opt += " --unpublished"
   end
 
-  if opt.include?('test')
+  if include?('test')
     jekyll_config = IO.read('_config.yml')
     jekyll_config += "\nshare_static: false # OCTOPRESS_TEST"
     jekyll_config += "\npage-view: false # OCTOPRESS_TEST"
@@ -116,7 +115,7 @@ task :generate, :opt do |t, args|
 
   ok_failed_raise system("jekyll build #{jekyll_opt}")
 
-  if args.opt.include?('test')
+  if opt.include?('test')
     jekyll_config = IO.read('_config.yml')
     jekyll_config.gsub!(/\n^.*OCTOPRESS_TEST$/, "")
     File.open('_config.yml', 'w') do |f|
@@ -126,11 +125,11 @@ task :generate, :opt do |t, args|
 
   Rake::Task[:common].execute
 
-  if not args.opt.include?('test')
+  if not opt.include?('test')
     Rake::Task[:css].execute
     Rake::Task[:minify_js].invoke('force')
 
-    if not args.opt.include?('no_minify')
+    if not opt.include?('no_minify')
       Rake::Task[:minify_html].execute
     end
   end
