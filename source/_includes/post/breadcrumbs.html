@@ -1,0 +1,31 @@
+<ol class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+  <li itemprop="itemListElement" itemscope
+      itemtype="http://schema.org/ListItem">
+    <a itemprop="item" href="{{root_url}}">
+        <span itemprop="name">Top</span></a>
+    <meta itemprop="position" content="1" />
+  </li>
+  {% if page.categories %}
+  {% for c in page.categories limit:1 %}
+  ›
+  <li itemprop="itemListElement" itemscope
+      itemtype="http://schema.org/ListItem">
+    <a itemprop="item" href="{{root_url}}/{{site.category_dir}}/{{c|downcase}}/">
+      <span itemprop="name">{{c}}</span></a>
+    <meta itemprop="position" content="2" />
+  </li>
+  {% endfor %}
+  {% endif %}
+  {% if page.tags %}
+  {% for t in page.tags limit:1 %}
+  ›
+  <li itemprop="itemListElement" itemscope
+      itemtype="http://schema.org/ListItem">
+    <a itemprop="item" href="{{root_url}}{{site.tag_dir}}/{{t|downcase}}/">
+      <span itemprop="name">{{t}}</span></a>
+    <meta itemprop="position" content="3" />
+  </li>
+  {% endfor %}
+  {% endif %}
+</ol>
+
