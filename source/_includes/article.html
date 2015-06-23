@@ -2,7 +2,7 @@
 <header>
   {% unless page.meta == false %}
   <p class="meta">
-    {% include post/date.html %}{{ time }}
+    {% date_html %}
     {% include post/categories.html %}
     {% include post/tags.html %}
   </p>
