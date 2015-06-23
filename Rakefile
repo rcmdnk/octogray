@@ -104,7 +104,7 @@ task :generate, :opt do |t, args|
     jekyll_opt += " --unpublished"
   end
 
-  if include?('test')
+  if opt.include?('test')
     jekyll_config = IO.read('_config.yml')
     jekyll_config += "\nshare_static: false # OCTOPRESS_TEST"
     jekyll_config += "\npage-view: false # OCTOPRESS_TEST"

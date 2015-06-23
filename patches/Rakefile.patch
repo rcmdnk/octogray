@@ -1,5 +1,5 @@
 diff --git a/Rakefile b/Rakefile
-index 9367ea1..5c7d24b 100644
+index 9367ea1..aaa9f52 100644
 --- a/Rakefile
 +++ b/Rakefile
 @@ -1,6 +1,7 @@
@@ -102,7 +102,7 @@ index 9367ea1..5c7d24b 100644
 +    jekyll_opt += " --unpublished"
 +  end
 +
-+  if include?('test')
++  if opt.include?('test')
 +    jekyll_config = IO.read('_config.yml')
 +    jekyll_config += "\nshare_static: false # OCTOPRESS_TEST"
 +    jekyll_config += "\npage-view: false # OCTOPRESS_TEST"
