@@ -1,11 +1,11 @@
-{% capture tag %}{% if post %}{{ post.tags | tag_links | size }}{% else %}{{ page.tags | tag_links | size }}{% endif %}{% endcapture %}
+{% if index %}
+  {% assign p = post %}
+{% else %}
+  {% assign p = page %}
+{% endif %}
+{% capture tag %}{{ p.tags | tag_links | size }}{% endcapture %}
 {% unless tag == '0' %}
 <span class="tags">
-  Tagged as
-  {% if post %}
-    {{ post.tags | tag_links }}
-  {% else %}
-    {{ page.tags | tag_links }}
-  {% endif %}
+  Tagged as {{ p.tags | tag_links }}
 </span>
 {% endunless %}

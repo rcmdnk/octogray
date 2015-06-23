@@ -1,11 +1,11 @@
-{% capture category %}{% if post %}{{ post.categories | category_links | size }}{% else %}{{ page.categories | category_links | size }}{% endif %}{% endcapture %}
+{% if index %}
+  {% assign p = post %}
+{% else %}
+  {% assign p = page %}
+{% endif %}
+{% capture category %}{{ p.categories | category_links | size }}{% endcapture %}
 {% unless category == '0' %}
 <span class="categories">
-  Posted in
-  {% if post %}
-    {{ post.categories | category_links }}
-  {% else %}
-    {{ page.categories | category_links }}
-  {% endif %}
+  Posted in {{ p.categories | category_links }}
 </span>
 {% endunless %}

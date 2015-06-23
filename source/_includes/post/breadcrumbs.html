@@ -1,3 +1,8 @@
+{% if index %}
+  {% assign p = post %}
+{% else %}
+  {% assign p = page %}
+{% endif %}
 <ol class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
   <li itemprop="itemListElement" itemscope
       itemtype="http://schema.org/ListItem">
@@ -5,8 +10,8 @@
         <span itemprop="name">Top</span></a>
     <meta itemprop="position" content="1" />
   </li>
-  {% if page.categories %}
-  {% for c in page.categories limit:1 %}
+  {% if p.categories %}
+  {% for c in p.categories limit:1 %}
   ›
   <li itemprop="itemListElement" itemscope
       itemtype="http://schema.org/ListItem">
@@ -16,8 +21,8 @@
   </li>
   {% endfor %}
   {% endif %}
-  {% if page.tags %}
-  {% for t in page.tags limit:1 %}
+  {% if p.tags %}
+  {% for t in p.tags limit:1 %}
   ›
   <li itemprop="itemListElement" itemscope
       itemtype="http://schema.org/ListItem">
