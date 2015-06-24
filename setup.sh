@@ -111,6 +111,9 @@ else
 fi
 echo
 
+# Don't proceed after error
+set -e
+
 # first, install normal files by install task
 bundle update
 rake install['octogray']
