@@ -7,7 +7,7 @@
     {% include post/tags.html %}
   </p>
   {% endunless %}
-  {% if index %}
+  {% if post %}
   <h1 class="entry-title" itemprop="name headline"><a href="{{root_url}}{{post.url}}">{% if site.titlecase %}{{ post.title | titlecase }}{% else %}{{ post.title }}{% endif %}</a></h1>
   {% else %}
   {% if site.zenback_show == true and page.comments == true %}
@@ -43,7 +43,7 @@
 {% include post/sharing_custom.html %}
 {% endif %}
 {% endunless %}
-{% if index %}
+{% if post %}
 <div class="entry-content index_click_box">
   <div class="group">
     {% if post.ogimage and post.no_ogimage != true %}

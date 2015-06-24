@@ -53,7 +53,7 @@ share_all: true
   <li class="post index_click_box">
     {% include post/sharing_all.html %}
     <span class="post-date">{{post.date}}</span>
-    {% include post_list.html%}
+    {% include post/post_list.html%}
   </li>
   {% endfor %}
 </ul>
