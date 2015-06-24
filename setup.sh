@@ -232,4 +232,3 @@ done
 
 # other files
 cp .themes/octogray/ping.yml .
-
