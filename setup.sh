@@ -150,7 +150,7 @@ copy_link octopress-random-posts/sass/plugins/_random-posts.scss
 copy_link octopress-random-posts/source/javascripts/random-posts.js
 copy_link octopress-random-posts/source/javascripts/random-posts-html.js
 #copy_link octopress-random-posts/source/_includes/post/post_list.html
-copy_link octopress-random-posts/source/post_light.html
+copy_link octopress-random-posts/source/posts_light.html
 copy_link octopress-random-posts/source/_includes/custom/asides/random_posts.html
 
 ## [related_posts-jekyll_plugin](https://github.com/rcmdnk/related_posts-jekyll_plugin)
