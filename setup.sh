@@ -149,7 +149,7 @@ copy_link octopress-random-posts/plugins/random_posts.rb
 copy_link octopress-random-posts/sass/plugins/_random-posts.scss
 copy_link octopress-random-posts/source/javascripts/random-posts.js
 copy_link octopress-random-posts/source/javascripts/random-posts-html.js
-copy_link octopress-random-posts/source/_includes/post_list.html
+#copy_link octopress-random-posts/source/_includes/post/post_list.html
 copy_link octopress-random-posts/source/post_light.html
 copy_link octopress-random-posts/source/_includes/custom/asides/random_posts.html
 
