@@ -69,8 +69,13 @@ module OctopressLiquidFilters
   # Get first amazon-img
   def amazon_img(input)
     if input.match(/<div class="amazon-img">.*<\/div>/) != nil
+      input.match(/<div class="amazon-img">.*<\/div>/)[0].sub("_SS200_", "_SS90_CR0,0,120,90")
       out=input.match(/(<div class="amazon-img">.*<img *)width="200" height="200"(.*)_SS200(.*<\/div>)/)
-      out[1] + "width=\"120\" height=\"90\"" + out[2] + "_SS90_CR0,0,120,90" + out[3]
+      if out == nil
+        input.match(/<div class="amazon-img">.*<\/div>/)[0]
+      else
+        out[1] + "width=\"120\" height=\"90\"" + out[2] + "_SS90_CR0,0,120,90" + out[3]
+      end
     else
       #"no amazon-img"
     end
