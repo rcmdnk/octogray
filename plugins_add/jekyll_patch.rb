@@ -109,11 +109,26 @@ module Octopress
         page.data['date_time_updated_html'] = date_updated_html(updated)
       elsif page.data['date'] || page.respond_to?(:date)
         page.data['date_html'].sub!('entry-date','entry-date updated')
+        page.data['date_html'].sub!('datePublished','datePublished dateModified')
         page.data['date_time_html'].sub!('entry-date','entry-date updated')
+        page.data['date_time_html'].sub!('datePublished','datePublished dateModified')
       end
 
       page
 
+    end
+
+    def date_html(date, time=true)
+      tag =  "<time itemprop='datePublished' class='entry-date' datetime='#{ date.xmlschema }'>"
+      tag += "<span class='date'>#{format_date(date, true)}</span>"
+      if time
+        tag += " <span class='time'>#{format_time(date)}</span>" if time
+      end
+      tag += "</time>"
+    end
+
+    def date_updated_html(date, time=true)
+      date_html(date, time).sub('datePublished','dateModified')
     end
   end
 end
