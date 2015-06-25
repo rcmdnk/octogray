@@ -118,7 +118,7 @@ module Octopress
 
     end
 
-    def date_html(date, time=true)
+    def self.date_html(date, time=true)
       tag =  "<time itemprop='datePublished' class='entry-date' datetime='#{ date.xmlschema }'>"
       tag += "<span class='date'>#{format_date(date, true)}</span>"
       if time
@@ -127,7 +127,7 @@ module Octopress
       tag += "</time>"
     end
 
-    def date_updated_html(date, time=true)
+    def self.date_updated_html(date, time=true)
       date_html(date, time).sub('datePublished','dateModified')
     end
   end
