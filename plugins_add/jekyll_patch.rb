@@ -128,7 +128,7 @@ module Octopress
     end
 
     def self.date_updated_html(date, time=true)
-      date_html(date, time).sub('datePublished','dateModified')
+      date_html(date, time).sub('entry-date','updated').sub('datePublished','dateModified')
     end
   end
 end
