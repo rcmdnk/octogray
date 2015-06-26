@@ -169,7 +169,7 @@ ERR
     #
     def tag_link(tag)
       dir = @context.registers[:site].config['tag_dir']
-      "<a class='tag' href='/#{dir}/#{tag.to_url}/'><span itemprop='articleSection keywords'>#{tag}</span></a>"
+      "<a class='tag' href='/#{dir}/#{tag.to_url}/'><span>#{tag}</span></a>"
     end
 
     # Outputs the post.date as formatted html, with hooks for CSS styling.
