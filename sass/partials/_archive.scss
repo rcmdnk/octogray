@@ -23,7 +23,7 @@
       display: inline-block;
     }
   }
-  a.category, a.tag, time {
+  a.category, a.tag, .breadcrumbs, time {
     @extend .sans;
     color: $text-color-light;
   }

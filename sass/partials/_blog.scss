@@ -6,20 +6,27 @@ article {
     padding-top: 2em;
     padding-bottom: 1em;
     margin-bottom: 1em;
-    background: $img-border bottom left repeat-x;
+    background: none;
+    padding-bottom: 0;
     h1 {
       margin: 0;
-      a { text-decoration: none;
-        &:hover { text-decoration: underline; } }
+      a {
+        color: $text-color;
+        text-decoration: none;
+        @include link-colors($text-color, $hover: $link-color-hover, $focus: $link-color-hover, $visited: $text-color, $active: $link-color-active);
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
-    p {
+    p, div {
       font-size: .9em;
       color: $text-color-light;
       line-height: 1.8em;
       margin-bottom: 0.5em;
       &.meta {
         @extend .sans;
-        text-transform: uppercase;
+        //text-transform: uppercase;
       }
     }
   }
@@ -50,7 +57,7 @@ article {
     padding-bottom: 2.5em;
     margin-top: 2em;
     @extend .sans;
-    p.meta {
+    p.meta, div.meta {
       margin-bottom: .8em;
       font-size: .85em;
       clear: both;
@@ -60,24 +67,11 @@ article {
       @extend .separator;
     }
   }
-
 }
+
 article + article {
   .blog-index & {
     background: $img-border top left repeat-x;
-  }
-}
-#content .blog-index {
-  padding: { top: 0; bottom: 0; }
-  article { padding-top: 2em; }
-  article header { background: none; padding-bottom: 0; }
-  article h1 {
-    font-size: 1.8em;
-    a { color: inherit; &:hover { color: $link-color-hover; } }
-  }
-  footer {
-    @extend .sans;
-    margin-top: 1em;
   }
 }
 
@@ -149,7 +143,7 @@ h1.entry-title{
 }
 
 .breadcrumbs {
-  margin-left: 0;
+  margin: 0;
   > li {
     list-style: none;
     display: inline-block;
@@ -157,5 +151,8 @@ h1.entry-title{
     a {
       white-space: normal;
     }
+  }
+  .breadcrumbs_separator {
+    font-weight: bolder;
   }
 }
