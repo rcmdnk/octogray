@@ -3,34 +3,22 @@
 {% else %}
   {% assign p = page %}
 {% endif %}
-<ol class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
-  <li itemprop="itemListElement" itemscope
-      itemtype="http://schema.org/ListItem">
-    <a itemprop="item" href="{{root_url}}">
-        <span itemprop="name">Top</span></a>
-    <meta itemprop="position" content="1" />
-  </li>
+<ol class="breadcrumbs">
+  <li><a href="{{site.url}}"><span>Top</span></a></li>
   {% if p.categories %}
-  {% for c in p.categories limit:1 %}
-  ›
-  <li itemprop="itemListElement" itemscope
-      itemtype="http://schema.org/ListItem">
-    <a itemprop="item" href="{{root_url}}/{{site.category_dir}}/{{c|downcase}}/">
-      <span itemprop="name">{{c}}</span></a>
-    <meta itemprop="position" content="2" />
-  </li>
-  {% endfor %}
+    {% capture c %}{{p.categories|first}}{% endcapture %}
+    <span class="breadcrumbs_separator"> › </span><li><a href="{{site.url}}/{{site.category_dir}}/{{c|downcase}}/"><span>{{c}}</span></a></li>
   {% endif %}
   {% if p.tags %}
-  {% for t in p.tags limit:1 %}
-  ›
-  <li itemprop="itemListElement" itemscope
-      itemtype="http://schema.org/ListItem">
-    <a itemprop="item" href="{{root_url}}/{{site.tag_dir}}/{{t|downcase}}/">
-      <span itemprop="name">{{t}}</span></a>
-    <meta itemprop="position" content="3" />
-  </li>
-  {% endfor %}
+    {% capture t %}{{p.tags|first}}{% endcapture %}
+    <span class="breadcrumbs_separator"> › </span><li><a href="{{site.url}}/{{site.tag_dir}}/{{t|downcase}}/"><span>{{t}}</span></a>
+    {% if p.tags.size > 1 %}
+      {% for t in p.tags offset:1 %}
+        <span>, </span>
+        <a href="{{site.url}}/{{site.tag_dir}}/{{t|downcase}}/"><span>{{t}}</span></a>
+      {% endfor %}
+    {% endif %}
+    </li>
   {% endif %}
 </ol>
 

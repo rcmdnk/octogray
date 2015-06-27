@@ -1,18 +1,19 @@
 diff --git a/_config.yml b/_config.yml
-index c1d56f4..87755b9 100644
+index c1d56f4..659e325 100644
 --- a/_config.yml
 +++ b/_config.yml
-@@ -6,20 +6,45 @@ url: http://yoursite.com
+@@ -6,20 +6,46 @@ url: http://yoursite.com
  title: My Octopress Blog
  subtitle: A blogging framework for hackers.
  author: Your Name
 -simple_search: https://www.google.com/search
 +lang: en
-+titlelogo:
-+titlelogocss: false
-+titlelogocss: false
++favicon: #/images/icon16.png
++title_logo:
++title_logo_css: false
 +nav_marks: true
 +# Please add your images to there
++aboutme_logo: #/images/icon32.png
 +#aboutme_logo: https://github.com/rcmdnk.png
 +aboutme_logo_css: false
 +sitelogo:
@@ -49,7 +50,7 @@ index c1d56f4..87755b9 100644
  
  # ----------------------- #
  #    Jekyll & Plugins     #
-@@ -33,25 +58,37 @@ destination: public
+@@ -33,25 +59,37 @@ destination: public
  plugins: plugins
  code_dir: downloads/code
  category_dir: blog/categories
@@ -97,7 +98,7 @@ index c1d56f4..87755b9 100644
  
  # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
  # and add an array with the asides you want to use.
-@@ -59,29 +96,78 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
+@@ -59,29 +97,78 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
  # post_asides:
  # page_asides:
  
@@ -111,7 +112,7 @@ index c1d56f4..87755b9 100644
 +related_posts_text: "You might also like..."
 +
 +# 404 not found picture
-+pic_404nf:
++pic_404nf: #/images/icon200.png
 +
 +# Filtering Content
 +show_drafts: null
@@ -178,7 +179,7 @@ index c1d56f4..87755b9 100644
  # Pinboard
  pinboard_user:
  pinboard_count: 3
-@@ -89,6 +175,10 @@ pinboard_count: 3
+@@ -89,6 +176,10 @@ pinboard_count: 3
  # Delicious
  delicious_user:
  delicious_count: 3
@@ -189,7 +190,7 @@ index c1d56f4..87755b9 100644
  
  # Disqus Comments
  disqus_short_name:
-@@ -99,3 +189,159 @@ google_analytics_tracking_id:
+@@ -99,3 +190,159 @@ google_analytics_tracking_id:
  
  # Facebook Like
  facebook_like: false
@@ -211,7 +212,7 @@ index c1d56f4..87755b9 100644
 +hatena_user:
 +hatena_add: "Add to Hatena Bookmark"
 +hatena_popular_posts: feed
-+hatena_popular_sort: "count"
++hatena_popular_sort: count
 +hatena_popular_num: 10
 +
 +# Pocket
@@ -241,7 +242,7 @@ index c1d56f4..87755b9 100644
 +# affiliate
 +affiliate: false
 +affiliate_link_unit: false
-+#affiliate_services: "Google Adsense"
++affiliate_services: "Google Adsense"
 +
 +# Google Adsense
 +sponsored_links: "Sponsored Links"

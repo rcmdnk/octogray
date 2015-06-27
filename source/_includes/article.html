@@ -1,37 +1,32 @@
+{% if post %}
+  {% assign p = post %}
+{% else %}
+  {% assign p = page %}
+{% endif %}
 {% unless page.no_header %}
 <header>
   {% unless page.meta == false %}
-  <p class="meta">
-    {% date_html %}
-    {% include post/categories.html %}
-    {% include post/tags.html %}
-  </p>
+  <div class="meta">
+    {% if p.date_text %}<time datetime='{{p.date_xml}}'><span class='time'>{{ p.date_text }}</span>{% endif %}
+    {% include post/breadcrumbs.html %}
+  </div>
   {% endunless %}
-  {% if post %}
-  <h1 class="entry-title" itemprop="name headline"><a href="{{root_url}}{{post.url}}">{% if site.titlecase %}{{ post.title | titlecase }}{% else %}{{ post.title }}{% endif %}</a></h1>
-  {% else %}
+  {% unless post %}
   {% if site.zenback_show == true and page.comments == true %}
   <!-- zenback_title_begin -->
   {% endif %}
-  <h1 class="entry-title" itemprop="name headline">{% if site.titlecase %}{{ page.title | titlecase }}{% else %}{{ page.title }}{% endif %}</h1>
+  {% endunless %}
+  <h1 class="entry-title" itemprop="name headline"><a href="{{root_url}}{{p.url}}" itemprop="url">{% if site.titlecase %}{{ p.title | titlecase }}{% else %}{{ p.title }}{% endif %}</a></h1>
+  {% unless post %}
   {% if site.zenback_show == true and page.comments == true %}
   <!-- zenback_title_end -->
-  {% endif %}
-  {%comment%}
-  {% if site.zenback_show == true and page.comments == true %}
   <!-- zenback_date {{page.date}}-->
   {% endif %}
-  {%endcomment%}
-  {% endif %}
+  {% endunless %}
 </header>
 {% endunless %}
-{% if index %}
-  {% capture ref_url %}{{ post.ref_url }}{% endcapture %}
-  {% capture ref_title %}{{ post.ref_title }}{% endcapture %}
-{% else %}
-  {% capture ref_url %}{{ page.ref_url }}{% endcapture %}
-  {% capture ref_title %}{{ page.ref_title }}{% endcapture %}
-{% endif %}
+{% capture ref_url %}{{ p.ref_url }}{% endcapture %}
+{% capture ref_title %}{{ p.ref_title }}{% endcapture %}
 {% if ref_url != "" %}
 <a href="{{ref_url}}"><i class="fa fa-language"></i> {{ref_title}}</a>
 {% endif %}
@@ -44,9 +39,9 @@
 {% endif %}
 {% endunless %}
 {% if post %}
-<div class="entry-content index_click_box">
+<div class="entry-content index_click_box" itemprop="articleBody">
   <div class="group">
-    {% if post.ogimage and post.no_ogimage != true %}
+    {% if p.ogimage and p.no_ogimage != true %}
     <div class="titlle-thumbnail-wrap">
       <div class="title-thumbnail">
         {%thumbnail square-thumbnail val:post.ogimage%}
@@ -56,7 +51,7 @@
     {{ content | excerpt }}
     {% capture excerpted %}{{ content | has_excerpt }}{% endcapture %}
     {% if excerpted == 'true' %}
-    <a class="click_box_link" href="{{root_url}}{{post.url}}">{{site.excerpt_link}}</a>
+    <a class="click_box_link" href="{{root_url}}{{p.url}}">{{site.excerpt_link}}</a>
     {% endif %}
   </div>
 </div>
@@ -64,11 +59,11 @@
 {% if site.zenback_show == true and page.comments == true %}
 <!-- zenback_body_begin -->
 {% endif %}
-<div class="entry-content">
+<div class="entry-content" itemprop="articleBody">
   <div class="group">
-    {% if page.ogimage and page.no_ogimage != true %}
+    {% if p.ogimage and p.no_ogimage != true %}
     <div class="title-thumbnail">
-      {%thumbnail square-thumbnail val:page.ogimage%}
+      {%thumbnail square-thumbnail val:p.ogimage%}
     </div>
     {% endif %}
     {{ content | excerpt }}
@@ -80,7 +75,7 @@
   </div>
 </div>
 <!-- </div><footer> * pseudo line for the function raw_content() -->
-{% if site.zenback_show == true and page.comments == true %}
+{% if site.zenback_show == true and p.comments == true %}
 <!-- zenback_body_end -->
 {% endif %}
 {% endif %}

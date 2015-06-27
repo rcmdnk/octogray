@@ -1,0 +1,103 @@
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "WebSite",
+  "name" : "{{site.title}}",
+{% if site.subtitle %}
+  "alternateName" : "{{site.subtitle}}",
+{% endif %}
+  "url" : "{{site.url}}"
+{% if site.google_result_page %}
+  ,"potentialAction": {
+    "@type": "SearchAction",
+    "target": "{{site.url}}{{site.google_result_page}}?{{site.google_search_query}}={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+{% endif %}
+}
+</script>
+{% if site.title_logo or site.aboutme_logo %}
+{% capture logo %}
+  {% if site.title_logo %}
+    {{site.title_logo }}
+  {% elsif site.aboutme_logo %}
+    {{site.aboutme_logo}}
+  {% endif %}
+{% endcapture %}
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "url": "{{site.url}}",
+  "logo": "{{site.url}}{{logo}}"
+}
+</script>
+{% endif %}
+
+<script type="application/ld+json">
+{ "@context" : "http://schema.org",
+  "@type" : "Person",
+  "name" : "{{ site.author }}",
+  "email" : "{{ site.email }}",
+  "url" : "{{ site.url }}",
+{% if site.twitter_user or site.googleplus_user or site.facebook_user or site.linkedin_user %}
+  "sameAs" : [
+  {% if site.twitter_user %}
+    {% assign is_prev = true %}
+    "https://twitter.com/{{site.twitter_user}}"
+  {% endif %}
+  {% if site.googleplus_user %}
+    {% if is_prev %}, {% else %}{% assign is_prev = true %}{% endif %}
+    "http://plus.google.com/{{site.googleplus_user}}"
+  {% endif %}
+  {% if site.facebook_user %}
+    {% if is_prev %}, {% else %}{% assign is_prev = true %}{% endif %}
+    "http://www.facebook.com/{{site.facebook_user}}"
+  {% endif %}
+  {% if site.linkedin_user %}
+    {% if is_prev %}, {% else %}{% assign is_prev = true %}{% endif %}
+    "http://www.linkedin.com/in/{{site.linkedin_user}}"
+  {% endif %}
+  ]
+{% endif %}
+}
+</script>
+{% if p.categories or p.tags %}
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement":
+  [
+  {% assign pos = 1 %}
+  {% if p.categories %}
+    {% capture c %}{{p.categories|first}}{% endcapture %}
+    {
+      "@type": "ListItem",
+      "position": {{pos}},
+      "item":
+      {
+        "@id": "{{site.url}}/{{site.category_dir}}/{{c|downcase}}/",
+        "name": "{{c}}"
+      }
+    }
+    {% assign pos = pos + 1 %}
+  {% endif %}
+  {% if p.tags %}
+    {% capture t %}{{p.tags|first}}{% endcapture %}
+    {% if pos > 1 %},{% endif %}
+    {
+      "@type": "ListItem",
+      "position": {{pos}},
+      "item":
+      {
+        "@id": "{{site.url}}/{{site.tag-dir}}/{{t|downcase}}/",
+        "name": "{{t}}"
+      }
+    }
+    {% assign pos = pos + 1 %}
+  {% endif %}
+  ]
+}
+</script>
+{% endif %}

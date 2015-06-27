@@ -5,7 +5,7 @@ sharing: true
 footer: true
 ---
 
-<div id="blog-archives" class="tag">
+<div id="blog-archives" class="tag" class="category" itemscope itemtype="http://schema.org/Blog">
 {% assign index = true %}
 {% for post in site.tags[page.tag] %}
 {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
@@ -13,7 +13,7 @@ footer: true
   {% assign year = this_year %}
   <h2>{{ year }}</h2>
 {% endunless %}
-<article>
+<article class="index-article" itemprop="blogPosts" itemscope itemtype="http://schema.org/BlogPosting">
   {% include archive_post.html %}
 </article>
 {% endfor %}
