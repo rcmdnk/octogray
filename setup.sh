@@ -118,9 +118,10 @@ echo
 yesno "Do you want to replace plugins (image_tag.rb, include_array.rb, octopress_filter.rb)?"
 ret=$?
 if [ $ret -eq 0 ];then
-  for p in plugins/*rb;do
+  for p in .themes/octogray/plugins/*rb;do
     rm -f "./plugins/$(basename "$p")"
-    copy_link "${p}"
+    orig=${p#.themes/octogray/}
+    copy_link "$orig"
   done
 else
   printf "\n\e[31mPlease update plugins by following .themes/octogray/plugins\e[m\n"
