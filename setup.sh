@@ -51,7 +51,7 @@ function copy_link_util () {
     done
     ln -s "$orig" "$dir/"
   else
-    cp "$orig" "$dir/"
+    cp -r "$orig" "$dir/"
   fi
 }
 
