@@ -192,6 +192,7 @@ copy_link_plugin octopress-postscript/sass/plugins/_postscript.scss
 
 ## [octopress-common-part](https://github.com/rcmdnk/octopress-common-part)
 copy_link_plugin octopress-common-part/plugins/common_parts.rb
+copy_link_plugin octopress-common-part/source/_common_parts
 
 ## [jquery--ex-flex-fiex](http://github.com/cyokodog/jquery.ex-flex-fixed)
 copy_link_plugin jquery.ex-flex-fixed/jquery.exflexfixed-0.3.0.js source/javascripts
