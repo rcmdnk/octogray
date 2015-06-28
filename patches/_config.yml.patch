@@ -339,7 +339,7 @@ index c1d56f4..659e325 100644
 +    - buffer_button
 +    - delicious_button
 +    - tumblr_button
-+    - share_all
++    - share_check_all
 +    - mandrill
 +    - mandrill_key
 +    - mandrill_from

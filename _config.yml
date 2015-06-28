@@ -335,7 +335,7 @@ jekyll_var:
     - buffer_button
     - delicious_button
     - tumblr_button
-    - share_all
+    - share_check_all
     - mandrill
     - mandrill_key
     - mandrill_from
