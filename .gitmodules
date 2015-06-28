@@ -46,3 +46,6 @@
 [submodule ".plugins/related_posts-jekyll_plugin"]
 	path = .plugins/related_posts-jekyll_plugin
 	url = https://github.com/rcmdnk/related_posts-jekyll_plugin.git
+[submodule ".plugins/octopress-common-part"]
+	path = .plugins/octopress-common-part
+	url = https://github.com/rcmdnk/octopress-common-part.git

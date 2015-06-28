@@ -90,8 +90,6 @@ module Jekyll
     #  +tag+     is the tag currently being processed.
     def write_tag_index(tag_dir, tag, m)
       index = TagIndex.new(self, self.source, tag_dir, tag)
-      index.render(self.layouts, site_payload)
-      index.write(self.dest)
       # Record the fact that this page has been added, otherwise Site::cleanup will remove it.
       m.synchronize do
         self.pages << index
@@ -99,8 +97,6 @@ module Jekyll
 
       # Create an Atom-feed for each index.
       feed = TagFeed.new(self, self.source, tag_dir, tag)
-      feed.render(self.layouts, site_payload)
-      feed.write(self.dest)
       # Record the fact that this page has been added, otherwise Site::cleanup will remove it.
       m.synchronize do
         self.pages << feed

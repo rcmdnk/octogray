@@ -26,6 +26,12 @@ module Jekyll
     end
 
     def render
+      if defined?(Octopress::Hooks) and defined?(old_render)
+        site_hooks.each do |hook|
+          hook.pre_render(self)
+        end
+      end
+
       relative_permalinks_deprecation_method
 
       collections.each do |label, collection|
@@ -35,7 +41,7 @@ module Jekyll
       end
 
       payload = site_payload
-      progressbar = ProgressBar.create(:title => "%#{@@space-5}s" % "render::posts-pages", :starting_at => 0,
+      progressbar = ProgressBar.create(:title => "%#{@@space-5}s" % "posts-pages, render", :starting_at => 0,
                                        :total => [posts, pages].flatten.size,
                                        :format => '%t %a |%B| %p%')
       #Parallel.map([posts, pages].flatten, :in_threads => self.config['n_cores'] ? self.config['n_cores'] : 1) do |page_or_post|
@@ -51,7 +57,7 @@ module Jekyll
         generator.generate(self)
         t_pre = t_now
         t_now = Time.now
-        diff_time('generate::' + generator.class.name.demodulize, t_pre, t_now)
+        diff_time(generator.class.name.demodulize+', generate', t_pre, t_now)
       end
     end
   end

@@ -43,8 +43,6 @@ js_minify_others = false
 html_for_minify = ["*.html", "blog/*/*/*/*/*.html"]
 html_not_minify = []
 precheck        = false
-common_words    = ["COMMON_SIDEBAR", "COMMON_HEADER"]
-common_dir      = "#{public_dir}/common"
 n_cores         = 8
 
 if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
@@ -122,8 +120,6 @@ task :generate, :opt do |t, args|
       f.write jekyll_config
     end
   end
-
-  Rake::Task[:common].execute
 
   if not opt.include?('test')
     Rake::Task[:css].execute
@@ -1044,24 +1040,4 @@ task :minify_html do
     output.close
     progressbar.increment
   end
-end
-
-# Replace common words
-desc "Replace common words"
-task :common do
-  puts "## Replace common words"
-  Parallel.map(Dir.glob("#{public_dir}/**/*.html"), :in_threads => n_cores) do |h|
-    if h.start_with?("#{common_dir}")
-      next
-    end
-    html = IO.read(h)
-    common_words.each do |c|
-      replace = IO.read("#{common_dir}/#{c.downcase}.html")
-      html.gsub!(c, replace)
-    end
-    File.open(h , 'w') do |f|
-      f.write html
-    end
-  end
-  rm_rf common_dir
 end
