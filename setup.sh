@@ -168,6 +168,7 @@ copy_link_plugin octopress-random-posts/source/javascripts/random-posts-html.js
 #copy_link_plugin octopress-random-posts/source/_includes/post/post_list.html
 copy_link_plugin octopress-random-posts/source/posts_light.html
 copy_link_plugin octopress-random-posts/source/_includes/custom/asides/random_posts.html
+copy_link_plugin octopress-random-posts/source/_includes/post/post_list.html
 
 ## [related_posts-jekyll_plugin](https://github.com/rcmdnk/related_posts-jekyll_plugin)
 copy_link_plugin related_posts-jekyll_plugin/plugins/related_posts.rb
@@ -180,6 +181,7 @@ copy_link_plugin related_posts-jekyll_plugin/source/_includes/custom/asides/rela
 copy_link_plugin octopress-popular-posts/plugins/popular_posts.rb
 copy_link_plugin octopress-popular-posts/octopress-page-view/plugins/page_view.rb plugins
 copy_link_plugin octopress-popular-posts/source/_includes/custom/asides/popular_posts.html
+copy_link_plugin octopress-popular-posts/source/_includes/post/popular_post_list.html
 
 ## [octopress-thumbnail](https://github.com/rcmdnk/octopress-thumbnail)
 copy_link_plugin octopress-thumbnail/plugins/thumbnail.rb
