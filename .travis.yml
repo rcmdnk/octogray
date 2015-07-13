@@ -46,11 +46,17 @@ script:
   - cd ~/octopress.master
   - ./.themes/octogray/setup.sh -y
   - rake setup_github_pages["git@github.com:rcmdnk/test.github.io","yes"]
+  - 'post=$(rake new_post["test"]|grep "Creating new post"|cut -d: -f2)'
+  - 'sed -i"" "s/published: *false/published: true/" $post'
+  - 'sed -i"" "s/categories:/categories: cat/" $post'
+  - 'sed -i"" "s/tags:/tags: tag/" $post'
+  - sed -i"" "s/<\!-- *more *-->/This is test post."\\$'\n'"<\!-- more -->/" $post
+  - sed -i"" "s/{%include after_excerpt.html%}/{%include after_excerpt.html%}"\\$'\n'"# Test Sectiontest"\\$'\n'"test $(date) test./" $post
+  - echo >> $post
+  - echo "[Code test](/others/codetest/) ">> $post
+  - rake generate --trace
   - cd ~/octopress.gh-pages
-  - ./.themes/octogray/setup.sh -y
-  - ls -l sass/plugins
-  - cat sass/plugins/_thumbnail.scss
-  - cat sass/plugins/../../.themes/octogray/.plugins/octopress-thumbnail/sass/plugins/_thumbnail.scss
+  - ./.themes/octogray/setup.sh -y -l
   - rake setup_github_pages["git@github.com:rcmdnk/octogray_test","yes"]
   - 'post=$(rake new_post["test"]|grep "Creating new post"|cut -d: -f2)'
   - 'sed -i"" "s/published: *false/published: true/" $post'
