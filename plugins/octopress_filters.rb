@@ -92,7 +92,7 @@ module OctopressLiquidFilters
   # Extracts raw content DIV from template, used for page description as {{ content }}
   # contains complete sub-template code on main page level
   def raw_content(input)
-    /(<div.*class="(blog-index|entry-content).*">)(?<content>[\s\S]*?)(<!--\s*more\s*-->|<\/div>\s*(<\/article|footer)|(<!-- *(|post|page|blog-index) *--))>/ =~ input
+    /(<div.*class="(blog-index|entry-content).*">)(?<content>[\s\S]*?)(<!--\s*more\s*-->|<\/div>\s*(<\/article|footer)|(<!-- *(|post|page|blog-index) *-->))/ =~ input
     if ! (content.nil?)
       return content
     end
@@ -120,6 +120,7 @@ module OctopressLiquidFilters
   # - Doesn't cut in the middle of a word.
   # - Uses typographically correct ellipsis (…) insted of '...'
   def truncate(input, length)
+    input.strip!
     if input.length > length && input[0..(length-1)] =~ /(.+)\b.+$/im
       $1.strip + ' &hellip;'
     else
