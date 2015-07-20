@@ -159,6 +159,7 @@ copy_link_plugin octopress-share-numbers/sass/plugins/_share-numbers.scss
 copy_link_plugin octopress-share-numbers/source/javascripts/share-custom.js
 copy_link_plugin octopress-share-numbers/source/_includes/post/sharing.html
 copy_link_plugin octopress-share-numbers/source/_includes/post/sharing_custom.html
+copy_link_plugin octopress-share-numbers/source/_includes/post/sharing_custom_big.html
 
 ## [octopress-random-posts](https://github.com/rcmdnk/octopress-random-posts)
 copy_link_plugin octopress-random-posts/plugins/random_posts.rb
