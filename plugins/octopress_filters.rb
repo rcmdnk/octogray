@@ -79,6 +79,7 @@ module OctopressLiquidFilters
       #"no amazon-img"
     end
   end
+  module_function :amazon_img
 
   # Summary is used on the Archive pages to return the first block of content from a post.
   def summary(input)
