@@ -76,7 +76,7 @@ module OctopressLiquidFilters
         out[1] + "width=\"120\" height=\"90\"" + out[2] + "_SS90_CR0,0,120,90" + out[3]
       end
     else
-      #"no amazon-img"
+      "" #"no amazon-img"
     end
   end
 
