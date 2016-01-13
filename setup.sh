@@ -171,6 +171,11 @@ copy_link_plugin octopress-random-posts/source/posts_light.html
 copy_link_plugin octopress-random-posts/source/_includes/custom/asides/random_posts.html
 copy_link_plugin octopress-random-posts/source/_includes/post/post_list.html
 
+## [octopress-hatebu-posts](https://github.com/rcmdnk/octopress-hatebu-posts)
+copy_link_plugin octopress-hatebu-posts/plugins/hatebu_posts.rb
+copy_link_plugin octopress-hatebu-posts/sass/plugins/_hatebu-posts.scss
+copy_link_plugin octopress-hatebu-posts/source/_includes/custom/asides/hatebu_posts.html
+
 ## [related_posts-jekyll_plugin](https://github.com/rcmdnk/related_posts-jekyll_plugin)
 copy_link_plugin related_posts-jekyll_plugin/plugins/related_posts.rb
 copy_link_plugin related_posts-jekyll_plugin/sass/plugins/_related-posts.scss

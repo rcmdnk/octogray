@@ -49,3 +49,6 @@
 [submodule ".plugins/octopress-common-part"]
 	path = .plugins/octopress-common-part
 	url = https://github.com/rcmdnk/octopress-common-part.git
+[submodule ".plugins/octopress-hatebu-posts"]
+	path = .plugins/octopress-hatebu-posts
+	url = https://github.com/rcmdnk/octopress-hatebu-posts.git
