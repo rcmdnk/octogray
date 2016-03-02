@@ -52,3 +52,6 @@
 [submodule ".plugins/octopress-hatebu-posts"]
 	path = .plugins/octopress-hatebu-posts
 	url = https://github.com/rcmdnk/octopress-hatebu-posts.git
+[submodule ".plugins/octopress-post-card"]
+	path = .plugins/octopress-post-card
+	url = https://github.com/rcmdnk/octopress-post-card

@@ -229,6 +229,10 @@ copy_link_plugin octopress-responsive-video-embed/_rve.scss sass/plugins
 copy_link_plugin githubrepo-octopress/githubwidget.rb plugins
 copy_link_plugin GitHub-jQuery-Repo-Widget/jquery.githubRepoWidget.min.js source/javascripts
 
+## [octopress-post-card](https://github.com/rcmdnk/octopress-post-card)
+copy_link_plugin octopress-post-card/plugins/post_card.rb
+copy_link_plugin octopress-post-card/sass/plugins/_post-card.scss
+
 # install downloaded plugins
 
 # [NailThumb](http://www.garralab.com/nailthumb.php)

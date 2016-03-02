@@ -57,8 +57,8 @@ module Jekyll
         generator.generate(self)
         t_pre = t_now
         t_now = Time.now
-        p generator.class.name
         #diff_time(generator.class.name.to_s.demodulize+', generate', t_pre, t_now)
+        diff_time(generator.class.name, t_pre, t_now)
       end
     end
   end
