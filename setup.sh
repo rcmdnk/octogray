@@ -137,6 +137,8 @@ set -e
 # first, install normal files by install task
 bundle update
 #rake install['octogray']
+mkdir -p source/_posts
+mkdir -p public
 for d in sass source sass;do
   while IFS= read -r -d '' f;do
     target="${f#.themes/octogray/}"
