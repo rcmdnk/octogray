@@ -147,7 +147,7 @@ for d in sass source sass;do
       mkdir -p "$dir"
       copy_link_util "$f" "$dir"
     fi
-  done < <(find .themes/octogray/$d)
+  done < <(find .themes/octogray/$d -print0)
 done
 
 # initialize submodules
