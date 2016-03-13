@@ -22,7 +22,7 @@ group :development do
   gem 'htmlcompressor'
   gem 'parallel'
   gem 'chronic'
-  gem 'google-api-client'
+  gem 'google-api-client', '~> 0.9'
   gem 'ruby-prof'
   gem 'ruby-progressbar'
 end

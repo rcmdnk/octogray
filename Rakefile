@@ -10,7 +10,7 @@ ssh_port       = "22"
 document_root  = "~/website.com/"
 rsync_delete   = false
 rsync_args     = ""  # Any extra arguments to pass to rsync
-deploy_default = "push_ex"
+deploy_default = "push"
 
 # This will be configured for you when you run config_deploy
 deploy_branch  = "master"
@@ -102,10 +102,17 @@ task :generate, :opt do |t, args|
     jekyll_opt += " --unpublished"
   end
 
+  jekyll_config = IO.read('_config.yml')
+  jekyll_config.gsub!(/\n^.*OCTOPRESS_TEST$/, "")
+  File.open('_config.yml', 'w') do |f|
+    f.write jekyll_config
+  end
+
   if opt.include?('test')
     jekyll_config = IO.read('_config.yml')
     jekyll_config += "\nshare_static: false # OCTOPRESS_TEST"
     jekyll_config += "\npage-view: false # OCTOPRESS_TEST"
+    jekyll_config += "\nhatena_popular_num: 0 # OCTOPRESS_TEST"
     File.open('_config.yml', 'w') do |f|
       f.write jekyll_config
     end
@@ -525,7 +532,7 @@ multitask :push_ex do
     system "git commit -m \"#{message}\" >/dev/null"
     system "git branch -m #{deploy_branch}" unless deploy_branch == 'master'
     puts "\n## Pushing generated #{deploy_dir} website"
-    output = (use_token)? " >/dev/null 2>&1":""
+    output = (use_token) ? " >/dev/null 2>&1" : ""
     Bundler.with_clean_env { system "git push -u -f origin #{deploy_branch} #{output}" }
     puts "\n## Github Pages deploy complete"
   end

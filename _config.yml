@@ -10,7 +10,6 @@ lang: en
 favicon: #/images/icon16.png
 title_logo:
 title_logo_css: false
-nav_marks: true
 # Please add your images to there
 aboutme_logo: #/images/icon32.png
 #aboutme_logo: https://github.com/rcmdnk.png
@@ -37,6 +36,15 @@ email:
 email_mark: false
 rss_mark: false
 
+# Navigation
+nav_marks: true
+nav_links:
+  - /blog/archives/ : Archives
+  - /share-checker.html/ : Share Checker
+  - /windows/ : Windows
+  - /mac/ : Mac
+  - /en/ : English Blog
+
 # sidebar
 aboutme_marks: false
 
@@ -45,7 +53,7 @@ jquery_version: 2.1.4
 jquery_ie8_version: 1.9.1
 
 # Font Awesome
-fontawesome_version: 4.4.0
+fontawesome_version: 4.5.0
 
 # ----------------------- #
 #    Jekyll & Plugins     #
@@ -63,8 +71,6 @@ tag_dir: blog/tags
 
 markdown: kramdown
 kramdown:
-  #parse_block_html: true # need jekyll 1.1.0 or later (they are completely different from  0.12)
-  # Use coderay, for  PHP Markdown Extra's code syntax (e.g. ~~~.ruby)
   use_coderay: true
   coderay:
     coderay_line_number: table
@@ -83,13 +89,19 @@ titlecase: false       # Converts page and post titles to titlecase
 # list each of the sidebar modules you want to include, in the order you want them to appear.
 # To add custom asides, create files in /source/_includes/custom/asides/ and add them to the list like 'custom/asides/custom_aside_name.html'
 default_asides:
+  #- custom/asides/ad_aside_top.html
+  - custom/asides/google_aside_top.html
   - custom/asides/about.html
+  - custom/asides/amazon_wishlist.html
   - asides/recent_posts.html
   - custom/asides/monthly_archive.html
   - custom/asides/category_list.html
   - custom/asides/tag_cloud.html
   - custom/asides/popular_posts.html
   - custom/asides/random_posts.html
+
+mytools_asides:
+  - custom/asides/twitter_search.html
 
 # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
 # and add an array with the asides you want to use.
@@ -103,8 +115,14 @@ aside_width: 336 # set sass/custom/_layout.scss: $sidebar-width-medium as 360px
 
 # Related post
 related_posts: 20
+related_categories: true
 related_posts_show: 5
 related_posts_text: "You might also like..."
+
+# Aside Pages
+aside_pages:
+#  - /windows/ : Windows
+#  - /mac/ : Mac
 
 # 404 not found picture
 pic_404nf: #/images/icon200.png
@@ -122,11 +140,33 @@ n_cores: 8
 #   3rd Party Settings    #
 # ----------------------- #
 
+# Linkchecker
+linkchecker: false
+linkchecker_travis_user:
+linkchecker_travis_repo:
+
+# My tools conents
+mytools:
+
 # Share
 share_official: false
 share_custom: true
 share_static: true
 share_check_all: true
+
+share_big:
+  hatebu: "HatenaBookMark"
+  twitter: "Share on Twitter"
+  googleplus: "Share on Google+"
+  facebook: "Share on Facebook"
+  pocket: "Save to Pocket"
+  linkedin: "Share on LinkedIn"
+  stumble: "Share on StumbleUpon"
+  pinterest: "Save to Pinterest"
+  buffer: "Share on Buffer"
+  delicious: "Save to Delicious"
+  tumbr: "Share on Tumblr"
+  feedly: "Follow on Feedly"
 
 # Github repositories
 github_user:
@@ -207,15 +247,17 @@ favorite: Favorite
 hatebu_button: true
 hatena_user:
 hatena_add: "Add to Hatena Bookmark"
-hatena_popular_posts: feed
-hatena_popular_sort: count
-hatena_popular_num: 10
+hatena_popular_posts: static # light, feed, orig or static
+hatena_popular_sort: count # eid, hot, count
+hatena_popular_title: Hatebu Popular Posts
+hatena_popular_num: 5
 
 # Pocket
 pocket_button: true
 
 # Zenback
 zenback_show: false
+zenback_widget:
 
 # LinkWithin
 linkwithin_show: false
@@ -231,6 +273,7 @@ coderwall_user:
 # feedly
 feedly_mark: false
 feedly_atom: http://yoursite/atom.xml
+feedly_button: false # for the bottom button
 
 # Tumblr
 tumblr_button: false
@@ -242,6 +285,14 @@ affiliate_services: "Google Adsense"
 
 # Google Adsense
 sponsored_links: "Sponsored Links"
+adsense_id:
+adsense_aside_top:
+adsense_aside_bottom:
+adsense_mid:
+adsense_bottom:
+adsense_link_nav:
+adsense_link_bottom:
+adsense_link_0:
 
 # Google Translate
 google_translate_lang: en
@@ -261,24 +312,33 @@ google_search_lang: en
 # Amazon tag
 #amazon_ad_tag: xxxxxx0c-22
 amazon_wishlist: false
+amazon_region: US # US or JP
+amazon_wish_id:
+amazon_wish_words: Wish list
+amazon_wish_tag:
+
+# UserLocal
+userlocal:
+
 # page-view settings (need service account private key file (key_file). ref: https://github.com/developmentseed/jekyll-ga)
-#page-view:
-#  service_account_email:
-#  key_file: # service account private key file
-#  key_secret: notasecret    # service account private key's password
-#  profileID:  #ga:XXXXXXXX
-#  start:                    # Beginning of report
-#    - 1 month ago
-#    - 10 years ago
-#    - 1 year ago
-#    - 1 week ago
-#    - 1 day ago
-#  end: now                  # End of report
-#  metric: ga:pageviews      # Metric code
-#  segment: gaid::-1         # all visits
-#  filters:                  # optional
-#  n_posts: 5                # Number of popular posts
-#  show_views: false         # If n_views is shown or not
+page-view:
+  service_account_email:
+  key_file: # service account private key file (Analytics-XXXXXXXXXXXX.p12)
+  key_secret: notasecret    # service account private key's password
+  profileID:  #ga:XXXXXXXX
+  start:                    # Beginning of report
+    - 1 month ago
+    - 10 years ago
+    - 1 year ago
+    - 1 week ago
+    - 1 day ago
+  end: now                  # End of report
+  metric: ga:pageviews      # Metric code
+  segment: gaid::-1         # all visits
+  filters:                  # optional
+  n_posts: 5                # Number of popular posts
+  show_views: false         # If n_views is shown or not
+popular_post_title: Most Viewed Posts (Last Month) # Title of sidebar section
 
 # Random posts
 random_posts: 5
@@ -335,6 +395,9 @@ jekyll_var:
     - buffer_button
     - delicious_button
     - tumblr_button
+    - feedly_button
+    - share_static
+    - share_no_ga
     - share_check_all
     - mandrill
     - mandrill_key
