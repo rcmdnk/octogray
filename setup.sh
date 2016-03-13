@@ -100,7 +100,7 @@ ret=$?
 if [ $ret -eq 0 ];then
   patch Rakefile < .themes/octogray/patches/Rakefile.patch
 else
-  "\n\e[31mPlease update Rakefile by following .themes/octogray/Rakefile.\e[m\n"
+  printf "\n\e[31mPlease update Rakefile by following .themes/octogray/Rakefile.\e[m\n"
 fi
 echo
 
