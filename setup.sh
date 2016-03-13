@@ -26,14 +26,14 @@ function yesno () {
     echo "y"
     return 0
   fi
-  read yn
+  read -r yn
   while :;do
     case $yn in
       "y"|"Y" ) return 0;;
       "n"|"N" ) return 1;;
       *)
         echo -n "Answer yes or no. [y/n]: "
-        read yn
+        read -r yn
         continue
         ;;
     esac
@@ -45,6 +45,9 @@ function copy_link_util () {
   orig=$1
   dir=$2
   mkdir -p "$dir"
+  if [ -f "$dir/$(basename "$orig")" ];then
+    rm -f "$dir/$(basename "$orig")"
+  fi
   if $link;then
     for((i=0; i<$(echo "$dir"|sed "s/^.\///"|sed "s/\/$//"|awk '{print split($0, tmp, "/")}'); i++));do
       orig="../$orig"
@@ -199,7 +202,9 @@ copy_link_plugin octopress-postscript/sass/plugins/_postscript.scss
 
 ## [octopress-common-part](https://github.com/rcmdnk/octopress-common-part)
 copy_link_plugin octopress-common-part/plugins/common_parts.rb
-copy_link_plugin octopress-common-part/source/_common_parts
+mkdir -p source/_common_parts
+copy_link_plugin octopress-common-part/source/_common_parts/common_header.html
+copy_link_plugin octopress-common-part/source/_common_parts/common_sidebar.html
 
 ## [jquery--ex-flex-fiex](http://github.com/cyokodog/jquery.ex-flex-fixed)
 copy_link_plugin jquery.ex-flex-fixed/jquery.exflexfixed-0.3.0.js source/javascripts
@@ -259,7 +264,7 @@ echo
 
 # other plugins
 for p in .themes/octogray/plugins_add/*rb;do
-  ln -s "../${p}" ./plugins/
+  copy_link_util "${p}" ./plugins/
 done
 
 # other files

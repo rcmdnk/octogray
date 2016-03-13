@@ -208,14 +208,18 @@ body.sidebar-footer {
 }
 
 // Table view
-* + table{
+.table-wrap {
+  overflow: scroll;
+}
+
+.table-wrap .table-wrap table{
   border-style: solid;
   border-width: 1.5px;
   //border-color: #CCCCCC;
   border-color: darken($main-bg,20);
 }
 
-* + table tr {
+.table-wrap .table-wrap table tr {
   &:nth-child(2n+1) {
     //background: #F8F8F8;
     background:lighten($main-bg,4);
@@ -226,13 +230,13 @@ body.sidebar-footer {
   }
 }
 
-* + table th, * + table td {
+.table-wrap table th, .table-wrap table td {
   border-style: solid;
   border-width: 1.5px;
   border-color: darken($main-bg,20);
 }
 
-* + table th {
+.table-wrap table th {
   font-weight: bold;
   //background: #F0F0F0;
   background: darken($main-bg,5);

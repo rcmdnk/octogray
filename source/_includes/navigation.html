@@ -30,9 +30,16 @@
     {% endif %}
   </p>
   {% endif %}
-  <p>
-    {% include custom/navigation.html %}
+  {%if site.nav_links.size %}
+  <p class="nav-links">
+    {% for link_hash in site.nav_links %}
+      {% for link in link_hash %}
+      <span><a href="{{ link[0] }}" class="link_btn" >{{ link[1] }}</a></span>
+      {% endfor %}
+    {% endfor %}
   </p>
+  {%endif%}
+  {% include custom/navigation.html %}
   {% if site.google_custom_search == 'compact' or site.google_custom_search == 'overlay' or site.google_custom_search == 'overlay_simple' or site.google_custom_search == 'overlay_classic' or site.google_custom_search == 'twolines' %}
   {% if site.google_search_pub %}
   <p>
