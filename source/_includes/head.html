@@ -11,7 +11,7 @@
   {% capture description %}{{ description | strip_html | condense_spaces | truncate:150 }}{% endcapture %}
   <meta name="title" content="{{title}}">
   <meta name="description" content="{{ description }}">
-  {% if site.google_translate_customize and page.translate != false %}
+  {% if site.google_translate_layout and site.google_translate_customize and page.translate != false %}
   <meta name="google-translate-customization" content="{{site.google_translate_customize}}">
   {% endif %}
   {% if page.keywords %}<meta name="keywords" content="{{ page.keywords }}">{% endif %}

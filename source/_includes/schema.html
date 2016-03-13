@@ -17,13 +17,7 @@
 }
 </script>
 {% if site.title_logo or site.aboutme_logo %}
-{% capture logo %}
-  {% if site.title_logo %}
-    {{site.title_logo }}
-  {% elsif site.aboutme_logo %}
-    {{site.aboutme_logo}}
-  {% endif %}
-{% endcapture %}
+{% capture logo %}{% if site.title_logo %}{{site.title_logo }}{% elsif site.aboutme_logo %}{{site.aboutme_logo}}{% endif %}{% endcapture %}
 <script type="application/ld+json">
 {
   "@context": "http://schema.org",
@@ -70,7 +64,7 @@
   "itemListElement":
   [
   {% assign pos = 1 %}
-  {% if page.categories %}
+  {% if page.categories and page.categories.size > 0 %}
     {% capture c %}{{page.categories|first}}{% endcapture %}
     {
       "@type": "ListItem",
@@ -83,9 +77,9 @@
     }
     {% capture pos %}{{ pos | plus:1}}{% endcapture %}
   {% endif %}
-  {% if page.tags %}
+  {% if page.tags and page.tags.size > 0 %}
     {% capture t %}{{page.tags|first}}{% endcapture %}
-    {% if pos != '1' %},{% endif %}
+    {% if pos != 1 %},{% endif %}
     {
       "@type": "ListItem",
       "position": {{pos}},

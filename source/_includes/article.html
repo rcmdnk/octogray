@@ -7,7 +7,7 @@
 <header>
   {% unless page.meta == false %}
   <div class="meta">
-    {% if p.date_text %}<time datetime='{{p.date_xml}}'><span class='time'>{{ p.date_text }}</span>{% endif %}
+    {% if p.date_text %}<time itemprop='datePublished' datetime='{{p.date_xml}}'><span class='time'>{{ p.date_text }}</span>{% endif %}
     {% include post/breadcrumbs.html %}
   </div>
   {% endunless %}
@@ -40,15 +40,18 @@
 {% endunless %}
 {% if post %}
 <div class="entry-content index_click_box" itemprop="articleBody">
-  <div class="group">
-    {% if p.ogimage and p.no_ogimage != true %}
-    <div class="titlle-thumbnail-wrap">
-      <div class="title-thumbnail">
-        {%thumbnail square-thumbnail val:post.ogimage%}
+  <div class="group" itemprop="description">
+    {% capture content_with_thumb %}
+      {% if p.ogimage and p.no_ogimage != true %}
+      <div class="titlle-thumbnail-wrap">
+        <div class="title-thumbnail">
+          {%thumbnail square-thumbnail val:post.ogimage%}
+        </div>
       </div>
-    </div>
-    {% endif %}
-    {{ content | excerpt }}
+      {% endif %}
+      {{ content }}
+    {% endcapture %}
+    {{ content_with_thumb | excerpt }}
     {% capture excerpted %}{{ content | has_excerpt }}{% endcapture %}
     {% if excerpted == 'true' %}
     <a class="click_box_link" href="{{root_url}}{{p.url}}">{{site.excerpt_link}}</a>
@@ -60,13 +63,16 @@
 <!-- zenback_body_begin -->
 {% endif %}
 <div class="entry-content" itemprop="articleBody">
-  <div class="group">
-    {% if p.ogimage and p.no_ogimage != true %}
-    <div class="title-thumbnail">
-      {%thumbnail square-thumbnail val:p.ogimage%}
-    </div>
-    {% endif %}
-    {{ content | excerpt }}
+  <div class="group" itemprop="description">
+    {% capture content_with_thumb %}
+      {% if p.ogimage and p.no_ogimage != true %}
+      <div class="title-thumbnail">
+        {%thumbnail square-thumbnail val:p.ogimage%}
+      </div>
+      {% endif %}
+      {{ content }}
+    {% endcapture %}
+    {{ content_with_thumb | excerpt }}
   </div>
   <!-- more -->
   <div class="group">

@@ -77,6 +77,19 @@
   </script>
   <script src="//www.linkwithin.com/widget.js" async defer></script>
 {% endif %}
+{% unless site.affiliate == false or page.affiliate == false %}
+  {% if site.amazon_ad_tag %}
+  <script type="text/javascript">
+    amzn_assoc_ad_type = "link_enhancement_widget";
+    amzn_assoc_tracking_id = "{{site.amazon_ad_tag}}";
+    amzn_assoc_placement = "";
+    amzn_assoc_marketplace = "amazon";
+    amzn_assoc_region = "{{site.amazon_region}}";
+  </script>
+  <script src="//z-fe.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&Operation=GetScript&ID=OneJS&WS=1&MarketPlace={{site.amazon_region}}" async defer></script>
+  {% endif %}
+{% endunless %}
+
 
 {%comment%}jQuery{%endcomment%}
 {%if site.jquery_ie8_version%}
@@ -101,9 +114,13 @@ compressed and combined to all.js
 <script src="{{root_url}}/javascripts/random-posts.js" defer></script>
 <script src="{{root_url}}/javascripts/utils.js" defer></script>
 {%endcomment%}
-{%unless site.share_static%}<script src="{{root_url}}/javascripts/share-custom.js" defer></script>{%endunless%}
 {%if site.scrolltop%}<script src="{{root_url}}/javascripts/scrolltopcontrol.js" defer></script>{%endif%}
-{%if site.n_scroll_fixed > 0%}<script src="{{root_url}}/javascripts/jquery.exflexfixed-0.3.0.js" defer></script>{%endif%}
+{%if site.n_scroll_fixed > 0%}
+  <script src="{{root_url}}/javascripts/jquery.exflexfixed-0.3.0.js" defer></script>
+  <script src="{{root_url}}/javascripts/n_sccroll_fixed.js" defer></script>
+{%endif%}
+{%unless site.share_static and page.share_check != true%}<script src="{{root_url}}/javascripts/share-custom.js" defer></script>{%endunless%}
+{%if page.share_check%}<script src="{{root_url}}/javascripts/share-check.js" defer></script>{%endif%}
 {% if site.google_custom_search == 'compact' %}
   {% include custom/google_search/compact.html %}
 {% elsif site.google_custom_search == 'onlyresults' %}

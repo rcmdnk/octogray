@@ -22,7 +22,7 @@ single: true
       {% include post/sharing.html %}
       {% endunless %}
       {% if site.share_custom == true %}
-      {% include post/sharing_custom.html %}
+      {% include post/sharing_custom_big.html %}
       {% endif %}
       {% endunless %}
       <p class="meta">
@@ -37,20 +37,31 @@ single: true
   </article>
   {% include custom/after_article.html %}
   {% if site.disqus_short_name and page.comments == true %}
-  {% include post/disqus_thread.html %}
-  {% unless site.affiliate == false or page.affiliate == false %}
-  <div id="ad-bottom" class="center_wrapper">
-  </div>
-  {% endunless %}
+    {% include post/disqus_thread.html %}
   {% endif %}
   {% if site.zenback_show == true and page.comments == true %}
-  {% include custom/zenback.html %}
+    {% include custom/zenback.html %}
   {% endif %}
   {% if site.linkwithin_show == true and page.footer != false %}
-  {% include linkwithin.html %}
+    {% include linkwithin.html %}
   {% endif %}
+  {% unless site.affiliate == false or page.affiliate == false %}
+  {%comment%}
+    <div class="center_wrapper">
+      <div class='only-footer'>{{site.sponsored_links}}</div>
+      <div>
+        {% include custom/affiliate/google_imgres0.html %}
+      </div>
+    </div>
+  {%endcomment%}
+    <div class="center_wrapper">
+      <div>
+        {% include custom/affiliate/ninja_bottom.html %}
+      </div>
+    </div>
+  {% endunless %}
   {% unless site.related_posts == false %}
-  {% include post/related_posts.html %}
+    {% include post/related_posts.html %}
   {% endunless %}
   {% include custom/endofpost.html %}
 </div><!-- post -->

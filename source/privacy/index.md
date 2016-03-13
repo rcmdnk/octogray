@@ -26,7 +26,7 @@ published: true
 
 # 広告について
 
-当サイトでは第三者配信事業者による広告サービス({{site.affiliate_serices}})を利用しています。
+当サイトでは第三者配信事業者による広告サービス({{site.affiliate_services}})を利用しています。
 これらの配信業者はユーザーに適切な広告を表示するためにCookieを利用して
 当サイトや他のサイトへのアクセス情報を使用することがあります。
 この情報は匿名で収集されており個人の特定するものではありません。
@@ -61,7 +61,7 @@ You can disable cookies via your browser settings.
 # Advertisements
 
 This site uses advertisements provided by third parties
-({{site.affiliate_serices}}).
+({{site.affiliate_services}}).
 These third parties collect cookies to optimize advertisements
 based on your online behavior.
 These cookies don't personally identifying information.

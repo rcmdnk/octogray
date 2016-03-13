@@ -1,4 +1,8 @@
 $(function(){
+  $('* + table').wrap('<div class="table-wrap"></div>');
+});
+
+$(function(){
   $(".add_bookmark").click(function () {
   if ( ! $(this).data('page_title') || ! $(this).data('page_url') ){
     return addBookmark(document.title, location.href)
@@ -37,19 +41,6 @@ $(function(){
   }
 });
 
-var index_click_box = function() {
-  var url = this.getElementsByClassName("click_box_link")[0].href
-  var p = this.parentNode
-  var name = p.id;
-  if (typeof name == "undefined"){
-    name = p.classList[0];
-  }
-  if (typeof name != "undefined"){
-    ga('send', 'event', "click_box", name, url);
-  }
-  window.location = url
-  return false;
-};
 var add_index_click_box_link = function() {
   [].forEach.call(document.getElementsByClassName('index_click_box'), function(b) {
     b.onclick = function() {
@@ -86,21 +77,6 @@ $(function(){
   });
 });
 
-// helper function for scroll fixed
-$(function(){
-  if("jekyll_var" in window && jekyll_var("n_scroll_fixed")!=null &&
-      jekyll_var("n_scroll_fixed") > 0){
-    if(!$('body').hasClass('collapse-sidebar')) {
-      if($('.scroll-fixed').length > 0){
-        $('.scroll-fixed').exFlexFixed({
-          watchPosition: true,
-          container : '#content'
-        });
-      }
-    }
-  }
-});
-
 // Mandrill helper
 $(function(){
   if((! "jekyll_var" in window || ! jekyll_var("mandrill")) && ! 'ga' in window){
@@ -125,7 +101,8 @@ $(function(){
     }
     if (!selected) return;
     var title = document.title;
-    var  url = location.href;
+    //var  url = location.href;
+    var  url = 'http://' + location.host + location.pathname;
     if("jekyll_var" in window && jekyll_var("mandrill")){
       $.ajax({
         type: "POST",
@@ -152,4 +129,58 @@ $(function(){
       ga('send', 'event', 'copy', url + ':' + title, selected);
     }
   });
+});
+
+$(function(){
+  if(! "jekyll_var" in window)return;
+
+  var socialCount = function (socials) {
+    social_data_box = [];
+    socials.forEach(function(s){
+      var urls = [];
+      var n = 0;
+      $("."+s+"Big").each(function(){
+        var url = $(this).attr("data-share-url");
+        var pos = "big";
+        if(n>0){
+          pos = pos + String(n);
+        }
+        if(!jekyll_var("share_no_ga")){
+          $(this).parent().on('click', function() {
+            ga('send', 'event', s, pos, url);
+          });
+        }
+        n++;
+      });
+      if(! jekyll_var("share_static"))return true;
+      n = 0;
+      $("."+s+"Count").each(function(){
+        var url = $(this).attr("data-share-url");
+        var pos = String(n);
+        if(n==0){
+          pos = "above";
+        }else if(n==1){
+          pos = "bottom";
+        }
+        if((! "jekyll_var" in window) || (!jekyll_var("share_no_ga"))){
+          $(this).parent().on('click', function() {
+            ga('send', 'event', s, pos, url);
+          });
+        }
+        n++;
+      });
+    });
+  };
+
+  var socials=[];
+  var smarks = ["hatebu", "twitter", "googleplus",
+               "facebook", "pocket", "linkedin",
+               "stumble", "pinterest", "buffer", "delicious",
+               "tumblr", "feedly"];
+  for(var i=0;i<smarks.length;i++){
+    if(jekyll_var(smarks[i]+'_button')){
+      socials.push(smarks[i]);
+    }
+  }
+  socialCount(socials);
 });
