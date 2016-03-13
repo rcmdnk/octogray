@@ -136,7 +136,19 @@ set -e
 
 # first, install normal files by install task
 bundle update
-rake install['octogray']
+#rake install['octogray']
+for d in sass source sass;do
+  while IFS= read -r -d '' f;do
+    target="${f#.themes/octogray/}"
+    if [ -d "$target" ];then
+      mkdir -p "$target"
+    else
+      dir=$(dirname "$target")
+      mkdir -p "$dir"
+      copy_link_util "$f" "$dir"
+    fi
+  done < <(find .themes/octogray/$d)
+done
 
 # initialize submodules
 cd .themes/octogray
