@@ -140,11 +140,15 @@ bundle update
 mkdir -p source/_posts
 mkdir -p public
 ls -l
-ls -l sass
+ls -l sass || :
 for d in sass source;do
   while IFS= read -r -d '' f;do
+    echo $f
     target="${f#.themes/octogray/}"
+    echo $target
     if [ -d "$target" ];then
+      echo target is directory
+      echo mkdir -p "$target"
       mkdir -p "$target"
     else
       dir=$(dirname "$target")
