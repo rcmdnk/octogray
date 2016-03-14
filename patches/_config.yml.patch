@@ -40,11 +40,11 @@ index c1d56f4..b2719c2 100644
 +# Navigation
 +nav_marks: true
 +nav_links:
-+  - /blog/archives/ : Archives
-+  - /share-checker.html/ : Share Checker
-+  - /windows/ : Windows
-+  - /mac/ : Mac
-+  - /en/ : English Blog
++  /blog/archives/: Archives
++  /share-checker.html/: Share Checker
++  /windows/: Windows
++  /mac/: Mac
++  /en/: English Blog
 +
 +# sidebar
 +aboutme_marks: false
@@ -126,8 +126,8 @@ index c1d56f4..b2719c2 100644
 +
 +# Aside Pages
 +aside_pages:
-+#  - /windows/ : Windows
-+#  - /mac/ : Mac
++#  /windows/: Windows
++#  /mac/: Mac
 +
 +# 404 not found picture
 +pic_404nf: #/images/icon200.png

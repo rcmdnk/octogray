@@ -2,10 +2,7 @@
 <section>
   <h1>Pages</h1>
   {% for link in site.aside_pages %}
-  {% for link_hash in site.nav_links %}
-    {% for link in link_hash %}
-    <span><a href="{{ link[0] }}" class="link_btn" >{{ link[1] }}</a></span>
-    {% endfor %}
+  <span><a href="{{ link[0] }}" class="link_btn" >{{ link[1] }}</a></span>
   {% endfor %}
 </section>
 {%endif%}

@@ -32,10 +32,8 @@
   {% endif %}
   {%if site.nav_links.size %}
   <p class="nav-links">
-    {% for link_hash in site.nav_links %}
-      {% for link in link_hash %}
+    {% for link in site.nav_links %}
       <span><a href="{{ link[0] }}" class="link_btn" >{{ link[1] }}</a></span>
-      {% endfor %}
     {% endfor %}
   </p>
   {%endif%}
