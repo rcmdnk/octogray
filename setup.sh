@@ -143,12 +143,8 @@ ls -l
 ls -l sass || :
 for d in sass source;do
   while IFS= read -r -d '' f;do
-    echo $f
     target="${f#.themes/octogray/}"
-    echo $target
-    if [ -d "$target" ];then
-      echo target is directory
-      echo mkdir -p "$target"
+    if [ -d "$f" ];then
       mkdir -p "$target"
     else
       dir=$(dirname "$target")
