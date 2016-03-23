@@ -139,8 +139,6 @@ bundle update
 #rake install['octogray']
 mkdir -p source/_posts
 mkdir -p public
-ls -l
-ls -l sass || :
 for d in sass source;do
   while IFS= read -r -d '' f;do
     target="${f#.themes/octogray/}"

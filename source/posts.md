@@ -3,6 +3,7 @@ layout: div
 share_all: true
 share_number: true
 views_periods: true
+share_check_all: true
 ---
 {% assign index = true %}
 <br>
@@ -52,12 +53,14 @@ views_periods: true
 </div>
 <ul id="posts-sort" class="posts">
   {% for post in site.posts %}
-  <li class="post index_click_box">
+  <li class="post">
     <p>
     {% include post/sharing_custom.html %}
     </p>
+    <div class="index_click_box">
     <span class="post-date">{{post.date}}</span>
     {% include post/post_list.html%}
+    </div>
   </li>
   {% endfor %}
 </ul>
