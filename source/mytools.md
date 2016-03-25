@@ -8,8 +8,7 @@ My Tools
 
 * [all posts](/posts.html)
 {% if site.linkchecker %}
-* [linkchecker](/linkchecker.html)
-* {{ site.linkchecker_travis_repo }}(Linkchecker): [![Build Status](https://travis-ci.org/{{ site.linkchecker_travis_user }}/{{ site.linkchecker_travis_repo }}.svg?branch=master)](https://travis-ci.org/{{ site.linkchecker_travis_user }}/{{ site.linkchecker_travis_repo }})
+* [linkchecker](/linkchecker.html) [![Build Status](https://travis-ci.org/{{ site.linkchecker_travis_user }}/{{ site.linkchecker_travis_repo }}.svg?branch=master)](https://travis-ci.org/{{ site.linkchecker_travis_user }}/{{ site.linkchecker_travis_repo }})
 {% endif %}
 
 * Octogray: [![Build Status](https://travis-ci.org/rcmdnk/octogray.svg?branch=master)](https://travis-ci.org/rcmdnk/octogray)
