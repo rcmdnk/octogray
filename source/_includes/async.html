@@ -43,6 +43,14 @@
   <script src='{{root_url}}/javascripts/translate/element.js' async defer></script>
 {% endif %}
 {% unless site.affiliate == false or page.affiliate == false %}
+  {% if site.adsense_page_level_ads %}
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-{{site.adsense_page_level_ads}}",
+      enable_page_level_ads: true
+    });
+  </script>
+  {% endif %}
   {% if site.sponsored_links %}<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>{% endif %}
   {% if site.linkplaza_key %}<script src='//static.linkplaza.jp/api/replace.js?key={{site.linkplaza_key}}' async defer></script>{% endif %}
 {% endunless %}
