@@ -86,7 +86,7 @@
   <script src="//www.linkwithin.com/widget.js" async defer></script>
 {% endif %}
 {% unless site.affiliate == false or page.affiliate == false %}
-  {% if site.amazon_ad_tag %}
+  {% if site.amazon_ad_tag and site.amazon_link_enhancement_widget %}
   <script type="text/javascript">
     amzn_assoc_ad_type = "link_enhancement_widget";
     amzn_assoc_tracking_id = "{{site.amazon_ad_tag}}";
