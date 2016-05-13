@@ -254,15 +254,15 @@ copy_link_plugin octopress-post-card/sass/plugins/_post-card.scss
 
 # install downloaded plugins
 
-# [NailThumb](http://www.garralab.com/nailthumb.php)
-wget -O nailthumb.1.1.zip http://sourceforge.net/projects/nailthumb/files/nailthumb.1.1.zip/download
-unzip nailthumb.1.1.zip
-rm -f nailthumb.1.1.zip
-mv nailthumb .themes/octogray/.plugins/
-cp .themes/octogray/.plugins/nailthumb/jquery.nailthumb.1.1.css ./sass/plugins/_nailthumb.scss
-cp .themes/octogray/.plugins/nailthumb/jquery.nailthumb.1.1.min.js ./source/javascripts/
-rm -rf .themes/octogray/.plugins/nailthumb/
-echo
+## [NailThumb](http://www.garralab.com/nailthumb.php)
+#wget -O nailthumb.1.1.zip http://sourceforge.net/projects/nailthumb/files/nailthumb.1.1.zip/download
+#unzip nailthumb.1.1.zip
+#rm -f nailthumb.1.1.zip
+#mv nailthumb .themes/octogray/.plugins/
+#cp .themes/octogray/.plugins/nailthumb/jquery.nailthumb.1.1.css ./sass/plugins/_nailthumb.scss
+#cp .themes/octogray/.plugins/nailthumb/jquery.nailthumb.1.1.min.js ./source/javascripts/
+#rm -rf .themes/octogray/.plugins/nailthumb/
+#echo
 
 ## [jQuery SCroll to Top Control](http://www.dynamicdrive.com/dynamicindex3/scrolltop.htm)
 wget -O scrolltopcontrol.js http://www.dynamicdrive.com/dynamicindex3/scrolltopcontrol.js
