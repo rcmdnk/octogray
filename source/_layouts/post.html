@@ -46,19 +46,13 @@ single: true
     {% include linkwithin.html %}
   {% endif %}
   {% unless site.affiliate == false or page.affiliate == false %}
-  {%comment%}
-    <div class="center_wrapper">
-      <div class='only-footer'>{{site.sponsored_links}}</div>
-      <div>
-        {% include custom/affiliate/google_imgres0.html %}
+    {% if site.affiliate_bot %}
+      <div class="center_wrapper">
+        <div>
+          {{ site.affiliate_bot }}
+        </div>
       </div>
-    </div>
-
-    <div class="center_wrapper">
-      <div>
-        {% include custom/affiliate/ninja_bottom.html %}
-      </div>
-    </div>
+    {% endif %}
   {%endcomment%}
   {% endunless %}
   {% unless site.related_posts == false %}
