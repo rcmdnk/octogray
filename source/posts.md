@@ -49,6 +49,7 @@ share_check_all: true
         </ul>
       </div>
     </li>
+    <li>Last update: {{site.time|date_to_rfc822}}</li>
   </ul>
 </div>
 <ul id="posts-sort" class="posts">
