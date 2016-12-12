@@ -4,7 +4,9 @@ footer: false
 twitter: true
 ---
 
-My Tools
+# My Tools
+
+Last update: {{site.time|date_to_rfc822}}
 
 * [all posts](/posts.html)
 {% if site.linkchecker %}* [linkchecker](/linkchecker.html) [![Build Status](https://travis-ci.org/{{ site.linkchecker_travis_user }}/{{ site.linkchecker_travis_repo }}.svg?branch=master)](https://travis-ci.org/{{ site.linkchecker_travis_user }}/{{ site.linkchecker_travis_repo }}){% endif %}
