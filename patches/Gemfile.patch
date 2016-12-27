@@ -1,28 +1,44 @@
 diff --git a/Gemfile b/Gemfile
-index 5683812..efa47c7 100644
+index 5683812..870d028 100644
 --- a/Gemfile
 +++ b/Gemfile
-@@ -8,11 +8,23 @@ group :development do
-   gem 'jekyll-sitemap'
-   gem 'rdiscount', '~> 2.0'
-   gem 'RedCloth', '~> 4.2.9'
-+  gem 'coderay', '~> 1.1.0'
-   gem 'haml', '~> 4.0'
-   gem 'compass', '~> 1.0.1'
-   gem 'sass-globbing', '~> 1.0.0'
-   gem 'rb-fsevent', '~> 0.9'
-   gem 'stringex', '~> 1.4.0'
-+  gem 'thin'
-+  gem 'gemoji'
-+  gem 'json'
-+  gem 'octopress-asset-pipeline'
-+  gem 'yui-compressor'
-+  gem 'htmlcompressor'
-+  gem 'parallel'
-+  gem 'chronic'
+@@ -1,18 +1,27 @@
+ source "https://rubygems.org"
+ 
+ group :development do
+-  gem 'rake', '~> 10.0'
+-  gem 'jekyll', '~> 2.0'
+-  gem 'octopress-hooks', '~> 2.2'
+-  gem 'octopress-date-format', '~> 2.0'
+-  gem 'jekyll-sitemap'
+-  gem 'rdiscount', '~> 2.0'
+-  gem 'RedCloth', '~> 4.2.9'
++  gem 'RedCloth', '~> 4.3'
++  gem 'chronic', '~> 0.10'
++  gem 'coderay', '~> 1.1'
++  gem 'compass', '~> 1.0'
++  gem 'gemoji', '~> 3.0'
 +  gem 'google-api-client', '~> 0.9'
-+  gem 'ruby-prof'
-+  gem 'ruby-progressbar'
+   gem 'haml', '~> 4.0'
+-  gem 'compass', '~> 1.0.1'
+-  gem 'sass-globbing', '~> 1.0.0'
+-  gem 'rb-fsevent', '~> 0.9'
+-  gem 'stringex', '~> 1.4.0'
++  gem 'htmlcompressor', '~> 0.3'
++  gem 'jekyll', '~> 3.3'
++  gem 'jekyll-sitemap', '~> 0.12'
++  gem 'json', '~> 2.0'
++  gem 'octopress-asset-pipeline', '~> 2.0'
++  gem 'octopress-date-format', '~> 3.0'
++  gem 'parallel', '~> 1.10'
++  gem 'rake', '~> 12.0'
++  gem 'rdiscount', '~> 2.2'
++  gem 'ruby-progressbar', '~> 1.8'
++  gem 'sass-globbing', '~> 1.1'
++  gem 'sinatra', '~> 1.4'
++  gem 'stringex', '~> 2.6'
++  gem 'thin', '~> 1.7'
++  gem 'yui-compressor', '~> 0.12'
  end
  
- gem 'sinatra', '~> 1.4.2'
+-gem 'sinatra', '~> 1.4.2'
