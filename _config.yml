@@ -39,11 +39,11 @@ rss_mark: false
 # Navigation
 nav_marks: true
 nav_links:
-  /blog/archives/ : Archives
-  /share-checker.html/ : Share Checker
-  /windows/ : Windows
-  /mac/ : Mac
-  /en/ : English Blog
+  /blog/archives/: Archives
+  /share-checker.html/: Share Checker
+  /windows/: Windows
+  /mac/: Mac
+  /en/: English Blog
 
 # sidebar
 aboutme_marks: false
@@ -53,7 +53,7 @@ jquery_version: 2.1.4
 jquery_ie8_version: 1.9.1
 
 # Font Awesome
-fontawesome_version: 4.5.0
+fontawesome_version: 4.7.0
 
 # ----------------------- #
 #    Jekyll & Plugins     #
@@ -64,20 +64,21 @@ root: /
 permalink: /blog/:year/:month/:day/:title/
 source: source
 destination: public
-plugins: plugins
+plugins_dir: plugins
 code_dir: downloads/code
 category_dir: blog/categories
 tag_dir: blog/tags
 
 markdown: kramdown
 kramdown:
-  use_coderay: true
-  coderay:
-    coderay_line_number: table
-    coderay_css: class
+  syntax_highlighter: true
+  syntax_highlighter_opts:
+    line_number: table
+    css: class
 
 highlighter: pygments # default python pygments have been replaced by pygments.rb
 
+gems: [jekyll-paginate]
 paginate: 10          # Posts per page on the blog index
 paginate_path: "blog/page/:num/"  # Directory base for pagination URLs eg. /blog/page/2/
 recent_posts: 5       # Posts in the sidebar Recent Posts section

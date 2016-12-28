@@ -118,7 +118,7 @@ task :generate, :opt do |t, args|
     end
   end
 
-  ok_failed_raise system("jekyll build #{jekyll_opt}")
+  ok_failed_raise system("JEKYLL_ENV=production jekyll build #{jekyll_opt}")
 
   if opt.include?('test')
     jekyll_config = IO.read('_config.yml')
@@ -887,7 +887,6 @@ end
 task :test do
   #ok_failed_raise system("if [ -f #{word_avoid} ];then while read a;do if ret=`grep -i -r -q $a #{public_dir}`;then echo \"A word $a is included, must be avoided!!!\"; echo $ret; exit 1;fi; done < #{word_avoid};fi")
   #ok_failed_raise system("cd #{public_dir};pwd;cd -")
-  #print "hoge"
   #raise "eror"
   system "git ls >& log"
 end
@@ -1048,3 +1047,4 @@ task :minify_html do
     progressbar.increment
   end
 end
+
