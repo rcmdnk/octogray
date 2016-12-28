@@ -1,5 +1,5 @@
 diff --git a/_config.yml b/_config.yml
-index c1d56f4..e2eaa34 100644
+index c1d56f4..f5f0c6c 100644
 --- a/_config.yml
 +++ b/_config.yml
 @@ -6,20 +6,54 @@ url: http://yoursite.com
@@ -58,8 +58,14 @@ index c1d56f4..e2eaa34 100644
  
  # ----------------------- #
  #    Jekyll & Plugins     #
-@@ -30,28 +64,45 @@ root: /
- permalink: /blog/:year/:month/:day/:title/
+@@ -27,31 +61,50 @@ email:
+ 
+ # If publishing to a subdirectory as in http://site.com/project set 'root: /project'
+ root: /
+-permalink: /blog/:year/:month/:day/:title/
++collections:
++  posts:
++    permalink: /blog/:year/:month/:day/:title/
  source: source
  destination: public
 -plugins: plugins
@@ -115,7 +121,7 @@ index c1d56f4..e2eaa34 100644
  
  # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
  # and add an array with the asides you want to use.
-@@ -59,29 +110,106 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
+@@ -59,29 +112,106 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
  # post_asides:
  # page_asides:
  
@@ -224,7 +230,7 @@ index c1d56f4..e2eaa34 100644
  # Pinboard
  pinboard_user:
  pinboard_count: 3
-@@ -89,6 +217,10 @@ pinboard_count: 3
+@@ -89,6 +219,10 @@ pinboard_count: 3
  # Delicious
  delicious_user:
  delicious_count: 3
@@ -235,7 +241,7 @@ index c1d56f4..e2eaa34 100644
  
  # Disqus Comments
  disqus_short_name:
-@@ -99,3 +231,182 @@ google_analytics_tracking_id:
+@@ -99,3 +233,182 @@ google_analytics_tracking_id:
  
  # Facebook Like
  facebook_like: false
