@@ -5,7 +5,7 @@ group :development do
   gem 'chronic', '~> 0.10'
   gem 'coderay', '~> 1.1'
   gem 'compass', '~> 1.0'
-  gem 'gemoji', '~> 3.0'
+  gem 'gemoji', '~> 2.1'
   gem 'google-api-client', '~> 0.9'
   gem 'haml', '~> 4.0'
   gem 'htmlcompressor', '~> 0.3'
