@@ -1,27 +1,31 @@
 require "parallel"
 require "ruby-progressbar"
 
+# Patch for jekyll-3.3.1/lib/jekyll/site.rb
 module Jekyll
   class Site
 
     @@space = 35
 
-    def diff_time(name, t_pre, t_now)
+    def diff_time_pre(name)
+      print "%#{@@space}s:" % name
+    end
+
+    def diff_time(t_pre, t_now)
       t_diff = t_now - t_pre
       sec = t_diff % 60
       min = ((t_diff - sec) % 3600) / 60
       hour = (t_diff - sec - (min * 60)) / 3600
-      puts "%#{@@space}s: %02d:%02d:%02d" % [name, hour, min, sec]
+      puts "%#{@@space+2}s%02d:%02d:%02d" % ["", hour, min, sec]
     end
 
     def process
-      exe = ['reset', 'read', 'generate', 'render', 'cleanup', 'write']
-      t_now = Time.now
+      exe = ['reset', 'read', 'generate', 'render', 'cleanup', 'write', 'print_stats']
       exe.each { |e|
+        start = Time.now
         send(e)
-        t_pre = t_now
-        t_now = Time.now
-        diff_time(e, t_pre, t_now)
+        diff_time_pre(e)
+        diff_time(start, Time.now)
       }
     end
 
@@ -32,110 +36,139 @@ module Jekyll
         end
       end
 
-      relative_permalinks_deprecation_method
+      relative_permalinks_are_deprecated
 
-      collections.each do |label, collection|
-        collection.docs.each do |document|
-          document.output = Jekyll::Renderer.new(self, document).run
+      n = 0
+      for c in collections
+        _, collection = c
+        for document in collection.docs
+          if regenerator.regenerate?(document)
+            n = n + 1
+          end
         end
       end
 
-      payload = site_payload
-      progressbar = ProgressBar.create(:title => "%#{@@space-5}s" % "posts-pages, render", :starting_at => 0,
-                                       :total => [posts, pages].flatten.size,
-                                       :format => '%t %a |%B| %p%')
-      #Parallel.map([posts, pages].flatten, :in_threads => self.config['n_cores'] ? self.config['n_cores'] : 1) do |page_or_post|
-      [posts, pages].flatten.each do |page_or_post|
-        page_or_post.render(layouts, payload)
-        progressbar.increment
+      for page in pages.flatten
+        if regenerator.regenerate?(page)
+          n = n + 1
+        end
       end
+
+      progressbar = ProgressBar.create(:title => "%#{@@space-5}s" % "posts-pages, render", :starting_at => 0,
+                                       :total => n,
+                                       :format => '%t %a |%B| %p%')
+      payload = site_payload
+
+      Jekyll::Hooks.trigger :site, :pre_render, self, payload
+
+      for c in collections
+        _, collection = c
+        for document in collection.docs
+          if regenerator.regenerate?(document)
+            document.output = Jekyll::Renderer.new(self, document, payload).run
+            document.trigger_hooks(:post_render)
+            progressbar.increment
+          end
+        end
+      end
+
+      for page in pages.flatten
+        if regenerator.regenerate?(page)
+          page.output = Jekyll::Renderer.new(self, page, payload).run
+          page.trigger_hooks(:post_render)
+          progressbar.increment
+        end
+      end
+
+      Jekyll::Hooks.trigger :site, :post_render, self, payload
     end
 
     def generate
-      t_now = Time.now
       generators.each do |generator|
+        diff_time_pre(generator.class.name)
+        start = Time.now
         generator.generate(self)
-        t_pre = t_now
-        t_now = Time.now
-        #diff_time(generator.class.name.to_s.demodulize+', generate', t_pre, t_now)
-        diff_time(generator.class.name, t_pre, t_now)
+        diff_time(start, Time.now)
       end
     end
   end
 end
 
-# Patch for jekyll-2.1.0/lib/jekyll/post.rb
+# Patch for jekyll-3.3.1/lib/jekyll/document.rb
 # to capitalize all categories, instead of being downcase.
 module Jekyll
-  class Post
+  class Document
     # Categories
     def populate_categories
-      categories_from_data = Utils.pluralized_array_from_hash(data, 'category', 'categories')
-      self.categories = (
-        Array(categories) + categories_from_data
-      ).map {|c| c.to_s.capitalize}.flatten.uniq # Capitalize categories
-      #) # Don't change (Be careful, must use exactly same capitalization for same category name
-         # e.g. if one post has "Category" and other has "category",
-         # there is only one "Category" or "category"
-         # and one of them is ignored.
-      #).map {|c| c.to_s.downcase}.flatten.uniq # All downcase (default)
+      merge_data!({
+        "categories" => (
+        Array(data["categories"]) + Utils.pluralized_array_from_hash(
+          data,
+          "category",
+          "categories"
+        )
+        ).map{|c| c.to_s.capitalize}.flatten.uniq
+      })
     end
 
     # Tags
     #def populate_tags
-    #  self.tags = Utils.pluralized_array_from_hash(data, "tag", "tags").map {|t| t.to_s.capitalize}.flatten
+    #  merge_data!({
+    #    "tags" => Utils.pluralized_array_from_hash(data, "tag", "tags").map {|t| t.to_s.capitalize}.flatten
+    #  })
     #end
   end
 end
 
-require 'octopress-date-format'
 module Octopress
-  module PageDate
-    def self.hack_date(page)
-      if page.data['date'] || page.respond_to?(:date)
-        date = datetime(page.data['date'] || page.date)
+  module DateFormat
+    class << self
+      def hack_date(page)
+        if page.data['date'] || page.respond_to?(:date)
+          date = datetime(page.data['date'] || page.date)
 
-        page.data['date_xml']  = date.xmlschema
-        page.data['date_text'] = format_date(date)
-        page.data['time_text'] = format_time(date)
-        page.data['date_html'] = date_html(date, false)
-        page.data['date_time_html'] = date_html(date)
+          page.data['date_xml']  = date.xmlschema
+          page.data['date_text'] = format_date(date)
+          page.data['time_text'] = format_time(date)
+          page.data['date_html'] = date_html(date, false)
+          page.data['date_time_html'] = date_html(date)
+        end
+
+        # Legacy support
+        if page.data['updated']
+          page.data['date_updated'] = page.data['updated']
+        end
+
+        if page.data['date_updated']
+          updated  = datetime(page.data['date_updated'])
+          page.data['date_updated_xml']  = updated.xmlschema
+          page.data['date_updated_text'] = format_date(updated)
+          page.data['time_updated_text'] = format_time(updated)
+          page.data['date_updated_html'] = date_updated_html(updated, false)
+          page.data['date_time_updated_html'] = date_updated_html(updated)
+        elsif page.data['date'] || page.respond_to?(:date)
+          page.data['date_html'].sub!('entry-date','entry-date updated')
+          page.data['date_html'].sub!('datePublished','datePublished dateModified')
+          page.data['date_time_html'].sub!('entry-date','entry-date updated')
+          page.data['date_time_html'].sub!('datePublished','datePublished dateModified')
+        end
+
+        page
+
       end
 
-      # Legacy support
-      if page.data['updated']
-        page.data['date_updated'] = page.data['updated']
+      def date_html(date, time=true)
+        tag =  "<time itemprop='datePublished' class='entry-date' datetime='#{ date.xmlschema }'>"
+        tag += "<span class='date'>#{format_date(date, true)}</span>"
+        if time
+          tag += " <span class='time'>#{format_time(date)}</span>" if time
+        end
+        tag += "</time>"
       end
 
-      if page.data['date_updated']
-        updated  = datetime(page.data['date_updated'])
-        page.data['date_updated_xml']  = updated.xmlschema
-        page.data['date_updated_text'] = format_date(updated)
-        page.data['time_updated_text'] = format_time(updated)
-        page.data['date_updated_html'] = date_updated_html(updated, false)
-        page.data['date_time_updated_html'] = date_updated_html(updated)
-      elsif page.data['date'] || page.respond_to?(:date)
-        page.data['date_html'].sub!('entry-date','entry-date updated')
-        page.data['date_html'].sub!('datePublished','datePublished dateModified')
-        page.data['date_time_html'].sub!('entry-date','entry-date updated')
-        page.data['date_time_html'].sub!('datePublished','datePublished dateModified')
+      def date_updated_html(date, time=true)
+        date_html(date, time).sub('entry-date','updated').sub('datePublished','dateModified')
       end
-
-      page
-
-    end
-
-    def self.date_html(date, time=true)
-      tag =  "<time itemprop='datePublished' class='entry-date' datetime='#{ date.xmlschema }'>"
-      tag += "<span class='date'>#{format_date(date, true)}</span>"
-      if time
-        tag += " <span class='time'>#{format_time(date)}</span>" if time
-      end
-      tag += "</time>"
-    end
-
-    def self.date_updated_html(date, time=true)
-      date_html(date, time).sub('entry-date','updated').sub('datePublished','dateModified')
     end
   end
 end

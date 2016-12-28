@@ -126,6 +126,11 @@ if [ $ret -eq 0 ];then
     orig=${p#.themes/octogray/}
     copy_link "$orig"
   done
+  for f in ./plugins/raw.rb ./plugins/video_tag.rb;do
+    if [ -f "$f" ];then
+      mv "$f" "$f".bak
+    fi
+  done
 else
   printf "\n\e[31mPlease update plugins by following .themes/octogray/plugins\e[m\n"
 fi

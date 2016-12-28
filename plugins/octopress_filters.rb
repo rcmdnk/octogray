@@ -3,7 +3,19 @@ require './plugins/backtick_code_block'
 require 'octopress-hooks'
 require 'jekyll-sitemap'
 require 'octopress-date-format'
-require './plugins/raw'
+
+module TemplateWrapper
+  # Wrap input with a <div>
+  def self.safe_wrap(input)
+    "<div class='bogus-wrapper'><notextile>#{input}</notextile></div>"
+  end
+  # This must be applied after the
+  def self.unwrap(input)
+    input.gsub /<div class=['"]bogus-wrapper['"]><notextile>(.+?)<\/notextile><\/div>/m do
+      $1
+    end
+  end
+end
 
 module OctopressFilters
   def self.pre_filter(page)
