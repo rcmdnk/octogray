@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+theme_dir=.themes/octogray
+submodule_dir="$theme_dir/.plugins"
+
 yes=false
 link=false
 
@@ -59,7 +62,7 @@ function copy_link_util () {
 }
 
 function copy_link () {
-  orig=".themes/octogray/$1"
+  orig="$theme_dir/$1"
   dir="$(dirname "${1}")"
   if [ $# -gt 1 ];then
     dir="$2"
@@ -68,7 +71,7 @@ function copy_link () {
 }
 
 function copy_link_plugin () {
-  orig=".themes/octogray/.plugins/$1"
+  orig="$submodule_dir/$1"
   dir="$(dirname "${1#*/}")"
   if [ $# -gt 1 ];then
     dir="$2"
@@ -91,9 +94,9 @@ fi
 yesno "Do you want to patch Gemfile?"
 ret=$?
 if [ $ret -eq 0 ];then
-  patch Gemfile < .themes/octogray/patches/Gemfile.patch
+  patch Gemfile < $theme_dir/patches/Gemfile.patch
 else
-  printf "\n\e[31mPlease check .themes/octogray/Gemfile for necessary packages.\e[m\n"
+  printf "\n\e[31mPlease check $theme_dir/Gemfile for necessary packages.\e[m\n"
 fi
 echo
 
@@ -101,9 +104,9 @@ echo
 yesno "Do you want to patch Rakefile?"
 ret=$?
 if [ $ret -eq 0 ];then
-  patch Rakefile < .themes/octogray/patches/Rakefile.patch
+  patch Rakefile < $theme_dir/patches/Rakefile.patch
 else
-  printf "\n\e[31mPlease update Rakefile by following .themes/octogray/Rakefile.\e[m\n"
+  printf "\n\e[31mPlease update Rakefile by following $theme_dir/Rakefile.\e[m\n"
 fi
 echo
 
@@ -111,23 +114,23 @@ echo
 yesno "Do you want to patch _config.yml?"
 ret=$?
 if [ $ret -eq 0 ];then
-  patch _config.yml < .themes/octogray/patches/_config.yml.patch
+  patch _config.yml < $theme_dir/patches/_config.yml.patch
 else
-  printf "\n\e[31mPlease update _config.yml by following .themes/octogray/_config.yml\e[m\n"
+  printf "\n\e[31mPlease update _config.yml by following $theme_dir/_config.yml\e[m\n"
 fi
 echo
 
 # replace plugins (image_tag.rb, include_array.rb, octopress_filter.rb)
-yesno "Do you want to replace plugins (image_tag.rb, include_array.rb, octopress_filter.rb)?"
+yesno "Do you want to replace plugins ($(find $theme_dir/plugins/ -name "*.rb" -print0 |xargs -0 basename|tr -d "\n"  ))?"
 ret=$?
 if [ $ret -eq 0 ];then
-  for p in .themes/octogray/plugins/*rb;do
+  for p in $theme_dir/plugins/*rb;do
     rm -f "./plugins/$(basename "$p")"
-    orig=${p#.themes/octogray/}
+    orig=${p#$theme_dir/}
     copy_link "$orig"
   done
 else
-  printf "\n\e[31mPlease update plugins by following .themes/octogray/plugins\e[m\n"
+  printf "\n\e[31mPlease update plugins by following $theme_dir/plugins\e[m\n"
 fi
 echo
 
@@ -141,7 +144,7 @@ mkdir -p source/_posts
 mkdir -p public
 for d in sass source;do
   while IFS= read -r -d '' f;do
-    target="${f#.themes/octogray/}"
+    target="${f#$theme_dir/}"
     if [ -d "$f" ];then
       mkdir -p "$target"
     else
@@ -149,11 +152,11 @@ for d in sass source;do
       mkdir -p "$dir"
       copy_link_util "$f" "$dir"
     fi
-  done < <(find .themes/octogray/$d -print0)
+  done < <(find $theme_dir/$d -print0)
 done
 
 # initialize submodules
-cd .themes/octogray
+cd $theme_dir
 git submodule update --init --recursive
 cd ../../
 
@@ -259,28 +262,28 @@ copy_link_plugin octopress-post-card/sass/plugins/_post-card.scss
 #wget -O nailthumb.1.1.zip http://sourceforge.net/projects/nailthumb/files/nailthumb.1.1.zip/download
 #unzip nailthumb.1.1.zip
 #rm -f nailthumb.1.1.zip
-#mv nailthumb .themes/octogray/.plugins/
-#cp .themes/octogray/.plugins/nailthumb/jquery.nailthumb.1.1.css ./sass/plugins/_nailthumb.scss
-#cp .themes/octogray/.plugins/nailthumb/jquery.nailthumb.1.1.min.js ./source/javascripts/
-#rm -rf .themes/octogray/.plugins/nailthumb/
+#mv nailthumb $submodule_dir/
+#cp $submodule_dir/nailthumb/jquery.nailthumb.1.1.css ./sass/plugins/_nailthumb.scss
+#cp $submodule_dir/nailthumb/jquery.nailthumb.1.1.min.js ./source/javascripts/
+#rm -rf $submodule_dir/nailthumb/
 #echo
 
 ## [jQuery SCroll to Top Control](http://www.dynamicdrive.com/dynamicindex3/scrolltop.htm)
 wget -O scrolltopcontrol.js http://www.dynamicdrive.com/dynamicindex3/scrolltopcontrol.js
-mkdir -p .themes/octogray/.plugins/scrolltopcontrol
-mv scrolltopcontrol.js .themes/octogray/.plugins/scrolltopcontrol
-cp .themes/octogray/.plugins/scrolltopcontrol/scrolltopcontrol.js ./source/javascripts/
+mkdir -p $submodule_dir/scrolltopcontrol
+mv scrolltopcontrol.js $submodule_dir/scrolltopcontrol
+cp $submodule_dir/scrolltopcontrol/scrolltopcontrol.js ./source/javascripts/
 sedi "s/<img src=\"up.png\" style=\"width:48px; height:48px\" \/>/<i class=\"fa fa-chevron-up icon-scroll-up\"><\/i>/g" ./source/javascripts/scrolltopcontrol.js
 sedi "s/startline:100/startline:300/g" ./source/javascripts/scrolltopcontrol.js
 sedi "s/offsety:5/offsety:20/g" ./source/javascripts/scrolltopcontrol.js
 sedi "s/bottom:mainobj/top:mainobj/g" ./source/javascripts/scrolltopcontrol.js
-rm -rf .themes/octogray/.plugins/scrolltopcontrol/
+rm -rf $submodule_dir/scrolltopcontrol/
 echo
 
 # other plugins
-for p in .themes/octogray/plugins_add/*rb;do
+for p in $theme_dir/plugins_add/*rb;do
   copy_link_util "${p}" ./plugins/
 done
 
 # other files
-cp .themes/octogray/ping.yml .
+cp $theme_dir/ping.yml .
