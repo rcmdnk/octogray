@@ -152,9 +152,7 @@ module Octopress
           page.data['date_time_html'].sub!('entry-date','entry-date updated')
           page.data['date_time_html'].sub!('datePublished','datePublished dateModified')
         end
-
         page
-
       end
 
       def date_html(date, time=true)
@@ -168,6 +166,35 @@ module Octopress
 
       def date_updated_html(date, time=true)
         date_html(date, time).sub('entry-date','updated').sub('datePublished','dateModified')
+      end
+
+    if defined?(Jekyll::Hooks)
+      Jekyll::Hooks.register :site, :after_reset do |site|
+        DateFormat.config = site.config
+      end
+
+      Jekyll::Hooks.register [:documents, :page, :post], :post_init do |item|
+        DateFormat.hack_date(item)
+      end
+    else
+      require 'octopress-hooks'
+
+      class PageHook < Hooks::Page
+        def post_init(page)
+          DateFormat.hack_date(page)
+        end
+      end
+
+      class PostHook < Hooks::Post
+        def post_init(post)
+          DateFormat.hack_date(post)
+        end
+      end
+
+      class SiteHook < Hooks::Site
+        def pre_read(site)
+          DateFormat.config = site.config
+        end
       end
     end
   end
