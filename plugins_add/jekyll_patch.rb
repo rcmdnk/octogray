@@ -168,6 +168,8 @@ module Octopress
         date_html(date, time).sub('entry-date','updated').sub('datePublished','dateModified')
       end
 
+    end
+
     if defined?(Jekyll::Hooks)
       Jekyll::Hooks.register :site, :after_reset do |site|
         DateFormat.config = site.config
