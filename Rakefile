@@ -36,6 +36,7 @@ new_page_ext    = "markdown"  # default new page file extension when using the n
 server_port     = "4000"      # port for preview server eg. localhost:4000
 word_avoid      = "~/.gitavoid"  # words which must be avoided to be published
 ping_file       = "ping.yml"  # file of site list for ping
+minify          = false
 js_for_combine  = ['footnote.js', 'jquery.githubRepoWidget.min.js', 'monthly_archive.js', 'random-posts.js', 'related-posts.js', 'utils.js']
 js_output       = "all.js"
 js_minify_others = false
@@ -74,7 +75,7 @@ desc "Update stylesheets. Give an argument as nested, expanded, compact or compr
 task :css, :style do |t, args|
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
   puts "## Update stylesheets"
-  style = ""
+  style = minify ? "-s compressed" : ""
   if args.style
     style = "-s #{args.style}"
   end
@@ -128,8 +129,9 @@ task :generate, :opt do |t, args|
     end
   end
 
-  if not opt.include?('test')
-    Rake::Task[:css].execute
+  Rake::Task[:css].execute
+  Rake::Task[:combine_js].invoke(args.opt)
+  if not opt.include?('test') and minify
     Rake::Task[:minify_js].invoke('force')
 
     if not opt.include?('no_minify')
@@ -921,7 +923,6 @@ end
 desc "Minify JS"
 task :minify_js, :opt do |t, args|
   puts "## Minifying JS"
-  Rake::Task[:combine_js].invoke(args.opt)
   if js_minify_others
     Rake::Task[:minify_other_js].invoke(args.opt)
   end
