@@ -412,3 +412,7 @@ jekyll_var:
     - random_url
     - related_posts_show
   exclude:
+
+share_static: false # OCTOPRESS_TEST
+page-view: false # OCTOPRESS_TEST
+hatena_popular_num: 0 # OCTOPRESS_TEST
