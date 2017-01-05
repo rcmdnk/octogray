@@ -53,7 +53,7 @@
   {% elsif site.google_search %}
   {% if site.google_search_pub %}
   <p>
-    <form action="{{site.google_result_page}}" id="cse-search-box">
+    <form action="{{site.url}}{{site.google_result_page}}" id="cse-search-box">
       <div>
         <input type="hidden" name="cx" value="partner-pub-{{site.google_search_pub}}" />
         <input type="hidden" name="cof" value="FORID:10" />

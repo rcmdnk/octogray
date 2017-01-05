@@ -7,7 +7,7 @@ google.setOnLoadCallback(function() {
   var customSearchControl =   new google.search.CustomSearchControl('partner-pub-{{site.google_search_pub}}', customSearchOptions);
   customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
   var options = new google.search.DrawOptions();
-  options.enableSearchboxOnly('{{site.google_result_page}}', '{%if site.google_search_query%}{{site.google_search_query}}{%else%}q{%endif%}');
+  options.enableSearchboxOnly('{{site.url}}{{site.google_result_page}}', '{%if site.google_search_query%}{{site.google_search_query}}{%else%}q{%endif%}');
   options.setAutoComplete(true);
   customSearchControl.draw('cse-search-form', options);
   var e = document.querySelectorAll(".gsc-search-button .gsc-search-button");
