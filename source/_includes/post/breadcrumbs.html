@@ -4,7 +4,7 @@
   {% assign p = page %}
 {% endif %}
 <ol class="breadcrumbs">
-  <li><a href="{{site.url}}"><span>Top</span></a></li>
+  <li><a href="{{root_url}}"><span>Top</span></a></li>
   {% if p.categories and p.categories.size > 0 %}
     {% capture c %}{{p.categories|first}}{% endcapture %}
     <li><span class="breadcrumbs_separator"> › </span><a href="{{root_url}}/{{site.category_dir}}/{{c|downcase}}/"><span>{{c}}</span></a></li>

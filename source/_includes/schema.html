@@ -1,6 +1,6 @@
 <script type="application/ld+json">
 {
-  "@context" : "http://schema.org",
+  "@context" : "https://schema.org",
   "@type" : "WebSite",
   "name" : "{{site.title}}",
 {% if site.subtitle %}
@@ -20,7 +20,7 @@
 {% capture logo %}{% if site.title_logo %}{{site.title_logo }}{% elsif site.aboutme_logo %}{{site.aboutme_logo}}{% endif %}{% endcapture %}
 <script type="application/ld+json">
 {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@type": "Organization",
   "url": "{{site.url}}",
   "logo": "{{site.url}}{{logo}}"
@@ -29,7 +29,7 @@
 {% endif %}
 
 <script type="application/ld+json">
-{ "@context" : "http://schema.org",
+{ "@context" : "https://schema.org",
   "@type" : "Person",
   "name" : "{{ site.author }}",
   "email" : "{{ site.email }}",
@@ -42,15 +42,15 @@
   {% endif %}
   {% if site.googleplus_user %}
     {% if is_prev %}, {% else %}{% assign is_prev = true %}{% endif %}
-    "http://plus.google.com/{{site.googleplus_user}}"
+    "https://plus.google.com/{{site.googleplus_user}}"
   {% endif %}
   {% if site.facebook_user %}
     {% if is_prev %}, {% else %}{% assign is_prev = true %}{% endif %}
-    "http://www.facebook.com/{{site.facebook_user}}"
+    "https://www.facebook.com/{{site.facebook_user}}"
   {% endif %}
   {% if site.linkedin_user %}
     {% if is_prev %}, {% else %}{% assign is_prev = true %}{% endif %}
-    "http://www.linkedin.com/in/{{site.linkedin_user}}"
+    "https://www.linkedin.com/in/{{site.linkedin_user}}"
   {% endif %}
   ]
 {% endif %}
@@ -59,7 +59,7 @@
 {% if page.categories or page.tags %}
 <script type="application/ld+json">
 {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement":
   [

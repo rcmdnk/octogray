@@ -20,10 +20,10 @@
     <a href="https://github.com/{{site.github_user}}" title="GitHub"><i class="fa fa-github-alt fa-2x"></i></a>
     {% endif %}
     {% if site.rss_mark %}
-    <a href="{{site.url}}{{site.subscribe_rss}}" title="RSS"><i class="fa fa-rss fa-2x"></i></a>
+    <a href="{{root_url}}{{site.subscribe_rss}}" title="RSS"><i class="fa fa-rss fa-2x"></i></a>
     {% endif %}
     {% if site.feedly_mark %}
-    <a class="feedly-link" href='http://feedly.com/i/subscription/feed/{{site.url}}{{site.subscribe_rss}}' title="feedly"><span class="feedlyimg feedly"></span></a>
+    <a class="feedly-link" href='https://feedly.com/i/subscription/feed/{{site.url}}{{site.subscribe_rss}}' title="feedly"><span class="feedlyimg feedly"></span></a>
     {% endif %}
     {% if site.bookmark_mark %}
     <a href="#" class="add_bookmark" title="Favorite" data-page_title="{{site.title}}" data-page_url="{{site.url}}"><i class="fa fa-star-o fa-2x"></i></a>
