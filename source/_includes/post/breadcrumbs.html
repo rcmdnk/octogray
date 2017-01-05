@@ -4,21 +4,20 @@
   {% assign p = page %}
 {% endif %}
 <ol class="breadcrumbs">
-  <li><a href="{{root_url}}"><span>Top</span></a></li>
+  <li><a href="/"><span>Top</span></a></li>
   {% if p.categories and p.categories.size > 0 %}
     {% capture c %}{{p.categories|first}}{% endcapture %}
-    <li><span class="breadcrumbs_separator"> › </span><a href="{{root_url}}/{{site.category_dir}}/{{c|downcase}}/"><span>{{c}}</span></a></li>
+    <li><span class="breadcrumbs_separator"> › </span><a href="/{{site.category_dir}}/{{c|downcase}}/"><span>{{c}}</span></a></li>
   {% endif %}
   {% if p.tags and p.tags.size > 0 %}
     {% capture t %}{{p.tags|first}}{% endcapture %}
-    <li><span class="breadcrumbs_separator"> › </span><a href="{{root_url}}/{{site.tag_dir}}/{{t|downcase}}/"><span>{{t}}</span></a>
+    <li><span class="breadcrumbs_separator"> › </span><a href="/{{site.tag_dir}}/{{t|downcase}}/"><span>{{t}}</span></a>
     {% if p.tags.size > 1 %}
       {% for t in p.tags offset:1 %}
         <span>, </span>
-        <a href="{{root_url}}/{{site.tag_dir}}/{{t|downcase}}/"><span>{{t}}</span></a>
+        <a href="/{{site.tag_dir}}/{{t|downcase}}/"><span>{{t}}</span></a>
       {% endfor %}
     {% endif %}
     </li>
   {% endif %}
 </ol>
-
