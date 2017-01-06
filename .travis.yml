@@ -56,11 +56,8 @@ script:
   - echo "[Code test](/others/codetest/) ">> $post
   - rake generate --trace
   - cd ~/octopress.gh-pages
-  - grep public Rakefile
   - ./.themes/octogray/setup.sh -y -l
-  - grep public Rakefile
   - rake setup_github_pages["git@github.com:rcmdnk/octogray_test","yes"]
-  - grep public Rakefile
   - 'post=$(rake new_post["test"]|grep "Creating new post"|cut -d: -f2)'
   - 'sed -i"" "s/published: *false/published: true/" $post'
   - 'sed -i"" "s/categories:/categories: cat/" $post'
@@ -69,6 +66,5 @@ script:
   - sed -i"" "s/{%include after_excerpt.html%}/{%include after_excerpt.html%}"\\$'\n'"# Test Sectiontest"\\$'\n'"test $(date) test./" $post
   - echo >> $post
   - echo "[Code test](/others/codetest/) ">> $post
-  - grep public Rakefile
   - rake gen --trace
   - rake deploy
