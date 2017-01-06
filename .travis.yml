@@ -66,5 +66,6 @@ script:
   - sed -i"" "s/{%include after_excerpt.html%}/{%include after_excerpt.html%}"\\$'\n'"# Test Sectiontest"\\$'\n'"test $(date) test./" $post
   - echo >> $post
   - echo "[Code test](/others/codetest/) ">> $post
+  - cat Rakefile
   - rake gen --trace
   - rake deploy
