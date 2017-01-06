@@ -19,13 +19,13 @@ use_token      = false
 
 ## -- Misc Configs -- ##
 
-tmp_dir         = File.expand_path(".") + "/"  # temporary directory for public/deploy
-public_dir      = "#{tmp_dir}public"  # compiled site directory
+tmp_dir         = File.expand_path(".") # temporary directory for public/deploy
+public_dir      = "#{tmp_dir}/public" # compiled site directory
 source_dir      = "source"    # source file directory
 blog_index_dir  = 'source'    # directory for your blog's index page (if you put your index in source/blog/index.html, set this to 'source/blog')
-deploy_dir      = "#{tmp_dir}_deploy" # deploy directory (for Github pages deployment)
+deploy_dir      = "#{tmp_dir}/_deploy" # deploy directory (for Github pages deployment)
 stash_dir       = "_stash"    # directory to stash posts for speedy generation
-full_stash_dir  = "#{source_dir}/#{stash_dir}"    # full path for stash dir
+full_stash_dir  = "#{source_dir}/#{stash_dir}" # full path for stash dir
 stash_root_dir  = "_stash_root" # directory to stash pages (in /source/)
 full_stash_root_dir = "#{source_dir}/#{stash_root_dir}" # full path for stash_root dir
 root_stashes    = [] # directories to be stashed in /source/
@@ -34,7 +34,7 @@ themes_dir      = ".themes"   # directory for blog files
 new_post_ext    = "markdown"  # default new post file extension when using the new_post task
 new_page_ext    = "markdown"  # default new page file extension when using the new_page task
 server_port     = "4000"      # port for preview server eg. localhost:4000
-word_avoid      = "~/.gitavoid"  # words which must be avoided to be published
+word_avoid      = "~/.gitavoid" # words which must be avoided to be published
 ping_file       = "ping.yml"  # file of site list for ping
 minify          = false
 js_for_combine  = ['footnote.js', 'jquery.githubRepoWidget.min.js', 'monthly_archive.js', 'random-posts.js', 'related-posts.js', 'utils.js']
