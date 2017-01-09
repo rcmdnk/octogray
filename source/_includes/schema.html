@@ -31,28 +31,40 @@
 <script type="application/ld+json">
 { "@context" : "https://schema.org",
   "@type" : "Person",
+{% if site.author %}
   "name" : "{{ site.author }}",
+{% endif %}
+{% if site.email %}
   "email" : "{{ site.email }}",
+{% endif %}
+{% if site.url %}
   "url" : "{{ site.url }}",
+{% endif %}
 {% if site.twitter_user or site.googleplus_user or site.facebook_user or site.linkedin_user %}
   "sameAs" : [
   {% if site.twitter_user %}
     {% assign is_prev = true %}
-    "https://twitter.com/{{site.twitter_user}}"
+    "https://twitter.com/{{site.twitter_user}}",
   {% endif %}
   {% if site.googleplus_user %}
     {% if is_prev %}, {% else %}{% assign is_prev = true %}{% endif %}
-    "https://plus.google.com/{{site.googleplus_user}}"
+    "https://plus.google.com/{{site.googleplus_user}}",
   {% endif %}
   {% if site.facebook_user %}
     {% if is_prev %}, {% else %}{% assign is_prev = true %}{% endif %}
-    "https://www.facebook.com/{{site.facebook_user}}"
+    "https://www.facebook.com/{{site.facebook_user}}",
   {% endif %}
   {% if site.linkedin_user %}
     {% if is_prev %}, {% else %}{% assign is_prev = true %}{% endif %}
     "https://www.linkedin.com/in/{{site.linkedin_user}}"
   {% endif %}
-  ]
+  ],
+  {% if site.homeLocation %}
+  "homeLocation" : {
+     "@type": "City",
+     "name": "{{site.homeLocation}}"
+  }
+  {% endif %}
 {% endif %}
 }
 </script>
