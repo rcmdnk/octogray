@@ -22,6 +22,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "publisher": "{{site.author}}",
   "url": "{{site.url}}",
   "logo": "{{site.url}}{{logo}}"
 }
@@ -33,6 +34,7 @@
   "@type" : "Person",
 {% if site.author %}
   "name" : "{{ site.author }}",
+  "author" : "{{ site.author }}",
 {% endif %}
 {% if site.email %}
   "email" : "{{ site.email }}",
