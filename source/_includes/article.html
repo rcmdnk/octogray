@@ -40,7 +40,7 @@
 {% endif %}
 {% endunless %}
 {% if post %}
-<div class="entry-content index_click_box" itemprop="articleBody">
+<div class="entry-content index_click_box" itemprop="mainEntityOfPage">
   <div class="group" itemprop="description">
     {% capture content_with_thumb %}
       {% if p.ogimage and p.no_ogimage != true %}
@@ -63,7 +63,7 @@
 {% if site.zenback_show == true and page.comments == true %}
 <!-- zenback_body_begin -->
 {% endif %}
-<div class="entry-content" itemprop="articleBody">
+<div class="entry-content" itemprop="mainEntityOfPage">
   <div class="group" itemprop="description">
     {% capture content_with_thumb %}
       {% if p.ogimage and p.no_ogimage != true %}

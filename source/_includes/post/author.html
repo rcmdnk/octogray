@@ -5,4 +5,24 @@
 {% else %}
   {% assign author = site.author %}
 {% endif %}
-{% if author %}<span class="byline">Posted by {{ author }}</span>{% endif %}
+{% if author %}<span class="byline">Posted by <span itemprop="author">{{ author }}</span></span>{% endif %}
+{% if site.author or site.publisher %}
+{% if site.publisher %}
+  {% assign publisher = site.publisher %}
+{% else %}
+  {% assign publisher = site.author %}
+{% endif %}
+{% if site.publisher_logo %}
+  {% assign logo = site.publisher_logo %}
+{% elsif site.sitelogo%}
+  {% assign logo = site.sitelogo %}
+{% elsif site.aboutme_logo%}
+  {% assign logo = site.aboutme_logo %}
+{% endif %}
+  <div itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="{{publisher}}">
+    <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+      <meta itemprop="url" content="{{logo}}">
+    </div>
+  </div>
+{% endif %}
