@@ -22,7 +22,7 @@
   <div itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="{{publisher}}">
     <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-      <meta itemprop="url" content="{{logo|expand_urls: site.root}}">
+      <meta itemprop="url" content="{{site.url}}{{logo}}">
     </div>
   </div>
 {% endif %}
