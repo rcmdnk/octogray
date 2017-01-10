@@ -68,3 +68,4 @@ script:
   - echo "[Code test](/others/codetest/) ">> $post
   - rake gen --trace
   - rake deploy
+
