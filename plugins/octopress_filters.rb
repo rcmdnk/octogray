@@ -104,7 +104,7 @@ module OctopressLiquidFilters
 
   # Escapes CDATA sections in post content
   def cdata_escape(input)
-    input.gsub(/<!\[CDATA\[/, '&lt;![CDATA[').gsub(/\]\]>/, ']]&gt;')
+    input = input.gsub(/<!\[CDATA\[/, '&lt;![CDATA[').gsub(/\]\]>/, ']]&gt;')
   end
 
   # Replaces relative urls with full urls
@@ -161,6 +161,12 @@ module OctopressLiquidFilters
   # Returns a title cased string based on John Gruber's title case http://daringfireball.net/2008/08/title_case_update
   def titlecase(input)
     input.titlecase
+  end
+
+  # Remove non-proper contents for atom.xml
+  def remove_for_atom(input)
+    input = input.gsub(/<iframe.*<\/iframe>/, "")
+    input.gsub(/itemprop\s*=\s*["|'][^"']*["|']|/, "")
   end
 
 end

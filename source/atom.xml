@@ -5,7 +5,7 @@ layout: null
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[{{ site.title | cdata_escape }}]]></title>
-  <link href="{{ site.url }}/atom.xml" rel="self"/>
+  <link href="{{ site.url }}/atom.xml" rel="self" type="application/atom+xml"/>
   <link href="{{ site.url }}/"/>
   {% if site.hub_url %}<link href="{{ site.hub_url }}" rel="hub"/>{% endif %}
   <updated>{{ site.time | datetime | date_to_xmlschema }}</updated>
@@ -22,7 +22,7 @@ layout: null
     <link href="{{ site.url }}{{ post.url }}"/>
     <updated>{{ post.date | datetime | date_to_xmlschema }}</updated>
     <id>{{ site.url }}{{ post.id }}</id>
-    <content type="html"><![CDATA[{{ post.content | excerpt | expand_urls: site.url | cdata_escape }} <a href="{{site.url}}{{root_url}}{{post.url}}">{{site.excerpt_link}}</a>]]></content>
+    <content type="html"><![CDATA[{{ post.content | excerpt | expand_urls: site.url | cdata_escape |remove_for_atom}} <a href="{{site.url}}{{root_url}}{{post.url}}">{{site.excerpt_link}}</a>]]></content>
   </entry>
   {% endfor %}
 </feed>
