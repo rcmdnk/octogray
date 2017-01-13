@@ -126,7 +126,7 @@ p, li, td{
   code {
     @extend .mono;
     display: inline-block;
-    white-space: no-wrap;
+    white-space: nowrap;
     background: $code-mainbg;
     font-size: $code-font-size;
     line-height: 1.2em;
@@ -191,7 +191,7 @@ p, li, td{
   .nf     { color: $code-function !important; }                       /* Name.Function */
   .nn     { color: $code-name !important; }                                          /* Name.Namespace */
   .nt     { color: $code-nametag !important; font-weight: bold !important; }                                          /* Name.Tag */
-  .nx     { color: $code-attribute iImportant; }
+  .nx     { color: $code-attribute !important; }
   .bp     { color: $code-builtin !important; }                                          /* Name.Builtin.Pseudo */
   //.vc     { color: #008080 }                                          /* Name.Variable.Class */
   .vg     { color: $code-variable !important; }                                          /* Name.Variable.Global */
@@ -233,7 +233,7 @@ $code-scroll-thumb: $code-subbg;
 
 pre, .highlightt {
   &::-webkit-scrollbar {  height: .5em; background: $code-scroll-bg; }
-  &::-webkit-scrollbar-thumb:horizontal { background: $code-scroll-thumb;  -webkit-border-radius: 0.5em; border-radius: 0.5em }
+  //&::-webkit-scrollbar-thumb:horizontal { background: $code-scroll-thumb;  -webkit-border-radius: 0.5em; border-radius: 0.5em }
 }
 
 .highlight code {

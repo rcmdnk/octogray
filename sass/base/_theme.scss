@@ -49,7 +49,7 @@ $sidebar-link-color-subdued-hover: $sidebar-link-color-hover !default;
 $footer-color: #888 !default;
 $footer-bg: $main-bg !default;
 $footer-bg-front: $footer-bg !default;
-$footer-bg-back: linear-gradient(lighten($footer-bg, 8), $footer-bg, darken($footer-bg, 11)) !default;
+//$footer-bg-back: linear-gradient(lighten($footer-bg, 8), $footer-bg, darken($footer-bg, 11)) !default;
 $footer-bg-back: $footer-bg !default;
 $footer-color: darken($footer-bg, 38) !default;
 $footer-color-hover: darken($footer-color, 10) !default;
