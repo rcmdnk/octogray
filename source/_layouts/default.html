@@ -1,4 +1,5 @@
-{% capture root_url %}{{ site.root | strip_slash }}{% endcapture %}{% include head.html %}
+{% capture root_url %}{{ site.root | strip_slash }}{% endcapture %}
+{% include head.html %}
 <body {% if page.body_id %} id="{{ page.body_id }}" {% endif %} {% if page.sidebar == false %} class="no-sidebar" {% endif %} {% if page.sidebar == 'collapse' or site.sidebar == 'collapse' %} class="collapse-sidebar sidebar-footer" {% endif %}>
 {% common_part common_header.html%}
   <div id="main">
@@ -6,7 +7,7 @@
       {{ content | expand_urls: root_url }}
     </div><!-- content -->
   </div><!-- main -->
-  <footer role="contentinfo">{% include footer.html %}</footer>
+  <footer>{% include footer.html %}</footer>
   {% include after_footer.html %}
 </body>
 </html>
