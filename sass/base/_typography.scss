@@ -21,7 +21,7 @@ $header-subtitle-font-family: "Arial", sans-serif !default;
 .serif { font-family: $serif; }
 .mono { font-family: $mono; }
 
-body > header h1 {
+body > header div#site-title {
   font-size: 2.2em;
   @extend .heading;
   font-family: $header-title-font-family;
@@ -29,7 +29,7 @@ body > header h1 {
   line-height: 1.2em;
   margin-bottom: 0.6667em;
 }
-body > header h2 {
+body > header div#site-subtitle {
   font-family: $header-subtitle-font-family;
 }
 

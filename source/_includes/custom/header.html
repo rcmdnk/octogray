@@ -1,4 +1,4 @@
-<h1>
+<div id="site-title">
   <a href="{{root_url}}/">
   {% if site.title_logo_css %}
   <span id="title-logo-img"></span>
@@ -7,7 +7,7 @@
   {% endif %}
   {{ site.title }}
   </a>
-</h1>
+</div>
 {% if site.subtitle %}
-  <h2>{{ site.subtitle }}</h2>
+  <div id="site-subtitle">{{ site.subtitle }}</div>
 {% endif %}
