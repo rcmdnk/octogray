@@ -269,7 +269,6 @@ th[align="center"],  td[align="center"] {
   &:before{
     content:"Contents";
     @extend .heading;
-    text-rendering: optimizelegibility;
     font-weight: bold;
     font-size: 1.7em;
     line-height: 2.0em;

@@ -75,7 +75,7 @@ desc "Update stylesheets. Give an argument as nested, expanded, compact or compr
 task :css, :style do |t, args|
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
   puts "## Update stylesheets"
-  style = minify ? "-s compressed" : ""
+  style = minify ? "-s compressed" : "-s nested"
   if args.style
     style = "-s #{args.style}"
   end
