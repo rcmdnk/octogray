@@ -46,6 +46,12 @@ html .gist .gist-file {
   //border: 1px solid $pre-border !important;
   border: 0px solid $pre-border !important;
   padding-top: image-height("code_bg.png") !important;
+  .blob-code {
+    background: $code-mainbg;
+  }
+  .blob-num {
+    background: $code-subbg;
+  }
   .highlight {
     margin-bottom: 0;
   }
@@ -233,7 +239,7 @@ $code-scroll-thumb: $code-subbg;
 
 pre, .highlightt {
   &::-webkit-scrollbar {  height: .5em; background: $code-scroll-bg; }
-  //&::-webkit-scrollbar-thumb:horizontal { background: $code-scroll-thumb;  -webkit-border-radius: 0.5em; border-radius: 0.5em }
+  &::-webkit-scrollbar-thumb:horizontal { background: $code-scroll-thumb;  -webkit-border-radius: 0.5em; border-radius: 0.5em }
 }
 
 .highlight code {
