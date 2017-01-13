@@ -40,15 +40,11 @@
   {% include custom/navigation.html %}
   {% if site.google_custom_search == 'compact' or site.google_custom_search == 'overlay' or site.google_custom_search == 'overlay_simple' or site.google_custom_search == 'overlay_classic' or site.google_custom_search == 'twolines' %}
   {% if site.google_search_pub %}
-  <p>
-    <div id='cse' style='width: 100%;'>Loading</div>
-  </p>
+  <div id='cse' style='width: 100%;'>Loading</div>
   {% endif %}
   {% elsif site.google_custom_search == 'twopages' %}
   {% if site.google_search_pub %}
-  <p>
-    <div id='cse-search-form' style='width: 100%;'>Loading</div>
-  </p>
+  <div id='cse-search-form' style='width: 100%;'>Loading</div>
   {% endif %}
   {% elsif site.google_search %}
   {% if site.google_search_pub %}
