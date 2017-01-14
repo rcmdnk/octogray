@@ -45,6 +45,7 @@ single: true
   {% if site.linkwithin_show == true and page.footer != false %}
     {% include linkwithin.html %}
   {% endif %}
+{%comment%}
   {% unless site.affiliate == false or page.affiliate == false %}
     {% if site.sponsored_links %}
       <div class="center_wrapper">
@@ -65,6 +66,7 @@ single: true
       {% endif %}
     {% endif %}
   {% endunless %}
+{%endcomment%}
   {% unless site.related_posts == false %}
     {% include post/related_posts.html %}
   {% endunless %}
