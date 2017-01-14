@@ -1,4 +1,4 @@
-{% unless site.affiliate == false or page.affiliate == false %}
+{% unless site.affiliate == false or page.affiliate == false %}{% if site.sponsored_links %}
 <div class="center_wrapper">
   <div>{{site.sponsored_links}}</div>
   <div>
@@ -7,9 +7,6 @@
          style="display:inline-block"
          data-ad-client="ca-pub-{{site.adsense_id}}"
          data-ad-slot="{{site.adsense_aside_bottom}}"></ins>
-    <script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
   </div>
 </div>
-{% endunless %}
+{% endif %}{% endunless %}

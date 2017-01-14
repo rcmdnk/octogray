@@ -1,10 +1,7 @@
-{% unless site.affiliate == false or page.affiliate == false %}
+{% unless site.affiliate == false or page.affiliate == false %}{% if site.sponsored_links %}
 <!-- google-bottom2 -->
 <ins class="adsbygoogle google-img-rect"
      style="display:inline-block"
      data-ad-client="ca-pub-{{site.adsense_id}}"
      data-ad-slot="{{site.adsense_bottom2}}"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-{% endunless %}
+{% endif %}{% endunless %}
