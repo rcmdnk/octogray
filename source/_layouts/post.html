@@ -39,7 +39,7 @@ single: true
   {% include post/disqus_thread.html %}
   {% include custom/zenback.html %}
   {% include linkwithin.html %}
-  {% include custom/affiliate/google_bottom2.html %}
+  {% capture adsense_slot %}{{site.adsense_bottom2}}{% endcapture %}{% include custom/affiliate/google_adsense.html %}{% capture adsense_slot %}{% endcapture %}
   {% include post/adsense_related.html %}
   {% include post/related_posts.html %}
   {% include custom/endofpost.html %}
