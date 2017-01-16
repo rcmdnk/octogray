@@ -1,0 +1,14 @@
+{% if site.adsense_id and site.adsense_related %}
+  <div class="related_posts">
+    {%capture text%}{%if site.related_posts_text%}{{site.related_posts_text}}{%else%}You might also like...{%endif%}{%endcapture%}
+    <h3>{{text}}</h3>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-format="autorelaxed"
+         data-ad-client="ca-pub-{{site.adsense_id}}"
+         data-ad-slot="{{site.adsense_related}}"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push();
+    </script>
+  </div>
+{% endif %}
