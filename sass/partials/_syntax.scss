@@ -132,7 +132,6 @@ p, li, td{
   code {
     @extend .mono;
     display: inline-block;
-    white-space: nowrap;
     background: $code-mainbg;
     font-size: $code-font-size;
     line-height: 1.2em;
@@ -237,7 +236,7 @@ p, li, td{
 $code-scroll-bg: $code-mainbg;
 $code-scroll-thumb: $code-subbg;
 
-pre, .highlightt {
+pre, .highlight {
   &::-webkit-scrollbar {  height: .5em; background: $code-scroll-bg; }
   &::-webkit-scrollbar-thumb:horizontal { background: $code-scroll-thumb;  -webkit-border-radius: 0.5em; border-radius: 0.5em }
 }

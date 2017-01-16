@@ -45,19 +45,15 @@ layout: default
     {% endunless %}
   </article>
   {% include custom/after_article.html %}
-  {% if site.disqus_short_name and page.comments == true %}
   {% include post/disqus_thread.html %}
-  {% endif %}
-  {% if site.zenback_show == true and page.comments == true %}
   {% include custom/zenback.html %}
-  {% endif %}
 </div><!-- page -->
 {% unless page.sidebar == false %}
-{% if site.page_asides.size %}
-<aside class="sidebar">
-  {% include_array page_asides %}
-</aside>
-{% else %}
-{% common_part common_sidebar.html %}
-{% endif %}
+  {% if site.page_asides.size %}
+    <aside class="sidebar">
+      {% include_array page_asides %}
+    </aside>
+  {% else %}
+    {% common_part common_sidebar.html %}
+  {% endif %}
 {% endunless %}

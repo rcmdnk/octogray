@@ -36,48 +36,27 @@ single: true
     </footer>
   </article>
   {% include custom/after_article.html %}
-  {% if site.disqus_short_name and page.comments == true %}
-    {% include post/disqus_thread.html %}
-  {% endif %}
-  {% if site.zenback_show == true and page.comments == true %}
-    {% include custom/zenback.html %}
-  {% endif %}
-  {% if site.linkwithin_show == true and page.footer != false %}
-    {% include linkwithin.html %}
-  {% endif %}
-{%comment%}
+  {% include post/disqus_thread.html %}
+  {% include custom/zenback.html %}
+  {% include linkwithin.html %}
   {% unless site.affiliate == false or page.affiliate == false %}
-    {% if site.sponsored_links %}
-      <div class="center_wrapper">
-        <div>{{site.sponsored_links}}</div>
-        <div>
-          {% include custom/affiliate/google_bottom2.html %}
-        </div>
+    <div class="center_wrapper">
+      <div>{{site.sponsored_links}}</div>
+      <div>
+        {% include custom/affiliate/google_bottom2.html %}
       </div>
-      {% if site.adsense_related %}
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-format="autorelaxed"
-             data-ad-client="ca-pub-{{site.adsense_id}}"
-             data-ad-slot="{{site.adsense_related}}"></ins>
-        <script>
-          (adsbygoogle = window.adsbygoogle || []).push();
-        </script>
-      {% endif %}
-    {% endif %}
+    </div>
   {% endunless %}
-{%endcomment%}
-  {% unless site.related_posts == false %}
-    {% include post/related_posts.html %}
-  {% endunless %}
+  {% include post/adsense_related.html %}
+  {% include post/related_posts.html %}
   {% include custom/endofpost.html %}
 </div><!-- post -->
 {% unless page.sidebar == false %}
-{% if site.post_asides.size %}
-<aside class="sidebar">
-  {% include_array post_asides %}
-</aside>
-{% else %}
-{% common_part common_sidebar.html %}
-{% endif %}
+  {% if site.post_asides.size %}
+    <aside class="sidebar">
+      {% include_array post_asides %}
+    </aside>
+  {% else %}
+    {% common_part common_sidebar.html %}
+  {% endif %}
 {% endunless %}
