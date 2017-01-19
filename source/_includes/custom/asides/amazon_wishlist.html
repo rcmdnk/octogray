@@ -6,7 +6,7 @@
 {% include custom/affiliate/amazon_wishlist.html %}
 </div>
 {%endcomment%}
-{% capture amazon_site %}{% if site.amazon_region == 'JP' %}http://www.amazon.co.jp{% else %}http://www.amazon.com{% endif %}{% endcapture %}
+{% capture amazon_site %}{% if site.amazon_region == 'JP' %}//www.amazon.co.jp{% else %}//www.amazon.com{% endif %}{% endcapture %}
 <a href="{{amazon_site}}/gp/redirect.html?ie=UTF8&location=http%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fregistry%2Fwishlist%2F{{site.amazon_wish_id}}%3Fie%3DUTF8%26type&tag={{site.amazon_ad_tag}}&linkCode=ur2&camp=247&creative=1211">{{site.amazon_wish_words}}</a>
 {%comment%}
 </div>
