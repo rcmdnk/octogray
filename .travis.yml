@@ -3,9 +3,7 @@ branches:
   except:
     - /^v[0-9]/
 rvm:
-  #- 1.9.3
-  - 2.0.0
-  #- 2.1.0
+  - 2.4.0
 git:
   submodules: false
 env:
