@@ -24,6 +24,7 @@ group :development do
   gem 'sinatra', '~> 1.4'
   gem 'stringex', '~> 2.6'
   gem 'thin', '~> 1.7'
+  gem 'xmlrpc', '~> 0.2'
   gem 'yui-compressor', '~> 0.12'
 end
 

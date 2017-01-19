@@ -1,8 +1,8 @@
 diff --git a/Gemfile b/Gemfile
-index 5683812..0750457 100644
+index 5683812..405e41e 100644
 --- a/Gemfile
 +++ b/Gemfile
-@@ -1,18 +1,29 @@
+@@ -1,18 +1,30 @@
  source "https://rubygems.org"
  
  group :development do
@@ -40,6 +40,7 @@ index 5683812..0750457 100644
 +  gem 'sinatra', '~> 1.4'
 +  gem 'stringex', '~> 2.6'
 +  gem 'thin', '~> 1.7'
++  gem 'xmlrpc', '~> 0.2'
 +  gem 'yui-compressor', '~> 0.12'
  end
  
