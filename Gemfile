@@ -24,7 +24,9 @@ group :development do
   gem 'sinatra', '~> 1.4'
   gem 'stringex', '~> 2.6'
   gem 'thin', '~> 1.7'
-  gem 'xmlrpc', '~> 0.2'
+  if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.4.0')
+    gem 'xmlrpc', '~> 0.2'
+  end
   gem 'yui-compressor', '~> 0.12'
 end
 
