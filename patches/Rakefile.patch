@@ -1,5 +1,54 @@
+diff --git a/Gemfile b/Gemfile
+index 5683812..a2b7273 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -1,18 +1,32 @@
+ source "https://rubygems.org"
+ 
+ group :development do
+-  gem 'rake', '~> 10.0'
+-  gem 'jekyll', '~> 2.0'
+-  gem 'octopress-hooks', '~> 2.2'
+-  gem 'octopress-date-format', '~> 2.0'
+-  gem 'jekyll-sitemap'
+-  gem 'rdiscount', '~> 2.0'
+-  gem 'RedCloth', '~> 4.2.9'
++  gem 'RedCloth', '~> 4.3'
++  gem 'chronic', '~> 0.10'
++  gem 'coderay', '~> 1.1'
++  gem 'compass', '~> 1.0'
++  gem 'gemoji', '~> 2.1'
++  gem 'google-api-client', '~> 0.9'
+   gem 'haml', '~> 4.0'
+-  gem 'compass', '~> 1.0.1'
+-  gem 'sass-globbing', '~> 1.0.0'
+-  gem 'rb-fsevent', '~> 0.9'
+-  gem 'stringex', '~> 1.4.0'
++  gem 'htmlcompressor', '~> 0.3'
++  gem 'jekyll', '~> 3.3'
++  gem 'jekyll-sitemap', '~> 0.12'
++  gem 'jekyll-paginate'
++  gem 'json', '~> 2.0'
++  gem 'octopress-asset-pipeline', '~> 2.0'
++  gem 'octopress-date-format', '~> 3.0'
++  gem 'parallel', '~> 1.10'
++  gem 'pygments.rb', '~> 1.1'
++  gem 'rake', '~> 12.0'
++  gem 'rdiscount', '~> 2.2'
++  gem 'ruby-progressbar', '~> 1.8'
++  gem 'sass-globbing', '~> 1.1'
++  gem 'sinatra', '~> 1.4'
++  gem 'stringex', '~> 2.6'
++  gem 'thin', '~> 1.7'
++  if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.4.0')
++    gem 'xmlrpc', '~> 0.2'
++  end
++  gem 'yui-compressor', '~> 0.12'
+ end
+ 
+-gem 'sinatra', '~> 1.4.2'
 diff --git a/Rakefile b/Rakefile
-index 9367ea1..2fb1a7f 100644
+index 9367ea1..b751ffb 100644
 --- a/Rakefile
 +++ b/Rakefile
 @@ -1,6 +1,7 @@
@@ -42,7 +91,7 @@ index 9367ea1..2fb1a7f 100644
  new_post_ext    = "markdown"  # default new post file extension when using the new_post task
  new_page_ext    = "markdown"  # default new page file extension when using the new_page task
  server_port     = "4000"      # port for preview server eg. localhost:4000
-+word_avoid      = "~/.gitavoid"  # words which must be avoided to be published
++word_avoid      = "~/.gitavoid" # words which must be avoided to be published
 +ping_file       = "ping.yml"  # file of site list for ping
 +minify          = false
 +js_for_combine  = ['footnote.js', 'jquery.githubRepoWidget.min.js', 'monthly_archive.js', 'random-posts.js', 'related-posts.js', 'utils.js']
@@ -548,7 +597,7 @@ index 9367ea1..2fb1a7f 100644
    unless (`git remote -v` =~ /origin.+?octopress(?:\.git)?/).nil?
      # If octopress is still the origin remote (from cloning) rename it to octopress
      system "git remote rename origin octopress"
-@@ -330,40 +601,75 @@ task :setup_github_pages, :repo do |t, args|
+@@ -330,40 +601,76 @@ task :setup_github_pages, :repo do |t, args|
        # If this is a user/organization pages repository, add the correct origin remote
        # and checkout the source branch for committing changes to the blog source.
        system "git remote add origin #{repo_url}"
@@ -640,11 +689,12 @@ index 9367ea1..2fb1a7f 100644
 +  File.open(__FILE__, 'w') do |f|
 +    f.write rakefile
 +  end
++  project = "/" if project == ""
 +  system "rake set_root_dir[#{project}]"
  end
  
  def ok_failed(condition)
-@@ -379,9 +685,22 @@ def get_stdin(message)
+@@ -379,9 +686,22 @@ def get_stdin(message)
    STDIN.gets.chomp
  end
  
@@ -669,7 +719,7 @@ index 9367ea1..2fb1a7f 100644
    else
      answer = get_stdin(message)
    end
-@@ -404,3 +723,329 @@ task :list do
+@@ -404,3 +724,329 @@ task :list do
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end

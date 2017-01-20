@@ -669,6 +669,7 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
   File.open(__FILE__, 'w') do |f|
     f.write rakefile
   end
+  project = "/" if project == ""
   system "rake set_root_dir[#{project}]"
 end
 
