@@ -1,4 +1,12 @@
-.group { @include pie-clearfix; }
+//.group { @include pie-clearfix; }
+.group {
+  //*zoom: 1;
+  &:after{
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
 
 @mixin collapse-sidebar {
   float: none;

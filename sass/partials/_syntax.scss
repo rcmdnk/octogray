@@ -35,9 +35,9 @@ figure.code, pre {
   .highlight pre { @include box-shadow(none); }
 }
 
-.gist .highlight, figure.code .highlight {
-  @include selection(adjust-color($code-mainbg, $lightness: -23%, $saturation: -65%), $text-shadow: $code-mainbg 0 1px);
-}
+//.gist .highlight, figure.code .highlight {
+//  @include selection(adjust-color($code-mainbg, $lightness: -23%, $saturation: -65%), $text-shadow: $code-mainbg 0 1px);
+//}
 html .gist .gist-file {
   //font-size: $code-font-size !important;
   line-height: $code-line-height;
@@ -233,12 +233,12 @@ p, li, td{
   overflow-x: auto;
 }
 
-$code-scroll-bg: $code-mainbg;
-$code-scroll-thumb: $code-subbg;
+$code-scroll-bg: $code-subbg;
+$code-scroll-thumb: $code-subcolor;
 
 pre, .highlight {
   &::-webkit-scrollbar {  height: .5em; background: $code-scroll-bg; }
-  &::-webkit-scrollbar-thumb:horizontal { background: $code-scroll-thumb;  -webkit-border-radius: 0.5em; border-radius: 0.5em }
+  &::-webkit-scrollbar-thumb { background: $code-scroll-thumb;  -webkit-border-radius: 0.5em; border-radius: 0.5em }
 }
 
 .highlight code {
