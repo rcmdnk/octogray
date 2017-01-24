@@ -43,7 +43,7 @@ body {
   }
   position: relative;
   margin: 0 auto;
-  > header, > nav, > footer, #content > article, #content > div > article, #content > div > section {
+  > header, > nav, > footer, #content > article, #content > div > article, #content > div > section, .part {
     @extend .group;
     padding-left: $pad-min;
     padding-right: $pad-min;

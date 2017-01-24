@@ -143,43 +143,32 @@ ERR
   end
 
 
-  # Adds some extra filters used during the tag creation process.
-  module Filters
+end
 
-    # Outputs a list of tags as comma-separated <a> links. This is used
-    # to output the tag list for each post on a tag page.
-    #
-    #  +tags+ is the list of tags to format.
-    #
-    # Returns string
-    #
-    def tag_links(tags)
-      tags.sort.map { |c| tag_link c }.join(', ')
-    end
+# Adds some extra filters used during the tag creation process.
+module TagFilters
 
-    # Outputs a single tag as an <a> link.
-    #
-    #  +tag+ is a tag string to format as an <a> link
-    #
-    # Returns string
-    #
-    def tag_link(tag)
-      dir = @context.registers[:site].config['tag_dir']
-      "<a class='tag' href='/#{dir}/#{tag.to_url}/'><span>#{tag}</span></a>"
-    end
+  # Outputs a list of tags as comma-separated <a> links. This is used
+  # to output the tag list for each post on a tag page.
+  #
+  #  +tags+ is the list of tags to format.
+  #
+  # Returns string
+  #
+  def tag_links(tags)
+    tags.sort.map { |c| tag_link c }.join(', ')
+  end
 
-    # Outputs the post.date as formatted html, with hooks for CSS styling.
-    #
-    #  +date+ is the date object to format as HTML.
-    #
-    # Returns string
-    def date_to_html_string(date)
-      result = '<span class="month">' + date.strftime('%b').upcase + '</span> '
-      result << date.strftime('<span class="day">%d</span> ')
-      result << date.strftime('<span class="year">%Y</span> ')
-      result
-    end
-
+  # Outputs a single tag as an <a> link.
+  #
+  #  +tag+ is a tag string to format as an <a> link
+  #
+  # Returns string
+  #
+  def tag_link(tag)
+    dir = @context.registers[:site].config['tag_dir']
+    "<a class='tag' href='/#{dir}/#{tag.to_url}/'><span>#{tag}</span></a>"
   end
 
 end
+Liquid::Template.register_filter TagFilters

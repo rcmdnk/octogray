@@ -3,7 +3,7 @@ layout: default
 ---
 
 <div><!-- page -->
-  <article role="article">
+  <article>
     {% include custom/pagetop.html %}
     <!-- google_ad_section_start -->
     {% if page.title %}
@@ -37,7 +37,7 @@ layout: default
       {% if page.date or page.author %}
       <p class="meta">
         {% include post/author.html %}
-        {% date_html Posted: %}{% date_updated_html Updated:%}
+        {% date_html %}{% date_updated_html Updated:%}
         {% if page.categories %}{% include post/categories.html %}{% endif %}
         {% if page.tags %}{% include post/tags.html %}{% endif %}
       </p>{% endif %}

@@ -4,19 +4,19 @@ single: true
 ---
 
 <div><!-- post -->
-  <article role="article" itemprop="blogPosts" itemscope itemtype="https://schema.org/BlogPosting">
+  <article itemprop="blogPosts" itemscope itemtype="https://schema.org/BlogPosting">
     {% include custom/pagetop.html %}
     <!-- google_ad_section_start -->
     {% include article.html %}
     <!-- google_ad_section_end -->
     <footer>
       {% include custom/footertop.html %}
-      <p class="meta">
+      <div class="meta">
         {% include post/author.html %}
-        {% date_html Posted: %}{% date_updated_html Updated: %}
+        {% date_html %}{% date_updated_html Updated: %}
         {% include post/categories.html %}
         {% include post/tags.html %}
-      </p>
+      </div>
       {% unless page.sharing == false %}
       {% unless site.share_official == false %}
       {% include post/sharing.html %}
