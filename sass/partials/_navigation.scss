@@ -1,3 +1,29 @@
+@mixin my-horizontal-list {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  //*zoom: 1;
+  li {
+    list-style-image: none;
+    list-style-type: none;
+    margin-left: 0;
+    white-space: nowrap;
+    float: left;
+    padding-left: 0;
+    padding-right: 0;
+    &:first-child {
+      padding-left: 0;
+    }
+    &:last-child {
+      padding-right: 0;
+    }
+    &.last {
+      padding-right: 0;
+    }
+  }
+}
+
 body > nav {
   position: relative;
   background-color: $nav-bg;
@@ -35,7 +61,8 @@ body > nav {
   fieldset[role=search]{ float: right; width: 48%; }
   ul {
     font-size: .85em;
-    @include horizontal-list(0);
+    //@include horizontal-list(0);
+    @include my-horizontal-list();
     //float: left;
     margin-left:auto;
     margin-right:auto;
