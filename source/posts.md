@@ -55,9 +55,7 @@ share_check_all: true
 <ul id="posts-sort" class="posts">
   {% for post in site.posts %}
   <li class="post">
-    <p>
     {% include post/sharing_custom.html %}
-    </p>
     <div class="index_click_box">
     <span class="post-date">{{post.date}}</span>
     {% include post/post_list.html%}
