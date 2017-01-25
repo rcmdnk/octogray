@@ -11,9 +11,9 @@
     }
     footer { padding: 0; margin: 0;}
   }
-  h1 { color: $text-color; margin-bottom: .3em; }
-  h2 { display: none; }
-  h1 {
+  h2 { color: $text-color; margin-bottom: .3em; }
+  h3 { display: none; }
+  h2 {
     font-size: 1.5em;
     a {
       @include hover-link;
