@@ -1,3 +1,4 @@
+require 'octopress-date-format'
 module Octopress
   module DateFormat
 
