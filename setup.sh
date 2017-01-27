@@ -134,6 +134,16 @@ else
 fi
 echo
 
+# replace plugins
+yesno "Do you want to remove plugins/haml.rb?"
+ret=$?
+if [ $ret -eq 0 ];then
+  rm -f "./plugins/haml.rb"
+else
+  printf "\n\e[31mPlease add `gem 'haml'` in your Gemfile.\e[m\n"
+fi
+echo
+
 # Don't proceed after error
 set -e
 
