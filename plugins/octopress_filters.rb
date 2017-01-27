@@ -1,40 +1,57 @@
 #custom filters for Octopress
 require './plugins/backtick_code_block'
-require 'octopress-hooks'
 require 'jekyll-sitemap'
 
 module OctopressFilters
-  def self.pre_filter(page, extcheck=true)
-    if !extcheck or page.ext.match('html|textile|markdown|md|haml|slim|xml')
+  def self.pre_filter(page)
+    if page.extname.match('html|textile|markdown|md|haml|slim|xml')
       input = BacktickCodeBlock::render_code_block(page.content)
       page.content = input.gsub /(<figure.+?>.+?<\/figure>)/m do
         TemplateWrapper::safe_wrap($1)
       end
     end
   end
-  def self.post_filter(page=true, extcheck=true)
-    if !extcheck or page.ext.match('html|textile|markdown|md|haml|slim|xml')
+  def self.post_filter(page)
+    if page.extname.match('html|textile|markdown|md|haml|slim|xml')
       page.output = TemplateWrapper::unwrap(page.output)
     end
   end
 
-  Jekyll::Hooks.register :posts, :pre_render do |post|
-    OctopressFilters::pre_filter(post, false)
-  end
-  Jekyll::Hooks.register :pages, :pre_render do |page|
-    OctopressFilters::pre_filter(page)
-  end
-  Jekyll::Hooks.register :documents, :pre_render do |document|
-    OctopressFilters::pre_filter(document, false)
-  end
-  Jekyll::Hooks.register :posts, :post_render do |post|
-    OctopressFilters::post_filter(post, false)
-  end
-  Jekyll::Hooks.register :pages, :post_render do |page|
-    OctopressFilters::post_filter(page)
-  end
-  Jekyll::Hooks.register :documents, :post_render do |document|
-    OctopressFilters::post_filter(document, false)
+  if defined?(Jekyll::Hooks)
+    Jekyll::Hooks.register [:documents, :pages, :posts], :pre_render do |page|
+      OctopressFilters::pre_filter(page)
+    end
+    Jekyll::Hooks.register [:documents, :pages, :posts], :post_render do |page|
+      OctopressFilters::post_filter(page)
+    end
+  else
+    require 'octopress-hooks'
+    class PageFilters < Octopress::Hooks::Page
+      def pre_render(page)
+        OctopressFilters::pre_filter(page)
+      end
+      def post_render(page)
+        OctopressFilters::post_filter(page)
+      end
+    end
+    class PostFilters < Octopress::Hooks::Post
+      def pre_render(post)
+        OctopressFilters::pre_filter(post)
+      end
+
+      def post_render(post)
+        OctopressFilters::post_filter(post)
+      end
+    end
+    class DocumentFilters < Octopress::Hooks::Document
+      def pre_render(document)
+        OctopressFilters::pre_filter(document)
+      end
+
+      def post_render(document)
+        OctopressFilters::post_filter(document)
+      end
+    end
   end
 end
 

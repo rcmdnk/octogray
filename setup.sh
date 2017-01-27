@@ -120,7 +120,7 @@ else
 fi
 echo
 
-# replace plugins (image_tag.rb, include_array.rb, octopress_filter.rb)
+# replace plugins
 yesno "Do you want to replace plugins ($(find $theme_dir/plugins/ -name "*.rb" -print0 |xargs -0 basename|tr "\n" " "  ))?"
 ret=$?
 if [ $ret -eq 0 ];then
