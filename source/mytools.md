@@ -10,12 +10,11 @@ Last update: {{site.time|date_to_rfc822}}
 
 * [all posts](/posts.html)
 {% if site.linkchecker or site.htmlchecker or site.linkchecker %}
-* [![Site Checker Result](//travis-ci.org/{{ site.linkchecker_travis_user }}/{{ site.linkchecker_travis_repo }}.svg?branch=master)](//travis-ci.org/{{ site.linkchecker_travis_user }}/{{ site.linkchecker_travis_repo }}){% endif %}
+* Site Checks {%if site.site_check_user%}[![Site Checker Result](//travis-ci.org/{{ site.site_check_user }}/{{ site.site_check_repo }}.svg?branch=master)](//travis-ci.org/{{ site.site_check_user }}/{{ site.site_check_repo }}){% endif %}
 {% if site.htmlchecker %}    * [HTML Validation](/htmlchecker.html){% endif %}
 {% if site.csschecker %}    * [CSS Validation](/csschecker.html){% endif %}
-{% if site.linkchecker %}    * [linkchecker](/linkchecker.html) [![Build Status](//travis-ci.org/{{ site.linkchecker_travis_user }}/{{ site.linkchecker_travis_repo }}.svg?branch=master)](//travis-ci.org/{{ site.linkchecker_travis_user }}/{{ site.linkchecker_travis_repo }}){% endif %}
-{% if site.htmlchecker %}* [HTML Validation](/htmlchecker.html){% endif %}
-{% if site.csschecker %}* [CSS Validation](/csschecker.html){% endif %}
+{% if site.linkchecker %}    * [linkchecker](/linkchecker.html){% endif %}
+{% endif %}
 * [FeedlyGraph](http://www.feedlygraph.info/graph?feedid=feed/{{site.url}}{{site.subscribe_rss}})
 * [Octogray](//github.com/rcmdnk/octogray) [![Build Status](//travis-ci.org/rcmdnk/octogray.svg?branch=master)](//travis-ci.org/rcmdnk/octogray)
 {% include custom/mytools.html %}

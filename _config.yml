@@ -143,10 +143,14 @@ n_cores: 8
 #   3rd Party Settings    #
 # ----------------------- #
 
-# Linkchecker
-linkchecker: false
-linkchecker_travis_user:
-linkchecker_travis_repo:
+# Site checks
+site_check_user: rcmdnk
+site_check_repo: rcmdnk.github.io
+
+# Linkchecker, HTML/CSS Validation
+linkchecker: true
+htmlchecker: true
+csschecker: true
 
 # My tools conents
 mytools:
@@ -412,7 +416,3 @@ jekyll_var:
     - random_url
     - related_posts_show
   exclude:
-
-share_static: false # OCTOPRESS_TEST
-page-view: false # OCTOPRESS_TEST
-hatena_popular_num: 0 # OCTOPRESS_TEST
