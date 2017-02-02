@@ -12,7 +12,7 @@ published: true
 {%if site.lang == "ja"%}
 {%if site.google_analytics_tracking_id%}
 
-# アクセス解析ツールについて
+## アクセス解析ツールについて
 
 当サイトではGoogle Analyticsを使用してしてアクセス状況の解析を行っています。
 このGoogle Analyticsではデータ収集のためにCookieを使用しています。
@@ -24,7 +24,7 @@ published: true
 {%endif site.google_analytics_tracking_id%}
 {%if site.affiliate%}
 
-# 広告について
+## 広告について
 
 当サイトでは第三者配信事業者による広告サービス({{site.affiliate_services}})を利用しています。
 これらの配信業者はユーザーに適切な広告を表示するためにCookieを利用して
@@ -34,7 +34,7 @@ published: true
 
 > [広告 – ポリシーと規約 – Google](http://www.google.co.jp/policies/technologies/ads/)
 
-# 免責事項
+## 免責事項
 
 当サイトでは個人的に調べた内容について掲載していますが、
 その内容の正確性や安全性に関して一切保証するものではありません。
@@ -46,7 +46,7 @@ published: true
 {%else%}
 {%if site.google_analytics_tracking_id%}
 
-# Web Analysis Tool
+## Web Analysis Tool
 
 This site uses Google Analytics to analyze user accesses.
 It uses cookies to collect data.
@@ -58,7 +58,7 @@ You can disable cookies via your browser settings.
 {%endif site.google_analytics_tracking_id%}
 {%if site.affiliate%}
 
-# Advertisements
+## Advertisements
 
 This site uses advertisements provided by third parties
 ({{site.affiliate_services}}).
@@ -69,7 +69,7 @@ You can disable cookies via your browser settings.
 
 > [Advertising – Privacy & Terms – Google](https://www.google.m/intl/en/policies/technologies/ads/)
 
-# General disclaimer
+## General disclaimer
 
 Information in this site have been corrected personally,
 however, this site cannot guarantee the validity or the safety of the information.

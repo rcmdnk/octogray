@@ -4,7 +4,7 @@ footer: false
 twitter: true
 ---
 
-# My Tools
+## My Tools
 
 Last update: {{site.time|date_to_rfc822}}
 
