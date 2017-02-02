@@ -44,7 +44,13 @@
 {% endif %}
 {% unless site.affiliate == false or page.affiliate == false %}
   {% if site.sponsored_links %}
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    {%comment%}
+    {% if site.adsense_insert %}
+    <script>
+      {% capture adsense_slot %}{{site.adsense_insert}}{% endcapture %}{% include custom/affiliate/google_adsense.html %}{% capture adsense_slot %}{% endcapture %}
+    </script>
+    {% endif %}
+    {%endcomment%}
     {% if site.adsense_page_level_ads %}
     <script>
       (adsbygoogle = window.adsbygoogle || []).push({
@@ -53,6 +59,17 @@
       });
     </script>
     {% endif %}
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  {% endif %}
+  {% if site.amazon_ad_tag and site.amazon_link_enhancement_widget %}
+  <script type="text/javascript">
+    amzn_assoc_ad_type = "link_enhancement_widget";
+    amzn_assoc_tracking_id = "{{site.amazon_ad_tag}}";
+    amzn_assoc_placement = "";
+    amzn_assoc_marketplace = "amazon";
+    amzn_assoc_region = "{{site.amazon_region}}";
+  </script>
+  <script src="//z-fe.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&Operation=GetScript&ID=OneJS&WS=1&MarketPlace={{site.amazon_region}}" async defer></script>
   {% endif %}
   {% if site.linkplaza_key %}<script src='//static.linkplaza.jp/api/replace.js?key={{site.linkplaza_key}}' async defer></script>{% endif %}
 {% endunless %}
@@ -87,19 +104,6 @@
   </script>
   <script src="//www.linkwithin.com/widget.js" async defer></script>
 {% endif %}
-{% unless site.affiliate == false or page.affiliate == false %}
-  {% if site.amazon_ad_tag and site.amazon_link_enhancement_widget %}
-  <script type="text/javascript">
-    amzn_assoc_ad_type = "link_enhancement_widget";
-    amzn_assoc_tracking_id = "{{site.amazon_ad_tag}}";
-    amzn_assoc_placement = "";
-    amzn_assoc_marketplace = "amazon";
-    amzn_assoc_region = "{{site.amazon_region}}";
-  </script>
-  <script src="//z-fe.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&Operation=GetScript&ID=OneJS&WS=1&MarketPlace={{site.amazon_region}}" async defer></script>
-  {% endif %}
-{% endunless %}
-
 
 {%comment%}jQuery{%endcomment%}
 {%if site.jquery_ie8_version%}
