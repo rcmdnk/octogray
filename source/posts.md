@@ -56,6 +56,7 @@ share_check_all: true
   {% for post in site.posts %}
   <li class="post">
     {% include post/sharing_custom.html %}
+    <br>
     <div class="index_click_box">
     <span class="post-date">{{post.date}}</span>
     {% include post/post_list.html%}
