@@ -28,6 +28,10 @@
 
 // amazon
 .amazon-box{
+  list-style: none;
+  @include shadow-box;
+  @extend .flex-content;
+  @extend .basic-alignment;
   @extend .group;
 }
 .amazon-img{
@@ -39,7 +43,49 @@
 .amazon-txt{
   float: left; margin-right: 1.5em;
   margin-bottom: .8em;
-  width: 500px;
+  width: 380px;
+  @media only screen and (min-width: 992px) {
+    width: 500px;
+  }
+}
+
+$amazon-color: #FF9900;
+$rakuten-color: #BF0000;
+.item-link {
+  text-align: center;
+  border: solid 1px;
+  border-radius: 3px;
+  float: left;
+  margin-right: 10px;
+  padding: 15px 15px 15px;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: $header-subtitle-font-family;
+  height: 25px;
+  a {
+    color: #FFFFFF;
+    &:visited {color: #FFFFFF;}
+    &:hover {color: darken(#FFFFFF, 10);}
+    text-decoration: none;
+  }
+}
+.amazon-link{
+  @extend .item-link;
+  background-color: $amazon-color;
+  border-color: $amazon-color;
+  &:hover {
+    background-color: darken($amazon-color, 10);
+    border-color: darken($amazon-color, 10);
+  }
+}
+.rakuten-link{
+  @extend .item-link;
+  background-color: $rakuten-color;
+  border-color: $rakuten-color;
+  &:hover {
+    background-color: darken($rakuten-color, 10);
+    border-color: darken($rakuten-color, 10);
+  }
 }
 .amazon-wish-wrap{
   margin: 0 auto;
