@@ -7,8 +7,8 @@
 <header>
   {% unless page.meta == false %}
   <div class="meta">
-    {% if p.date_text %}<time itemprop='datePublished' datetime='{{p.date_xml}}'><span class='time'>{{ p.date_text }}</span></time>{% endif %}
-    {% date_updated_html , Last update: %}
+    {% if p.date_text %}<span class="byline"><time itemprop='datePublished' datetime='{{p.date_xml}}'><span class='time'>{{ p.date_text }}</span></time></span>{% endif %}
+    {% date_updated_html Last update %}
     {% include post/breadcrumbs.html %}
   </div>
   {% endunless %}
