@@ -55,3 +55,6 @@
 [submodule ".plugins/octopress-post-card"]
 	path = .plugins/octopress-post-card
 	url = https://github.com/rcmdnk/octopress-post-card
+[submodule ".plugins/date-format"]
+	path = .plugins/date-format
+	url = git@github.com:rcmdnk/date-format

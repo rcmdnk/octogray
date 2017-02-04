@@ -112,3 +112,7 @@ li.post {
     margin-bottom: 0;
   }
 }
+
+.byline ~ .date-wrapper:before {
+  @extend .separator;
+}

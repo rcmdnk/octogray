@@ -266,6 +266,9 @@ copy_link_plugin GitHub-jQuery-Repo-Widget/jquery.githubRepoWidget.min.js source
 copy_link_plugin octopress-post-card/plugins/post_card.rb
 copy_link_plugin octopress-post-card/sass/plugins/_post-card.scss
 
+## [date-format](https://github.com/rcmdnk/date-format)
+copy_link_plugin date-format/lib/octopress-date-format.rb plugins
+
 # install downloaded plugins
 
 ## [NailThumb](http://www.garralab.com/nailthumb.php)
