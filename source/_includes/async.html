@@ -49,7 +49,7 @@
       (function(){
         var content = document.getElementById('content');
         if(content === undefined)return;
-        var article = content.getElementsByTagName('article');
+        var article = content.getElementsByTagName('article')[0];
         if(content === undefined)return;
         var h2s = article.getElementsByTagName('h2');
         if(h2s.length < 3)return;
