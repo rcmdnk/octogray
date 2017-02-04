@@ -46,14 +46,23 @@
   {% if site.sponsored_links %}
     {% if site.adsense_insert %}
     <script>
-    (function(){
-    var content = document.getElementsById('content');
-    if(content === undefined)return;
-    var h2s = content.getElementByTagName('h2');
-    if(h2s.length < 3)return;
-    var inner = document.createElement('div');
-    inner.innerHTML = '{% capture adsense_slot %}{{site.adsense_insert}}{% endcapture %}{% include custom/affiliate/google_adsense.html %}{% capture adsense_slot %}{% endcapture %}';
-    h2s[3].parentNode.insertBefore(inner, h2s[3]);
+      (function(){
+        var content = document.getElementById('content');
+        if(content === undefined)return;
+        var article = content.getElementsByTag('article');
+        if(content === undefined)return;
+        var h2s = article.getElementsByTagName('h2');
+        if(h2s.length < 3)return;
+        var inner = document.createElement('div');
+        inner.className = "center_wrapper";
+        inner.innerHTML = '<div>{{site.sponsored_links}}</div><div>' +
+                          '<ins class="adsbygoogle google-img-rect" ' +
+                          'style="display:inline-block" ' +
+                          'data-ad-client="ca-pub-{{site.adsense_id}}" ' +
+                          'data-ad-slot="{{site.adsense_insert}}"></ins></div>';
+        h2s[3].parentNode.insertBefore(inner, h2s[3]);
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      }());
     </script>
     {% endif %}
     {% if site.adsense_page_level_ads %}
