@@ -54,9 +54,9 @@ module Jekyll
         end
       end
 
-#      progressbar = ProgressBar.create(:title => "%#{@@space-5}s" % "posts-pages, render", :starting_at => 0,
-#                                       :total => n,
-#                                       :format => '%t %a |%B| %p%')
+      progressbar = ProgressBar.create(:title => "%#{@@space-5}s" % "posts-pages, render", :starting_at => 0,
+                                       :total => n,
+                                       :format => '%t %a |%B| %p%')
       payload = site_payload
 
       Jekyll::Hooks.trigger :site, :pre_render, self, payload
@@ -67,7 +67,7 @@ module Jekyll
           if regenerator.regenerate?(document)
             document.output = Jekyll::Renderer.new(self, document, payload).run
             document.trigger_hooks(:post_render)
-#            progressbar.increment
+            progressbar.increment
           end
         end
       end
@@ -76,7 +76,7 @@ module Jekyll
         if regenerator.regenerate?(page)
           page.output = Jekyll::Renderer.new(self, page, payload).run
           page.trigger_hooks(:post_render)
-#          progressbar.increment
+          progressbar.increment
         end
       end
 
