@@ -44,13 +44,18 @@
 {% endif %}
 {% unless site.affiliate == false or page.affiliate == false %}
   {% if site.sponsored_links %}
-    {%comment%}
     {% if site.adsense_insert %}
     <script>
-      {% capture adsense_slot %}{{site.adsense_insert}}{% endcapture %}{% include custom/affiliate/google_adsense.html %}{% capture adsense_slot %}{% endcapture %}
+    (function(){
+    var content = document.getElementsById('content');
+    if(content === undefined)return;
+    var h2s = content.getElementByTagName('h2');
+    if(h2s.length < 3)return;
+    var inner = document.createElement('div');
+    inner.innerHTML = '{% capture adsense_slot %}{{site.adsense_insert}}{% endcapture %}{% include custom/affiliate/google_adsense.html %}{% capture adsense_slot %}{% endcapture %}';
+    h2s[3].parentNode.insertBefore(inner, h2s[3]);
     </script>
     {% endif %}
-    {%endcomment%}
     {% if site.adsense_page_level_ads %}
     <script>
       (adsbygoogle = window.adsbygoogle || []).push({
