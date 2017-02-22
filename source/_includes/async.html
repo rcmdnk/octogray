@@ -86,6 +86,7 @@
   <script src="//z-fe.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&Operation=GetScript&ID=OneJS&WS=1&MarketPlace={{site.amazon_region}}" async defer></script>
   {% endif %}
   {% if site.linkplaza_key %}<script src='//static.linkplaza.jp/api/replace.js?key={{site.linkplaza_key}}' async defer></script>{% endif %}
+  {% if site.medi8_sp_overlay %}<script src="{{self.medi8_sp_overlay}}" async defer></script>{% endif %}
 {% endunless %}
 {% if site.twitter_follow_button or site.twitter_button or site.twitter_search%}{% unless site.twitter_only_page == true and page.twitter != true %} <script src='//platform.twitter.com/widgets.js' async defer></script>{%endunless%}{% endif %}
 {% unless site.share_official == false %}
