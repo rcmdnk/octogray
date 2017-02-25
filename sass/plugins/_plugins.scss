@@ -37,6 +37,10 @@
 .amazon-img{
   @extend .title-thumbnail;
 }
+.amazon-img img{
+  width: 200px;
+  height: 200px;
+}
 .title-small-thumbnail .amazon-img{
   @extend .title-small-thumbnail;
 }
