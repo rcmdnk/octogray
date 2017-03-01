@@ -16,6 +16,7 @@ EOS
   end
 
   def amazon_link(asin, ad_tag)
+    asin.strip!
     if ad_tag
       return "//www.amazon.co.jp/gp/product/#{asin}?ie=UTF8&camp=1207&creative=8411&creativeASIN=#{asin}&linkCode=shr&tag=#{ad_tag}"
     end
@@ -42,7 +43,7 @@ module Jekyll
     end
 
     def render(context)
-      amazon_link(@asin, context.registers[:site].config["amazon_ad_tag"])
+      Aff.amazon_link(@asin, context.registers[:site].config["amazon_ad_tag"])
     end
   end
 
