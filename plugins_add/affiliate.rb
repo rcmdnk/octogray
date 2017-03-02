@@ -99,7 +99,6 @@ module Jekyll
       if @search.include?(" ")
         @search = CGI.escape(@search)
       end
-      p @search
     end
 
     def render(context)
