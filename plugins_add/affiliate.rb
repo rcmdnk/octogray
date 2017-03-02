@@ -1,23 +1,27 @@
 module Aff
-  def amazon_img_path(img, size)
+  def amazon_img_path(img, size=0, size_width=0)
     if img.start_with?("http") or img.start_with?("//")
       retrn img
     end
-    size = size || 200
+    size = 200 if size == 0
+    if size_width != 0
+    "https://images-na.ssl-images-amazon.com/images/I/#{img}._SS#{size}_CR0,0,#{size_width},#{size}_.jpg"
+    else
     "https://images-na.ssl-images-amazon.com/images/I/#{img}._SS#{size}_.jpg"
+    end
   end
 
-  def amazon_img(link, title, img, size)
+  def amazon_img(link, title, img, size, size_width=0)
 <<EOS
 <div class='amazon-img'>
-  <a href='#{link}' rel='nofollow' target='_blank'><img src='#{amazon_img_path(img, size)}' alt='#{title}'/></a>
+  <a href='#{link}' rel='nofollow' target='_blank'><img src='#{amazon_img_path(img, size, size_width)}' alt='#{title}'/></a>
 </div>
 EOS
   end
 
   def amazon_link(asin, ad_tag)
     asin.strip!
-    if ad_tag
+    if ad_tag != ""
       return "//www.amazon.co.jp/gp/product/#{asin}?ie=UTF8&camp=1207&creative=8411&creativeASIN=#{asin}&linkCode=shr&tag=#{ad_tag}"
     end
     return "//www.amazon.co.jp/gp/product/#{asin}"
@@ -131,3 +135,24 @@ end
 Liquid::Template.register_tag('amazon_link', Jekyll::AmazonLink)
 Liquid::Template.register_tag('amazon_img', Jekyll::AmazonImg)
 Liquid::Template.register_tag('amazon_box', Jekyll::AmazonBox)
+
+module AmazonFilter
+  # Get first amazon-img
+  def amazon_img(input)
+    if input.match(/<div class="amazon-img">.*<\/div>/) != nil
+      out=input.match(/(<div class="amazon-img">.*<img *)width="200" height="200"(.*)_SS200(.*<\/div>)/)
+      if out == nil
+        input.match(/<div class="amazon-img">.*<\/div>/)[0]
+      else
+        out[1] + out[2] + "_SS90_CR0,0,120,90" + out[3]
+      end
+    elsif input.match(/{% *amazon_img.*%}/) != nil
+      out = input.match(/{% *amazon_img (\S*) (\S*) (.*) %}/)
+      Aff.amazon_img(Aff.amazon_link(out[1], ''), out[3], out[2], 90, 120)
+    else
+      "" #"no amazon-img"
+    end
+  end
+end
+
+Liquid::Template.register_filter AmazonFilter
