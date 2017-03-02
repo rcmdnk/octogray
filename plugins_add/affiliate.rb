@@ -11,7 +11,7 @@ module Aff
     end
   end
 
-  def amazon_img(link, title, img, size, size_width=0)
+  def amazon_img(link, title, img, size=0, size_width=0)
 <<EOS
 <div class='amazon-img'>
   <a href='#{link}' rel='nofollow' target='_blank'><img src='#{amazon_img_path(img, size, size_width)}' alt='#{title}'/></a>
@@ -19,16 +19,23 @@ module Aff
 EOS
   end
 
-  def amazon_link(asin, ad_tag)
+  def amazon_link(asin, ad_tag, a_id='')
     asin.strip!
     if ad_tag != ""
-      return "//www.amazon.co.jp/gp/product/#{asin}?ie=UTF8&camp=1207&creative=8411&creativeASIN=#{asin}&linkCode=shr&tag=#{ad_tag}"
+      "//www.amazon.co.jp/gp/product/#{asin}?ie=UTF8&camp=1207&creative=8411&creativeASIN=#{asin}&linkCode=shr&tag=#{ad_tag}"
+    elsif a_id != ""
+      "//af.moshimo.com/af/c/click?a_id=#{a_id}&p_id=170&pc_id=185&pl_id=4062&url=https%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fproduct%2F#{asin}"
+    else
+      "//www.amazon.co.jp/gp/product/#{asin}"
     end
-    return "//www.amazon.co.jp/gp/product/#{asin}"
   end
 
-  def rakuten_link(search, id, ut)
-    return "//hb.afl.rakuten.co.jp/hgc/#{id}/?pc=http://search.rakuten.co.jp/search/mall/#{search}/&m=http://search.rakuten.co.jp/search/mall/#{search}/&scid=af_url_txt&link_type=text&ut=#{ut}"
+  def rakuten_link(search, id, ut, a_id='')
+    if id != ''
+      "//hb.afl.rakuten.co.jp/hgc/#{id}/?pc=http://search.rakuten.co.jp/search/mall/#{search}/&m=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F#{search}%2F&scid=af_url_txt&link_type=text&ut=#{ut}"
+    else
+      "//af.moshimo.com/af/c/click?a_id=#{a_id}&p_id=54&pc_id=54&pl_id=616&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F#{search}%2F"
+    end
   end
 
   module_function :amazon_img_path
@@ -47,23 +54,10 @@ module Jekyll
     end
 
     def render(context)
-      Aff.amazon_link(@asin, context.registers[:site].config["amazon_ad_tag"])
-    end
-  end
-
-  class AmazonImg < Liquid::Tag
-    def initialize(tag_name, markup, tokens)
-      super
-      @asin = markup[0]
-      @img = markup[1]
-      @name = markup[2].gsub("'", "")
-    end
-
-    def render(context)
-      tag = context.registers[:site].config["amazon_ad_tag"]
-      size = context.registers[:site].config["amazon_img_size"]
-      link = Aff.amazon_link(@asin, tag)
-      Aff.amazon_img(link, @name, @img, size)
+      config = context.registers[:site].config
+      amazon_tag = config["amazon_ad_tag"] || ''
+      amazon_a_id = config["amazon_moshimo_a_id"] || ''
+      Aff.amazon_link(@asin, amazon_tag, amazon_a_id)
     end
   end
 
@@ -78,9 +72,14 @@ module Jekyll
 
     def render(context)
       config = context.registers[:site].config
-      tag = config["amazon_ad_tag"]
-      size = config["amazon_img_size"]
-      Aff.amazon_img(Aff.amazon_link(@asin, tag), @title, @img, size)
+      size = config["amazon_img_size"] || 0
+      amazon_tag = config["amazon_ad_tag"] || ''
+      amazon_a_id = config["amazon_moshimo_a_id"] || ''
+      img = Aff.amazon_img(Aff.amazon_link(@asin, amazon_tag, amazon_a_id), @title, @img, size)
+      if amazon_tag == '' and amazon_a_id != ''
+        img += "<img src='//i.moshimo.com/af/i/impression?a_id=#{amazon_a_id}&p_id=170&pc_id=185&pl_id=4062' width='1' height='1' style='border:none;'>"
+      end
+      img
     end
   end
 
@@ -107,15 +106,23 @@ module Jekyll
 
     def render(context)
       config = context.registers[:site].config
-      size = config["amazon_img_size"]
-      size = config["amazon_img_size"]
-      amazon_tag = config["amazon_ad_tag"]
-      rakuten_id = config["rakuten_ad_id"]
-      rakuten_ut = config["rakuten_ad_ut"]
-      amazon_link = Aff.amazon_link(@asin, amazon_tag)
-      rakuten_link = Aff.rakuten_link(@search, rakuten_id, rakuten_ut)
+      size = config["amazon_img_size"] || 0
+      amazon_tag = config["amazon_ad_tag"] || ''
+      amazon_a_id = config["amazon_moshimo_a_id"] || ''
+      rakuten_id = config["rakuten_ad_id"] || ''
+      rakuten_ut = config["rakuten_ad_ut"] || ''
+      rakuten_a_id = config["rakuten_moshimo_a_id"] || ''
+      amazon_link = Aff.amazon_link(@asin, amazon_tag, amazon_a_id)
+      rakuten_link = Aff.rakuten_link(@search, rakuten_id, rakuten_ut, rakuten_a_id)
       amazon_ad_label = config["amazon_ad_label"] || "Check Amazon"
       rakuten_ad_label = config["rakuten_ad_label"] || "Check Rakuten"
+      moshimo = ""
+      if amazon_tag == '' and amazon_a_id != ''
+        moshimo += "<img src='//i.moshimo.com/af/i/impression?a_id=#{amazon_a_id}&p_id=170&pc_id=185&pl_id=4062' width='1' height='1' style='border:none;'>"
+      end
+      if rakuten_id == '' and rakuten_a_id != ''
+        moshimo += "<img src='//i.moshimo.com/af/i/impression?a_id=#{rakuten_a_id}&p_id=54&pc_id=54&pl_id=616' width='1' height='1' style='border:none;'>"
+      end
 <<EOS
 <div class='amazon-box'>
   #{Aff.amazon_img(amazon_link, @title, @img, size)}
@@ -127,6 +134,7 @@ module Jekyll
     <span class='rakuten-link'><a href='#{rakuten_link}' rel='nofollow' target='_blank'>#{rakuten_ad_label}</a></span>
   </div>
 </div>
+#{moshimo}
 EOS
     end
   end
