@@ -147,10 +147,10 @@ Liquid::Template.register_tag('amazon_box', Jekyll::AmazonBox)
 module AmazonFilter
   # Get first amazon-img
   def amazon_img(input)
-    if input.match(/<div class="amazon-img">.*<\/div>/) != nil
-      out=input.match(/(<div class="amazon-img">.*<img *)width="200" height="200"(.*)_SS200(.*<\/div>)/)
+    if input.match(/<div class="amazon-img">.*<\/div>/m) != nil
+      out=input.match(/(<div class="amazon-img">.*<img *)width="200" height="200"(.*)_SS200(.*<\/div>)/m)
       if out == nil
-        input.match(/<div class="amazon-img">.*<\/div>/)[0]
+        input.match(/<div class="amazon-img">.*<\/div>/m)[0]
       else
         out[1] + out[2] + "_SS90_CR0,0,120,90" + out[3]
       end
