@@ -4,10 +4,12 @@ module Aff
       retrn img
     end
     size = 200 if size == 0
+    img = img.split(".")
+    ext = img[1] || "jpg"
     if size_width != 0
-    "https://images-na.ssl-images-amazon.com/images/I/#{img}._SS#{size}_CR0,0,#{size_width},#{size}_.jpg"
+    "https://images-na.ssl-images-amazon.com/images/I/#{img[0]}._SS#{size}_CR0,0,#{size_width},#{size}_.#{ext}"
     else
-    "https://images-na.ssl-images-amazon.com/images/I/#{img}._SS#{size}_.jpg"
+    "https://images-na.ssl-images-amazon.com/images/I/#{img[0]}._SS#{size}_.#{ext}"
     end
   end
 
