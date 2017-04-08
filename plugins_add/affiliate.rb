@@ -156,7 +156,7 @@ EOS
     def render(context)
       config = context.registers[:site].config
       itune_token = config["itune_token"] || ""
-      amazon_ad_tag = config["amazon_ad_tag"] || ''
+      amazon_ad_tag = config["amazon_ad_tag"] || ""
     end
   end
 end
