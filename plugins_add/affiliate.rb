@@ -158,6 +158,42 @@ EOS
       itune_token = config["itune_token"] || ""
       amazon_ad_tag = config["amazon_ad_tag"] || ""
     end
+
+#  <img id="appreach-image" src="//is5.mzstatic.com/image/thumb/Purple91/v4/c1/e9/48/c1e948b2-d0ad-feaa-4cea-fec3ead8c409/source/512x512bb.jpg" alt="Chrome - Google のウェブブラウザ" style="float:left; margin:10px; width:25%; max-width:120px; border-radius:10%;">
+#  <div class="appreach-info" style="margin: 10px;">
+#    <div id="appreach-appname">Chrome - Google のウェブブラウザ</div>
+#    <div id="appreach-developer" style="font-size:80%; display:inline-block; _display:inline;">
+#      開発元:<a id="appreach-developerurl" href="https://itunes.apple.com/jp/developer/google-inc/id281956209?uo=4" target="_blank" rel="nofollow">Google, Inc.</a>
+#    </div>
+#    <div id="appreach-price" style="font-size:80%; display:inline-block; _display:inline;">無料</div>
+#    <div class="appreach-powered" style="font-size:80%; display:inline-block; _display:inline;">
+#      posted with <a href="http://mama-hack.com/app-reach/" title="アプリーチ" target="_blank" rel="nofollow">アプリーチ</a>
+#    </div>
+#    <div class="appreach-links" style="float: left;">
+#      <div id="appreach-itunes-link" style="display: inline-block; _display: inline;">
+#        <a id="appreach-itunes" href="https://itunes.apple.com/jp/app/chrome-google-%E3%81%AE%E3%82%A6%E3%82%A7%E3%83%96%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6/id535886823?mt=8&amp;uo=4&amp;at=11lHd9" target="_blank" rel="nofollow">
+#          <img src="https://nabettu.github.io/appreach/img/itune_ja.svg" style="height:40px;">
+#        </a>
+#      </div>
+#      <div id="appreach-gplay-link" style="display:inline-block; _display:inline;">
+#        <a id="appreach-gplay" href="https://play.google.com/store/apps/details?id=com.android.chrome" target="_blank" rel="nofollow">
+#          <img src="https://nabettu.github.io/appreach/img/gplay_ja.png" style="height:40px;">
+#        </a>
+#      </div>
+#    </div>
+#  </div>
+#  <div class="appreach-footer" style="margin-bottom:10px; clear: left;"></div>
+#</div>
+
+
+
+
+
+<div class="group">
+<a href="https://itunes.apple.com/jp/app/id560851219?mt=12&uo=4&at=10lc94" target="_blank" rel="nofollow"><img width="75" class="alignleft" align="left" src="http://a2.mzstatic.com/us/r1000/103/Purple/v4/78/dc/7b/78dc7bc7-19e0-8888-cc9f-2829fd67ba59/Should_I_Sleep.75x75-65.png" style="border-radius: 11px 11px 11px 11px;-moz-border-radius: 11px 11px 11px 11px;-webkit-border-radius: 11px 11px 11px 11px;box-shadow: 1px 4px 6px 1px #999999;-moz-box-shadow: 1px 4px 6px 1px #999999;-webkit-box-shadow: 1px 4px 6px 1px #999999;margin: -5px 15px 1px 5px;"></a>
+<div style="font-size:small;line-height:1.2;"><a href="https://itunes.apple.com/jp/app/id560851219?mt=12&uo=4&at=10lc94" target="_blank" rel="nofollow"><strong> Should I Sleep 1.7.7（￥170）</strong></a><br> カテゴリ: ライフスタイル, ビデオ<br> 販売元: <a href="https://itunes.apple.com/jp/app/id560851219?mt=12&uo=4&at=10lc94" target="_blank" rel="nofollow">Marcelo Leite - Marcelo Leite</a>（サイズ: 2.8 MB）</div>
+</div>
+
   end
 end
 
