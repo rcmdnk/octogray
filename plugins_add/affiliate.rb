@@ -184,16 +184,12 @@ EOS
 #  </div>
 #  <div class="appreach-footer" style="margin-bottom:10px; clear: left;"></div>
 #</div>
-
-
-
-
-
-<div class="group">
-<a href="https://itunes.apple.com/jp/app/id560851219?mt=12&uo=4&at=10lc94" target="_blank" rel="nofollow"><img width="75" class="alignleft" align="left" src="http://a2.mzstatic.com/us/r1000/103/Purple/v4/78/dc/7b/78dc7bc7-19e0-8888-cc9f-2829fd67ba59/Should_I_Sleep.75x75-65.png" style="border-radius: 11px 11px 11px 11px;-moz-border-radius: 11px 11px 11px 11px;-webkit-border-radius: 11px 11px 11px 11px;box-shadow: 1px 4px 6px 1px #999999;-moz-box-shadow: 1px 4px 6px 1px #999999;-webkit-box-shadow: 1px 4px 6px 1px #999999;margin: -5px 15px 1px 5px;"></a>
-<div style="font-size:small;line-height:1.2;"><a href="https://itunes.apple.com/jp/app/id560851219?mt=12&uo=4&at=10lc94" target="_blank" rel="nofollow"><strong> Should I Sleep 1.7.7（￥170）</strong></a><br> カテゴリ: ライフスタイル, ビデオ<br> 販売元: <a href="https://itunes.apple.com/jp/app/id560851219?mt=12&uo=4&at=10lc94" target="_blank" rel="nofollow">Marcelo Leite - Marcelo Leite</a>（サイズ: 2.8 MB）</div>
-</div>
-
+#
+#<div class="group">
+#<a href="https://itunes.apple.com/jp/app/id560851219?mt=12&uo=4&at=10lc94" target="_blank" rel="nofollow"><img width="75" class="alignleft" align="left" src="http://a2.mzstatic.com/us/r1000/103/Purple/v4/78/dc/7b/78dc7bc7-19e0-8888-cc9f-2829fd67ba59/Should_I_Sleep.75x75-65.png" style="border-radius: 11px 11px 11px 11px;-moz-border-radius: 11px 11px 11px 11px;-webkit-border-radius: 11px 11px 11px 11px;box-shadow: 1px 4px 6px 1px #999999;-moz-box-shadow: 1px 4px 6px 1px #999999;-webkit-box-shadow: 1px 4px 6px 1px #999999;margin: -5px 15px 1px 5px;"></a>
+#<div style="font-size:small;line-height:1.2;"><a href="https://itunes.apple.com/jp/app/id560851219?mt=12&uo=4&at=10lc94" target="_blank" rel="nofollow"><strong> Should I Sleep 1.7.7（￥170）</strong></a><br> カテゴリ: ライフスタイル, ビデオ<br> 販売元: <a href="https://itunes.apple.com/jp/app/id560851219?mt=12&uo=4&at=10lc94" target="_blank" rel="nofollow">Marcelo Leite - Marcelo Leite</a>（サイズ: 2.8 MB）</div>
+#</div>
+#
   end
 end
 
