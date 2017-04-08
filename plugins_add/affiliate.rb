@@ -21,22 +21,29 @@ module Aff
 EOS
   end
 
-  def amazon_link(asin, ad_tag, a_id='')
+  def amazon_link(asin, ad_tag='', a_id='')
     asin.strip!
-    if ad_tag != ""
-      "//www.amazon.co.jp/gp/product/#{asin}?ie=UTF8&camp=1207&creative=8411&creativeASIN=#{asin}&linkCode=shr&tag=#{ad_tag}"
-    elsif a_id != ""
+    if a_id != ""
       "//af.moshimo.com/af/c/click?a_id=#{a_id}&p_id=170&pc_id=185&pl_id=4062&url=https%3A%2F%2Fwww.amazon.co.jp%2Fgp%2Fproduct%2F#{asin}"
+    elsif ad_tag != ""
+      "//www.amazon.co.jp/gp/product/#{asin}?ie=UTF8&camp=1207&creative=8411&creativeASIN=#{asin}&linkCode=shr&tag=#{ad_tag}"
     else
       "//www.amazon.co.jp/gp/product/#{asin}"
     end
   end
 
-  def rakuten_link(search, id, ut, a_id='')
-    if id != ''
-      "//hb.afl.rakuten.co.jp/hgc/#{id}/?pc=http://search.rakuten.co.jp/search/mall/#{search}/&m=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F#{search}%2F&scid=af_url_txt&link_type=text&ut=#{ut}"
-    else
+  def rakuten_link(search, id='', ut='', a_id='')
+    require 'cgi'
+    #search.gsub!(" ", "+")
+    search = CGI.escape(search)
+    if a_id != ''
+      # Need double escape for moshimo
+      search = CGI.escape(search)
       "//af.moshimo.com/af/c/click?a_id=#{a_id}&p_id=54&pc_id=54&pl_id=616&url=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F#{search}%2F"
+    elsif id != ''
+      "//hb.afl.rakuten.co.jp/hgc/#{id}/?pc=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F#{search}%2F&m=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F#{search}%2F&scid=af_url_txt&link_type=text&ut=#{ut}"
+    else
+      "http://search.rakuten.co.jp/search/mall/#{search}/&m=http%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F#{search}%2F&scid=af_url_txt&link_type=text&ut=#{ut}"
     end
   end
 
@@ -88,7 +95,6 @@ module Jekyll
   class AmazonBox < Liquid::Tag
     def initialize(tag_name, markup, tokens)
       super
-      require 'cgi'
       vals = markup.gsub("'", "").split()
       @asin = vals[0]
       @img = vals[1]
@@ -100,9 +106,6 @@ module Jekyll
       else
         @title = rem
         @search = rem
-      end
-      if @search.include?(" ")
-        @search = CGI.escape(@search)
       end
     end
 
@@ -138,6 +141,22 @@ module Jekyll
 </div>
 #{moshimo}
 EOS
+    end
+  end
+
+  class AppBox < Liquid::Tag
+    def initialize(tag_name, markup, tokens)
+      super
+      vals = markup.gsub("'", "").split()
+      @title = vals[0]
+      @iphone = vals[1]
+      @android = vals[2]
+    end
+
+    def render(context)
+      config = context.registers[:site].config
+      itune_token = config["itune_token"] || ""
+      amazon_ad_tag = config["amazon_ad_tag"] || ''
     end
   end
 end
