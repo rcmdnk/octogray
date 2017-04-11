@@ -69,7 +69,6 @@ EOS
     size = 200 if size == 0
     size_width = size if size_width == 0
     "//is3.mzstatic.com/image/thumb/#{@img}/source/#{size}x#{size_width}bb.jpg"
-    end
   end
 
   def itunes_img(link, title, img, size=0, size_width=0)
@@ -81,8 +80,6 @@ EOS
 </div>
 EOS
   end
-
-
   module_function :amazon_img_path
   module_function :amazon_img
   module_function :amazon_link
@@ -91,6 +88,7 @@ EOS
   module_function :android_link
   module_function :itunes_img_path
   module_function :itunes_img
+
 end
 
 module Jekyll
@@ -183,26 +181,23 @@ EOS
     end
   end
 
-  class ItuneesImg < Liquid::Tag
+  class ItunesImg < Liquid::Tag
     def initialize(tag_name, markup, tokens)
       super
       if /\/(?<title>[^\/]*)\/\s+(?<img>\S*)\s+(?<itunes>\S*)/ =~ markup
-      vals = markup.split()
-      @asin = vals[0]
-      @img = vals[1]
-      @title = vals[2..-1].join(' ').gsub("'", "")
+        @title = title
+        @img = img
+        @itunes = itunes
+      end
     end
 
     def render(context)
       config = context.registers[:site].config
-      size = config["amazon_img_size"] || 0
-      amazon_tag = config["amazon_ad_tag"] || ''
-      amazon_a_id = config["amazon_moshimo_a_id"] || ''
-      img = Aff.amazon_img(Aff.amazon_link(@asin, amazon_tag, amazon_a_id), @title, @img, size)
-      if amazon_tag == '' and amazon_a_id != ''
-        img += "<img src='//i.moshimo.com/af/i/impression?a_id=#{amazon_a_id}&p_id=170&pc_id=185&pl_id=4062' width='1' height='1' style='border:none;'>"
-      end
-      img
+      itunes_lang = config["itunes_lang"] || "us"
+      itunes_token = config["itunes_token"] || ""
+      size = config["itunes_img_size"] || 0
+      itunes_url = Aff.itunes_link(@itunes, itunes_lang, itunes_token)
+      Aff.itunes_img(itunes_url, @title, @img, size)
     end
   end
 
@@ -226,6 +221,7 @@ EOS
       itunes_lang = config["itunes_lang"] || "us"
       itunes_token = config["itunes_token"] || ""
       itunes_url = Aff.itunes_link(@itunes, itunes_lang, itunes_token)
+      itunes_size = config["itunes_img_size"] || 0
 
       if @android.start_with?("amazon")
         amazon_tag = config["amazon_ad_tag"] || ''
@@ -248,7 +244,7 @@ EOS
       end
 <<EOS
 <div id="app-box">
-  #{Aff.itunes_img(itunes_url, @title, @img)
+  #{Aff.itunes_img(itunes_url, @title, @img, itunes_size)}
   <div class="app-title">
     <a href="#{itunes_url}" rel="nofollow" target="_blank">#{@title}</a>
   </div>
@@ -262,11 +258,10 @@ EOS
   </div>
 </div>
 EOS
-
     end
-
   end
 end
+
 
 Liquid::Template.register_tag('amazon_link', Jekyll::AmazonLink)
 Liquid::Template.register_tag('amazon_img', Jekyll::AmazonImg)
