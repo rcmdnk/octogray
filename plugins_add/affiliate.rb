@@ -47,11 +47,50 @@ EOS
     end
   end
 
+  def itunes_link(app, lang='us', token='')
+    if token != ''
+      if token.start_with?("at=")
+        token = "?#{token}"
+      elsif not token.start_with?("?")
+        token = "?at=#{token}"
+      end
+    end
+    "//itunes.apple.com/#{lang}/app/#{app}#{token}"
+  end
+
+  def android_link(app)
+    "//play.google.com/store/apps/details?id=#{app}"
+  end
+
+  def itunes_img_path(img, size=0, size_width=0)
+    if img.start_with?("http") or img.start_with?("//")
+      retrn img
+    end
+    size = 200 if size == 0
+    size_width = size if size_width == 0
+    "//is3.mzstatic.com/image/thumb/#{@img}/source/#{size}x#{size_width}bb.jpg"
+    end
+  end
+
+  def itunes_img(link, title, img, size=0, size_width=0)
+<<EOS
+<div class='app-img'>
+  <a href='#{link}' rel='nofollow' target='_blank'>
+    <img src='#{itunes_img_path(img, size, size_width)}' alt='#{title}'/>
+  </a>
+</div>
+EOS
+  end
+
+
   module_function :amazon_img_path
   module_function :amazon_img
   module_function :amazon_link
   module_function :rakuten_link
-
+  module_function :itunes_link
+  module_function :android_link
+  module_function :itunes_img_path
+  module_function :itunes_img
 end
 
 module Jekyll
@@ -144,58 +183,96 @@ EOS
     end
   end
 
-  class AppBox < Liquid::Tag
+  class ItuneesImg < Liquid::Tag
     def initialize(tag_name, markup, tokens)
       super
-      vals = markup.gsub("'", "").split()
-      @title = vals[0]
-      @iphone = vals[1]
-      @android = vals[2]
+      if /\/(?<title>[^\/]*)\/\s+(?<img>\S*)\s+(?<itunes>\S*)/ =~ markup
+      vals = markup.split()
+      @asin = vals[0]
+      @img = vals[1]
+      @title = vals[2..-1].join(' ').gsub("'", "")
     end
 
     def render(context)
       config = context.registers[:site].config
-      itune_token = config["itune_token"] || ""
-      amazon_ad_tag = config["amazon_ad_tag"] || ""
+      size = config["amazon_img_size"] || 0
+      amazon_tag = config["amazon_ad_tag"] || ''
+      amazon_a_id = config["amazon_moshimo_a_id"] || ''
+      img = Aff.amazon_img(Aff.amazon_link(@asin, amazon_tag, amazon_a_id), @title, @img, size)
+      if amazon_tag == '' and amazon_a_id != ''
+        img += "<img src='//i.moshimo.com/af/i/impression?a_id=#{amazon_a_id}&p_id=170&pc_id=185&pl_id=4062' width='1' height='1' style='border:none;'>"
+      end
+      img
+    end
+  end
+
+  class AppBox < Liquid::Tag
+    def initialize(tag_name, markup, tokens)
+      super
+      if /\/(?<title>[^\/]*)\/\s+(?<img>\S*)\s+\/(?<developer>[^\/]*)\/\s+(?<dev_url>\S*)\s+(?<price>\S*)\s+(?<itunes>\S*)\s+(?<android>\S*)/ =~ markup
+        @title = title
+        @img = img
+        @developer = developer
+        @dev_url = dev_url
+        @price = price
+        @itunes = itunes
+        @android = android
+      end
     end
 
-#  <img id="appreach-image" src="//is5.mzstatic.com/image/thumb/Purple91/v4/c1/e9/48/c1e948b2-d0ad-feaa-4cea-fec3ead8c409/source/512x512bb.jpg" alt="Chrome - Google のウェブブラウザ" style="float:left; margin:10px; width:25%; max-width:120px; border-radius:10%;">
-#  <div class="appreach-info" style="margin: 10px;">
-#    <div id="appreach-appname">Chrome - Google のウェブブラウザ</div>
-#    <div id="appreach-developer" style="font-size:80%; display:inline-block; _display:inline;">
-#      開発元:<a id="appreach-developerurl" href="https://itunes.apple.com/jp/developer/google-inc/id281956209?uo=4" target="_blank" rel="nofollow">Google, Inc.</a>
-#    </div>
-#    <div id="appreach-price" style="font-size:80%; display:inline-block; _display:inline;">無料</div>
-#    <div class="appreach-powered" style="font-size:80%; display:inline-block; _display:inline;">
-#      posted with <a href="http://mama-hack.com/app-reach/" title="アプリーチ" target="_blank" rel="nofollow">アプリーチ</a>
-#    </div>
-#    <div class="appreach-links" style="float: left;">
-#      <div id="appreach-itunes-link" style="display: inline-block; _display: inline;">
-#        <a id="appreach-itunes" href="https://itunes.apple.com/jp/app/chrome-google-%E3%81%AE%E3%82%A6%E3%82%A7%E3%83%96%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6/id535886823?mt=8&amp;uo=4&amp;at=11lHd9" target="_blank" rel="nofollow">
-#          <img src="https://nabettu.github.io/appreach/img/itune_ja.svg" style="height:40px;">
-#        </a>
-#      </div>
-#      <div id="appreach-gplay-link" style="display:inline-block; _display:inline;">
-#        <a id="appreach-gplay" href="https://play.google.com/store/apps/details?id=com.android.chrome" target="_blank" rel="nofollow">
-#          <img src="https://nabettu.github.io/appreach/img/gplay_ja.png" style="height:40px;">
-#        </a>
-#      </div>
-#    </div>
-#  </div>
-#  <div class="appreach-footer" style="margin-bottom:10px; clear: left;"></div>
-#</div>
-#
-#<div class="group">
-#<a href="https://itunes.apple.com/jp/app/id560851219?mt=12&uo=4&at=10lc94" target="_blank" rel="nofollow"><img width="75" class="alignleft" align="left" src="http://a2.mzstatic.com/us/r1000/103/Purple/v4/78/dc/7b/78dc7bc7-19e0-8888-cc9f-2829fd67ba59/Should_I_Sleep.75x75-65.png" style="border-radius: 11px 11px 11px 11px;-moz-border-radius: 11px 11px 11px 11px;-webkit-border-radius: 11px 11px 11px 11px;box-shadow: 1px 4px 6px 1px #999999;-moz-box-shadow: 1px 4px 6px 1px #999999;-webkit-box-shadow: 1px 4px 6px 1px #999999;margin: -5px 15px 1px 5px;"></a>
-#<div style="font-size:small;line-height:1.2;"><a href="https://itunes.apple.com/jp/app/id560851219?mt=12&uo=4&at=10lc94" target="_blank" rel="nofollow"><strong> Should I Sleep 1.7.7（￥170）</strong></a><br> カテゴリ: ライフスタイル, ビデオ<br> 販売元: <a href="https://itunes.apple.com/jp/app/id560851219?mt=12&uo=4&at=10lc94" target="_blank" rel="nofollow">Marcelo Leite - Marcelo Leite</a>（サイズ: 2.8 MB）</div>
-#</div>
-#
+    def render(context)
+      config = context.registers[:site].config
+
+      itunes_lang = config["itunes_lang"] || "us"
+      itunes_token = config["itunes_token"] || ""
+      itunes_url = Aff.itunes_link(@itunes, itunes_lang, itunes_token)
+
+      if @android.start_with?("amazon")
+        amazon_tag = config["amazon_ad_tag"] || ''
+        amazon_a_id = config["amazon_moshimo_a_id"] || ''
+        android_url = Aff.amazon_link(@android.split("_")[1], amazon_tag, amazon_a_id)
+      else
+        android_url = Aff.android_link(@android)
+      end
+
+      itunes_pic = config["itunes_pic"]
+      android_pic = config["android_pic"]
+      if config['imgpath']
+        imgpath = config['imgpath']
+        if itunes_pic !~ /^(http|#{imgpath})/
+          itunes_pic = imgpath + '/' + itunes_pic
+        end
+        if android_pic !~ /^(http|#{imgpath})/
+          android_pic = imgpath + '/' + android_pic
+        end
+      end
+<<EOS
+<div id="app-box">
+  #{Aff.itunes_img(itunes_url, @title, @img)
+  <div class="app-title">
+    <a href="#{itunes_url}" rel="nofollow" target="_blank">#{@title}</a>
+  </div>
+  <div class="app-developer">
+    <a href="#{@dev_url}" target="_blank" rel="nofollow">#{@developer}</a>
+  </div>
+  <div id="app-price">#{@price}</div>
+  <div class="app-links">
+    <span class="itunes-link"><a href="#{itunes_url}" target="_blank" rel="nofollow"><img src="#{itunes_pic}"/></a></span>
+    <span class="android-link"><a href="#{android_url}" target="_blank" rel="nofollow"><img src="#{android_pic}"/></a></span>
+  </div>
+</div>
+EOS
+
+    end
+
   end
 end
 
 Liquid::Template.register_tag('amazon_link', Jekyll::AmazonLink)
 Liquid::Template.register_tag('amazon_img', Jekyll::AmazonImg)
 Liquid::Template.register_tag('amazon_box', Jekyll::AmazonBox)
+Liquid::Template.register_tag('itunes_img', Jekyll::ItunesImg)
+Liquid::Template.register_tag('app_box', Jekyll::AppBox)
 
 module AmazonFilter
   # Get first amazon-img
