@@ -33,6 +33,7 @@
   @extend .flex-content;
   @extend .basic-alignment;
   @extend .group;
+  margin-bottom: 20px;
 }
 .amazon-img, .app-img{
   @extend .title-thumbnail;
