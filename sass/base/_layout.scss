@@ -1,3 +1,7 @@
+$media-small-medium: "only screen and (min-width: 550px)";
+$media-medium: "only screen and (min-width: 768px)";
+$media-large: "only screen and (min-width: 992px)";
+
 //.group { @include pie-clearfix; }
 .group {
   //*zoom: 1;
@@ -124,7 +128,7 @@ aside.sidebar {
 .toggle-sidebar { &, .no-sidebar & { display: none; }}
 
 body.sidebar-footer {
-  @media only screen and (min-width: 750px) {
+  @media #{$media-medium} {
     aside.sidebar{@include collapse-sidebar; }
   }
   #content { margin-right: 0px; }
@@ -132,10 +136,10 @@ body.sidebar-footer {
 }
 
 @if $sidebar-remain == false {
-  @media only screen and (min-width: 550px) {
+  @media #{$media-small-medium} {
     body > header { font-size: $header-font-size; }
   }
-  @media only screen and (min-width: 750px) {
+  @media #{$media-medium} {
     aside.sidebar { @include collapse-sidebar; }
   }
 }
@@ -143,7 +147,7 @@ body.sidebar-footer {
   @extend .group;
 }
 @if $sidebar-remain == false {
-  @media only screen and (min-width: 768px) {
+  @media #{$media-medium} {
     body { -webkit-text-size-adjust: auto; }
     body > header { font-size: $header-font-size * 1.2; }
     #main {
@@ -184,7 +188,7 @@ body.sidebar-footer {
       }
     }
   }
-  @media only screen and (min-width: 992px) {
+  @media #{$media-large} {
     body > header { font-size: $header-font-size * 1.3; }
     #content { margin-right: $sidebar-width-wide; }
     #content {
@@ -204,7 +208,7 @@ body.sidebar-footer {
 }
 
 @if $indented-lists == false {
-  @media only screen and (min-width: 768px) {
+  @media #{$media-medium} {
     ul, ol { margin-left: 0; }
   }
 }

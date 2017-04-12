@@ -26,31 +26,40 @@
   cursor: pointer;
 }
 
-// amazon
-.amazon-box{
+// amazon, affiliate
+.amazon-box, .app-box{
   list-style: none;
   @include shadow-box;
   @extend .flex-content;
   @extend .basic-alignment;
   @extend .group;
 }
-.amazon-img{
+.amazon-img, .app-img{
   @extend .title-thumbnail;
 }
-.amazon-img img{
-  width: 200px;
-  height: 200px;
+.app-img img{
+  border-radius:10%;
 }
-.title-small-thumbnail .amazon-img{
+.title-small-thumbnail .amazon-img, .title-small-thumbnail .app-img{
   @extend .title-small-thumbnail;
 }
-.amazon-txt{
-  float: left; margin-right: 1.5em;
-  margin-bottom: .8em;
-  width: 380px;
-  @media only screen and (min-width: 992px) {
-    width: 500px;
+.amazon-title, .amazon-txt, .app-title, .app-links, .app-developer, .app-price{
+  float: left;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  width: 100%;
+  $amazon-width-subtract: 8px + 8px + (200px + 8px + 8px + 16px) + 20px;
+  @media #{$media-medium} {
+    @include mycalc(width, "100% - #{$amazon-width-subtract}", 768px - $amazon-width-subtract);
   }
+}
+
+.amazon-title, .app-title{
+  margin-top: 20px;
+}
+
+.app-title{
+  font-size: 200%;
 }
 
 $amazon-color: #FF9900;
@@ -91,9 +100,18 @@ $rakuten-color: #BF0000;
     border-color: darken($rakuten-color, 10);
   }
 }
+.amazon-link, .rakuten-link{
+  margin-bottom: 5px;
+}
 .amazon-wish-wrap{
   margin: 0 auto;
   width: $sidebar-width-medium;
+}
+
+.itunes-link, .android-link{
+  img {
+    height: 60px;
+  }
 }
 
 .views {

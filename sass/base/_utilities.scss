@@ -18,3 +18,10 @@
   $text-color: if($text-color >= 150, $dark, $light);
   @return $text-color;
 }
+
+@mixin mycalc ($prop, $val, $default){
+  #{$prop}: $default;
+  #{$prop}: -webkit-calc(#{$val});
+  #{$prop}: -moz-calc(#{$val});
+  #{$prop}: calc(#{$val});
+}

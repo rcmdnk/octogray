@@ -68,15 +68,13 @@ EOS
     end
     size = 200 if size == 0
     size_width = size if size_width == 0
-    "//is3.mzstatic.com/image/thumb/#{@img}/source/#{size}x#{size_width}bb.jpg"
+    "//is3.mzstatic.com/image/thumb/#{img}/source/#{size}x#{size_width}bb.jpg"
   end
 
   def itunes_img(link, title, img, size=0, size_width=0)
 <<EOS
 <div class='app-img'>
-  <a href='#{link}' rel='nofollow' target='_blank'>
-    <img src='#{itunes_img_path(img, size, size_width)}' alt='#{title}'/>
-  </a>
+  <a href='#{link}' rel='nofollow' target='_blank'><img src='#{itunes_img_path(img, size, size_width)}' alt='#{title}'/></a>
 </div>
 EOS
   end
@@ -168,7 +166,7 @@ module Jekyll
 <<EOS
 <div class='amazon-box'>
   #{Aff.amazon_img(amazon_link, @title, @img, size)}
-  <div class='amazon-txt'>
+  <div class='amazon-title'>
     <a href='#{amazon_link}' rel='nofollow' target='_blank'>#{@title}</a>
   </div>
   <div class='amazon-txt'>
@@ -222,6 +220,7 @@ EOS
       itunes_token = config["itunes_token"] || ""
       itunes_url = Aff.itunes_link(@itunes, itunes_lang, itunes_token)
       itunes_size = config["itunes_img_size"] || 0
+      itunes_developer = config["itunes_developer"] || "Developer"
 
       if @android.start_with?("amazon")
         amazon_tag = config["amazon_ad_tag"] || ''
@@ -243,18 +242,18 @@ EOS
         end
       end
 <<EOS
-<div id="app-box">
+<div class="app-box">
   #{Aff.itunes_img(itunes_url, @title, @img, itunes_size)}
   <div class="app-title">
     <a href="#{itunes_url}" rel="nofollow" target="_blank">#{@title}</a>
   </div>
   <div class="app-developer">
-    <a href="#{@dev_url}" target="_blank" rel="nofollow">#{@developer}</a>
+    #{itunes_developer}: <a href="#{@dev_url}" target="_blank" rel="nofollow">#{@developer}</a>
   </div>
-  <div id="app-price">#{@price}</div>
+  <div class="app-price">#{@price}</div>
   <div class="app-links">
-    <span class="itunes-link"><a href="#{itunes_url}" target="_blank" rel="nofollow"><img src="#{itunes_pic}"/></a></span>
-    <span class="android-link"><a href="#{android_url}" target="_blank" rel="nofollow"><img src="#{android_pic}"/></a></span>
+    <span class="itunes-link"><a href="#{itunes_url}" target="_blank" rel="nofollow"><img src="#{itunes_pic}" alt="App Store"/></a></span>
+    <span class="android-link"><a href="#{android_url}" target="_blank" rel="nofollow"><img src="#{android_pic}" alt="Google Play"/></a></span>
   </div>
 </div>
 EOS
