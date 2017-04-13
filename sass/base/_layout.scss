@@ -82,26 +82,50 @@ body {
 }
 
 aside.sidebar {
+  color: $sidebar-color;
+  text-shadow: lighten($sidebar-bg, 8) 0 1px;
+  background-color: $sidebar-bg;
+  border-top: 0px;
+
+  //overflow: hidden;
   float: none;
   //clear: none;
   //float: left;
   padding: 2em $pad-min 1px;
   //padding: 0 $sidebar-pad-medium $sidebar-pad-medium;
   //background-color: lighten($sidebar-bg, 2);
-  background-color: $sidebar-bg;
-  border-top: 0px;
-  background: none;
+
+  a { @extend .force-wrap; }
+  section {
+    @extend .sans;
+    font-size: .8em;
+    line-height: 1.4em;
+    margin-bottom: 1.5em;
+    text-align: left;
+    //width: auto; margin-left: 0;
+    //&.odd, &.even { float: none; width: auto; margin-left: 0; }
+    h2 {
+      font-size: 1.5em;
+      line-height: 1.2em;
+      margin: 1.5em 0 0;
+      padding-bottom: .2em;
+      border-bottom: 1px solid $sidebar-border;
+      @extend .side-shadow-border;
+      + p {
+        padding-top: .4em;
+      }
+    }
+    &:hover a {
+      @include link-colors($sidebar-link-color, $hover: $sidebar-link-color-hover, $focus: $sidebar-link-color-hover, $visited: $sidebar-link-color-visited, $active: $sidebar-link-color-active);
+    }
+  }
+
   @extend .group;
   .only-footer {
     font-family: $serif;
     color: $text-color;
     font-size: 1.25em;
     display: block;
-  }
-  section {
-    text-align: left;
-    //width: auto; margin-left: 0;
-    //&.odd, &.even { float: none; width: auto; margin-left: 0; }
   }
   @if $sidebar-remain == true {
     width: $sidebar-width-medium - $sidebar-pad-medium*2;

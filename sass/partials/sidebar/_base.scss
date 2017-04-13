@@ -2,30 +2,6 @@
   @include box-shadow(lighten($sidebar-bg, 5) 0 1px);
 }
 aside.sidebar {
-  overflow: hidden;
-  color: $sidebar-color;
-  text-shadow: lighten($sidebar-bg, 8) 0 1px;
-  a { @extend .force-wrap; }
-  section {
-    @extend .sans;
-    font-size: .8em;
-    line-height: 1.4em;
-    margin-bottom: 1.5em;
-    h2 {
-      font-size: 1.5em;
-      line-height: 1.2em;
-      margin: 1.5em 0 0;
-      padding-bottom: .2em;
-      border-bottom: 1px solid $sidebar-border;
-      @extend .side-shadow-border;
-      + p {
-        padding-top: .4em;
-      }
-    }
-    &:hover a {
-      @include link-colors($sidebar-link-color, $hover: $sidebar-link-color-hover, $focus: $sidebar-link-color-hover, $visited: $sidebar-link-color-visited, $active: $sidebar-link-color-active);
-    }
-  }
   img {
     @extend .flex-content;
     @extend .basic-alignment;
