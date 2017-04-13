@@ -281,6 +281,16 @@ module AmazonFilter
     elsif input.match(/{% *amazon_img.*%}/) != nil
       out = input.match(/{% *amazon_img (\S*) (\S*) (.*) %}/)
       Aff.amazon_img(Aff.amazon_link(out[1], ''), out[3], out[2], 90, 120)
+    elsif input.match(/<div class="app-img">.*<\/div>/m) != nil
+      out=input.match(/(<div class="app-img">.*<img *).*(src=\".*)200x200(bb.jpg.*<\/div>)/m)
+      if out == nil
+        input.match(/<div class="app-img">.*<\/div>/m)[0]
+      else
+        out[1] + out[2] + "120x90" + out[3]
+      end
+    elsif input.match(/{% *itunes_img.*%}/) != nil
+      out = input.match(/{% *itunes_img *(\/[^\/]*\/) *(\S*) *(\S*).*%}/)
+      Aff.itunes_img(Aff.itunes_link(out[3]), out[1], out[2], 90, 120)
     else
       "" #"no amazon-img"
     end
