@@ -92,7 +92,7 @@ module Jekyll
     end
 
     def get_gist_from_web(gist, file, client="")
-      gist_url = get_gist_url_for(gist, file)
+      gist_url = get_gist_url_for(gist, file, client)
       data     = get_web_content(gist_url)
 
       locations = Array.new
