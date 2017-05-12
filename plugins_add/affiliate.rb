@@ -270,13 +270,14 @@ Liquid::Template.register_tag('app_box', Jekyll::AppBox)
 
 module AmazonFilter
   # Get first amazon-img
-  def amazon_img(input)
-    if input.match(/<div class="amazon-img">.*<\/div>/m) != nil
-      out=input.match(/(<div class="amazon-img">.*<img *)width="200" height="200"(.*)_SS200(.*<\/div>)/m)
-      if out == nil
-        input.match(/<div class="amazon-img">.*<\/div>/m)[0]
-      else
+  def self.amazon_img(input)
+    if input.match(/<div class="amazon-img">.*?<\/div>/m) != nil
+      if ( out = input.match(/(<div class="amazon-img">.*<img.*)width="200" height="200"(.*)_SS200(.*?<\/div>)/m)) != nil
         out[1] + out[2] + "_SS90_CR0,0,120,90" + out[3]
+      elsif ( out = input.match(/(<div class="amazon-img">.*<img.src=.*)_SS200(.*?<\/div>)/m)) != nil
+        out[1] + "_SS90_CR0,0,120,90" + out[2]
+      else
+        input.match(/<div class="amazon-img">.*<\/div>/m)[0]
       end
     elsif input.match(/{% *amazon_img.*%}/) != nil
       out = input.match(/{% *amazon_img (\S*) (\S*) (.*) %}/)
@@ -292,7 +293,7 @@ module AmazonFilter
       out = input.match(/{% *itunes_img *(\/[^\/]*\/) *(\S*) *(\S*).*%}/)
       Aff.itunes_img(Aff.itunes_link(out[3]), out[1], out[2], 90, 120)
     else
-      "" #"no amazon-img"
+      #"no amazon-img"
     end
   end
 end
