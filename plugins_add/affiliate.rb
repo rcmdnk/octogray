@@ -269,8 +269,10 @@ Liquid::Template.register_tag('itunes_img', Jekyll::ItunesImg)
 Liquid::Template.register_tag('app_box', Jekyll::AppBox)
 
 module AmazonFilter
+  extend self
+
   # Get first amazon-img
-  def self.amazon_img(input)
+  def amazon_img(input)
     if input.match(/<div class="amazon-img">.*?<\/div>/m) != nil
       if ( out = input.match(/(<div class="amazon-img">.*<img.*)width="200" height="200"(.*)_SS200(.*?<\/div>)/m)) != nil
         out[1] + out[2] + "_SS90_CR0,0,120,90" + out[3]
