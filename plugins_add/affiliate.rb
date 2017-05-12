@@ -276,7 +276,7 @@ module AmazonFilter
     if input.match(/<div class="amazon-img">.*?<\/div>/m) != nil
       if ( out = input.match(/(<div class="amazon-img">.*<img.*)width="200" height="200"(.*)_SS200(.*?<\/div>)/m)) != nil
         out[1] + out[2] + "_SS90_CR0,0,120,90" + out[3]
-      elsif ( out = input.match(/(<div class="amazon-img">.*<img.src=.*)_SS200(.*?<\/div>)/m)) != nil
+      elsif ( out = input.match(/(<div class="amazon-img">.*?<img.src=.*?)_SS200(.*?<\/div>)/m)) != nil
         out[1] + "_SS90_CR0,0,120,90" + out[2]
       else
         input.match(/<div class="amazon-img">.*<\/div>/m)[0]
