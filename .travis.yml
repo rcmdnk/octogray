@@ -3,7 +3,8 @@ branches:
   except:
     - /^v[0-9]/
 rvm:
-  - head
+  - 2.4.1
+  - ruby-head
 git:
   submodules: false
 env:
