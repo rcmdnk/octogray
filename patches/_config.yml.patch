@@ -89,7 +89,7 @@ index c1d56f4..24ffc62 100644
 +
  highlighter: pygments # default python pygments have been replaced by pygments.rb
  
-+gems: [jekyll-paginate]
++plugins: [jekyll-paginate]
  paginate: 10          # Posts per page on the blog index
 -paginate_path: "posts/:num"  # Directory base for pagination URLs eg. /posts/2/
 +paginate_path: "blog/page/:num/"  # Directory base for pagination URLs eg. /blog/page/2/
