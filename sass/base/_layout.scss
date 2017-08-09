@@ -343,3 +343,10 @@ i.icon-link-btn {
 .va_middle { vertical-align: middle; }
 .va_bottom { vertical-align: bottom; }
 .va_text_top { vertical-align: text-top; }
+
+summary {
+  display: list-item;
+  &:hover {
+    cursor: pointer;
+  }
+}
