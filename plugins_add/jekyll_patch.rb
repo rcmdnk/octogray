@@ -20,7 +20,8 @@ module Jekyll
     end
 
     def process
-      exe = ['reset', 'read', 'generate', 'render', 'cleanup', 'write', 'print_stats']
+      #exe = ['reset', 'read', 'generate', 'render', 'cleanup', 'write', 'print_stats']
+      exe = ['reset', 'read', 'generate', 'render', 'cleanup', 'write']
       exe.each { |e|
         start = Time.now
         send(e)
