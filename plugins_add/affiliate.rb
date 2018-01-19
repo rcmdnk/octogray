@@ -68,7 +68,11 @@ EOS
     end
     size = 200 if size == 0
     size_width = size if size_width == 0
-    "http://is3.mzstatic.com/image/thumb/#{img}/source/#{size}x#{size_width}bb.jpg"
+    if img.end_with?("png")
+      "http://is3.mzstatic.com/image/thumb/#{img}/#{size}x#{size_width}bb.jpg"
+    else
+      "http://is3.mzstatic.com/image/thumb/#{img}/source/#{size}x#{size_width}bb.jpg"
+    end
   end
 
   def itunes_img(link, title, img, size=0, size_width=0)
@@ -226,6 +230,10 @@ EOS
         amazon_tag = config["amazon_ad_tag"] || ''
         amazon_a_id = config["amazon_moshimo_a_id"] || ''
         android_url = Aff.amazon_link(@android.split("_")[1], amazon_tag, amazon_a_id)
+      elsif @android == "android"
+        android_url = "//play.google.com/store/search?q=#{@title}&c=apps"
+      elsif @android == "" or @android == "non"
+        android_url = ""
       else
         android_url = Aff.android_link(@android)
       end
@@ -241,6 +249,12 @@ EOS
           android_pic = imgpath + '/' + android_pic
         end
       end
+      itunes_link = "<span class=\"itunes-link\"><a href=\"#{itunes_url}\" target=\"_blank\" rel=\"nofollow\"><img src=\"#{itunes_pic}\" alt=\"App Store\"/></a></span>"
+      android_link = ""
+      if android_url != ""
+        android_link = "<span class=\"android-link\"><a href=\"#{android_url}\" target=\"_blank\" rel=\"nofollow\"><img src=\"#{android_pic}\" alt=\"Google Play\"/></a></span>"
+      end
+
 <<EOS
 <div class="app-box">
   #{Aff.itunes_img(itunes_url, @title, @img, itunes_size)}
@@ -252,8 +266,8 @@ EOS
   </div>
   <div class="app-price">#{@price}</div>
   <div class="app-links">
-    <span class="itunes-link"><a href="#{itunes_url}" target="_blank" rel="nofollow"><img src="#{itunes_pic}" alt="App Store"/></a></span>
-    <span class="android-link"><a href="#{android_url}" target="_blank" rel="nofollow"><img src="#{android_pic}" alt="Google Play"/></a></span>
+    #{itunes_link}
+    #{android_link}
   </div>
 </div>
 EOS
