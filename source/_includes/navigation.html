@@ -38,37 +38,46 @@
   </p>
   {%endif%}
   {% include custom/navigation.html %}
-  {% if site.google_custom_search == 'compact' or site.google_custom_search == 'overlay' or site.google_custom_search == 'overlay_simple' or site.google_custom_search == 'overlay_classic' or site.google_custom_search == 'twolines' %}
   {% if site.google_search_pub %}
-  <div id='cse' style='width: 100%;'>Loading</div>
-  {% endif %}
-  {% elsif site.google_custom_search == 'twopages' %}
-  {% if site.google_search_pub %}
-  <div id='cse-search-form' style='width: 100%;'>Loading</div>
-  {% endif %}
-  {% elsif site.google_search %}
-  {% if site.google_search_pub %}
-  <p>
-    <form action="{{site.url}}{{site.google_result_page}}" id="cse-search-box">
-      <div>
-        <input type="hidden" name="cx" value="partner-pub-{{site.google_search_pub}}" />
-        <input type="hidden" name="cof" value="FORID:10" />
-        <input type="hidden" name="ie" value="UTF-8" />
-        <input type="text" name="{%if site.google_search_query%}{{site.google_search_query}}{%else%}q{%endif%}" size="30" />
-        <input type="submit" name="sa" value="&#xf00e;" />
-      </div>
-    </form>
-  </p>
-  {% endif %}
+    {% if site.google_adsense_search %}
+        <script>
+          (function() {
+            var cx = 'partner-pub-{{site.google_search_pub}}';
+            var gcse = document.createElement('script');
+            gcse.type = 'text/javascript';
+            gcse.async = true;
+            gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(gcse, s);
+          })();
+        </script>
+        <gcse:searchbox-only></gcse:searchbox-only>
+    {% elsif site.google_custom_search == 'compact' or site.google_custom_search == 'overlay' or site.google_custom_search == 'overlay_simple' or site.google_custom_search == 'overlay_classic' or site.google_custom_search == 'twolines' %}
+      <div id='cse' style='width: 100%;'>Loading</div>
+    {% elsif site.google_custom_search == 'twopages' %}
+      <div id='cse-search-form' style='width: 100%;'>Loading</div>
+    {% elsif site.google_search %}
+      <p>
+        <form action="{{site.url}}{{site.google_result_page}}" id="cse-search-box" data="aaa">
+          <div>
+            <input type="hidden" name="cx" value="partner-pub-{{site.google_search_pub}}" />
+            <input type="hidden" name="cof" value="FORID:10" />
+            <input type="hidden" name="ie" value="UTF-8" />
+            <input type="text" name="{%if site.google_search_query%}{{site.google_search_query}}{%else%}q{%endif%}" size="30" />
+            <input type="submit" name="sa" value="&#xf00e;" />
+          </div>
+        </form>
+      </p>
+    {% endif %}
   {% elsif site.simple_search %}
-  <p>
-    <form action="{{ site.simple_search }}" method="get">
-      <fieldset role="search">
-        <input type="hidden" name="sitesearch" value="{{ site.url | shorthand_url }}">
-        <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-      </fieldset>
-    </form>
-  </p>
+    <p>
+      <form action="{{ site.simple_search }}" method="get">
+        <fieldset role="search">
+          <input type="hidden" name="sitesearch" value="{{ site.url | shorthand_url }}">
+          <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+        </fieldset>
+      </form>
+    </p>
   {%endif%}
   {% if site.google_translate_layout %}
   <p>

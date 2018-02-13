@@ -6,7 +6,20 @@ footer: false
 
 <div>
 <article>
-{%if site.google_custom_search == 'twopages'%}
+{%if site.adsense-search %}
+<script>
+  (function() {
+    var cx = 'partner-pub-{{site.google_search_pub}}';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:searchresults-only></gcse:searchresults-only>
+{%elsif site.google_custom_search == 'twopages'%}
   <div id='cse' style='width: 100%;'>Loading</div>
   <script src='//www.google.com/jsapi' type='text/javascript'></script>
   <script type='text/javascript'>

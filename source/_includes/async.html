@@ -50,7 +50,7 @@
         var content = document.getElementById('content');
         if(content === undefined)return;
         var article = content.getElementsByTagName('article')[0];
-        if(content === undefined)return;
+        if(article === undefined)return;
         var h2s = article.getElementsByTagName('h2');
         if(h2s.length < 3)return;
         var inner = document.createElement('div');
@@ -73,7 +73,7 @@
       });
     </script>
     {% endif %}
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" async defer></script>
   {% endif %}
   {% if site.amazon_ad_tag and site.amazon_link_enhancement_widget %}
   <script type="text/javascript">
@@ -150,18 +150,35 @@ compressed and combined to all.js
 {%endif%}
 {%unless site.share_static and page.share_check != true%}<script src="{{root_url}}/javascripts/share-custom.js" defer></script>{%endunless%}
 {%if page.share_check%}<script src="{{root_url}}/javascripts/share-check.js" defer></script>{%endif%}
-{% if site.google_custom_search == 'compact' %}
-  {% include custom/google_search/compact.html %}
-{% elsif site.google_custom_search == 'onlyresults' %}
-  {% include custom/google_search/onlyresults.html %}
-{% elsif site.google_custom_search == 'overlay_simple' %}
-  {% include custom/google_search/overlay_simple.html %}
-{% elsif site.google_custom_search == 'overlay_classic' %}
-  {% include custom/google_search/overlay_classic.html %}
-{% elsif site.google_custom_search == 'twolines' %}
-  {% include custom/google_search/twolines.html %}
-{% elsif site.google_custom_search == 'twopages' %}
-  {% include custom/google_search/twopages.html %}
-{% elsif site.google_search %}
-  {% include custom/affiliate/google_search.html %}
+{% if site.google_search_pub %}
+  {% if site.google_adsense_search %}
+    <script>
+      (function() {
+        var cx = 'partner-pub-{{site.google_search_pub}}';
+        var gcse = document.createElement('script');
+        gcse.type = 'text/javascript';
+        gcse.async = true;
+        gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+        gcse.onload = function() {
+          document.querySelector(".gsc-search-button .gsc-search-button").value = eval("'\\uf00e'");
+        }
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(gcse, s);
+      })();
+    </script>
+  {% elsif site.google_custom_search == 'compact' %}
+    {% include custom/google_search/compact.html %}
+  {% elsif site.google_custom_search == 'onlyresults' %}
+    {% include custom/google_search/onlyresults.html %}
+  {% elsif site.google_custom_search == 'overlay_simple' %}
+    {% include custom/google_search/overlay_simple.html %}
+  {% elsif site.google_custom_search == 'overlay_classic' %}
+    {% include custom/google_search/overlay_classic.html %}
+  {% elsif site.google_custom_search == 'twolines' %}
+    {% include custom/google_search/twolines.html %}
+  {% elsif site.google_custom_search == 'twopages' %}
+    {% include custom/google_search/twopages.html %}
+  {% elsif site.google_search %}
+    {% include custom/affiliate/google_search.html %}
+  {%endif%}
 {%endif%}
