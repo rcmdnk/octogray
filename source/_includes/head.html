@@ -50,10 +50,10 @@
   {%assign imgpath="site.imgpath"%}
   {%capture ogimage%}{{ogimage|replace:imgpath,site.imgpath}}{%endcapture%}
   {% if ogimage != "" %}
-  {% unless ogimage contains "//" %}
-  {% capture ogimage %}{{root_url}}{{ogimage}}{% endcapture %}
-  {% endunless %}
-  <meta property="og:image" content="{{ ogimage }}">
+    {% unless ogimage contains "//" %}
+      {% capture ogimage %}{{site.url}}{{ogimage}}{% endcapture %}
+    {% endunless %}
+    <meta property="og:image" content="{{ ogimage }}">
   {% endif %}
   <meta property="og:site_name" content="{{site.title}}">
   {% if site.facebook_admins_id %}
