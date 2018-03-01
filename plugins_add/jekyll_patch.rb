@@ -1,6 +1,8 @@
 require "parallel"
 require "ruby-progressbar"
 
+I18n.config.available_locales = :en
+
 # Patch for jekyll-3.3.1/lib/jekyll/site.rb
 module Jekyll
   class Site
