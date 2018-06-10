@@ -54,3 +54,23 @@ module Jekyll
 end
 
 Liquid::Template.register_tag('img', Jekyll::ImageTag)
+
+module ImageFilter
+  extend self
+
+  def imgpath(input, site_url, imgpath, start="")
+    if input.start_with? "http"
+      input
+    elsif start != ""
+      if input.start_with? start
+        site_url + imgpath + input
+      else
+        site_url + input
+      end
+    else
+      site_url + input
+    end
+  end
+end
+
+Liquid::Template.register_filter ImageFilter
