@@ -1,7 +1,7 @@
 module Aff
   def amazon_img_path(img, size=0, size_width=0)
     if img.start_with?("http") or img.start_with?("//")
-      retrn img
+      return img
     end
     size = 200 if size == 0
     img = img.split(".")
@@ -64,7 +64,7 @@ EOS
 
   def itunes_img_path(img, size=0, size_width=0)
     if img.start_with?("http") or img.start_with?("//")
-      retrn img
+      return img
     end
     size = 200 if size == 0
     size_width = size if size_width == 0
