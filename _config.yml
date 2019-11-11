@@ -40,7 +40,7 @@ rss_mark: false
 nav_marks: true
 nav_links:
   /blog/archives/: Archives
-  /share-checker.html/: Share Checker
+  /share-checker.html: Share Checker
   /windows/: Windows
   /mac/: Mac
   /en/: English Blog

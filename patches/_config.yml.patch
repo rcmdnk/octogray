@@ -41,7 +41,7 @@ index c1d56f4..24ffc62 100644
 +nav_marks: true
 +nav_links:
 +  /blog/archives/: Archives
-+  /share-checker.html/: Share Checker
++  /share-checker.html: Share Checker
 +  /windows/: Windows
 +  /mac/: Mac
 +  /en/: English Blog
