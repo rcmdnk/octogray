@@ -26,7 +26,7 @@
 {% endif %}
 <br>
 {% if site.rss_mark %}
-<a href="{{ site.subscribe_rss }}" title="RSS" class="sidebar-about"><i class="fa fa-rss icon-link-btn"></i></a>
+<a href="{{site.url}}{{site.subscribe_rss}}" title="RSS" class="sidebar-about"><i class="fa fa-rss icon-link-btn"></i></a>
 {% endif %}
 {% if site.feedly_mark %}
 <a href='//feedly.com/i/subscription/feed/{{site.url}}{{site.subscribe_rss}}'><span class="feedlyimg feedly"></span></a>

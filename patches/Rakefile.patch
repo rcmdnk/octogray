@@ -1,5 +1,5 @@
 diff --git a/Rakefile b/Rakefile
-index 9367ea1..b751ffb 100644
+index 9367ea1..089e4c4 100644
 --- a/Rakefile
 +++ b/Rakefile
 @@ -1,6 +1,7 @@
@@ -548,7 +548,7 @@ index 9367ea1..b751ffb 100644
    unless (`git remote -v` =~ /origin.+?octopress(?:\.git)?/).nil?
      # If octopress is still the origin remote (from cloning) rename it to octopress
      system "git remote rename origin octopress"
-@@ -330,40 +601,76 @@ task :setup_github_pages, :repo do |t, args|
+@@ -330,40 +601,81 @@ task :setup_github_pages, :repo do |t, args|
        # If this is a user/organization pages repository, add the correct origin remote
        # and checkout the source branch for committing changes to the blog source.
        system "git remote add origin #{repo_url}"
@@ -569,9 +569,14 @@ index 9367ea1..b751ffb 100644
      end
    end
    url = blog_url(user, project, source_dir)
++  if project == "/"
++    dir = "/"
++  else
++    dir = "/" + project.sub(/(\/*)(.+)/, "\\2").sub(/\/$/, '') + "/"
++  end
    jekyll_config = IO.read('_config.yml')
    jekyll_config.sub!(/^url:.*$/, "url: #{url}")
-+  jekyll_config.sub!(/^subscribe_rss:.*$/, "subscribe_rss: #{url}/atom.xml")
++  jekyll_config.sub!(/^subscribe_rss:.*$/, "subscribe_rss: #{dir}/atom.xml")
 +  jekyll_config.sub!(/^feedly_atom:.*$/, "feedly_atom: #{url}/atom.xml")
    File.open('_config.yml', 'w') do |f|
      f.write jekyll_config
@@ -645,7 +650,7 @@ index 9367ea1..b751ffb 100644
  end
  
  def ok_failed(condition)
-@@ -379,9 +686,22 @@ def get_stdin(message)
+@@ -379,9 +691,22 @@ def get_stdin(message)
    STDIN.gets.chomp
  end
  
@@ -670,7 +675,7 @@ index 9367ea1..b751ffb 100644
    else
      answer = get_stdin(message)
    end
-@@ -404,3 +724,329 @@ task :list do
+@@ -404,3 +729,329 @@ task :list do
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end
