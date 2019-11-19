@@ -612,14 +612,6 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
       puts "Master branch renamed to 'source' for committing your blog source files"
     end
   end
-  url = blog_url(user, project, source_dir)
-  jekyll_config = IO.read('_config.yml')
-  jekyll_config.sub!(/^url:.*$/, "url: #{url}")
-  jekyll_config.sub!(/^subscribe_rss:.*$/, "subscribe_rss: #{url}/atom.xml")
-  jekyll_config.sub!(/^feedly_atom:.*$/, "feedly_atom: #{url}/atom.xml")
-  File.open('_config.yml', 'w') do |f|
-    f.write jekyll_config
-  end
 
   rakefile = IO.read(__FILE__)
   rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")

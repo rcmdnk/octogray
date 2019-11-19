@@ -1,5 +1,3 @@
-diff --git a/Rakefile b/Rakefile
-index 9367ea1..089e4c4 100644
 --- a/Rakefile
 +++ b/Rakefile
 @@ -1,6 +1,7 @@
@@ -10,7 +8,7 @@ index 9367ea1..089e4c4 100644
  
  ## -- Rsync Deploy config -- ##
  # Be sure your public key is listed in your server's ~/.ssh/authorized_keys file
-@@ -9,27 +10,45 @@ ssh_port       = "22"
+@@ -9,27 +10,45 @@
  document_root  = "~/website.com/"
  rsync_delete   = false
  rsync_args     = ""  # Any extra arguments to pass to rsync
@@ -61,15 +59,13 @@ index 9367ea1..089e4c4 100644
  end
  
  desc "Initial setup for Octopress: copies the default theme into the path of Jekyll's generator. Rake install defaults to rake install[classic] to install a different theme run rake install[some_theme_name]"
-@@ -52,12 +71,122 @@ end
+@@ -52,12 +71,122 @@
  # Working with Jekyll #
  #######################
  
--desc "Generate jekyll site"
--task :generate do
 +desc "Update stylesheets. Give an argument as nested, expanded, compact or compressed (default) to the output style."
 +task :css, :style do |t, args|
-   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
++  raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
 +  puts "## Update stylesheets"
 +  style = minify ? "-s compressed" : "-s nested"
 +  if args.style
@@ -79,9 +75,10 @@ index 9367ea1..089e4c4 100644
 +  cp_r "#{source_dir}/stylesheets/.", "#{public_dir}/stylesheets/"
 +end
 +
-+desc "Generate jekyll site"
+ desc "Generate jekyll site"
+-task :generate do
 +task :generate, :opt do |t, args|
-+  raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
+   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
 +
 +  opt = args.opt ? args.opt : ""
 +
@@ -188,7 +185,7 @@ index 9367ea1..089e4c4 100644
  end
  
  desc "Watch the site and regenerate when it changes"
-@@ -65,34 +194,67 @@ task :watch do
+@@ -65,34 +194,67 @@
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
    puts "Starting to watch source with Jekyll and Compass."
    system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
@@ -260,7 +257,7 @@ index 9367ea1..089e4c4 100644
  # usage rake new_post[my-new-post] or rake new_post['my new post'] or rake new_post (defaults to "new-post")
  desc "Begin a new post in #{source_dir}/#{posts_dir}"
  task :new_post, :title do |t, args|
-@@ -102,20 +264,37 @@ task :new_post, :title do |t, args|
+@@ -102,20 +264,37 @@
      title = get_stdin("Enter a title for your post: ")
    end
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
@@ -299,7 +296,7 @@ index 9367ea1..089e4c4 100644
    end
  end
  
-@@ -125,8 +304,10 @@ task :new_page, :filename do |t, args|
+@@ -125,8 +304,10 @@
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
    args.with_defaults(:filename => 'new-page')
    page_dir = [source_dir]
@@ -311,7 +308,7 @@ index 9367ea1..089e4c4 100644
      title = filename
      page_dir.concat($1.downcase.sub(/^\//, '').split('/')) unless $1.nil?  # Add path to page_dir Array
      if extension.nil?
-@@ -147,10 +328,12 @@ task :new_page, :filename do |t, args|
+@@ -147,10 +328,12 @@
        page.puts "---"
        page.puts "layout: page"
        page.puts "title: \"#{title}\""
@@ -324,7 +321,7 @@ index 9367ea1..089e4c4 100644
        page.puts "---"
      end
    else
-@@ -161,21 +344,49 @@ end
+@@ -161,21 +344,49 @@
  # usage rake isolate[my-post]
  desc "Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly."
  task :isolate, :filename do |t, args|
@@ -336,7 +333,7 @@ index 9367ea1..089e4c4 100644
 +    filename = args.filename
 +  else
 +    filename = Dir.glob("#{source_dir}/#{posts_dir}/*.#{new_post_ext}").sort_by{|f| File.mtime(f)}.last
-   end
++  end
 +  if filename == nil
 +    puts "## Stashing all posts"
 +  else
@@ -359,7 +356,7 @@ index 9367ea1..089e4c4 100644
 +        FileUtils.mv "#{source_dir}/#{d}", full_stash_root_dir if File.exist?("#{source_dir}/#{d}")
 +      end
 +    end
-+  end
+   end
 +  system "touch .isolated"
  end
  
@@ -381,7 +378,7 @@ index 9367ea1..089e4c4 100644
  end
  
  desc "Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom"
-@@ -215,8 +426,14 @@ end
+@@ -215,8 +426,14 @@
  ##############
  
  desc "Default deploy task"
@@ -398,7 +395,7 @@ index 9367ea1..089e4c4 100644
    if File.exists?(".preview-mode")
      puts "## Found posts in preview mode, regenerating files ..."
      File.delete(".preview-mode")
-@@ -224,11 +441,32 @@ task :deploy do
+@@ -224,11 +441,32 @@
    end
  
    Rake::Task[:copydot].invoke(source_dir, public_dir)
@@ -433,7 +430,7 @@ index 9367ea1..089e4c4 100644
  end
  
  desc "copy dot files for deployment"
-@@ -265,54 +503,85 @@ multitask :push do
+@@ -265,54 +503,85 @@
      puts "\n## Committing: #{message}"
      system "git commit -m \"#{message}\""
      puts "\n## Pushing generated #{deploy_dir} website"
@@ -537,7 +534,7 @@ index 9367ea1..089e4c4 100644
      repo_url = get_stdin("Repository url: ")
    end
    protocol = (repo_url.match(/(^git)@/).nil?) ? 'https' : 'git'
-@@ -322,7 +591,9 @@ task :setup_github_pages, :repo do |t, args|
+@@ -322,7 +591,9 @@
      user = repo_url.match(/github\.com\/([^\/]+)/)[1]
    end
    branch = (repo_url.match(/\/[\w-]+\.github\.(?:io|com)/).nil?) ? 'gh-pages' : 'master'
@@ -548,7 +545,7 @@ index 9367ea1..089e4c4 100644
    unless (`git remote -v` =~ /origin.+?octopress(?:\.git)?/).nil?
      # If octopress is still the origin remote (from cloning) rename it to octopress
      system "git remote rename origin octopress"
-@@ -330,40 +601,81 @@ task :setup_github_pages, :repo do |t, args|
+@@ -330,40 +601,68 @@
        # If this is a user/organization pages repository, add the correct origin remote
        # and checkout the source branch for committing changes to the blog source.
        system "git remote add origin #{repo_url}"
@@ -568,18 +565,20 @@ index 9367ea1..089e4c4 100644
 -      end
      end
    end
-   url = blog_url(user, project, source_dir)
-+  if project == "/"
-+    dir = "/"
-+  else
-+    dir = "/" + project.sub(/(\/*)(.+)/, "\\2").sub(/\/$/, '') + "/"
-+  end
-   jekyll_config = IO.read('_config.yml')
-   jekyll_config.sub!(/^url:.*$/, "url: #{url}")
-+  jekyll_config.sub!(/^subscribe_rss:.*$/, "subscribe_rss: #{dir}/atom.xml")
-+  jekyll_config.sub!(/^feedly_atom:.*$/, "feedly_atom: #{url}/atom.xml")
-   File.open('_config.yml', 'w') do |f|
-     f.write jekyll_config
+-  url = blog_url(user, project, source_dir)
+-  jekyll_config = IO.read('_config.yml')
+-  jekyll_config.sub!(/^url:.*$/, "url: #{url}")
+-  File.open('_config.yml', 'w') do |f|
+-    f.write jekyll_config
++
++  rakefile = IO.read(__FILE__)
++  rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
++  rakefile.sub!(/repo_url(\s*)=(\s*)(["'])[0-9a-zA-Z\-\_\/\@\.\:]*["']/, "repo_url\\1=\\2\\3#{repo_url}\\3")
++  rakefile.sub!(/use_token(\s*)=(\s*)[0-9a-zA-Z\-\_\/\@\.\:]*/, "use_token\\1=\\2#{use_token_val}")
++
++  ext = 'markdown'
++  if ask("Do you want to use 'md' extension instead of 'markdown'?", ['y', 'n'], args.yes) == "y"
++    ext = 'md'
    end
 -  rm_rf deploy_dir
 -  mkdir deploy_dir
@@ -595,16 +594,6 @@ index 9367ea1..089e4c4 100644
 -    rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push\\3")
 -    File.open(__FILE__, 'w') do |f|
 -      f.write rakefile
-+
-+  rakefile = IO.read(__FILE__)
-+  rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
-+  rakefile.sub!(/repo_url(\s*)=(\s*)(["'])[0-9a-zA-Z\-\_\/\@\.\:]*["']/, "repo_url\\1=\\2\\3#{repo_url}\\3")
-+  rakefile.sub!(/use_token(\s*)=(\s*)[0-9a-zA-Z\-\_\/\@\.\:]*/, "use_token\\1=\\2#{use_token_val}")
-+
-+  ext = 'markdown'
-+  if ask("Do you want to use 'md' extension instead of 'markdown'?", ['y', 'n'], args.yes) == "y"
-+    ext = 'md'
-+  end
 +  rakefile.sub!(/new_post_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_post_ext\\1=\\2\\3#{ext}\\3")
 +  rakefile.sub!(/new_page_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_page_ext\\1=\\2\\3#{ext}\\3")
 +
@@ -613,7 +602,7 @@ index 9367ea1..089e4c4 100644
 +      dir = ""
 +    else
 +      dir = get_stdin("Enter where you want to put _deploy (current: #{tmp_dir}): ")
-+    end
+     end
 +    if dir == ""
 +      dir = tmp_dir
 +    elsif
@@ -639,18 +628,18 @@ index 9367ea1..089e4c4 100644
 +      puts "\n---\n## Now you can deploy with `rake deploy` ##"
 +    else
 +      puts "\n---\n## Now you can deploy to #{repo_url} with `rake deploy` ##"
-     end
-   end
--  puts "\n---\n## Now you can deploy to #{repo_url} with `rake deploy` ##"
++    end
++  end
 +  File.open(__FILE__, 'w') do |f|
 +    f.write rakefile
-+  end
+   end
+-  puts "\n---\n## Now you can deploy to #{repo_url} with `rake deploy` ##"
 +  project = "/" if project == ""
 +  system "rake set_root_dir[#{project}]"
  end
  
  def ok_failed(condition)
-@@ -379,9 +691,22 @@ def get_stdin(message)
+@@ -379,9 +678,22 @@
    STDIN.gets.chomp
  end
  
@@ -675,7 +664,7 @@ index 9367ea1..089e4c4 100644
    else
      answer = get_stdin(message)
    end
-@@ -404,3 +729,329 @@ task :list do
+@@ -404,3 +716,329 @@
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end
