@@ -234,9 +234,6 @@ mkdir -p source/_common_parts
 copy_link_plugin octopress-common-part/source/_common_parts/common_header.html
 copy_link_plugin octopress-common-part/source/_common_parts/common_sidebar.html
 
-## [jquery--ex-flex-fiex](http://github.com/cyokodog/jquery.ex-flex-fixed)
-copy_link_plugin jquery.ex-flex-fixed/jquery.exflexfixed-0.3.0.js source/javascripts
-
 ## [keyboardkey](http://rcmdnk.github.io/blog/2013/06/19/blog-octopress/)
 copy_link_plugin keyboardkey/plugins/keyboardkey.rb
 copy_link_plugin keyboardkey/sass/plugins/_keyboardkey.scss
