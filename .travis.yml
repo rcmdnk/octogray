@@ -60,6 +60,7 @@ script:
   - echo >> $post
   - echo "[Code test](/others/codetest/) ">> $post
   - bundle exec jekyll --version
+  - cat _config.yml
   - rake generate --trace
   - cd ~/octopress.gh-pages
   - gem update --system --no-document
