@@ -19,9 +19,6 @@
 [submodule ".plugins/footnote-inline"]
 	path = .plugins/footnote-inline
 	url = https://github.com/rcmdnk/footnote-inline.git
-[submodule ".plugins/jquery.ex-flex-fixed"]
-	path = .plugins/jquery.ex-flex-fixed
-	url = https://github.com/cyokodog/jquery.ex-flex-fixed.git
 [submodule ".plugins/githubrepo-octopress"]
 	path = .plugins/githubrepo-octopress
 	url = https://github.com/sotsy/githubrepo-octopress.git

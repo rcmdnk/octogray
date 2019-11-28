@@ -31,11 +31,6 @@ module Jekyll
       end
 
       rtn = ''
-      n_files = context.environments.first['site'][@array_name].size ? \
-        context.environments.first['site'][@array_name].size : 0
-      n_files_count = n_files
-      n_last_fixed = context.registers[:site].config['n_scroll_fixed'] ? \
-        context.registers[:site].config['n_scroll_fixed'] : 0
       (context.environments.first['site'][@array_name] || []).each do |file|
         if file !~ /^[a-zA-Z0-9_\/\.-]+$/ || file =~ /\.\// || file =~ /\/\./
           raise "#{rtn} Include file '#{file}' contains invalid characters or sequences"
@@ -49,19 +44,12 @@ module Jekyll
             source = File.read(file_inc)
             partial = Liquid::Template.parse(source)
             context.stack do
-              if n_files_count == n_last_fixed
-                rtn = rtn + "<div class=\"scroll-fixed\">"
-              end
 
               rtn = rtn + partial.render(context)
-              if n_last_fixed != 0 and n_files_count == 1
-                rtn = rtn + "</div>"
-              end
             end
           else
             raise "Included file '#{file}' not found in _includes directory"
           end
-          n_files_count -= 1
         end
       end
       rtn

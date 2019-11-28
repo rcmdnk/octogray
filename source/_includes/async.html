@@ -151,10 +151,6 @@ compressed and combined to all.js
 <script src="{{root_url}}/javascripts/utils.js" defer></script>
 {%endcomment%}
 {%if site.scrolltop%}<script src="{{root_url}}/javascripts/scrolltopcontrol.js" defer></script>{%endif%}
-{%if site.n_scroll_fixed > 0%}
-  <script src="{{root_url}}/javascripts/jquery.exflexfixed-0.3.0.js" defer></script>
-  <script src="{{root_url}}/javascripts/n_sccroll_fixed.js" defer></script>
-{%endif%}
 {%unless site.share_static and page.share_check != true%}<script src="{{root_url}}/javascripts/share-custom.js" defer></script>{%endunless%}
 {%if page.share_check%}<script src="{{root_url}}/javascripts/share-check.js" defer></script>{%endif%}
 {% if site.google_search_pub %}

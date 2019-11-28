@@ -24,14 +24,6 @@ function addSidebarToggler() {
     $('.toggle-sidebar').bind('click', function(e) {
       e.preventDefault();
       $('body').toggleClass('collapse-sidebar');
-      //if($('body').hasClass('collapse-sidebar')) {
-      //  $('.scroll-fixed').unbind();
-      //}else{
-      //  $('.scroll-fixed').exFlexFixed({
-      //    watchPosition: true,
-      //    container : '#content'
-      //  }));
-      //}
     });
   }
   var sections = $('aside.sidebar > section');

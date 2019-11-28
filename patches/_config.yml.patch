@@ -386,9 +386,6 @@ index c1d56f4..24ffc62 100644
 +monthly_archive_format: JAN
 +monthly_format: January
 +
-+# scroll-fixed
-+n_scroll_fixed: 0
-+
 +# scrolltop
 +scrolltop: false
 +
@@ -402,7 +399,6 @@ index c1d56f4..24ffc62 100644
 +# jekyll-var
 +jekyll_var:
 +  include:
-+    - n_scroll_fixed
 +    - hatebu_button
 +    - twitter_button
 +    - googleplus_button

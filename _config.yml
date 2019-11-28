@@ -374,9 +374,6 @@ monthly_archive_open: first
 monthly_archive_format: JAN
 monthly_format: January
 
-# scroll-fixed
-n_scroll_fixed: 0
-
 # scrolltop
 scrolltop: false
 
@@ -390,7 +387,6 @@ emoji_dir: /images/emoji
 # jekyll-var
 jekyll_var:
   include:
-    - n_scroll_fixed
     - hatebu_button
     - twitter_button
     - googleplus_button
