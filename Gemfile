@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 group :development do
   gem 'rake', '~> 13.0'
-  gem 'jekyll', '~> 4.0'
+  gem "jekyll", github: 'jekyll/jekyll', ref: 'refs/pull/7948/head'
   gem 'jekyll-sitemap', '~> 1.0'
   gem 'compass', '~> 1.0'
   gem 'sass-globbing', '~> 1.1'
