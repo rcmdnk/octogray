@@ -3,7 +3,7 @@ require "ruby-progressbar"
 
 I18n.config.available_locales = :en
 
-# Patch for jekyll-3.3.1/lib/jekyll/site.rb
+# Patch for jekyll-4.0.0/lib/jekyll/site.rb
 module Jekyll
   class Site
 
@@ -97,7 +97,7 @@ module Jekyll
   end
 end
 
-# Patch for jekyll-3.3.1/lib/jekyll/document.rb
+# Patch for jekyll-4.0.0/lib/jekyll/document.rb
 # to capitalize all categories, instead of being downcase.
 module Jekyll
   class Document
@@ -120,5 +120,17 @@ module Jekyll
     #    "tags" => Utils.pluralized_array_from_hash(data, "tag", "tags").map {|t| t.to_s.capitalize}.flatten
     #  })
     #end
+  end
+end
+
+# Patch for jekyll-4.0.0/lib/jekyll/renderer.rb
+module Jekyll
+  class Renderer
+    # Fix for common parts
+    def assign_current_document!
+      if document.is_a?(Document) && document.collection.label == "posts"
+        payload["site"].current_document = document
+      end
+    end
   end
 end

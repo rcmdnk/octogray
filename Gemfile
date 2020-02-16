@@ -1,15 +1,15 @@
 source "https://rubygems.org"
 
 group :development do
-  gem 'rake', '~> 12.0'
-  gem 'jekyll', '~> 3.7.3'
-  gem 'jekyll-sitemap', '~> 0.12'
+  gem 'rake', '~> 13.0'
+  gem 'jekyll', '~> 4.0'
+  gem 'jekyll-sitemap', '~> 1.0'
   gem 'compass', '~> 1.0'
   gem 'sass-globbing', '~> 1.1'
   gem 'stringex', '~> 2.6'
   gem 'chronic', '~> 0.10'
   gem 'gemoji', '~> 2.1'
-  gem 'google-api-client', '~> 0.9'
+  gem 'google-api-client', '~> 0.11.0'
   gem 'htmlcompressor', '~> 0.3'
   gem 'jekyll-paginate'
   gem 'json', '~> 2.0'
