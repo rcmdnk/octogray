@@ -296,4 +296,4 @@ for p in $theme_dir/plugins_add/*rb;do
 done
 
 # other files
-cp $theme_dir/ping.yml .
+copy_link_util $theme_dir/ping.yml ./
