@@ -436,7 +436,7 @@
      puts "\n## Pushing generated #{deploy_dir} website"
 -    Bundler.with_clean_env { system "git push origin #{deploy_branch}" }
 +    output = (use_token)? " >/dev/null 2>&1":""
-+    Bundler.with_clean_env { system "git push origin #{deploy_branch} #{output}" }
++    Bundler.with_unbundled_env { system "git push origin #{deploy_branch} #{output}" }
 +    puts "\n## Github Pages deploy complete"
 +  end
 +end
