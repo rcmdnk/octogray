@@ -3,10 +3,9 @@ branches:
   except:
     - /^v[0-9]/
 rvm:
-  - 2.4.3
-  - 2.5.0
-  - 2.5.7
-  - 2.6.5
+  - 2.5
+  - 2.6
+  - 2.7
   #- ruby-head
 git:
   submodules: false
@@ -47,9 +46,7 @@ install:
   - sed -i"" 's/git@github.com:/https:\/\/github.com\//' .themes/octogray/.gitmodules
 script:
   - cd ~/octopress.master
-  - bundle install
   - ./.themes/octogray/setup.sh -y
-  - bundle install
   - rake setup_github_pages["git@github.com:rcmdnk/test.github.io","yes"]
   - 'post=$(rake new_post["test"]|grep "Creating new post"|cut -d: -f2)'
   - 'sed -i"" "s/published: *false/published: true/" $post'
@@ -64,7 +61,6 @@ script:
   - rake generate --trace
   - cd ~/octopress.gh-pages
   - gem update --system --no-document
-  - bundle install
   - ./.themes/octogray/setup.sh -y -l
   - rake setup_github_pages["git@github.com:rcmdnk/octogray_test","yes"]
   - 'post=$(rake new_post["test"]|grep "Creating new post"|cut -d: -f2)'
