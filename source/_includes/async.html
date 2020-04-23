@@ -58,8 +58,12 @@
         if(content === undefined)return;
         var article = content.getElementsByTagName('article')[0];
         if(article === undefined)return;
-        var h2s = article.getElementsByTagName('h2');
-        if(h2s.length < 3)return;
+        if(article.className == "index-article"){
+          var groups = article.getElementsByTagName('header');
+        }else{
+          var groups = article.getElementsByTagName('h2');
+        }
+        if(groups.length < 3)return;
         var inner = document.createElement('div');
         inner.className = "center_wrapper";
 
@@ -77,7 +81,7 @@
                           'data-ad-client="ca-pub-{{site.adsense_id}}" ' +
                           'data-ad-slot="{{site.adsense_insert}}"></ins></div>';
         {% endif %}
-        h2s[2].parentNode.insertBefore(inner, h2s[2]);
+        groups[2].parentNode.insertBefore(inner, groups[2]);
         (adsbygoogle = window.adsbygoogle || []).push({});
       }());
     </script>
