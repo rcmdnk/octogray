@@ -51,7 +51,7 @@
 {% endif %}
 {% unless site.affiliate == false or page.affiliate == false %}
   {% if site.sponsored_links %}
-    {% if site.adsense_insert or site.adsnse_infeed %}
+    {% if site.adsense_insert or site.adsense_infeed %}
     <script>
       (function(){
         var content = document.getElementById('content');
@@ -63,7 +63,7 @@
         var inner = document.createElement('div');
         inner.className = "center_wrapper";
 
-        {% if site.adsnse_infeed %}
+        {% if site.adsense_infeed %}
         inner.innerHTML = '<div><ins class="adsbygoogle" ' +
                           'style="display:block" ' +
                           'data-ad-format="fluid" ' +
