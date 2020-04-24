@@ -3,6 +3,7 @@
   <ul id="recent_posts" class="posts">
     {% for post in site.posts limit: site.recent_posts %}
     {% if site.adsense_aside_popular and forloop.index == 3 %}
+    <li>
     <ins class="adsbygoogle"
          style="display:block"
          data-ad-format="fluid"
@@ -12,6 +13,7 @@
     <script>
          (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
+    </li>
     {% endif %}
     <li class="post index_click_box">
       {% include post/post_list.html%}
