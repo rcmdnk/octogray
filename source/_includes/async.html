@@ -72,7 +72,7 @@
                           'data-ad-layout-key="-al-7-1d-op+12x" ' +
                           'data-ad-client="ca-pub-{{ site.adsense_id }}" ' +
                           'data-ad-slot="{{ site.adsense_infeed }}"></ins></div>';
-        {% endif %}
+        {% endunless %}
       }else{
         {% if site.adsense_insert_in_article %}
         var groups = article.getElementsByTagName('h2');
