@@ -50,51 +50,64 @@
   <script src='{{root_url}}/javascripts/translate/element.js' async defer></script>
 {% endif %}
 {% unless site.affiliate == false or page.affiliate == false %}
-  {% if site.sponsored_links %}
-    {% if site.adsense_insert or site.adsense_infeed %}
-    <script>
-      (function(){
-        var content = document.getElementById('content');
-        if(content === undefined)return;
-        var article = content.getElementsByTagName('article')[0];
-        if(article === undefined)return;
-        if(article.className == "index-article"){
-          var groups = article.getElementsByTagName('header');
-        }else{
-          var groups = article.getElementsByTagName('h2');
-        }
-        if(groups.length < 3)return;
-        var inner = document.createElement('div');
-        inner.className = "center_wrapper";
+  {% if site.adsense_insert or site.adsense_insert_in_article or site.adsense_infeed %}
+  <script>
+    (function(){
+      var content = document.getElementById('content');
+      if(content === undefined)return;
+      var article = content.getElementsByTagName('article')[0];
+      if(article === undefined)return;
 
-        {% if site.adsense_infeed %}
+      var inner = document.createElement('div');
+      inner.className = "center_wrapper";
+
+      if(article.className == "index-article"){
+        {% unless site.adsense_infeed %}
+        return;
+        {% else %}
+        var groups = article.getElementsByTagName('header');
         inner.innerHTML = '<div><ins class="adsbygoogle" ' +
                           'style="display:block" ' +
                           'data-ad-format="fluid" ' +
                           'data-ad-layout-key="-al-7-1d-op+12x" ' +
                           'data-ad-client="ca-pub-{{ site.adsense_id }}" ' +
                           'data-ad-slot="{{ site.adsense_infeed }}"></ins></div>';
-        {% else %}
+        {% endif %}
+      }else{
+        {% if site.adsense_insert_in_article %}
+        var groups = article.getElementsByTagName('h2');
+        inner.innerHTML = '<ins class="adsbygoogle"' +
+                          'style="display:block; text-align:center;"' +
+                          'data-ad-layout="in-article"' +
+                          'data-ad-format="fluid"' +
+                          'data-ad-client="ca-pub-{{ site.adsense_id }}"' +
+                          'data-ad-slot="{{ site.adsense_insert_in_article }}"></ins>';
+
+        {% elsif site.adsense_insert_in_article %}
+        var groups = article.getElementsByTagName('h2');
         inner.innerHTML = '<div>{{site.sponsored_links}}</div><div>' +
                           '<ins class="adsbygoogle google-img-rect" ' +
                           'style="display:inline-block" ' +
                           'data-ad-client="ca-pub-{{site.adsense_id}}" ' +
                           'data-ad-slot="{{site.adsense_insert}}"></ins></div>';
+        {% else %}
+        return;
         {% endif %}
-        groups[2].parentNode.insertBefore(inner, groups[2]);
-        (adsbygoogle = window.adsbygoogle || []).push({});
-      }());
-    </script>
-    {% endif %}
-    {% if site.adsense_page_level_ads %}
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({
-        google_ad_client: "ca-pub-{{site.adsense_page_level_ads}}",
-        enable_page_level_ads: true
-      });
-    </script>
-    {% endif %}
-    <script src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" async defer></script>
+      }
+      if(groups.length < 3)return;
+      groups[2].parentNode.insertBefore(inner, groups[2]);
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    }());
+  </script>
+  {% if site.adsense_page_level_ads %}
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-{{site.adsense_page_level_ads}}",
+      enable_page_level_ads: true
+    });
+  </script>
+  {% endif %}
+  <script src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" async defer></script>
   {% endif %}
   {% if site.amazon_ad_tag and site.amazon_link_enhancement_widget %}
   <script type="text/javascript">

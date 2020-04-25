@@ -1,9 +1,7 @@
 {% comment %}
   Add content to be output before TOC (normally called from after_excerpt.html).
 {% endcomment %}
-{% if site.adsense_mid_infeed %}
-{% capture adsense_slot %}{{site.adsense_mid_infeed}}{% endcapture %}{% include custom/affiliate/google_adsense_infeed.html %}{% capture adsense_slot %}{% endcapture %}
-{% elsif site.adsense_mid_in_article %}
+{% if site.adsense_mid_in_article %}
 {% capture adsense_slot %}{{site.adsense_mid_in_article}}{% endcapture %}{% include custom/affiliate/google_adsense_in_article.html %}{% capture adsense_slot %}{% endcapture %}
 {% else %}
 {% capture adsense_slot %}{{site.adsense_mid}}{% endcapture %}{% include custom/affiliate/google_adsense.html %}{% capture adsense_slot %}{% endcapture %}
