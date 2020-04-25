@@ -1,0 +1,15 @@
+{% unless site.affiliate == false or page.affiliate == false %}{% if site.adsense_id and adsense_slot %}
+<div class="center_wrapper">
+  <div>
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-format="fluid"
+       data-ad-layout-key="-am-3+55-v1+o4"
+       data-ad-client="ca-pub-{{site.adsense_id}}"
+       data-ad-slot="{{adsense_slot}}"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+  </div>
+</div>
+{% endif %}{% endunless %}
