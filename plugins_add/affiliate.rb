@@ -161,10 +161,10 @@ module Jekyll
       amazon_ad_label = config["amazon_ad_label"] || "Check Amazon"
       rakuten_ad_label = config["rakuten_ad_label"] || "Check Rakuten"
       moshimo = ""
-      if amazon_tag == '' and amazon_a_id != ''
+      if amazon_a_id != ''
         moshimo += "<img src='//i.moshimo.com/af/i/impression?a_id=#{amazon_a_id}&p_id=170&pc_id=185&pl_id=4062' width='1' height='1' style='border:none;'>"
       end
-      if rakuten_id == '' and rakuten_a_id != ''
+      if rakuten_a_id != ''
         moshimo += "<img src='//i.moshimo.com/af/i/impression?a_id=#{rakuten_a_id}&p_id=54&pc_id=54&pl_id=616' width='1' height='1' style='border:none;'>"
       end
 <<EOS
