@@ -266,6 +266,10 @@ copy_link_plugin octopress-post-card/sass/plugins/_post-card.scss
 ## [date-format](https://github.com/rcmdnk/date-format)
 copy_link_plugin date-format/lib/octopress-date-format.rb plugins
 
+## [octopress-upptime](https://github.com/rcmdnk/octopress-upptime)
+copy_link_plugin octopress-upptime/plugins/upptime.rb
+copy_link_plugin octopress-upptime/source/_includes/custom/asides/upptime.html
+
 # install downloaded plugins
 
 ## [NailThumb](http://www.garralab.com/nailthumb.php)

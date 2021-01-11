@@ -55,3 +55,6 @@
 [submodule ".plugins/date-format"]
 	path = .plugins/date-format
 	url = https://github.com/rcmdnk/date-format
+[submodule ".plugins/octopress-upptime"]
+	path = .plugins/octopress-upptime
+	url = https://github.com/rcmdnk/octopress-upptime.git
