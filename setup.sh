@@ -271,7 +271,7 @@ copy_link_plugin octopress-upptime/plugins/upptime.rb
 copy_link_plugin octopress-upptime/source/_includes/custom/asides/upptime.html
 
 ## [octopress-github-readme-stats](https://github.com/rcmdnk/octopress-github-readme-stats)
-copy_link_plugin octopress-github-readme-stats/source/_includes/custom/asides/github-readme-stats.html
+copy_link_plugin octopress-github-readme-stats/source/_includes/custom/asides/github_readme_stats.html
 
 # install downloaded plugins
 
