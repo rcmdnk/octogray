@@ -58,3 +58,6 @@
 [submodule ".plugins/octopress-upptime"]
 	path = .plugins/octopress-upptime
 	url = https://github.com/rcmdnk/octopress-upptime.git
+[submodule ".plugins/octopress-github-readme-stats"]
+	path = .plugins/octopress-github-readme-stats
+	url = https://github.com/rcmdnk/octopress-github-readme-stats.git
