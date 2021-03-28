@@ -68,11 +68,7 @@ EOS
     end
     size = 200 if size == 0
     size_width = size if size_width == 0
-    if img.end_with?("png")
-      "http://is3.mzstatic.com/image/thumb/#{img}/#{size}x#{size_width}bb.jpg"
-    else
-      "http://is3.mzstatic.com/image/thumb/#{img}/source/#{size}x#{size_width}bb.jpg"
-    end
+    "https://is3-ssl.mzstatic.com/image/thumb/#{img}/#{size}x#{size_width}bb.jpg"
   end
 
   def itunes_img(link, title, img, size=0, size_width=0)
