@@ -14,7 +14,7 @@ group :development do
   gem 'jekyll-paginate'
   gem 'json', '~> 2.0'
   gem 'parallel', '~> 1.10'
-  gem 'pygments.rb', '~> 1.1'
+  gem 'pygments.rb', '~> 2.0'
   gem 'ruby-progressbar', '~> 1.8'
   gem 'thin', '~> 1.7'
   gem 'sinatra', '~> 2.0'
