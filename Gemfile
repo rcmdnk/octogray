@@ -9,7 +9,7 @@ group :development do
   gem 'stringex', '~> 2.6'
   gem 'chronic', '~> 0.10'
   gem 'gemoji', '~> 3.0'
-  gem 'google-api-client', '~> 0.11.0'
+  gem 'google-api-client', '~> 0.53.0'
   gem 'htmlcompressor', '~> 0.3'
   gem 'jekyll-paginate'
   gem 'json', '~> 2.0'
