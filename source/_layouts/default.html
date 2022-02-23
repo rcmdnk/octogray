@@ -2,8 +2,6 @@
 {% include head.html %}
 <body {% if page.body_id %} id="{{ page.body_id }}" {% endif %} {% if page.sidebar == false %} class="no-sidebar" {% endif %} {% if page.sidebar == 'collapse' or site.sidebar == 'collapse' %} class="collapse-sidebar sidebar-footer" {% endif %}>
 {% if site.google_tag_manager_id %}
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{site.google_tag_manager_id}}"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 {% endif %}
 {% common_part common_header.html%}
   <div id="main">
