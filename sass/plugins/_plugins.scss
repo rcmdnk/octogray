@@ -139,3 +139,7 @@ li.post {
 .byline ~ .date-wrapper:before {
   @extend .separator;
 }
+
+.gist-meta a {
+  white-space: normal;
+}
