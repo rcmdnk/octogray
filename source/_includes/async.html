@@ -30,6 +30,14 @@
   ga.q = [['create', '{{site.google_analytics_tracking_id}}', 'auto'], ['send', 'pageview'], ['require', 'linkid', 'linkid.js']];
 </script>
 <script src="//www.google-analytics.com/analytics.js" async defer></script>
+
+<script src="https://www.googletagmanager.com/gtag/js?id={{site.google_analytics_tracking_id}}" async defer></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '{{site.google_analytics_tracking_id}}');
+</script>
 {%endif%}
 {% if site.google_tag_manager_id %}
 <script>(function(w,d,s,l,i){
