@@ -9,8 +9,8 @@ published: true
 
 ---
 
-{%if site.lang == "ja"%}
-{%if site.google_analytics_tracking_id%}
+{% if site.lang == "ja" %}
+{% if site.google_analytics_tracking_id %}
 
 ## アクセス解析ツールについて
 
@@ -21,8 +21,8 @@ published: true
 
 > [ユーザーが Google パートナーのサイトやアプリを使用する際の Google によ るデータ使用 – ポリシーと規約 – Google](http://www.google.com/policies/privacy/partners/)
 
-{%endif site.google_analytics_tracking_id%}
-{%if site.affiliate%}
+{% endif site.google_analytics_tracking_id %}
+{% if site.affiliate %}
 
 ## 広告について
 
@@ -42,9 +42,9 @@ published: true
 当サイトの内容、及びリンク先の情報によって起こったトラブルに関してして、
 当サイトでは一切の責任を負いかねます。
 
-{%endif site.affiliate%}
-{%else%}
-{%if site.google_analytics_tracking_id%}
+{% endif site.affiliate %}
+{% else %}
+{% if site.google_analytics_tracking_id %}
 
 ## Web Analysis Tool
 
@@ -55,8 +55,8 @@ You can disable cookies via your browser settings.
 
 > [How Google uses data when you use our partners' sites or apps – Privacy & Terms – Google](http://www.google.com/intl/en/policies/privacy/partners/)
 
-{%endif site.google_analytics_tracking_id%}
-{%if site.affiliate%}
+{% endif site.google_analytics_tracking_id %}
+{% if site.affiliate %}
 
 ## Advertisements
 
@@ -77,5 +77,5 @@ however, this site cannot guarantee the validity or the safety of the informatio
 This site cannot be responsible for any issues related to the information
 contained in this site or linked from this site.
 
-{%endif site.affiliate%}
-{%endif site.lang = "ja"%}
+{% endif site.affiliate %}
+{% endif site.lang = "ja" %}

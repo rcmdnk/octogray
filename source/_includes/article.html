@@ -46,7 +46,7 @@
       {% if p.ogimage and p.no_ogimage != true %}
       <div class="titlle-thumbnail-wrap">
         <div class="title-thumbnail">
-          {%thumbnail square-thumbnail val:post.ogimage%}
+          {% thumbnail square-thumbnail val:post.ogimage %}
         </div>
       </div>
       {% endif %}
@@ -68,7 +68,7 @@
     {% capture content_with_thumb %}
       {% if p.ogimage and p.no_ogimage != true %}
       <div class="title-thumbnail">
-        {%thumbnail square-thumbnail val:p.ogimage%}
+        {% thumbnail square-thumbnail val:p.ogimage %}
       </div>
       {% endif %}
       {{ content }}

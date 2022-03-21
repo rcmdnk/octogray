@@ -1,11 +1,11 @@
 {% if site.twitter_search %}
-{%comment%}
+{% comment %}
 <section>
-  <h2>Tweets about {{ site.twitter_search }} </h2>{%endcomment%}
+  <h2>Tweets about {{ site.twitter_search }} </h2>{% endcomment %}
   <div class='center_wrapper'>
   <a class="twitter-timeline" data-chrome="transparent" width="{{site.aside_width}}" height="400"  href="//twitter.com/search?q={{site.twitter_search}}"  data-widget-id="373008330047770624">Tweet about {{site.twitter_search}}</a>
   <br>
   <a href="//t-proj.org/twitter/?q={{site.twitter_search}}">Another Twitter Search</a>
   </div>
-{%comment%}</section>{%endcomment%}
+{% comment %}</section>{% endcomment %}
 {% endif %}

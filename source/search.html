@@ -6,7 +6,7 @@ footer: false
 
 <div>
 <article>
-{%if site.adsense-search %}
+{% if site.adsense-search %}
 <script>
   (function() {
     var cx = 'partner-pub-{{site.google_search_pub}}';
@@ -19,7 +19,7 @@ footer: false
   })();
 </script>
 <gcse:searchresults-only></gcse:searchresults-only>
-{%elsif site.google_custom_search == 'twopages'%}
+{% elsif site.google_custom_search == 'twopages' %}
   <div id='cse' style='width: 100%;'>Loading</div>
   <script src='//www.google.com/jsapi' type='text/javascript'></script>
   <script type='text/javascript'>
@@ -44,13 +44,13 @@ footer: false
       return params;
     }
     var urlParams = parseParamsFromUrl();
-    var queryParamName = '{%if site.google_search_query%}{{site.google_search_query}}{%else%}q{%endif%}';
+    var queryParamName = '{% if site.google_search_query %}{{site.google_search_query}}{% else %}q{% endif %}';
     if (urlParams[queryParamName]) {
       customSearchControl.execute(urlParams[queryParamName]);
     }
   }, true);
   </script>
-{%elsif site.google_custom_search == 'onlyresults'%}
+{% elsif site.google_custom_search == 'onlyresults' %}
   <div id='cse' style='width: 100%;'>Loading</div>
   <script src='//www.google.com/jsapi' type='text/javascript'></script>
   <script type='text/javascript'>
@@ -81,15 +81,15 @@ footer: false
       return params;
     }
     var urlParams = parseParamsFromUrl();
-    var queryParamName = '{%if site.google_search_query%}{{site.google_search_query}}{%else%}q{%endif%}';
+    var queryParamName = '{% if site.google_search_query %}{{site.google_search_query}}{% else %}q{% endif %}';
     if (urlParams[queryParamName]) {
       customSearchControl.execute(urlParams[queryParamName]);
     }
   }, true);
   </script>
-{%elsif site.google_custom_search == 'twolines'%}
+{% elsif site.google_custom_search == 'twolines' %}
   <div id='cse' style='width: 100%;'></div>
-{%else%}
+{% else %}
   <div id="cse-search-results"></div>
   <script type="text/javascript">
     var googleSearchIframeName = "cse-search-results";
@@ -99,7 +99,7 @@ footer: false
     var googleSearchPath = "/cse";
   </script>
   <script type="text/javascript" src="//www.google.com/afsonline/show_afs_search.js"></script>
-{%endif%}
+{% endif %}
 </article>
 </div>
 {% if site.blog_index_asides.size %}

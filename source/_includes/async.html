@@ -10,12 +10,12 @@
       s.parentNode.insertBefore(j, s);
     }
   };
-  {%if site.fontawesome_version%}
+  {% if site.fontawesome_version %}
   a("//maxcdn.bootstrapcdn.com/font-awesome/{{site.fontawesome_version}}/css/font-awesome.min.css","font-awesome-css");
-  {%endif%}
-  {%comment%}
+  {% endif %}
+  {% comment %}
   a("{{root_url}}/stylesheets/screen.css","screen-css");
-  {%endcomment%}
+  {% endcomment %}
 })(document);
 </script>
 {% if site.google_analytics_tracking_id %}
@@ -38,14 +38,14 @@
   gtag('js', new Date());
   gtag('config', '{{site.google_analytics_tracking_id}}');
 </script>
-{%endif%}
+{% endif %}
 {% if site.google_tag_manager_id %}
 <script>(function(w,d,s,l,i){
            w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
            var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;
            j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
          })(window,document,'script','dataLayer','{{site.google_tag_manager_id}}');</script>
-{%endif%}
+{% endif %}
 {% if site.google_translate_layout and page.translate != false %}
 <script>
   {% capture analytics %}{% if site.google_analytics_tracking_id %}, gaTrack: true, gaId: '{{site.google_analytics_tracking_id}}'{% endif %}{% endcapture %}
@@ -54,7 +54,7 @@
     new google.translate.TranslateElement({pageLanguage: '{{site.google_translate_lang}}', layout: google.translate.TranslateElement.{{layout}}, autoDisplay: false, multilanguagePage: true{{analytics}}}, 'google_translate_element');
   }
 </script>
-  {%comment%}<script src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit' async defer></script>{% endcomment %}
+  {% comment %}<script src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit' async defer></script>{% endcomment %}
   <script src='{{root_url}}/javascripts/translate/element.js' async defer></script>
 {% endif %}
 {% unless site.affiliate == false or page.affiliate == false %}
@@ -130,7 +130,7 @@
   {% if site.linkplaza_key %}<script src='//static.linkplaza.jp/api/replace.js?key={{site.linkplaza_key}}' async defer></script>{% endif %}
   {% if site.medi8_sp_overlay %}<script src="{{site.medi8_sp_overlay}}" async defer></script>{% endif %}
 {% endunless %}
-{% if site.twitter_follow_button or site.twitter_button or site.twitter_search%}{% unless site.twitter_only_page == true and page.twitter != true %} <script src='//platform.twitter.com/widgets.js' async defer></script>{%endunless%}{% endif %}
+{% if site.twitter_follow_button or site.twitter_button or site.twitter_search%}{% unless site.twitter_only_page == true and page.twitter != true %} <script src='//platform.twitter.com/widgets.js' async defer></script>{% endunless %}{% endif %}
 {% unless site.share_official == false %}
   {% if site.hatebu_button %}<script src='//b.st-hatena.com/js/bookmark_button.js' async defer></script>{% endif %}
   {% if site.googleplus_button %}{% if site.google_plus_one_lang %}<script>window.___gcfg={lang:'{{site.google_plus_one_lang}}'};</script>{% endif %}<script src='//apis.google.com/js/plusone.js' async defer></script>{% endif %}
@@ -162,32 +162,32 @@
   <script src="//www.linkwithin.com/widget.js" async defer></script>
 {% endif %}
 
-{%comment%}jQuery{%endcomment%}
-{%if site.jquery_ie8_version%}
+{% comment %}jQuery{% endcomment %}
+{% if site.jquery_ie8_version %}
   <!--[if lt IE 9]>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/{{jquery_ie8_version}}/jquery.min.js" defer></script>
   <![endif]-->
-  {%endif%}
-{%if site.jquery_version%}
+  {% endif %}
+{% if site.jquery_version %}
   <!--[if gte IE 9]><!-->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/{{site.jquery_version}}/jquery.min.js" defer></script>
   <!--<![endif]-->
-{%endif%}
-{%comment%}
+{% endif %}
+{% comment %}
 <script>!window.jQuery && document.write(unescape('%3Cscript src="{{root_url}}/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
-{%endcomment%}
+{% endcomment %}
 <script src="{{root_url}}/javascripts/all.js" defer></script>
-{%comment%}
+{% comment %}
 compressed and combined to all.js
 <script src="{{root_url}}/javascripts/footnote.js" defer></script>
 <script src="{{root_url}}/javascripts/jquery.githubRepoWidget.min.js" defer></script>
 <script src="{{root_url}}/javascripts/monthly_archive.js" defer></script>
 <script src="{{root_url}}/javascripts/random-posts.js" defer></script>
 <script src="{{root_url}}/javascripts/utils.js" defer></script>
-{%endcomment%}
-{%if site.scrolltop%}<script src="{{root_url}}/javascripts/scrolltopcontrol.js" defer></script>{%endif%}
-{%unless site.share_static and page.share_check != true%}<script src="{{root_url}}/javascripts/share-custom.js" defer></script>{%endunless%}
-{%if page.share_check%}<script src="{{root_url}}/javascripts/share-check.js" defer></script>{%endif%}
+{% endcomment %}
+{% if site.scrolltop%}<script src="{{root_url}}/javascripts/scrolltopcontrol.js" defer></script>{% endif %}
+{% unless site.share_static and page.share_check != true %}<script src="{{root_url}}/javascripts/share-custom.js" defer></script>{% endunless %}
+{% if page.share_check %}<script src="{{root_url}}/javascripts/share-check.js" defer></script>{% endif %}
 {% if site.google_search_pub %}
   {% if site.google_adsense_search %}
     <script>
@@ -218,5 +218,5 @@ compressed and combined to all.js
     {% include custom/google_search/twopages.html %}
   {% elsif site.google_search %}
     {% include custom/affiliate/google_search.html %}
-  {%endif%}
-{%endif%}
+  {% endif %}
+{% endif %}

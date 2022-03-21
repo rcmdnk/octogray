@@ -1,10 +1,10 @@
 <div class="center_wrapper">
   <div>
-    {%if site.google_analytics_tracking_id or site.affiliate%}
+    {% if site.google_analytics_tracking_id or site.affiliate %}
     <a href="mailto:{{site.email}}">Contact</a>, <a href="{{root_url}}/privacy/">Privacy Policy</a>
-    {%else%}
+    {% else %}
     <a href="mailto:{{site.email}}">Contact</a>
-    {%endif%}
+    {% endif %}
   </div>
   <div>
     Copyright &copy; {{ site.time | date: "%Y" }} - {{ site.author }} -

@@ -1,7 +1,7 @@
 {% if site.google_search_pub %}
 <script src='//www.google.com/jsapi' type='text/javascript'></script>
 <script type='text/javascript'>
-google.load('search', '1', {language: '{%if site.google_search_lang%}{{site.google_search_lang}}{%else%}en{%endif%}', style: google.loader.themes.V2_DEFAULT});
+google.load('search', '1', {language: '{% if site.google_search_lang %}{{site.google_search_lang}}{% else %}en{% endif %}', style: google.loader.themes.V2_DEFAULT});
 google.setOnLoadCallback(function() {
   var customSearchOptions = {};
   customSearchOptions['overlayResults'] = true;

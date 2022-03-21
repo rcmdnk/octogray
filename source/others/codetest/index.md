@@ -11,9 +11,9 @@ a one-line code block
 ~~~~~~~~~~~~~~~~~~~~~
 
 
-{%codeblock%}
+{% codeblock %}
 Jekyll Codeblocke
-{%endcodeblock%}
+{% endcodeblock %}
 
     code with 4 spaces
     code with 4 spaces
@@ -37,33 +37,33 @@ valu=${aaa}
 triple waves
 ~~~
 
-{%codeblock lang:cpp%}
+{% codeblock lang:cpp %}
 #include <iostream>
 for(int i=0;i<10;i++){
   std::cout << "codeblock" << std::endl;
 }
-{%endcodeblock%}
+{% endcodeblock %}
 
-{%codeblock title lang:cpp%}
+{% codeblock title lang:cpp %}
 #include <iostream>
 for(int i=0;i<10;i++){
   std::cout << "codeblock with lang" << std::endl;
 }
-{%endcodeblock%}
+{% endcodeblock %}
 
-{%codeblock a.cpp %}
+{% codeblock a.cpp %}
 #include <iostream>
 for(int i=0;i<10;i++){
   std::cout << "codeblock with file extension" << std::endl;
 }
-{%endcodeblock%}
+{% endcodeblock %}
 
-{%codeblock a.vim lang:cpp%}
+{% codeblock a.vim lang:cpp %}
 #include <iostream>
 for(int i=0;i<10;i++){
   std::cout << "If both lang and extension are available, lang is used for the syntax" << std::endl;
 }
-{%endcodeblock%}
+{% endcodeblock %}
 
 ```java
 import java.awt.Color;
@@ -85,7 +85,7 @@ end
 ~~~
 
 
-{%codeblock Rakefile lang:ruby%}
+{% codeblock Rakefile lang:ruby %}
  ## -- Misc Configs -- ##
 stash_dir       = "_stash"    # directory to stash posts for speedy generation
 full_stash_dir  = "#{source_dir}/#{stash_dir}"    # full path for stash dir
@@ -136,11 +136,11 @@ task :integrate do
   system "rm -f .isolated"
   system "touch .integrated"
 end
-{%endcodeblock%}
+{% endcodeblock %}
 
 ref: [a.rb](https://gist.github.com/rcmdnk/27238df31e8f6b2a5c84)
 
-{%codeblock source/javascript/utils.js lang:javascript%}
+{% codeblock source/javascript/utils.js lang:javascript %}
 jQuery(function($){
   $(document).on('copy', function(e) {
     var selected = "";
@@ -181,11 +181,11 @@ jQuery(function($){
     });
   });
 });
-{%endcodeblock utils.js lang:javascript%}
+{% endcodeblock utils.js lang:javascript %}
 
 ref: [a.js](https://gist.github.com/rcmdnk/fa04da82a25c602c0505)
 
-{%codeblock source/_includes/head.html%}
+{% codeblock source/_includes/head.html %}
 ...
 <head>
 ...
@@ -194,12 +194,12 @@ ref: [a.js](https://gist.github.com/rcmdnk/fa04da82a25c602c0505)
   <script src="{{root_url}}/javascripts/utils.js"></script>
 </head>
 ...
-{%endcodeblock%}
+{% endcodeblock %}
 
 ref: [a.html](https://gist.github.com/rcmdnk/ebf92a967a6e17d37de7)
 
-{%codeblock lang:sh%}
-{%raw%}
+{% codeblock lang:sh %}
+{% raw %}
 # Execution part {{{
 _s_is_exec=1
 _sf_check_args_first () { # {{{
@@ -225,12 +225,12 @@ fi
 # Clean up
 unset _s_is_exec
 # }}}
-{%endraw%}
-{%endcodeblock lang:sh%}
+{% endraw %}
+{% endcodeblock lang:sh %}
 
 ref: [a.sh](https://gist.github.com/rcmdnk/b7c17c42d108cc1860a2)
 
-{%codeblock lang:diff%}
+{% codeblock lang:diff %}
 diff --git a/.themes/octogray b/.themes/octogray
 index 69e224c..a519ddb 160000
 --- a/.themes/octogray
@@ -238,11 +238,11 @@ index 69e224c..a519ddb 160000
 @@ -1 +1 @@
 -Subproject commit 69e224c5def49917f7fe5527532f8cb50614e81f
 +Subproject commit a519ddbdb6a3b40e48ef7713c3be5d15f853b880
-{%endcodeblock%}
+{% endcodeblock %}
 
 ref: [hoge.diff](https://gist.github.com/rcmdnk/5215d850f72e510ed4d3)
 
-{%codeblock gtask.py lang:python%}
+{% codeblock gtask.py lang:python %}
 
 #!/usr/bin/env python
 
@@ -331,12 +331,12 @@ if __name__ == '__main__':
 
     # Run main function
     main(uselist, items)
-{%endcodeblock gtask.py%}
+{% endcodeblock gtask.py %}
 
 ref: [a.py](https://gist.github.com/rcmdnk/b9d8e5ce51e0b041ae9d)
 
 
-{%gist b9d8e5ce51e0b041ae9d%}
+{% gist b9d8e5ce51e0b041ae9d %}
 
 `pre test`
 
@@ -345,10 +345,10 @@ pre test
 
 aaaa `pre` pre
 
-{%codeblock small%}
+{% codeblock small %}
 small
-{%endcodeblock small%}
+{% endcodeblock small %}
 
-{%gist 9bca7fcd3676f1e9b499%}
+{% gist 9bca7fcd3676f1e9b499 %}
 
 {% gist 5439030 rm_wrapper.sh %}

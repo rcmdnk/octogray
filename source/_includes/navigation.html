@@ -30,13 +30,13 @@
     {% endif %}
   </p>
   {% endif %}
-  {%if site.nav_links.size %}
+  {% if site.nav_links.size %}
   <p class="nav-links">
     {% for link in site.nav_links %}
       <span><a href="{{ link[0] }}" class="link_btn" >{{ link[1] }}</a></span>
     {% endfor %}
   </p>
-  {%endif%}
+  {% endif %}
   {% include custom/navigation.html %}
   {% if site.google_search_pub %}
     {% if site.google_adsense_search %}
@@ -63,7 +63,7 @@
             <input type="hidden" name="cx" value="partner-pub-{{site.google_search_pub}}" />
             <input type="hidden" name="cof" value="FORID:10" />
             <input type="hidden" name="ie" value="UTF-8" />
-            <input type="text" name="{%if site.google_search_query%}{{site.google_search_query}}{%else%}q{%endif%}" size="30" />
+            <input type="text" name="{% if site.google_search_query %}{{site.google_search_query}}{% else %}q{% endif %}" size="30" />
             <input type="submit" name="sa" value="&#xf00e;" />
           </div>
         </form>
@@ -78,7 +78,7 @@
         </fieldset>
       </form>
     </p>
-  {%endif%}
+  {% endif %}
   {% if site.google_translate_layout %}
   <p>
     <div id="google_translate_element"></div>
