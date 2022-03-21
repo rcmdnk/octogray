@@ -31,7 +31,7 @@
   {% if page.ogimage %}
     {% assign ogimage = page.ogimage %}
   {% elsif page.content contains "<img " %}
-    {% comment %}">%{%endcomment %}
+    {% comment %}">%{% endcomment %}
     {% capture str %}{{page.content|newline_to_br|replace:" ","TMPSPACE"}}{% endcapture %}
     {% capture first_word %}{{str|split:"<imgTMPSPACE"|first}}<imgTMPSPACE{% endcapture %}
     {% comment %}">%{% endcomment %}
@@ -39,9 +39,9 @@
     {% capture first_word %}{{str|split:'src="'|first}}src="{% endcapture %}
     {% capture str %}{{str|remove_first:first_word}}{% endcapture %}
     {% capture src %}{{str|split:'"'|first}}{% endcapture %}
-    {% if src != ""%}
-      {% assign ogimage = src%}
-    {% endif%}
+    {% if src != "" %}
+      {% assign ogimage = src %}
+    {% endif %}
   {% endif %}
   {% assign imgpath="{{site.imgpath}}" %}
   {% capture ogimage %}{{ogimage|replace:imgpath,site.imgpath}}{% endcapture %}
@@ -60,5 +60,5 @@
   <link href="{{root_url}}{{site.subscribe_rss}}" rel="alternate" title="{{site.title}}" type="application/atom+xml">
   <link id="screen-css" href="{{root_url}}/stylesheets/screen.css" rel="stylesheet">
   {% include custom/head.html %}
-  {{if page.jekyll_var}}{{page.jekyll_var}}{{endif%}}
+  {% if page.jekyll_var %}{{page.jekyll_var}}{% endif %}
 </head>

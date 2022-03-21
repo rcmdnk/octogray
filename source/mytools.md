@@ -10,7 +10,7 @@ Last update: {{site.time|date_to_rfc822}}
 
 * [all posts](/posts.html)
 {% if site.linkchecker or site.htmlchecker or site.linkchecker %}
-* Site Checks {%if site.site_check_batch%}{{ site.site_check_batch }}{% endif %}
+* Site Checks {% if site.site_check_batch %}{{ site.site_check_batch }}{% endif %}
 
 {% if site.htmlchecker %}    * [HTML Validation](/htmlchecker.html){% endif %}
 {% if site.csschecker %}    * [CSS Validation](/csschecker.html){% endif %}

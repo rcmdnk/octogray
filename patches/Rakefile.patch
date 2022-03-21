@@ -291,7 +291,7 @@
      post.puts "---"
 +    post.puts ""
 +    post.puts "<!-- more -->"
-+    post.puts "{%include after_excerpt.html%}"
++    post.puts "{% include after_excerpt.html %}"
 +    post.puts ""
    end
  end
