@@ -1,6 +1,7 @@
-- http://ping.blo.gs/
-- http://ping.dendou.jp/
-- http://ping.freeblogranking.com/xmlrpc/
-- http://rpc.pingomatic.com/
-- http://www.blogpeople.net/ping/
-- http://www.blogpeople.net/servlet/weblogUpdates
+#- http://ping.blo.gs/
+#- http://ping.dendou.jp/
+#- http://ping.freeblogranking.com/xmlrpc/
+#- http://rpc.pingomatic.com/
+#- http://www.blogpeople.net/ping/
+#- http://www.blogpeople.net/servlet/weblogUpdates
+[]
