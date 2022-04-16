@@ -1,14 +1,15 @@
---- a/Rakefile
-+++ b/Rakefile
-@@ -1,6 +1,7 @@
+--- Rakefile.orig	2022-08-06 01:52:04.902606200 +0900
++++ Rakefile	2022-08-06 02:06:44.542606200 +0900
+@@ -1,6 +1,8 @@
  require "rubygems"
  require "bundler/setup"
  require "stringex"
 +require 'ruby-progressbar'
++require "open3"
  
  ## -- Rsync Deploy config -- ##
  # Be sure your public key is listed in your server's ~/.ssh/authorized_keys file
-@@ -9,27 +10,45 @@
+@@ -9,27 +11,45 @@
  document_root  = "~/website.com/"
  rsync_delete   = false
  rsync_args     = ""  # Any extra arguments to pass to rsync
@@ -24,14 +25,14 @@
  ## -- Misc Configs -- ##
  
 -public_dir      = "public"    # compiled site directory
-+tmp_dir         = File.expand_path(".") # temporary directory for public/deploy
-+public_dir      = "#{tmp_dir}/public" # compiled site directory
++tmp_dir         = File.expand_path(".") + "/"  # temporary directory for public/deploy
++public_dir      = "#{tmp_dir}public"  # compiled site directory
  source_dir      = "source"    # source file directory
  blog_index_dir  = 'source'    # directory for your blog's index page (if you put your index in source/blog/index.html, set this to 'source/blog')
 -deploy_dir      = "_deploy"   # deploy directory (for Github pages deployment)
-+deploy_dir      = "#{tmp_dir}/_deploy" # deploy directory (for Github pages deployment)
++deploy_dir      = "#{tmp_dir}_deploy" # deploy directory (for Github pages deployment)
  stash_dir       = "_stash"    # directory to stash posts for speedy generation
-+full_stash_dir  = "#{source_dir}/#{stash_dir}" # full path for stash dir
++full_stash_dir  = "#{source_dir}/#{stash_dir}"    # full path for stash dir
 +stash_root_dir  = "_stash_root" # directory to stash pages (in /source/)
 +full_stash_root_dir = "#{source_dir}/#{stash_root_dir}" # full path for stash_root dir
 +root_stashes    = [] # directories to be stashed in /source/
@@ -40,7 +41,7 @@
  new_post_ext    = "markdown"  # default new post file extension when using the new_post task
  new_page_ext    = "markdown"  # default new page file extension when using the new_page task
  server_port     = "4000"      # port for preview server eg. localhost:4000
-+word_avoid      = "~/.gitavoid" # words which must be avoided to be published
++word_avoid      = "~/.gitavoid"  # words which must be avoided to be published
 +ping_file       = "ping.yml"  # file of site list for ping
 +minify          = false
 +js_for_combine  = ['footnote.js', 'jquery.githubRepoWidget.min.js', 'monthly_archive.js', 'random-posts.js', 'related-posts.js', 'utils.js']
@@ -59,7 +60,7 @@
  end
  
  desc "Initial setup for Octopress: copies the default theme into the path of Jekyll's generator. Rake install defaults to rake install[classic] to install a different theme run rake install[some_theme_name]"
-@@ -52,12 +71,122 @@
+@@ -52,47 +72,192 @@
  # Working with Jekyll #
  #######################
  
@@ -71,7 +72,7 @@
 +  if args.style
 +    style = "-s #{args.style}"
 +  end
-+  system "compass compile #{style} --css-dir #{source_dir}/stylesheets"
++  ok_failed("compass compile #{style} --css-dir #{source_dir}/stylesheets")
 +  cp_r "#{source_dir}/stylesheets/.", "#{public_dir}/stylesheets/"
 +end
 +
@@ -114,7 +115,7 @@
 +    end
 +  end
 +
-+  ok_failed_raise system("JEKYLL_ENV=production jekyll build #{jekyll_opt}")
++  ok_failed("JEKYLL_ENV=production jekyll build #{jekyll_opt}")
 +
 +  if opt.include?('test')
 +    jekyll_config = IO.read('_config.yml')
@@ -126,16 +127,18 @@
 +
 +  Rake::Task[:css].execute
 +  Rake::Task[:combine_js].invoke(args.opt)
-+  if not opt.include?('test') and minify
-+    Rake::Task[:minify_js].invoke('force')
++  if not opt.include?('test')
++    if not opt.include?('test') and minify
++      Rake::Task[:minify_js].invoke('force')
 +
-+    if not opt.include?('no_minify')
-+      Rake::Task[:minify_html].execute
++      if not opt.include?('no_minify')
++        Rake::Task[:minify_html].execute
++      end
 +    end
 +  end
 +
-+  system "rm -f .integrated"
-+  system "rm -f .preview-mode"
++  ok_failed("rm -f .integrated")
++  ok_failed("rm -f .preview-mode")
 +end
 +
 +desc "Same as generate"
@@ -185,12 +188,13 @@
  end
  
  desc "Watch the site and regenerate when it changes"
-@@ -65,34 +194,67 @@
+ task :watch do
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
    puts "Starting to watch source with Jekyll and Compass."
-   system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
+-  system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
 -  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch")
-+  system "touch .preview-mode"
++  ok_failed("compass compile --css-dir #{source_dir}/stylesheets") unless File.exist?("#{source_dir}/stylesheets/screen.css")
++  ok_failed( "touch .preview-mode")
 +  jekyllPid = Process.spawn("jekyll build --watch --unpublished")
    compassPid = Process.spawn("compass watch")
  
@@ -222,9 +226,10 @@
  task :preview do
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
    puts "Starting to watch source with Jekyll and Compass. Starting Rack on port #{server_port}"
-   system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
+-  system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
 -  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch")
-+  system "touch .preview-mode"
++  ok_failed("compass compile --css-dir #{source_dir}/stylesheets") unless File.exist?("#{source_dir}/stylesheets/screen.css")
++  ok_failed("touch .preview-mode")
 +  jekyllPid = Process.spawn("jekyll build --watch --unpublished")
    compassPid = Process.spawn("compass watch")
    rackupPid = Process.spawn("rackup --port #{server_port}")
@@ -257,13 +262,13 @@
  # usage rake new_post[my-new-post] or rake new_post['my new post'] or rake new_post (defaults to "new-post")
  desc "Begin a new post in #{source_dir}/#{posts_dir}"
  task :new_post, :title do |t, args|
-@@ -102,20 +264,37 @@
+@@ -102,20 +267,39 @@
      title = get_stdin("Enter a title for your post: ")
    end
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
-+  #title_words = title.split(' ')
-+  #tags = title_words
-+  #category = tags.shift
++  title_words = title.split(' ')
++  tags = title_words
++  category = tags.shift
    mkdir_p "#{source_dir}/#{posts_dir}"
    filename = "#{source_dir}/#{posts_dir}/#{Time.now.strftime('%Y-%m-%d')}-#{title.to_url}.#{new_post_ext}"
    if File.exist?(filename)
@@ -275,16 +280,18 @@
    open(filename, 'w') do |post|
      post.puts "---"
      post.puts "layout: post"
-     post.puts "title: \"#{title.gsub(/&/,'&amp;')}\""
+-    post.puts "title: \"#{title.gsub(/&/,'&amp;')}\""
+-    post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M:%S %z')}"
++    #post.puts "title: \"#{title.gsub(/&/,'&amp;')}\""
 +    #post.puts "title: \"#{title_tags}\""
-     post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M:%S %z')}"
++    post.puts "title: \"\""
++    #post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M:%S %z')}"
++    #post.puts "date: #{Time.now.strftime('%Y-%m-%d 12:00')}"
      post.puts "comments: true"
 -    post.puts "categories: "
-+    post.puts "categories:"
-+    post.puts "tags:"
-+    #post.puts "categories: #{category}"
-+    #post.puts "tags: #{tags}"
-+    #post.puts "keywords: #{title.gsub(' ',', ')}"
++    post.puts "categories: #{category}"
++    post.puts "tags: #{tags}"
++    post.puts "keywords: #{title.gsub(' ',', ')}"
 +    #post.puts "description: "
 +    post.puts "ogimage:"
 +    post.puts "published: false"
@@ -293,10 +300,12 @@
 +    post.puts "<!-- more -->"
 +    post.puts "{% include after_excerpt.html %}"
 +    post.puts ""
++    post.puts "##"
++    post.puts ""
    end
  end
  
-@@ -125,8 +304,10 @@
+@@ -125,8 +309,10 @@
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
    args.with_defaults(:filename => 'new-page')
    page_dir = [source_dir]
@@ -308,12 +317,14 @@
      title = filename
      page_dir.concat($1.downcase.sub(/^\//, '').split('/')) unless $1.nil?  # Add path to page_dir Array
      if extension.nil?
-@@ -147,10 +328,12 @@
+@@ -147,10 +333,13 @@
        page.puts "---"
        page.puts "layout: page"
        page.puts "title: \"#{title}\""
+-      page.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M')}"
 +      page.puts "author: \"#{author}\""
-       page.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M')}"
++      #page.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M')}"
++      page.puts "date: #{Time.now.strftime('%Y-%m-%d 12:00')}"
        page.puts "comments: true"
        page.puts "sharing: true"
        page.puts "footer: true"
@@ -321,7 +332,7 @@
        page.puts "---"
      end
    else
-@@ -161,21 +344,49 @@
+@@ -161,21 +350,49 @@
  # usage rake isolate[my-post]
  desc "Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly."
  task :isolate, :filename do |t, args|
@@ -338,7 +349,7 @@
 +    puts "## Stashing all posts"
 +  else
 +    puts "## Stashing other posts than #{filename}"
-+  end
+   end
 +  FileUtils.mkdir(full_stash_dir) unless File.exist?(full_stash_dir)
 +  Dir.glob("#{source_dir}/#{posts_dir}/*") do |post|
 +    if filename != nil && post.include?(filename)
@@ -356,8 +367,8 @@
 +        FileUtils.mv "#{source_dir}/#{d}", full_stash_root_dir if File.exist?("#{source_dir}/#{d}")
 +      end
 +    end
-   end
-+  system "touch .isolated"
++  end
++  ok_failed("touch .isolated")
  end
  
  desc "Move all stashed posts back into the posts directory, ready for site generation."
@@ -365,8 +376,8 @@
 -  FileUtils.mv Dir.glob("#{source_dir}/#{stash_dir}/*.*"), "#{source_dir}/#{posts_dir}/"
 +  FileUtils.mv Dir.glob("#{full_stash_dir}/*"), "#{source_dir}/#{posts_dir}/"
 +  FileUtils.mv Dir.glob("#{full_stash_root_dir}/*"), "#{source_dir}/"
-+  system "rm -f .isolated"
-+  system "touch .integrated"
++  ok_failed("rm -f .isolated")
++  ok_failed("touch .integrated")
  end
  
 -desc "Clean out caches: .pygments-cache, .gist-cache, .sass-cache"
@@ -378,7 +389,7 @@
  end
  
  desc "Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom"
-@@ -215,8 +426,14 @@
+@@ -215,8 +432,14 @@
  ##############
  
  desc "Default deploy task"
@@ -388,21 +399,21 @@
 +  # Check if preview posts exists, which should not be published
 +  if File.exists?(".integrated") or File.exists?(".isolated")
 +    puts "## Found isolated history, regenerating files ..."
-+    system "rm -f .integrated .isolated"
++    ok_failed("rm -f .integrated .isolated")
 +    Rake::Task[:integrate].execute
 +    Rake::Task[:generate].execute
 +  end
    if File.exists?(".preview-mode")
      puts "## Found posts in preview mode, regenerating files ..."
      File.delete(".preview-mode")
-@@ -224,11 +441,32 @@
+@@ -224,11 +447,32 @@
    end
  
    Rake::Task[:copydot].invoke(source_dir, public_dir)
 -  Rake::Task["#{deploy_default}"].execute
 +
 +  # Check if files are fine or not
-+  ok_failed_raise system("if [ -f #{word_avoid} ];then while read a;do if ret=`grep -i -r -q $a #{public_dir}`;then echo \"A word $a is included, must be avoided!!!\"; echo $ret; exit 1;fi; done < #{word_avoid};fi")
++  ok_failed("if [ -f #{word_avoid} ];then while read a;do if ret=`grep -i -r -q $a #{public_dir}`;then echo \"A word $a is included, must be avoided!!!\"; echo $ret; exit 1;fi; done < #{word_avoid};fi")
 +
 +  if args.deploy_method
 +    deploy_method = args.deploy_method;
@@ -430,13 +441,37 @@
  end
  
  desc "copy dot files for deployment"
-@@ -265,54 +503,85 @@
+@@ -245,74 +489,105 @@
+     exclude = "--exclude-from '#{File.expand_path('./rsync-exclude')}'"
+   end
+   puts "## Deploying website via Rsync"
+-  ok_failed system("rsync -avze 'ssh -p #{ssh_port}' #{exclude} #{rsync_args} #{"--delete" unless rsync_delete == false} #{public_dir}/ #{ssh_user}:#{document_root}")
++  ok_failed("rsync -avze 'ssh -p #{ssh_port}' #{exclude} #{rsync_args} #{"--delete" unless rsync_delete == false} #{public_dir}/ #{ssh_user}:#{document_root}")
+ end
+ 
+ desc "deploy public directory to github pages"
+ multitask :push do
+   puts "## Deploying branch to Github Pages "
+   puts "## Pulling any updates from Github Pages "
+-  cd "#{deploy_dir}" do 
+-    Bundler.with_clean_env { system "git pull" }
++  cd "#{deploy_dir}" do
++    Bundler.with_original_env { ok_failed("git pull") }
+   end
+   (Dir["#{deploy_dir}/*"]).each { |f| rm_rf(f) }
+   Rake::Task[:copydot].invoke(public_dir, deploy_dir)
+   puts "\n## Copying #{public_dir} to #{deploy_dir}"
+   cp_r "#{public_dir}/.", deploy_dir
+   cd "#{deploy_dir}" do
+-    system "git add -A"
++    ok_failed("git add -A")
+     message = "Site updated at #{Time.now.utc}"
      puts "\n## Committing: #{message}"
-     system "git commit -m \"#{message}\""
-     puts "\n## Pushing generated #{deploy_dir} website"
--    Bundler.with_clean_env { system "git push origin #{deploy_branch}" }
+-    system "git commit -m \"#{message}\""
++    ok_failed("git commit -m \"#{message}\"")
++    puts "\n## Pushing generated #{deploy_dir} website"
 +    output = (use_token)? " >/dev/null 2>&1":""
-+    Bundler.with_unbundled_env { system "git push origin #{deploy_branch} #{output}" }
++    Bundler.with_original_env { ok_failed("git push origin #{deploy_branch} #{output}") }
 +    puts "\n## Github Pages deploy complete"
 +  end
 +end
@@ -452,22 +487,23 @@
 +  rm_rf deploy_dir
 +  mkdir_p deploy_dir
 +  cd "#{deploy_dir}" do
-+    system "git init"
-+    system "git remote add origin #{repo_url}"
++    ok_failed("git init")
++    ok_failed("git remote add origin #{repo_url}")
 +  end
 +
 +  Rake::Task[:copydot].invoke(public_dir, deploy_dir)
 +  puts "\n## Copying #{public_dir} to #{deploy_dir}"
 +  cp_r "#{public_dir}/.", deploy_dir
 +  cd "#{deploy_dir}" do
-+    system "git add -A"
++    ok_failed("git add -A")
 +    puts "\n## Commiting: Site updated at #{Time.now.utc}"
 +    message = "Site updated at #{Time.now.utc}"
-+    system "git commit -m \"#{message}\" >/dev/null"
-+    system "git branch -m #{deploy_branch}" unless deploy_branch == 'master'
-+    puts "\n## Pushing generated #{deploy_dir} website"
++    ok_failed("git commit -m \"#{message}\" >/dev/null")
++    ok_failed("git branch -m #{deploy_branch}")
+     puts "\n## Pushing generated #{deploy_dir} website"
+-    Bundler.with_clean_env { system "git push origin #{deploy_branch}" }
 +    output = (use_token) ? " >/dev/null 2>&1" : ""
-+    Bundler.with_clean_env { system "git push -u -f origin #{deploy_branch} #{output}" }
++    Bundler.with_unbundled_env { ok_failed("git push -u -f origin #{deploy_branch} #{output}") }
      puts "\n## Github Pages deploy complete"
    end
  end
@@ -487,7 +523,7 @@
 +    rm_rf "#{public_dir}"
      rakefile = IO.read(__FILE__)
 -    rakefile.sub!(/public_dir(\s*)=(\s*)(["'])[\w\-\/]*["']/, "public_dir\\1=\\2\\3public#{dir}\\3")
-+    rakefile.sub!(/public_dir(\s*)=(\s*)(["'])[^"']*public[^"']*(["'])/, "public_dir\\1=\\2\\3\#{tmp_dir}/#{File.join('public', dir)}\\3")
++    rakefile.sub!(/public_dir(\s*)=(\s*)(["'])[^"']*public[^"']*(["'])/, "public_dir\\1=\\2\\3\#{tmp_dir}#{File.join('public', dir)}\\3")
      File.open(__FILE__, 'w') do |f|
        f.write rakefile
      end
@@ -534,7 +570,7 @@
      repo_url = get_stdin("Repository url: ")
    end
    protocol = (repo_url.match(/(^git)@/).nil?) ? 'https' : 'git'
-@@ -322,7 +591,9 @@
+@@ -322,23 +597,25 @@
      user = repo_url.match(/github\.com\/([^\/]+)/)[1]
    end
    branch = (repo_url.match(/\/[\w-]+\.github\.(?:io|com)/).nil?) ? 'gh-pages' : 'master'
@@ -544,20 +580,24 @@
 +  use_token_val = use_token ? "true" : "false"
    unless (`git remote -v` =~ /origin.+?octopress(?:\.git)?/).nil?
      # If octopress is still the origin remote (from cloning) rename it to octopress
-     system "git remote rename origin octopress"
-@@ -330,40 +601,68 @@
+-    system "git remote rename origin octopress"
++    ok_failed("git remote rename origin octopress")
+     if branch == 'master'
        # If this is a user/organization pages repository, add the correct origin remote
        # and checkout the source branch for committing changes to the blog source.
-       system "git remote add origin #{repo_url}"
+-      system "git remote add origin #{repo_url}"
 -      puts "Added remote #{repo_url} as origin"
+-      system "git config branch.master.remote origin"
++      ok_failed("git remote add origin #{repo_url}")
 +      if use_token
 +        puts "Added given remote as origin"
 +      else
 +        puts "Added remote #{repo_url} as origin"
 +      end
-       system "git config branch.master.remote origin"
++      ok_failed("git config branch.master.remote origin")
        puts "Set origin as default remote"
-       system "git branch -m master source"
+-      system "git branch -m master source"
++      ok_failed("git branch -m master source")
        puts "Master branch renamed to 'source' for committing your blog source files"
 -    else
 -      unless !public_dir.match("#{project}").nil?
@@ -565,20 +605,10 @@
 -      end
      end
    end
--  url = blog_url(user, project, source_dir)
--  jekyll_config = IO.read('_config.yml')
--  jekyll_config.sub!(/^url:.*$/, "url: #{url}")
--  File.open('_config.yml', 'w') do |f|
--    f.write jekyll_config
-+
-+  rakefile = IO.read(__FILE__)
-+  rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
-+  rakefile.sub!(/repo_url(\s*)=(\s*)(["'])[0-9a-zA-Z\-\_\/\@\.\:]*["']/, "repo_url\\1=\\2\\3#{repo_url}\\3")
-+  rakefile.sub!(/use_token(\s*)=(\s*)[0-9a-zA-Z\-\_\/\@\.\:]*/, "use_token\\1=\\2#{use_token_val}")
-+
-+  ext = 'markdown'
-+  if ask("Do you want to use 'md' extension instead of 'markdown'?", ['y', 'n'], args.yes) == "y"
-+    ext = 'md'
+   url = blog_url(user, project, source_dir)
+@@ -347,31 +624,56 @@
+   File.open('_config.yml', 'w') do |f|
+     f.write jekyll_config
    end
 -  rm_rf deploy_dir
 -  mkdir deploy_dir
@@ -594,15 +624,31 @@
 -    rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push\\3")
 -    File.open(__FILE__, 'w') do |f|
 -      f.write rakefile
+-    end
++
++  rakefile = IO.read(__FILE__)
++  rakefile.sub!(/deploy_branch(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_branch\\1=\\2\\3#{branch}\\3")
++  rakefile.sub!(/repo_url(\s*)=(\s*)(["'])[0-9a-zA-Z\-\_\/\@\.\:]*["']/, "repo_url\\1=\\2\\3#{repo_url}\\3")
++  rakefile.sub!(/use_token(\s*)=(\s*)[0-9a-zA-Z\-\_\/\@\.\:]*/, "use_token\\1=\\2#{use_token_val}")
++
++  ext = 'markdown'
++  if ask("Do you want to use 'md' extension instead of 'markdown'?", ['y', 'n'], args.yes) == "y"
++    ext = 'md'
+   end
+-  puts "\n---\n## Now you can deploy to #{repo_url} with `rake deploy` ##"
+-end
 +  rakefile.sub!(/new_post_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_post_ext\\1=\\2\\3#{ext}\\3")
 +  rakefile.sub!(/new_page_ext(\s*)=(\s*)(["'])[\w-]*["']/, "new_page_ext\\1=\\2\\3#{ext}\\3")
-+
+ 
+-def ok_failed(condition)
+-  if (condition)
+-    puts "OK"
 +  if ask("Do you want to push_ex (renew remote repository evrey time)?", ['y', 'n'], args.yes) == 'y'
 +    if yn_check(args.yes) == "y"
 +      dir = ""
 +    else
 +      dir = get_stdin("Enter where you want to put _deploy (current: #{tmp_dir}): ")
-     end
++    end
 +    if dir == ""
 +      dir = tmp_dir
 +    elsif
@@ -612,16 +658,17 @@
 +    end
 +    rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push_ex\\3")
 +    rakefile.sub!(/(tmp_dir\s*=\s*File.expand_path\()(["'])[^"']*["']/,"\\1\\2#{dir}\\2")
-+  else
+   else
+-    puts "FAILED"
 +    rm_rf deploy_dir
 +    mkdir deploy_dir
 +    cd "#{deploy_dir}" do
-+      system "git init"
-+      system "echo 'My Octopress Page is coming soon &hellip;' > index.html"
-+      system "git add -A"
-+      system "git commit -m \"Octopress init\""
-+      system "git branch -m #{deploy_branch}" unless branch == 'master'
-+      system "git remote add origin #{repo_url}"
++      ok_failed("git init")
++      ok_failed("echo 'My Octopress Page is coming soon &hellip;' > index.html")
++      ok_failed("git add -A")
++      ok_failed("git commit -m \"Octopress init\"")
++      ok_failed("git branch -m #{deploy_branch}") unless branch == 'master'
++      ok_failed("git remote add origin #{repo_url}")
 +      rakefile.sub!(/deploy_default(\s*)=(\s*)(["'])[\w-]*["']/, "deploy_default\\1=\\2\\3push\\3")
 +    end
 +    if use_token
@@ -633,13 +680,11 @@
 +  File.open(__FILE__, 'w') do |f|
 +    f.write rakefile
    end
--  puts "\n---\n## Now you can deploy to #{repo_url} with `rake deploy` ##"
-+  project = "/" if project == ""
-+  system "rake set_root_dir[#{project}]"
++  ok_failed("rake set_root_dir[#{project}]")
  end
  
- def ok_failed(condition)
-@@ -379,9 +678,22 @@
+ def get_stdin(message)
+@@ -379,9 +681,22 @@
    STDIN.gets.chomp
  end
  
@@ -664,7 +709,7 @@
    else
      answer = get_stdin(message)
    end
-@@ -404,3 +716,329 @@
+@@ -404,3 +719,336 @@
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end
@@ -685,7 +730,7 @@
 +    comment = "An empty line is required after \\\"#{word}\\\"!"
 +  end
 +  print "Checking \"#{word}\"... "
-+  ok_failed_raise system("\
++  ok_failed("\
 +      if grep -H -n -e \"#{word}\" #{grep_option} 2>/dev/null|\
 +          grep -v \"#{vword}\";then \
 +        printf \"\\\\n\\\\e[31m\";\
@@ -714,7 +759,7 @@
 +  #grep_check("^<hr>$", grep_option, 1)
 +
 +  print "Checking words to be avoided... "
-+  ok_failed_raise system("\
++  ok_failed("\
 +      if [ -f #{word_avoid} ];then \
 +        while read a;do \
 +          if ret=$(grep -i -q $a #{grep_files} 2>/dev/null);then \
@@ -789,7 +834,7 @@
 +#  begin
 +#    require 'xmlrpc/client'
 +#    puts '* Pinging PINGOO{'
-+#    XMLRPC::Client.new('pingoo.jp', '/').call('weblogUpdates.extendedPing', 'rcmdnk.github.io' , 'http://rcmdnk.github.io', 'http://rcmdnk.github.io/atom.xml')
++#    XMLRPC::Client.new('pingoo.jp', '/').call('weblogUpdates.extendedPing', 'rcmdnk.com' , 'http://rcmdnk.com', 'http://rcmdnk.com/atom.xml')
 +#  rescue LoadError
 +#    puts '! Could not ping PINGOO, because XMLRPC::Client could not be found.'
 +#  end
@@ -800,8 +845,8 @@
 +#  begin
 +#    require 'xmlrpc/client'
 +#    puts '## Pinging PINGOO'
-+#    #XMLRPC::Client.new('rpc.pingomatic.com', '/').call('weblogUpdates.extendedPing', 'rcmdnk\'s blog' , 'http://rcmdnk.github.io', 'http://rcmdnk.github.io/atom.xml')
-+#    XMLRPC::Client.new2('http://api.my.yahoo.co.jp/RPC2').call('weblogUpdates.ping', 'rcmdnk blog' , 'http://rcmdnk.github.io')
++#    #XMLRPC::Client.new('rpc.pingomatic.com', '/').call('weblogUpdates.extendedPing', 'rcmdnk\'s blog' , 'http://rcmdnk.com', 'http://rcmdnk.com/atom.xml')
++#    XMLRPC::Client.new2('http://api.my.yahoo.co.jp/RPC2').call('weblogUpdates.ping', 'rcmdnk blog' , 'http://rcmdnk.com')
 +#  rescue LoadError
 +#    puts '! Could not ping ping-o-matic, because XMLRPC::Client could not be found.'
 +#  end
@@ -832,20 +877,27 @@
 +end
 +
 +task :test do
-+  #ok_failed_raise system("if [ -f #{word_avoid} ];then while read a;do if ret=`grep -i -r -q $a #{public_dir}`;then echo \"A word $a is included, must be avoided!!!\"; echo $ret; exit 1;fi; done < #{word_avoid};fi")
-+  #ok_failed_raise system("cd #{public_dir};pwd;cd -")
++  #ok_failed("if [ -f #{word_avoid} ];then while read a;do if ret=`grep -i -r -q $a #{public_dir}`;then echo \"A word $a is included, must be avoided!!!\"; echo $ret; exit 1;fi; done < #{word_avoid};fi")
++  #ok_failed("cd #{public_dir};pwd;cd -")
 +  #raise "eror"
-+  system "git ls >& log"
++  ok_failed("git ls >& log")
 +end
 +
-+def ok_failed_raise(condition, print_ok = true)
-+  if (condition)
++def ok_failed(command, print_ok = false)
++  out, err, status = Open3.capture3(command)
++  if (status.success?)
++    puts command if print_ok
 +    puts "OK" if print_ok
 +  else
++    puts "=== command ==="
++    puts command
++    puts "=== stdout ==="
++    puts out
++    puts "=== stderr ==="
++    puts err
 +    raise "FAILD"
 +  end
 +end
-+
 +
 +require "yui/compressor"
 +require "htmlcompressor"
@@ -894,7 +946,7 @@
 +  output = File.open("#{source_dir}/javascripts/#{js_output}", "w")
 +  js_for_combine.each do |j|
 +    input = File.read("#{source_dir}/javascripts/#{j}")
-+    if args.opt == nil or args.opt.include?("no")
++    if args.opt == nil or args.opt.include?("no") or args.opt.include?("test")
 +      output << input
 +    else
 +      output << compressor.compress(input)

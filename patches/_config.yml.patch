@@ -2,7 +2,7 @@ diff --git a/_config.yml b/_config.yml
 index c1d56f4..b4a9f1e 100644
 --- a/_config.yml
 +++ b/_config.yml
-@@ -6,20 +6,54 @@ url: http://yoursite.com
+@@ -6,20 +6,54 @@ url: http://example.com
  title: My Octopress Blog
  subtitle: A blogging framework for hackers.
  author: Your Name
@@ -292,7 +292,7 @@ index c1d56f4..b4a9f1e 100644
 +
 +# feedly
 +feedly_mark: false
-+feedly_atom: http://yoursite/atom.xml
++feedly_atom: http://example/atom.xml
 +feedly_button: false # for the bottom button
 +
 +# Tumblr
