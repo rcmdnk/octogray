@@ -537,7 +537,7 @@ multitask :push_ex do
     puts "\n## Commiting: Site updated at #{Time.now.utc}"
     message = "Site updated at #{Time.now.utc}"
     ok_failed_raise system("git commit -m \"#{message}\" >/dev/null")
-    ok_failed_raise system("git branch -m #{deploy_branch}") unless deploy_branch == 'master'
+    ok_failed_raise system("git branch -m #{deploy_branch}")
     puts "\n## Pushing generated #{deploy_dir} website"
     output = (use_token) ? " >/dev/null 2>&1" : ""
     Bundler.with_unbundled_env { ok_failed_raise system("git push -u -f origin #{deploy_branch} #{output}") }
