@@ -36,7 +36,9 @@ jobs:
         cd ../
     - name: master check
       run: |
+        pwd
         echo $top_dir
+        cd ../
         cd octopress.master
         ./.themes/octogray/setup.sh -y
         rake setup_github_pages["git@github.com:rcmdnk/test.github.io","yes"]
