@@ -21,8 +21,6 @@ jobs:
     - name: Preparation
       run: |
         cd ../
-        pwd
-        top_dir=$(pwd)
         git clone https://github.com/imathis/octopress.git ./octopress.orig
         cp -r octopress.orig octopress.master
         cd octopress.master
@@ -36,11 +34,11 @@ jobs:
         cd ../
     - name: master check
       run: |
-        pwd
-        echo $top_dir
         cd ../
         cd octopress.master
+        cat Gemfile
         ./.themes/octogray/setup.sh -y
+        cat Gemfile
         rake setup_github_pages["git@github.com:rcmdnk/test.github.io","yes"]
         post=$(rake new_post["test"]|grep "Creating new post"|cut -d: -f2)
         sed -i"" "s/published: *false/published: true/" $post
@@ -55,7 +53,8 @@ jobs:
         rake generate --trace
     - name: gh-pages check
       run: |
-        cd ~/octopress.gh-pages
+        cd ../
+        cd octopress.gh-pages
         gem update --system --no-document
         ./.themes/octogray/setup.sh -y -l
         rake setup_github_pages["git@github.com:rcmdnk/octogray_test","yes"]
