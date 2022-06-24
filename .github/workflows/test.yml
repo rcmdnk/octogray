@@ -21,6 +21,8 @@ jobs:
     - name: Preparation
       run: |
         cd ../
+        pwd
+        top_dir=$(pwd)
         git clone https://github.com/imathis/octopress.git ./octopress.orig
         cp -r octopress.orig octopress.master
         cd octopress.master
@@ -34,6 +36,7 @@ jobs:
         cd ../
     - name: master check
       run: |
+        echo $top_dir
         cd octopress.master
         ./.themes/octogray/setup.sh -y
         rake setup_github_pages["git@github.com:rcmdnk/test.github.io","yes"]
