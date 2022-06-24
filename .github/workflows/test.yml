@@ -29,7 +29,7 @@ jobs:
         cd ../
         cp -r octopress.orig octopress.gh-pages
         cd octopress.gh-pages
-        git submodule add git://github.com/rcmdnk/octogray.git .themes/octogray
+        git submodule add https://github.com/rcmdnk/octogray.git .themes/octogray
         sed -i"" 's/git@github.com:/https:\/\/github.com\//' .themes/octogray/.gitmodules
         cd ../
     - name: master check
