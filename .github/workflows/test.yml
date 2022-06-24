@@ -21,10 +21,10 @@ jobs:
     - name: Preparation
       run: |
         cd ../
-        git clone git://github.com/imathis/octopress.git ./octopress.orig
+        git clone https://github.com/imathis/octopress.git ./octopress.orig
         cp -r octopress.orig octopress.master
         cd octopress.master
-        git submodule add git://github.com/rcmdnk/octogray.git .themes/octogray
+        git submodule add https://github.com/rcmdnk/octogray.git .themes/octogray
         sed -i"" 's/git@github.com:/https:\/\/github.com\//' .themes/octogray/.gitmodules
         cd ../
         cp -r octopress.orig octopress.gh-pages
