@@ -1,0 +1,67 @@
+name: Octogray test
+
+on:
+  push:
+    branches:
+      - master
+
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - name: Setup ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: '3.0'
+        bundler-cache: true
+    - name: Preparation
+      run: |
+        cd ../
+        git clone git://github.com/imathis/octopress.git ./octopress.orig
+        cp -r octopress.orig octopress.master
+        cd octopress.master
+        git submodule add git://github.com/rcmdnk/octogray.git .themes/octogray
+        sed -i"" 's/git@github.com:/https:\/\/github.com\//' .themes/octogray/.gitmodules
+        cd ../
+        cp -r octopress.orig octopress.gh-pages
+        cd octopress.gh-pages
+        git submodule add git://github.com/rcmdnk/octogray.git .themes/octogray
+        sed -i"" 's/git@github.com:/https:\/\/github.com\//' .themes/octogray/.gitmodules
+        cd ../
+    - name: master check
+      run: |
+        cd octopress.master
+        ./.themes/octogray/setup.sh -y
+        rake setup_github_pages["git@github.com:rcmdnk/test.github.io","yes"]
+        post=$(rake new_post["test"]|grep "Creating new post"|cut -d: -f2)
+        sed -i"" "s/published: *false/published: true/" $post
+        sed -i"" "s/categories:/categories: cat/" $post
+        sed -i"" "s/tags:/tags: tag/" $post
+        sed -i"" "s/<\!-- *more *-->/This is test post."\\$'\n'"<\!-- more -->/" $post
+        sed -i"" "s/{% include after_excerpt.html %}/{% include after_excerpt.html %}"\\$'\n'"# Test Sectiontest"\\$'\n'"test $(date) test./" $post
+        echo >> $post
+        echo "[Code test](/others/codetest/) ">> $post
+        bundle exec jekyll --version
+        cat _config.yml
+        rake generate --trace
+    - name: gh-pages check
+      run: |
+        cd ~/octopress.gh-pages
+        gem update --system --no-document
+        ./.themes/octogray/setup.sh -y -l
+        rake setup_github_pages["git@github.com:rcmdnk/octogray_test","yes"]
+        post=$(rake new_post["test"]|grep "Creating new post"|cut -d: -f2)
+        sed -i"" "s/published: *false/published: true/" $post
+        sed -i"" "s/categories:/categories: cat/" $post
+        sed -i"" "s/tags:/tags: tag/" $post
+        sed -i"" "s/<\!-- *more *-->/This is test post."\\$'\n'"<\!-- more -->/" $post
+        sed -i"" "s/{% include after_excerpt.html %}/{% include after_excerpt.html %}"\\$'\n'"# Test Sectiontest"\\$'\n'"test $(date) test./" $post
+        echo >> $post
+        echo "[Code test](/others/codetest/) ">> $post
+        rake gen --trace
+        rake deploy
+
