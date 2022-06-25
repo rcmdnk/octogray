@@ -55,7 +55,7 @@ jobs:
         cd octopress.gh-pages
         gem update --system --no-document
         ./.themes/octogray/setup.sh -y -l
-        rake setup_github_pages["git@github.com:rcmdnk/octogray_test","yes"]
+        rake setup_github_pages["https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/rcmdnk/octogray_test","yes"]
         post=$(rake new_post["test"]|grep "Creating new post"|cut -d: -f2)
         sed -i"" "s/published: *false/published: true/" $post
         sed -i"" "s/categories:/categories: cat/" $post
