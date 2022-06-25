@@ -34,6 +34,7 @@ jobs:
         cd ../
         git config --global user.email "rcmdnk@gmail.com"
         git config --global user.name "rcmdnk"
+        git config --global init.defaultBranch main
 
     - name: master check
       run: |

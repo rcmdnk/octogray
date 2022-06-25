@@ -495,8 +495,8 @@ desc "deploy public directory to github pages"
 multitask :push do
   puts "## Deploying branch to Github Pages "
   puts "## Pulling any updates from Github Pages "
-  cd "#{deploy_dir}" do 
-    Bundler.with_clean_env { ok_failed_raise system("git pull") }
+  cd "#{deploy_dir}" do
+    Bundler.with_original_env { ok_failed_raise system("git pull") }
   end
   (Dir["#{deploy_dir}/*"]).each { |f| rm_rf(f) }
   Rake::Task[:copydot].invoke(public_dir, deploy_dir)
@@ -509,7 +509,7 @@ multitask :push do
     ok_failed_raise system("git commit -m \"#{message}\"")
     puts "\n## Pushing generated #{deploy_dir} website"
     output = (use_token)? " >/dev/null 2>&1":""
-    Bundler.with_clean_env { ok_failed_raise system("git push origin #{deploy_branch} #{output}") }
+    Bundler.with_original_env { ok_failed_raise system("git push origin #{deploy_branch} #{output}") }
     puts "\n## Github Pages deploy complete"
   end
 end
@@ -953,7 +953,6 @@ task :combine_js, :opt do |t, args|
   end
   output = File.open("#{source_dir}/javascripts/#{js_output}", "w")
   js_for_combine.each do |j|
-    puts "#{source_dir}/javascripts/#{j}"
     input = File.read("#{source_dir}/javascripts/#{j}")
     if args.opt == nil or args.opt.include?("no") or args.opt.include?("test")
       output << input
