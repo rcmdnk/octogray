@@ -900,9 +900,9 @@ def ok_failed(command, print_ok = false)
     puts "=== command ==="
     puts command
     puts "=== stdout ==="
-    puts ret[0]
+    puts out
     puts "=== stderr ==="
-    puts ret[1]
+    puts err
     raise "FAILD"
   end
 end
