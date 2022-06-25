@@ -17,5 +17,5 @@ Last update: {{site.time|date_to_rfc822}}
 {% if site.linkchecker %}    * [linkchecker](/linkchecker.html){% endif %}
 {% endif %}
 * [FeedlyGraph](http://www.feedlygraph.info/graph?feedid=feed/{{site.url}}{{site.subscribe_rss}})
-* [Octogray](//github.com/rcmdnk/octogray) [![Build Status](//travis-ci.org/rcmdnk/octogray.svg?branch=master)](//travis-ci.org/rcmdnk/octogray)
+* [Octogray](//github.com/rcmdnk/octogray) [![Octogray test](https://github.com/rcmdnk/octogray/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/rcmdnk/octogray/actions/workflows/test.yml)
 {% include custom/mytools.html %}
