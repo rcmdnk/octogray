@@ -32,6 +32,9 @@ jobs:
         git submodule add https://github.com/rcmdnk/octogray.git .themes/octogray
         sed -i"" 's/git@github.com:/https:\/\/github.com\//' .themes/octogray/.gitmodules
         cd ../
+        git config --global user.email "rcmdnk@gmail.com"
+        git config --global user.name "rcmdnk"
+
     - name: master check
       run: |
         cd ../
