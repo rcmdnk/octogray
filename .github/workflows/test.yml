@@ -63,9 +63,10 @@ jobs:
         rake setup_github_pages["https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}","yes"]
         grep "^use_token" Rakefile
         post=$(rake new_post["test"]|grep "Creating new post"|cut -d: -f2)
+        sed -i"" "s/title:.*/title: Test post/" $post
+        sed -i"" "s/categories:.*/categories: cat/" $post
+        sed -i"" "s/tags:.*/tags: [\"tag\"]/" $post
         sed -i"" "s/published: *false/published: true/" $post
-        sed -i"" "s/categories:/categories: cat/" $post
-        sed -i"" "s/tags:/tags: tag/" $post
         sed -i"" "s/<\!-- *more *-->/This is test post."\\$'\n'"<\!-- more -->/" $post
         sed -i"" "s/{% include after_excerpt.html %}/{% include after_excerpt.html %}"\\$'\n'"# Test Sectiontest"\\$'\n'"test $(date) test./" $post
         echo >> $post
