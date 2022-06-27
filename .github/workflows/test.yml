@@ -59,6 +59,7 @@ jobs:
         cd octopress.gh-pages
         gem update --system --no-document
         ./.themes/octogray/setup.sh -y -l
+        echo rcmdnk.com > source/CNAME
         rake setup_github_pages["https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}","yes"]
         grep "^use_token" Rakefile
         post=$(rake new_post["test"]|grep "Creating new post"|cut -d: -f2)
