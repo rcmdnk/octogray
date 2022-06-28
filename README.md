@@ -1,7 +1,7 @@
 octogray
 ========
 
-[![Build Status](https://travis-ci.org/rcmdnk/octogray.svg?branch=master)](https://travis-ci.org/rcmdnk/octogray)
+[![Octogray test](https://github.com/rcmdnk/octogray/actions/workflows/test.yml/badge.svg)](https://github.com/rcmdnk/octogray/actions/workflows/test.yml)
 
 octgray is a theme for Octopress.
 
