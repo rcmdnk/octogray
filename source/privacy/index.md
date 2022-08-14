@@ -32,7 +32,7 @@ published: true
 この情報は匿名で収集されており個人の特定するものではありません。
 また、Cookieを無効にすることでこの収集を拒否することが出来ます。
 
-> [広告 – ポリシーと規約 – Google](http://www.google.co.jp/policies/technologies/ads/)
+> [広告 – ポリシーと規約 – Google](https://policies.google.com/technologies/ads?gl=jp)
 
 ## 免責事項
 
@@ -67,7 +67,7 @@ based on your online behavior.
 These cookies don't personally identifying information.
 You can disable cookies via your browser settings.
 
-> [Advertising – Privacy & Terms – Google](https://www.google.m/intl/en/policies/technologies/ads/)
+> [Advertising – Privacy & Terms – Google](https://policies.google.com/technologies/ads?hl=en-US)
 
 ## General disclaimer
 
