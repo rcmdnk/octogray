@@ -7,7 +7,7 @@
 </div>
 {% endcomment %}
 {% capture amazon_site %}{% if site.amazon_region == 'JP' %}//www.amazon.co.jp{% else %}//www.amazon.com{% endif %}{% endcapture %}
-<a href="{{amazon_site}}/hz/wishlist/ls/{{site.amazon_ad_tag}}?ref_=wl_share&tag={{site.amazon_ad_tag}}">{{site.amazon_wish_words}}</a>
+<a href="{{amazon_site}}/hz/wishlist/ls/{{site.amazon_wish_id}}?ref_=wl_share&tag={{site.amazon_ad_tag}}">{{site.amazon_wish_words}}</a>
 
 {% comment %}
 </div>
