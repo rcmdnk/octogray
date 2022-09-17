@@ -48,6 +48,9 @@ EOS
   end
 
   def itunes_link(app, lang='us', token='')
+    if app == ''
+      return ''
+    end
     if token != ''
       if token.start_with?("at=")
         token = "?#{token}"
@@ -72,11 +75,11 @@ EOS
   end
 
   def itunes_img(link, title, img, size=0, size_width=0)
-<<EOS
-<div class='app-img'>
-  <a href='#{link}' rel='nofollow' target='_blank'><img src='#{itunes_img_path(img, size, size_width)}' alt='#{title}'/></a>
-</div>
-EOS
+    if link == ''
+      "<div class='app-img'><img src='#{itunes_img_path(img, size, size_width)}' alt='#{title}'/></div>"
+    else
+      "<div class='app-img'><a href='#{link}' rel='nofollow' target='_blank'><img src='#{itunes_img_path(img, size, size_width)}' alt='#{title}'/></a></div>"
+    end
   end
   module_function :amazon_img_path
   module_function :amazon_img
