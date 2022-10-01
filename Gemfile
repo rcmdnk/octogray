@@ -17,7 +17,7 @@ group :development do
   gem 'pygments.rb', '~> 2.0'
   gem 'ruby-progressbar', '~> 1.8'
   gem 'thin', '~> 1.7'
-  gem 'sinatra', '~> 2.0'
+  gem 'sinatra', '~> 3.0'
   if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.4.0')
     gem 'xmlrpc', '~> 0.2'
   end
