@@ -132,7 +132,7 @@ module Jekyll
       https.verify_mode = OpenSSL::SSL::VERIFY_NONE
       request           = Net::HTTP::Get.new raw_uri.request_uri
       if ENV['GITHUB_TOKEN']
-        httprequest["Authorization"] = "Bearer "+ENV['GITHUB_TOKEN']
+        request["Authorization"] = "Bearer "+ENV['GITHUB_TOKEN']
       end
       data              = https.request request
     end
