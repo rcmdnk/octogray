@@ -32,7 +32,17 @@ figure.code .highlight .line-numbers {
 
 figure.code, pre {
   //@include box-shadow(rgba(#000, .06) 0 0 1em);
-  .highlight pre { @include box-shadow(none); }
+  .highlight pre {
+    @include box-shadow(none);
+    span.line {
+      white-space: pre;
+      word-wrap: normal;
+      a {
+        white-space: pre;
+        word-wrap: normal;
+      }
+    }
+  }
 }
 
 //.gist .highlight, figure.code .highlight {
