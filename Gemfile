@@ -9,7 +9,7 @@ group :development do
   gem 'sass-globbing', '~> 1.1'
   gem 'stringex', '~> 2.8'
   gem 'chronic', '~> 0.10'
-  gem 'gemoji', '~> 4.0'
+  gem 'gemoji', '~> 2.0'
   gem 'google-api-client', '~> 0.53'
   gem 'htmlcompressor', '~> 0.4'
   gem 'jekyll-paginate', '~> 1.1'
