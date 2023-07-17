@@ -40,15 +40,11 @@
 {% if site.url %}
   ,"url" : "{{ site.url }}"
 {% endif %}
-{% if site.twitter_user or site.googleplus_user or site.facebook_user or site.linkedin_user %}
+{% if site.twitter_user or site.facebook_user or site.linkedin_user %}
   ,"sameAs" : [
   {% if site.twitter_user %}
     {% assign is_prev = true %}
     "https://twitter.com/{{site.twitter_user}}"
-  {% endif %}
-  {% if site.googleplus_user %}
-    {% if is_prev %}, {% else %}{% assign is_prev = true %}{% endif %}
-    "https://plus.google.com/{{site.googleplus_user}}"
   {% endif %}
   {% if site.facebook_user %}
     {% if is_prev %}, {% else %}{% assign is_prev = true %}{% endif %}

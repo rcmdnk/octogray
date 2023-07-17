@@ -3,19 +3,6 @@
   Imported. Load order is alphabetical and styles can be overriden in
   custom/_style.scss which is loaded after all plugin stylesheets.
 */
-// scrolltopcontrol
-.icon-scroll-up {
-  font-size: 3em;
-  color: #999999;
-  border: solid 2px #999999;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-}
-#topcontrol {
-  z-index: 100;
-}
-
 // index_click_box
 .index_click_box{
   cursor: pointer;

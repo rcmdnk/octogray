@@ -275,28 +275,6 @@ copy_link_plugin octopress-github-readme-stats/source/_includes/custom/asides/gi
 
 # install downloaded plugins
 
-## [NailThumb](http://www.garralab.com/nailthumb.php)
-#wget -O nailthumb.1.1.zip http://sourceforge.net/projects/nailthumb/files/nailthumb.1.1.zip/download
-#unzip nailthumb.1.1.zip
-#rm -f nailthumb.1.1.zip
-#mv nailthumb $submodule_dir/
-#cp $submodule_dir/nailthumb/jquery.nailthumb.1.1.css ./sass/plugins/_nailthumb.scss
-#cp $submodule_dir/nailthumb/jquery.nailthumb.1.1.min.js ./source/javascripts/
-#rm -rf $submodule_dir/nailthumb/
-#echo
-
-## [jQuery SCroll to Top Control](http://www.dynamicdrive.com/dynamicindex3/scrolltop.htm)
-wget -O scrolltopcontrol.js http://www.dynamicdrive.com/dynamicindex3/scrolltopcontrol.js
-mkdir -p $submodule_dir/scrolltopcontrol
-mv scrolltopcontrol.js $submodule_dir/scrolltopcontrol
-cp $submodule_dir/scrolltopcontrol/scrolltopcontrol.js ./source/javascripts/
-sedi "s/<img src=\"up.png\" style=\"width:48px; height:48px\" \/>/<i class=\"fa fa-chevron-up icon-scroll-up\"><\/i>/g" ./source/javascripts/scrolltopcontrol.js
-sedi "s/startline:100/startline:300/g" ./source/javascripts/scrolltopcontrol.js
-sedi "s/offsety:5/offsety:20/g" ./source/javascripts/scrolltopcontrol.js
-sedi "s/bottom:mainobj/top:mainobj/g" ./source/javascripts/scrolltopcontrol.js
-rm -rf $submodule_dir/scrolltopcontrol/
-echo
-
 # other plugins
 for p in $theme_dir/plugins_add/*rb;do
   copy_link_util "${p}" ./plugins/

@@ -173,7 +173,7 @@ $(function(){
   };
 
   var socials=[];
-  var smarks = ["hatebu", "twitter", "googleplus",
+  var smarks = ["hatebu", "twitter",
                "facebook", "pocket", "linkedin",
                "stumble", "pinterest", "buffer", "delicious",
                "tumblr", "feedly"];

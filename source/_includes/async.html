@@ -133,7 +133,6 @@
 {% if site.twitter_follow_button or site.twitter_button or site.twitter_search %}{% unless site.twitter_only_page == true and page.twitter != true %} <script src='//platform.twitter.com/widgets.js' async defer></script>{% endunless %}{% endif %}
 {% unless site.share_official == false %}
   {% if site.hatebu_button %}<script src='//b.st-hatena.com/js/bookmark_button.js' async defer></script>{% endif %}
-  {% if site.googleplus_button %}{% if site.google_plus_one_lang %}<script>window.___gcfg={lang:'{{site.google_plus_one_lang}}'};</script>{% endif %}<script src='//apis.google.com/js/plusone.js' async defer></script>{% endif %}
   {% if site.facebook_like or site.facebook_button %}<script src='//connect.facebook.net/{% if site.facebook_lang %}{{ site.facebook_lang }}{% else %}en_US{% endif %}/sdk.js#{% if site.facebook_app_id %}appId={{ site.facebook_app_id }}&{% endif %}xfbml=1&version=v2.0' async defer></script>{% endif %}
   {% if site.pocket_button %}<script src='//widgets.getpocket.com/v1/j/btn.js?v=1' async defer></script>{% endif %}
   {% if site.linkedin_button %}<script src='//platform.linkedin.com/in.js' async defer></script>{% endif %}
@@ -184,7 +183,6 @@ compressed and combined to all.js
 <script src="{{root_url}}/javascripts/random-posts.js" defer></script>
 <script src="{{root_url}}/javascripts/utils.js" defer></script>
 {% endcomment %}
-{% if site.scrolltop %}<script src="{{root_url}}/javascripts/scrolltopcontrol.js" defer></script>{% endif %}
 {% unless site.share_static and page.share_check != true %}<script src="{{root_url}}/javascripts/share-custom.js" defer></script>{% endunless %}
 {% if page.share_check %}<script src="{{root_url}}/javascripts/share-check.js" defer></script>{% endif %}
 {% if site.google_search_pub %}

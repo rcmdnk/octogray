@@ -30,8 +30,6 @@ share_check_all: true
           id="hatebu_shuffle" class="btn hatebu_custom" >Hatebu {{site.hatebuCount}}</p></li>
           <li><p title="Sort by Tweet"
           id="twitter_shuffle" class="btn twitter_custom" >Tweet {{site.twitterCount}}</p></li>
-          <li><p title="Sort by Google Plus One"
-          id="googleplus_shuffle" class="btn googleplus_custom" >Google+ {{site.googleplusCount}}</p></li>
           <li><p title="Sort by Facebook"
           id="facebook_shuffle" class="btn facebook_custom" >Facebook {{site.facebookCount}}</p></li>
           <li><p title="Sort by Pocket"
@@ -67,7 +65,7 @@ share_check_all: true
 <script>
   window.onload = function(){
     ["views1d","views1w","views1m","views1y","views10y",
-        "hatebu","twitter","googleplus","facebook","pocket","linkedin","stumble",
+        "hatebu","twitter","facebook","pocket","linkedin","stumble",
         "pinterest","buffer", "delicious"].forEach(function(c){
       document.getElementById(c+"_shuffle").onclick = function(){
         var list = document.getElementById("posts-sort");
