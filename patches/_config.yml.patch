@@ -341,22 +341,18 @@ index c1d56f4..d6d2191 100644
 +
 +# page-view settings (need service account private key file (key_file). ref: https://github.com/developmentseed/jekyll-ga)
 +page-view:
-+  service_account_email:
++  credential:
 +  key_file: # service account private key file (Analytics-XXXXXXXXXXXX.p12)
-+  key_secret: notasecret    # service account private key's password
-+  profileID:  #ga:XXXXXXXX
++  property_id: # Analytics property id (XXXXXXXX)
 +  start:                    # Beginning of report
-+    - 1 month ago
-+    - 10 years ago
-+    - 1 year ago
-+    - 1 week ago
-+    - 1 day ago
-+  end: now                  # End of report
-+  metric: ga:pageviews      # Metric code
-+  segment: gaid::-1         # all visits
-+  filters:                  # optional
-+  n_posts: 5                # Number of popular posts
-+  show_views: false         # If n_views is shown or not
++    - 30daysAgo
++    - 3653daysAgo
++    - 365daysAgo
++    - 7daysAgo
++    - 1daysAgo
++  end: today              # End of report
++  n_posts: 5              # Number of popular posts
++  show_views: true        # If n_views is shown or not
 +popular_post_title: Most Viewed Posts (Last Month) # Title of sidebar section
 +
 +# Random posts

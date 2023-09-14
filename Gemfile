@@ -10,7 +10,7 @@ group :development do
   gem 'stringex', '~> 2.8'
   gem 'chronic', '~> 0.10'
   gem 'gemoji', '~> 2.0'
-  gem 'google-api-client', '~> 0.53'
+  gem 'google-analytics-data', '~> 0.4.0'
   gem 'htmlcompressor', '~> 0.4'
   gem 'jekyll-paginate', '~> 1.1'
   gem 'json', '~> 2.6'

@@ -17,15 +17,15 @@ share_check_all: true
       <div class="share-button">
         <ul>
           <li><p title="Sort by 1 day views by Analytics"
-          id="views1d_shuffle" class="btn views1d_custom" >1d views {{site._pv_1-day-ago-to-now}}</p></li>
+          id="views1d_shuffle" class="btn views1d_custom" >1d views {{site._pv_1daysAgo-to-today}}</p></li>
           <li><p title="Sort by 1 week views by Analytics"
-          id="views1w_shuffle" class="btn views1w_custom" >1w views {{site._pv_1-week-ago-to-now}}</p></li>
+          id="views1w_shuffle" class="btn views1w_custom" >1w views {{site._pv_7daysAgo-to-today}}</p></li>
           <li><p title="Sort by 1 month views by Analytics"
-          id="views1m_shuffle" class="btn views1m_custom" >1m views {{site._pv_1-month-ago-to-now}}</p></li>
+          id="views1m_shuffle" class="btn views1m_custom" >1m views {{site._pv_30daysAgo-to-today}}</p></li>
           <li><p title="Sort by 1 year views by Analytics"
-          id="views1y_shuffle" class="btn views1y_custom" >1y views {{site._pv_1-year-ago-to-now}}</p></li>
+          id="views1y_shuffle" class="btn views1y_custom" >1y views {{site._pv_365daysAgo-to-today}}</p></li>
           <li><p title="Sort by 10 years views by Analytics"
-          id="views10y_shuffle" class="btn views10y_custom" >10y views {{site._pv_10-years-ago-to-now}}</p></li>
+          id="views10y_shuffle" class="btn views10y_custom" >10y views {{site._pv_3653daysAgo-to-today}}</p></li>
           <li><p title="Sort by Hatebu"
           id="hatebu_shuffle" class="btn hatebu_custom" >Hatebu {{site.hatebuCount}}</p></li>
           <li><p title="Sort by Tweet"
