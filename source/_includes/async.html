@@ -160,16 +160,8 @@
   <script src="//www.linkwithin.com/widget.js" async defer></script>
 {% endif %}
 {% if page.math %}<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript" async defer></script>{% endif %}}
-{% comment %}jQuery{% endcomment %}
-{% if site.jquery_ie8_version %}
-  <!--[if lt IE 9]>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/{{jquery_ie8_version}}/jquery.min.js" defer></script>
-  <![endif]-->
-  {% endif %}
 {% if site.jquery_version %}
-  <!--[if gte IE 9]><!-->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/{{site.jquery_version}}/jquery.min.js" defer></script>
-  <!--<![endif]-->
 {% endif %}
 {% comment %}
 <script>!window.jQuery && document.write(unescape('%3Cscript src="{{root_url}}/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>

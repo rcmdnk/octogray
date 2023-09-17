@@ -50,7 +50,6 @@ aboutme_marks: false
 
 # jQuery
 jquery_version: 3.7.0
-jquery_ie8_version: 1.9.1
 
 # Font Awesome
 fontawesome_version: 4.7.0
@@ -316,8 +315,7 @@ userlocal:
 
 # page-view settings (need service account private key file (key_file). ref: https://github.com/developmentseed/jekyll-ga)
 page-view:
-  credential:
-  key_file: # service account private key file (Analytics-XXXXXXXXXXXX.p12)
+  credential:  # service account credential json file
   property_id: # Analytics property id (XXXXXXXX)
   start:                    # Beginning of report
     - 30daysAgo
