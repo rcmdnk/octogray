@@ -18,25 +18,14 @@
   {% endcomment %}
 })(document);
 </script>
-{% if site.google_analytics_tracking_id %}
-<script>
-  window.GoogleAnalyticsObject = 'ga';
-  if (!('ga' in window)){
-    ga = function(){
-      ga.q.push(arguments);
-    };
-  }
-  ga.l = (new Date()).getTime();
-  ga.q = [['create', '{{site.google_analytics_tracking_id}}', 'auto'], ['send', 'pageview'], ['require', 'linkid', 'linkid.js']];
-</script>
-<script src="//www.google-analytics.com/analytics.js" async defer></script>
-
-<script src="https://www.googletagmanager.com/gtag/js?id={{site.google_analytics_tracking_id}}" async defer></script>
+{% if site.google_analytics_measurement_id %}
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={{site.google_analytics_measurement_id}}"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', '{{site.google_analytics_tracking_id}}');
+  gtag('config', '{{site.google_analytics_measurement_id}}');
 </script>
 {% endif %}
 {% if site.google_tag_manager_id %}
@@ -48,7 +37,7 @@
 {% endif %}
 {% if site.google_translate_layout and page.translate != false %}
 <script>
-  {% capture analytics %}{% if site.google_analytics_tracking_id %}, gaTrack: true, gaId: '{{site.google_analytics_tracking_id}}'{% endif %}{% endcapture %}
+  {% capture analytics %}{% if site.google_analytics_measurement_id %}, gaTrack: true, gaId: '{{site.google_analytics_measurement_id}}'{% endif %}{% endcapture %}
   {% capture layout %}{% if site.google_translate_layout == 'SIMPLE' %}InlineLayout.SIMPLE{% else %}FloatPosition.{{site.google_translate_layout}}{% endif %}{% endcapture %}
   function googleTranslateElementInit() {
     new google.translate.TranslateElement({pageLanguage: '{{site.google_translate_lang}}', layout: google.translate.TranslateElement.{{layout}}, autoDisplay: false, multilanguagePage: true{{analytics}}}, 'google_translate_element');
