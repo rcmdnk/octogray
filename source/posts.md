@@ -25,7 +25,7 @@ share_check_all: true
           <li><p title="Sort by 1 year views by Analytics"
           id="views1y_shuffle" class="btn views1y_custom" >1y views {{site._pv_365daysAgo-to-today}}</p></li>
           <li><p title="Sort by 10 years views by Analytics"
-          id="views10y_shuffle" class="btn views10y_custom" >10y views {{site._pv_3653daysAgo-to-today}}</p></li>
+          id="viewsfull_shuffle" class="btn viewsfull_custom" >Since 2015/08/14 views {{site._pv_2015-08-14-to-today}}</p></li>
           <li><p title="Sort by Hatebu"
           id="hatebu_shuffle" class="btn hatebu_custom" >Hatebu {{site.hatebuCount}}</p></li>
           <li><p title="Sort by Tweet"
@@ -64,7 +64,7 @@ share_check_all: true
 </ul>
 <script>
   window.onload = function(){
-    ["views1d","views1w","views1m","views1y","views10y",
+    ["views1d","views1w","views1m","views1y","viewsfull",
         "hatebu","twitter","facebook","pocket","linkedin","stumble",
         "pinterest","buffer", "delicious"].forEach(function(c){
       document.getElementById(c+"_shuffle").onclick = function(){
