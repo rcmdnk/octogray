@@ -18,7 +18,7 @@ group :development do
   gem 'pygments.rb', '~> 2.3'
   gem 'ruby-progressbar', '~> 1.11'
   gem 'thin', '~> 1.8'
-  gem 'sinatra', '~> 3.0'
+  gem 'sinatra', '~> 4.0'
   gem 'xmlrpc', '~> 0.3'
   gem 'yui-compressor', '~> 0.12'
 end
