@@ -2,7 +2,7 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://example.com
+url: https://example.com
 title: My Octopress Blog
 subtitle: A blogging framework for hackers.
 author: Your Name
@@ -265,7 +265,7 @@ coderwall_user:
 
 # feedly
 feedly_mark: false
-feedly_atom: http://example/atom.xml
+feedly_atom: https://example/atom.xml
 feedly_button: false # for the bottom button
 
 # Tumblr

@@ -102,7 +102,7 @@ $(function(){
     if (!selected) return;
     var title = document.title;
     //var  url = location.href;
-    var  url = 'http://' + location.host + location.pathname;
+    var  url = 'https://' + location.host + location.pathname;
     if("jekyll_var" in window && jekyll_var("mandrill")){
       $.ajax({
         type: "POST",

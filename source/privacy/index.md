@@ -19,7 +19,7 @@ published: true
 この情報は匿名で収集されており個人の特定するものではありません。
 また、Cookieを無効にすることでこの収集を拒否することが出来ます。
 
-> [ユーザーが Google パートナーのサイトやアプリを使用する際の Google によ るデータ使用 – ポリシーと規約 – Google](http://www.google.com/policies/privacy/partners/)
+> [ユーザーが Google パートナーのサイトやアプリを使用する際の Google によ るデータ使用 – ポリシーと規約 – Google](https://www.google.com/policies/privacy/partners/)
 
 {% endif site.google_analytics_tracking_id %}
 {% if site.affiliate %}
@@ -53,7 +53,7 @@ It uses cookies to collect data.
 These cookies don't personally identifying information.
 You can disable cookies via your browser settings.
 
-> [How Google uses data when you use our partners' sites or apps – Privacy & Terms – Google](http://www.google.com/intl/en/policies/privacy/partners/)
+> [How Google uses data when you use our partners' sites or apps – Privacy & Terms – Google](https://www.google.com/intl/en/policies/privacy/partners/)
 
 {% endif site.google_analytics_tracking_id %}
 {% if site.affiliate %}

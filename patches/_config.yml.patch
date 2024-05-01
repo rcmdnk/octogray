@@ -295,7 +295,7 @@ index c1d56f4..b260ef1 100644
 +
 +# feedly
 +feedly_mark: false
-+feedly_atom: http://example/atom.xml
++feedly_atom: https://example/atom.xml
 +feedly_button: false # for the bottom button
 +
 +# Tumblr

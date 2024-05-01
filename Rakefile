@@ -706,9 +706,9 @@ end
 def blog_url(user, project, source_dir)
   cname = "#{source_dir}/CNAME"
   url = if File.exists?(cname)
-    "http://#{IO.read(cname).strip}"
+    "https://#{IO.read(cname).strip}"
   else
-    "http://#{user.downcase}.github.io"
+    "https://#{user.downcase}.github.io"
   end
   url += "/#{project}" unless project == ''
   url
@@ -800,7 +800,7 @@ end
 #  begin
 #    require 'xmlrpc/client'
 #    puts '* Pinging ping-o-matic'
-#    XMLRPC::Client.new('rpc.pingomatic.com', '/').call('weblogUpdates.extendedPing', 'Nothoughtcontrol.com' , 'http://www.nothoughtcontrol.com', 'http://www.nothoughtcontrol.com/atom.xml')
+#    XMLRPC::Client.new('rpc.pingomatic.com', '/').call('weblogUpdates.extendedPing', 'Nothoughtcontrol.com' , 'https://www.nothoughtcontrol.com', 'https://www.nothoughtcontrol.com/atom.xml')
 #  rescue LoadError
 #    puts '! Could not ping ping-o-matic, because XMLRPC::Client could not be found.'
 #  end
@@ -812,7 +812,7 @@ end
 #    require 'net/http'
 #    require 'uri'
 #    puts '* Pinging Google about our sitemap'
-#    Net::HTTP.get('www.google.com', '/webmasters/tools/ping?sitemap=' + URI.escape('http://www.nothoughtcontrol.com/sitemap.xml'))
+#    Net::HTTP.get('www.google.com', '/webmasters/tools/ping?sitemap=' + URI.escape('https://www.nothoughtcontrol.com/sitemap.xml'))
 #  rescue LoadError
 #    puts '! Could not ping Google about our sitemap, because Net::HTTP or URI could not be found.'
 #  end
@@ -824,7 +824,7 @@ end
 #    require 'net/http'
 #    require 'uri'
 #    puts '* Pinging Bing about our sitemap'
-#    Net::HTTP.get('www.bing.com', '/webmaster/ping.aspx?siteMap=' + URI.escape('http://www.nothoughtcontrol.com/sitemap.xml'))
+#    Net::HTTP.get('www.bing.com', '/webmaster/ping.aspx?siteMap=' + URI.escape('https://www.nothoughtcontrol.com/sitemap.xml'))
 #  rescue LoadError
 #    puts '! Could not ping Bing about our sitemap, because Net::HTTP or URI could not be found.'
 #  end
@@ -840,7 +840,7 @@ end
 #  begin
 #    require 'xmlrpc/client'
 #    puts '* Pinging PINGOO{'
-#    XMLRPC::Client.new('pingoo.jp', '/').call('weblogUpdates.extendedPing', 'rcmdnk.com' , 'http://rcmdnk.com', 'http://rcmdnk.com/atom.xml')
+#    XMLRPC::Client.new('pingoo.jp', '/').call('weblogUpdates.extendedPing', 'rcmdnk.com' , 'https://rcmdnk.com', 'https://rcmdnk.com/atom.xml')
 #  rescue LoadError
 #    puts '! Could not ping PINGOO, because XMLRPC::Client could not be found.'
 #  end
@@ -851,8 +851,8 @@ end
 #  begin
 #    require 'xmlrpc/client'
 #    puts '## Pinging PINGOO'
-#    #XMLRPC::Client.new('rpc.pingomatic.com', '/').call('weblogUpdates.extendedPing', 'rcmdnk\'s blog' , 'http://rcmdnk.com', 'http://rcmdnk.com/atom.xml')
-#    XMLRPC::Client.new2('http://api.my.yahoo.co.jp/RPC2').call('weblogUpdates.ping', 'rcmdnk blog' , 'http://rcmdnk.com')
+#    #XMLRPC::Client.new('rpc.pingomatic.com', '/').call('weblogUpdates.extendedPing', 'rcmdnk\'s blog' , 'https://rcmdnk.com', 'https://rcmdnk.com/atom.xml')
+#    XMLRPC::Client.new2('https://api.my.yahoo.co.jp/RPC2').call('weblogUpdates.ping', 'rcmdnk blog' , 'https://rcmdnk.com')
 #  rescue LoadError
 #    puts '! Could not ping ping-o-matic, because XMLRPC::Client could not be found.'
 #  end

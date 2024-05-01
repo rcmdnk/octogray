@@ -1,14 +1,14 @@
 {% capture canonical %}{{ site.url }}{% if site.permalink contains '.html' %}{{ page.url }}{% else %}{{ page.url | remove:'index.html' }}{% endif %}{% endcapture %}
 <!--
 <rdf:RDF
-xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:rdf="https://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dc="https://purl.org/dc/elements/1.1/"
 xmlns:foaf="http://xmlns.com/foaf/0.1/">
 <rdf:Description rdf:about="{{canonical}}">
 <foaf:maker rdf:parseType="Resource">
 <foaf:holdsAccount>
 <foaf:OnlineAccount foaf:accountName="{{site.hatena_user}}">
-<foaf:accountServiceHomepage rdf:resource="http://www.hatena.ne.jp/">
+<foaf:accountServiceHomepage rdf:resource="https://www.hatena.ne.jp/">
 </foaf:accountServiceHomepage>
 </foaf:OnlineAccount>
 </foaf:holdsAccount>

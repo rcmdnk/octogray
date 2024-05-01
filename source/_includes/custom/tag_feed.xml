@@ -2,7 +2,7 @@
 layout: null
 ---
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
+<feed xmlns="https://www.w3.org/2005/Atom">
 
   <title><![CDATA[{% if site.titlecase %}{{ page.title | titlecase | cdata_escape }}{% else %}{{ page.title | cdata_escape }}{% endif %} | {{ site.title | cdata_escape }}]]></title>
   <link href="{{ site.url }}/{{ page.feed_url }}" rel="self"/>
@@ -13,7 +13,7 @@ layout: null
     <name><![CDATA[{{ site.author | strip_html }}]]></name>
     {% if site.email %}<email><![CDATA[{{ site.email }}]]></email>{% endif %}
   </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
+  <generator uri="https://octopress.org/">Octopress</generator>
 
   {% for post in site.tags[page.tag] limit: 5 %}
   <entry>
