@@ -435,13 +435,13 @@ end
 desc "Default deploy task"
 task :deploy, :deploy_method do |t, args|
   # Check if preview posts exists, which should not be published
-  if File.exists?(".integrated") or File.exists?(".isolated")
+  if File.exist?(".integrated") or File.exist?(".isolated")
     puts "## Found isolated history, regenerating files ..."
     ok_failed("rm -f .integrated .isolated")
     Rake::Task[:integrate].execute
     Rake::Task[:generate].execute
   end
-  if File.exists?(".preview-mode")
+  if File.exist?(".preview-mode")
     puts "## Found posts in preview mode, regenerating files ..."
     File.delete(".preview-mode")
     Rake::Task[:generate].execute
@@ -486,7 +486,7 @@ end
 desc "Deploy website via rsync"
 task :rsync do
   exclude = ""
-  if File.exists?('./rsync-exclude')
+  if File.exist?('./rsync-exclude')
     exclude = "--exclude-from '#{File.expand_path('./rsync-exclude')}'"
   end
   puts "## Deploying website via Rsync"
@@ -622,6 +622,8 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
   url = blog_url(user, project, source_dir)
   jekyll_config = IO.read('_config.yml')
   jekyll_config.sub!(/^url:.*$/, "url: #{url}")
+  jekyll_config.sub!(/^subscribe_rss:.*$/, "subscribe_rss: #{url}/atom.xml")
+  jekyll_config.sub!(/^feedly_atom:.*$/, "feedly_atom: #{url}/atom.xml")
   File.open('_config.yml', 'w') do |f|
     f.write jekyll_config
   end
@@ -706,7 +708,7 @@ end
 
 def blog_url(user, project, source_dir)
   cname = "#{source_dir}/CNAME"
-  url = if File.exists?(cname)
+  url = if File.exist?(cname)
     "https://#{IO.read(cname).strip}"
   else
     "https://#{user.downcase}.github.io"

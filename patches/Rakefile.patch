@@ -1,5 +1,5 @@
 diff --git a/Rakefile b/Rakefile
-index 9367ea1..de8f694 100644
+index 9367ea1..efa4437 100644
 --- a/Rakefile
 +++ b/Rakefile
 @@ -1,6 +1,8 @@
@@ -395,24 +395,25 @@ index 9367ea1..de8f694 100644
  end
  
  desc "Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom"
-@@ -215,8 +433,14 @@ end
+@@ -215,20 +433,47 @@ end
  ##############
  
  desc "Default deploy task"
 -task :deploy do
 -  # Check if preview posts exist, which should not be published
+-  if File.exists?(".preview-mode")
 +task :deploy, :deploy_method do |t, args|
 +  # Check if preview posts exists, which should not be published
-+  if File.exists?(".integrated") or File.exists?(".isolated")
++  if File.exist?(".integrated") or File.exist?(".isolated")
 +    puts "## Found isolated history, regenerating files ..."
 +    ok_failed("rm -f .integrated .isolated")
 +    Rake::Task[:integrate].execute
 +    Rake::Task[:generate].execute
 +  end
-   if File.exists?(".preview-mode")
++  if File.exist?(".preview-mode")
      puts "## Found posts in preview mode, regenerating files ..."
      File.delete(".preview-mode")
-@@ -224,11 +448,32 @@ task :deploy do
+     Rake::Task[:generate].execute
    end
  
    Rake::Task[:copydot].invoke(source_dir, public_dir)
@@ -447,7 +448,12 @@ index 9367ea1..de8f694 100644
  end
  
  desc "copy dot files for deployment"
-@@ -245,74 +490,105 @@ task :rsync do
+@@ -241,78 +486,109 @@ end
+ desc "Deploy website via rsync"
+ task :rsync do
+   exclude = ""
+-  if File.exists?('./rsync-exclude')
++  if File.exist?('./rsync-exclude')
      exclude = "--exclude-from '#{File.expand_path('./rsync-exclude')}'"
    end
    puts "## Deploying website via Rsync"
@@ -576,7 +582,7 @@ index 9367ea1..de8f694 100644
      repo_url = get_stdin("Repository url: ")
    end
    protocol = (repo_url.match(/(^git)@/).nil?) ? 'https' : 'git'
-@@ -322,23 +598,25 @@ task :setup_github_pages, :repo do |t, args|
+@@ -322,56 +598,85 @@ task :setup_github_pages, :repo do |t, args|
      user = repo_url.match(/github\.com\/([^\/]+)/)[1]
    end
    branch = (repo_url.match(/\/[\w-]+\.github\.(?:io|com)/).nil?) ? 'gh-pages' : 'master'
@@ -613,7 +619,10 @@ index 9367ea1..de8f694 100644
      end
    end
    url = blog_url(user, project, source_dir)
-@@ -347,31 +625,56 @@ task :setup_github_pages, :repo do |t, args|
+   jekyll_config = IO.read('_config.yml')
+   jekyll_config.sub!(/^url:.*$/, "url: #{url}")
++  jekyll_config.sub!(/^subscribe_rss:.*$/, "subscribe_rss: #{url}/atom.xml")
++  jekyll_config.sub!(/^feedly_atom:.*$/, "feedly_atom: #{url}/atom.xml")
    File.open('_config.yml', 'w') do |f|
      f.write jekyll_config
    end
@@ -692,7 +701,7 @@ index 9367ea1..de8f694 100644
  end
  
  def get_stdin(message)
-@@ -379,9 +682,22 @@ def get_stdin(message)
+@@ -379,9 +684,22 @@ def get_stdin(message)
    STDIN.gets.chomp
  end
  
@@ -717,11 +726,13 @@ index 9367ea1..de8f694 100644
    else
      answer = get_stdin(message)
    end
-@@ -391,9 +707,9 @@ end
+@@ -390,10 +708,10 @@ end
+ 
  def blog_url(user, project, source_dir)
    cname = "#{source_dir}/CNAME"
-   url = if File.exists?(cname)
+-  url = if File.exists?(cname)
 -    "http://#{IO.read(cname).strip}"
++  url = if File.exist?(cname)
 +    "https://#{IO.read(cname).strip}"
    else
 -    "http://#{user.downcase}.github.io"
@@ -729,7 +740,7 @@ index 9367ea1..de8f694 100644
    end
    url += "/#{project}" unless project == ''
    url
-@@ -404,3 +720,336 @@ task :list do
+@@ -404,3 +722,336 @@ task :list do
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end
