@@ -46,6 +46,7 @@ html_for_minify = ["*.html", "blog/*/*/*/*/*.html"]
 html_not_minify = []
 precheck        = false
 n_cores         = 8
+compass         = "ruby -r ./plugins/compass_monkey_patch.rb -S compass"
 
 if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
   puts '## Set the codepage to 65001 for Windows machines'
@@ -80,7 +81,7 @@ task :css, :style do |t, args|
   if args.style
     style = "-s #{args.style}"
   end
-  ok_failed("compass compile #{style} --css-dir #{source_dir}/stylesheets")
+  ok_failed("#{compass} compile #{style} --css-dir #{source_dir}/stylesheets")
   cp_r "#{source_dir}/stylesheets/.", "#{public_dir}/stylesheets/"
 end
 
@@ -196,10 +197,10 @@ desc "Watch the site and regenerate when it changes"
 task :watch do
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
   puts "Starting to watch source with Jekyll and Compass."
-  ok_failed("compass compile --css-dir #{source_dir}/stylesheets") unless File.exist?("#{source_dir}/stylesheets/screen.css")
+  ok_failed("#{compass} compile --css-dir #{source_dir}/stylesheets") unless File.exist?("#{source_dir}/stylesheets/screen.css")
   ok_failed( "touch .preview-mode")
   jekyllPid = Process.spawn("jekyll build --watch --unpublished")
-  compassPid = Process.spawn("compass watch")
+  compassPid = Process.spawn("#{compass} watch")
 
   trap("INT") {
     [jekyllPid, compassPid].each { |pid| Process.kill(9, pid) rescue Errno::ESRCH }
@@ -228,10 +229,10 @@ desc "preview the site in a web browser"
 task :preview do
   raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
   puts "Starting to watch source with Jekyll and Compass. Starting Rack on port #{server_port}"
-  ok_failed("compass compile --css-dir #{source_dir}/stylesheets") unless File.exist?("#{source_dir}/stylesheets/screen.css")
+  ok_failed("#{compass} compile --css-dir #{source_dir}/stylesheets") unless File.exist?("#{source_dir}/stylesheets/screen.css")
   ok_failed("touch .preview-mode")
   jekyllPid = Process.spawn("jekyll build --watch --unpublished")
-  compassPid = Process.spawn("compass watch")
+  compassPid = Process.spawn("#{compass} watch")
   rackupPid = Process.spawn("rackup --port #{server_port}")
 
   trap("INT") {

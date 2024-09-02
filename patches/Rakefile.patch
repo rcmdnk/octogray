@@ -1,5 +1,5 @@
 diff --git a/Rakefile b/Rakefile
-index 9367ea1..bd0ca80 100644
+index 9367ea1..de8f694 100644
 --- a/Rakefile
 +++ b/Rakefile
 @@ -1,6 +1,8 @@
@@ -11,7 +11,7 @@ index 9367ea1..bd0ca80 100644
  
  ## -- Rsync Deploy config -- ##
  # Be sure your public key is listed in your server's ~/.ssh/authorized_keys file
-@@ -9,27 +11,45 @@ ssh_port       = "22"
+@@ -9,27 +11,46 @@ ssh_port       = "22"
  document_root  = "~/website.com/"
  rsync_delete   = false
  rsync_args     = ""  # Any extra arguments to pass to rsync
@@ -54,6 +54,7 @@ index 9367ea1..bd0ca80 100644
 +html_not_minify = []
 +precheck        = false
 +n_cores         = 8
++compass         = "ruby -r ./plugins/compass_monkey_patch.rb -S compass"
  
  if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
    puts '## Set the codepage to 65001 for Windows machines'
@@ -62,7 +63,7 @@ index 9367ea1..bd0ca80 100644
  end
  
  desc "Initial setup for Octopress: copies the default theme into the path of Jekyll's generator. Rake install defaults to rake install[classic] to install a different theme run rake install[some_theme_name]"
-@@ -52,47 +72,192 @@ end
+@@ -52,47 +73,192 @@ end
  # Working with Jekyll #
  #######################
  
@@ -76,7 +77,7 @@ index 9367ea1..bd0ca80 100644
 +  if args.style
 +    style = "-s #{args.style}"
 +  end
-+  ok_failed("compass compile #{style} --css-dir #{source_dir}/stylesheets")
++  ok_failed("#{compass} compile #{style} --css-dir #{source_dir}/stylesheets")
 +  cp_r "#{source_dir}/stylesheets/.", "#{public_dir}/stylesheets/"
 +end
 +
@@ -196,10 +197,11 @@ index 9367ea1..bd0ca80 100644
    puts "Starting to watch source with Jekyll and Compass."
 -  system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
 -  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch")
-+  ok_failed("compass compile --css-dir #{source_dir}/stylesheets") unless File.exist?("#{source_dir}/stylesheets/screen.css")
+-  compassPid = Process.spawn("compass watch")
++  ok_failed("#{compass} compile --css-dir #{source_dir}/stylesheets") unless File.exist?("#{source_dir}/stylesheets/screen.css")
 +  ok_failed( "touch .preview-mode")
 +  jekyllPid = Process.spawn("jekyll build --watch --unpublished")
-   compassPid = Process.spawn("compass watch")
++  compassPid = Process.spawn("#{compass} watch")
  
    trap("INT") {
      [jekyllPid, compassPid].each { |pid| Process.kill(9, pid) rescue Errno::ESRCH }
@@ -231,10 +233,11 @@ index 9367ea1..bd0ca80 100644
    puts "Starting to watch source with Jekyll and Compass. Starting Rack on port #{server_port}"
 -  system "compass compile --css-dir #{source_dir}/stylesheets" unless File.exist?("#{source_dir}/stylesheets/screen.css")
 -  jekyllPid = Process.spawn({"OCTOPRESS_ENV"=>"preview"}, "jekyll build --watch")
-+  ok_failed("compass compile --css-dir #{source_dir}/stylesheets") unless File.exist?("#{source_dir}/stylesheets/screen.css")
+-  compassPid = Process.spawn("compass watch")
++  ok_failed("#{compass} compile --css-dir #{source_dir}/stylesheets") unless File.exist?("#{source_dir}/stylesheets/screen.css")
 +  ok_failed("touch .preview-mode")
 +  jekyllPid = Process.spawn("jekyll build --watch --unpublished")
-   compassPid = Process.spawn("compass watch")
++  compassPid = Process.spawn("#{compass} watch")
    rackupPid = Process.spawn("rackup --port #{server_port}")
  
    trap("INT") {
@@ -265,7 +268,7 @@ index 9367ea1..bd0ca80 100644
  # usage rake new_post[my-new-post] or rake new_post['my new post'] or rake new_post (defaults to "new-post")
  desc "Begin a new post in #{source_dir}/#{posts_dir}"
  task :new_post, :title do |t, args|
-@@ -102,20 +267,39 @@ task :new_post, :title do |t, args|
+@@ -102,20 +268,39 @@ task :new_post, :title do |t, args|
      title = get_stdin("Enter a title for your post: ")
    end
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
@@ -308,7 +311,7 @@ index 9367ea1..bd0ca80 100644
    end
  end
  
-@@ -125,8 +309,10 @@ task :new_page, :filename do |t, args|
+@@ -125,8 +310,10 @@ task :new_page, :filename do |t, args|
    raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
    args.with_defaults(:filename => 'new-page')
    page_dir = [source_dir]
@@ -320,7 +323,7 @@ index 9367ea1..bd0ca80 100644
      title = filename
      page_dir.concat($1.downcase.sub(/^\//, '').split('/')) unless $1.nil?  # Add path to page_dir Array
      if extension.nil?
-@@ -147,10 +333,13 @@ task :new_page, :filename do |t, args|
+@@ -147,10 +334,13 @@ task :new_page, :filename do |t, args|
        page.puts "---"
        page.puts "layout: page"
        page.puts "title: \"#{title}\""
@@ -335,7 +338,7 @@ index 9367ea1..bd0ca80 100644
        page.puts "---"
      end
    else
-@@ -161,21 +350,49 @@ end
+@@ -161,21 +351,49 @@ end
  # usage rake isolate[my-post]
  desc "Move all other posts than the one currently being worked on to a temporary stash location (stash) so regenerating the site happens much more quickly."
  task :isolate, :filename do |t, args|
@@ -392,7 +395,7 @@ index 9367ea1..bd0ca80 100644
  end
  
  desc "Move sass to sass.old, install sass theme updates, replace sass/custom with sass.old/custom"
-@@ -215,8 +432,14 @@ end
+@@ -215,8 +433,14 @@ end
  ##############
  
  desc "Default deploy task"
@@ -409,7 +412,7 @@ index 9367ea1..bd0ca80 100644
    if File.exists?(".preview-mode")
      puts "## Found posts in preview mode, regenerating files ..."
      File.delete(".preview-mode")
-@@ -224,11 +447,32 @@ task :deploy do
+@@ -224,11 +448,32 @@ task :deploy do
    end
  
    Rake::Task[:copydot].invoke(source_dir, public_dir)
@@ -444,7 +447,7 @@ index 9367ea1..bd0ca80 100644
  end
  
  desc "copy dot files for deployment"
-@@ -245,74 +489,105 @@ task :rsync do
+@@ -245,74 +490,105 @@ task :rsync do
      exclude = "--exclude-from '#{File.expand_path('./rsync-exclude')}'"
    end
    puts "## Deploying website via Rsync"
@@ -573,7 +576,7 @@ index 9367ea1..bd0ca80 100644
      repo_url = get_stdin("Repository url: ")
    end
    protocol = (repo_url.match(/(^git)@/).nil?) ? 'https' : 'git'
-@@ -322,23 +597,25 @@ task :setup_github_pages, :repo do |t, args|
+@@ -322,23 +598,25 @@ task :setup_github_pages, :repo do |t, args|
      user = repo_url.match(/github\.com\/([^\/]+)/)[1]
    end
    branch = (repo_url.match(/\/[\w-]+\.github\.(?:io|com)/).nil?) ? 'gh-pages' : 'master'
@@ -610,7 +613,7 @@ index 9367ea1..bd0ca80 100644
      end
    end
    url = blog_url(user, project, source_dir)
-@@ -347,31 +624,56 @@ task :setup_github_pages, :repo do |t, args|
+@@ -347,31 +625,56 @@ task :setup_github_pages, :repo do |t, args|
    File.open('_config.yml', 'w') do |f|
      f.write jekyll_config
    end
@@ -689,7 +692,7 @@ index 9367ea1..bd0ca80 100644
  end
  
  def get_stdin(message)
-@@ -379,9 +681,22 @@ def get_stdin(message)
+@@ -379,9 +682,22 @@ def get_stdin(message)
    STDIN.gets.chomp
  end
  
@@ -714,7 +717,19 @@ index 9367ea1..bd0ca80 100644
    else
      answer = get_stdin(message)
    end
-@@ -404,3 +719,336 @@ task :list do
+@@ -391,9 +707,9 @@ end
+ def blog_url(user, project, source_dir)
+   cname = "#{source_dir}/CNAME"
+   url = if File.exists?(cname)
+-    "http://#{IO.read(cname).strip}"
++    "https://#{IO.read(cname).strip}"
+   else
+-    "http://#{user.downcase}.github.io"
++    "https://#{user.downcase}.github.io"
+   end
+   url += "/#{project}" unless project == ''
+   url
+@@ -404,3 +720,336 @@ task :list do
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end

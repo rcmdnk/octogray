@@ -1,10 +1,9 @@
 diff --git a/Gemfile b/Gemfile
-index 5683812..5d6ceb3 100644
+index 5683812..eaaee8c 100644
 --- a/Gemfile
 +++ b/Gemfile
-@@ -1,18 +1,25 @@
+@@ -1,18 +1,24 @@
  source "https://rubygems.org"
-+ruby "2.7.8"
  
  group :development do
 -  gem 'rake', '~> 10.0'
@@ -19,25 +18,26 @@ index 5683812..5d6ceb3 100644
 -  gem 'sass-globbing', '~> 1.0.0'
 -  gem 'rb-fsevent', '~> 0.9'
 -  gem 'stringex', '~> 1.4.0'
-+  gem 'rake', '~> 13.0'
-+  gem 'jekyll', '~> 4.3'
-+  gem 'jekyll-sitemap', '~> 1.4'
-+  gem 'compass', '~> 1.0'
-+  gem 'sass-globbing', '~> 1.1'
-+  gem 'stringex', '~> 2.8'
-+  gem 'chronic', '~> 0.10'
-+  gem 'gemoji', '~> 2.0'
-+  gem 'google-analytics-data', '~> 0.4.0'
-+  gem 'htmlcompressor', '~> 0.4'
-+  gem 'jekyll-paginate', '~> 1.1'
-+  gem 'json', '~> 2.6'
-+  gem 'parallel', '~> 1.22'
-+  gem 'pygments.rb', '~> 2.3'
-+  gem 'ruby-progressbar', '~> 1.11'
-+  gem 'thin', '~> 1.8'
-+  gem 'sinatra', '~> 3.0'
-+  gem 'xmlrpc', '~> 0.3'
-+  gem 'yui-compressor', '~> 0.12'
++  gem 'chronic', '~> 0.10.2'
++  gem 'compass', '~> 1.0.3'
++  gem 'csv', '~> 3.3.0'
++  gem 'gemoji', '~> 4.1.0'
++  gem 'google-analytics-data', '~> 0.6.1'
++  gem 'htmlcompressor', '~> 0.4.0'
++  gem 'jekyll', '~> 4.3.3'
++  gem 'jekyll-paginate', '~> 1.1.0'
++  gem 'jekyll-sitemap', '~> 1.4.0'
++  gem 'json', '~> 2.7.2'
++  gem 'parallel', '~> 1.26.3'
++  gem 'pygments.rb', '~> 3.0.0'
++  gem 'rake', '~>13.2.1'
++  gem 'ruby-progressbar', '~> 1.13.0'
++  gem 'sass-globbing', '~> 1.1.5'
++  gem 'sinatra', '~> 3.0.0'
++  gem 'stringex', '~> 2.8.6'
++  gem 'thin', '~> 1.8.2'
++  gem 'xmlrpc', '~> 0.3.3'
++  gem 'yui-compressor', '~> 0.12.0'
  end
- 
+-
 -gem 'sinatra', '~> 1.4.2'
