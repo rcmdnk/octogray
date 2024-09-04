@@ -895,8 +895,15 @@ end
 def ok_failed(command, print_ok = false)
   out, err, status = Open3.capture3(command)
   if (status.success?)
-    puts command if print_ok
-    puts "OK" if print_ok
+    if print_ok
+      puts "=== command ==="
+      puts command
+      puts "=== stdout ==="
+      puts out
+      puts "=== stderr ==="
+      puts err
+      puts "OK" if print_ok
+    end
   else
     puts "=== command ==="
     puts command

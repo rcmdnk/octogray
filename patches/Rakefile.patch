@@ -1,5 +1,5 @@
 diff --git a/Rakefile b/Rakefile
-index 9367ea1..efa4437 100644
+index 9367ea1..ed70a63 100644
 --- a/Rakefile
 +++ b/Rakefile
 @@ -1,6 +1,8 @@
@@ -740,7 +740,7 @@ index 9367ea1..efa4437 100644
    end
    url += "/#{project}" unless project == ''
    url
-@@ -404,3 +722,336 @@ task :list do
+@@ -404,3 +722,343 @@ task :list do
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end
@@ -917,8 +917,15 @@ index 9367ea1..efa4437 100644
 +def ok_failed(command, print_ok = false)
 +  out, err, status = Open3.capture3(command)
 +  if (status.success?)
-+    puts command if print_ok
-+    puts "OK" if print_ok
++    if print_ok
++      puts "=== command ==="
++      puts command
++      puts "=== stdout ==="
++      puts out
++      puts "=== stderr ==="
++      puts err
++      puts "OK" if print_ok
++    end
 +  else
 +    puts "=== command ==="
 +    puts command
