@@ -121,7 +121,7 @@ fi
 echo
 
 # replace plugins
-yesno "Do you want to replace plugins ($(find $theme_dir/plugins/ -name "*.rb" -print0 |xargs -0 basename|tr "\n" " "  ))?"
+yesno "Do you want to replace plugins ($(find $theme_dir/plugins/ -name "*.rb" -exec basename {} \;|tr "\n" " "  ))?"
 ret=$?
 if [ $ret -eq 0 ];then
   for p in $theme_dir/plugins/*rb;do
