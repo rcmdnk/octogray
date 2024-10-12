@@ -71,4 +71,3 @@ watch_only | Watch only specified post.
 Current version is based on:
 
 > [imathis/octopress at c434de5977c316c8406c00bb24221fa61ca8fe88](https://github.com/imathis/octopress/tree/c434de5977c316c8406c00bb24221fa61ca8fe88)
-
