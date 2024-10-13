@@ -622,6 +622,7 @@ task :setup_github_pages, [:repo, :yes] do |t, args|
   url = blog_url(user, project, source_dir)
   jekyll_config = IO.read('_config.yml')
   jekyll_config.sub!(/^url:.*$/, "url: #{url}")
+  jekyll_config.sub!(/^feedly_atom:.*$/, "feedly_atom: #{url}/atom.xml")
   File.open('_config.yml', 'w') do |f|
     f.write jekyll_config
   end

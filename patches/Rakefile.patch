@@ -1,5 +1,5 @@
 diff --git a/Rakefile b/Rakefile
-index 9367ea1..e0a79d2 100644
+index 9367ea1..870240d 100644
 --- a/Rakefile
 +++ b/Rakefile
 @@ -1,6 +1,8 @@
@@ -582,7 +582,7 @@ index 9367ea1..e0a79d2 100644
      repo_url = get_stdin("Repository url: ")
    end
    protocol = (repo_url.match(/(^git)@/).nil?) ? 'https' : 'git'
-@@ -322,56 +598,85 @@ task :setup_github_pages, :repo do |t, args|
+@@ -322,56 +598,84 @@ task :setup_github_pages, :repo do |t, args|
      user = repo_url.match(/github\.com\/([^\/]+)/)[1]
    end
    branch = (repo_url.match(/\/[\w-]+\.github\.(?:io|com)/).nil?) ? 'gh-pages' : 'master'
@@ -621,7 +621,6 @@ index 9367ea1..e0a79d2 100644
    url = blog_url(user, project, source_dir)
    jekyll_config = IO.read('_config.yml')
    jekyll_config.sub!(/^url:.*$/, "url: #{url}")
-+  jekyll_config.sub!(/^subscribe_rss:.*$/, "subscribe_rss: #{url}/atom.xml")
 +  jekyll_config.sub!(/^feedly_atom:.*$/, "feedly_atom: #{url}/atom.xml")
    File.open('_config.yml', 'w') do |f|
      f.write jekyll_config
@@ -701,7 +700,7 @@ index 9367ea1..e0a79d2 100644
  end
  
  def get_stdin(message)
-@@ -379,9 +684,22 @@ def get_stdin(message)
+@@ -379,9 +683,22 @@ def get_stdin(message)
    STDIN.gets.chomp
  end
  
@@ -726,7 +725,7 @@ index 9367ea1..e0a79d2 100644
    else
      answer = get_stdin(message)
    end
-@@ -390,10 +708,10 @@ end
+@@ -390,10 +707,10 @@ end
  
  def blog_url(user, project, source_dir)
    cname = "#{source_dir}/CNAME"
@@ -740,7 +739,7 @@ index 9367ea1..e0a79d2 100644
    end
    url += "/#{project}" unless project == ''
    url
-@@ -404,3 +722,343 @@ task :list do
+@@ -404,3 +721,343 @@ task :list do
    puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
    puts "(type rake -T for more detail)\n\n"
  end
