@@ -1,5 +1,5 @@
 diff --git a/Gemfile b/Gemfile
-index 5683812..eaaee8c 100644
+index 5683812..4ae3e38 100644
 --- a/Gemfile
 +++ b/Gemfile
 @@ -1,18 +1,24 @@
@@ -30,12 +30,12 @@ index 5683812..eaaee8c 100644
 +  gem 'json', '~> 2.7.2'
 +  gem 'parallel', '~> 1.26.3'
 +  gem 'pygments.rb', '~> 3.0.0'
++  gem 'rackup', '~> 2.2.0'
 +  gem 'rake', '~>13.2.1'
 +  gem 'ruby-progressbar', '~> 1.13.0'
 +  gem 'sass-globbing', '~> 1.1.5'
-+  gem 'sinatra', '~> 3.0.0'
++  gem 'sinatra', '~> 4.0.0'
 +  gem 'stringex', '~> 2.8.6'
-+  gem 'thin', '~> 1.8.2'
 +  gem 'xmlrpc', '~> 0.3.3'
 +  gem 'yui-compressor', '~> 0.12.0'
  end
