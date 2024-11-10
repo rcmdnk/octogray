@@ -148,7 +148,59 @@
   </script>
   <script src="//www.linkwithin.com/widget.js" async defer></script>
 {% endif %}
-{% if page.math %}<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript" async defer></script>{% endif %}}
+{% if page.math %}<script>
+// mathjax v2 compatible configuration
+// [Upgrading from v2 to v3 — MathJax 3.2 documentation](https://docs.mathjax.org/en/v3.2-latest/upgrading/v2.html#version-2-compatibility-example)
+MathJax = {
+  startup: {
+    //
+    //  Mapping of old extension names to new ones
+    //
+    requireMap: {
+      AMSmath: 'ams',
+      AMSsymbols: 'ams',
+      AMScd: 'amscd',
+      HTML: 'html',
+      noErrors: 'noerrors',
+      noUndefined: 'noundefined'
+    },
+    ready: function () {
+      //
+      //  Replace the require command map with a new one that checks for
+      //    renamed extensions and converts them to the new names.
+      //
+      var CommandMap = MathJax._.input.tex.SymbolMap.CommandMap;
+      var requireMap = MathJax.config.startup.requireMap;
+      var RequireLoad = MathJax._.input.tex.require.RequireConfiguration.RequireLoad;
+      var RequireMethods = {
+        Require: function (parser, name) {
+          var required = parser.GetArgument(name);
+          if (required.match(/[^_a-zA-Z0-9]/) || required === '') {
+            throw new TexError('BadPackageName', 'Argument for %1 is not a valid package name', name);
+          }
+          if (requireMap.hasOwnProperty(required)) {
+            required = requireMap[required];
+          }
+          RequireLoad(parser, required);
+        }
+      };
+      new CommandMap('require', {require: 'Require'}, RequireMethods);
+      //
+      //  Do the usual startup
+      //
+      return MathJax.startup.defaultReady();
+    }
+  },
+  tex: {
+    autoload: {
+      color: [],          // don't autoload the color extension
+      colorv2: ['color'], // do autoload the colorv2 extension
+    }
+  }
+};
+</script>
+<script id="MathJax-script" async
+ src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>{% endif %}}
 {% if site.jquery_version %}
   <script src="//ajax.googleapis.com/ajax/libs/jquery/{{site.jquery_version}}/jquery.min.js" defer></script>
 {% endif %}
