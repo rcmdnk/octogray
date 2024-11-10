@@ -10,7 +10,7 @@ group :development do
   gem 'jekyll', '~> 4.3.3'
   gem 'jekyll-paginate', '~> 1.1.0'
   gem 'jekyll-sitemap', '~> 1.4.0'
-  gem 'json', '~> 2.7.2'
+  gem 'json', '~> 2.8.0'
   gem 'parallel', '~> 1.26.3'
   gem 'pygments.rb', '~> 3.0.0'
   gem 'rackup', '~> 2.2.0'
