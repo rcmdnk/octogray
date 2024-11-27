@@ -18,7 +18,7 @@ group :development do
   gem 'rake', '~>13.2.1'
   gem 'ruby-progressbar', '~> 1.13.0'
   gem 'sass-globbing', '~> 1.1.5'
-  gem 'sinatra', '~> 4.0.0'
+  gem 'sinatra', '~> 4.1.0'
   gem 'stringex', '~> 2.8.6'
   gem 'xmlrpc', '~> 0.3.3'
   gem 'yui-compressor', '~> 0.12.0'
