@@ -2,7 +2,7 @@ diff --git a/Gemfile b/Gemfile
 index 5683812..4ae3e38 100644
 --- a/Gemfile
 +++ b/Gemfile
-@@ -1,18 +1,24 @@
+@@ -1,18 +1,25 @@
  source "https://rubygems.org"
  
  group :development do
@@ -28,6 +28,7 @@ index 5683812..4ae3e38 100644
 +  gem 'jekyll-paginate', '~> 1.1.0'
 +  gem 'jekyll-sitemap', '~> 1.4.0'
 +  gem 'json', '~> 2.8.0'
++  gem 'ostruct', '~> 0.6.1'
 +  gem 'parallel', '~> 1.26.3'
 +  gem 'pygments.rb', '~> 3.0.0'
 +  gem 'rackup', '~> 2.2.0'

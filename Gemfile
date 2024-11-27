@@ -11,6 +11,7 @@ group :development do
   gem 'jekyll-paginate', '~> 1.1.0'
   gem 'jekyll-sitemap', '~> 1.4.0'
   gem 'json', '~> 2.8.0'
+  gem 'ostruct', '~> 0.6.1'
   gem 'parallel', '~> 1.26.3'
   gem 'pygments.rb', '~> 3.0.0'
   gem 'rackup', '~> 2.2.0'
