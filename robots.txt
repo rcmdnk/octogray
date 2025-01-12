@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://rcmdnk.com/octogray/sitemap.xml
