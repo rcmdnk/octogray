@@ -7,7 +7,7 @@ group :development do
   gem 'gemoji', '~> 2.1.0'
   gem 'google-analytics-data', '~> 0.6.1'
   gem 'htmlcompressor', '~> 0.4.0'
-  gem 'jekyll', '~> 4.3.3'
+  gem 'jekyll', '~> 4.4.0'
   gem 'jekyll-paginate', '~> 1.1.0'
   gem 'jekyll-sitemap', '~> 1.4.0'
   gem 'json', '~> 2.8.0'
