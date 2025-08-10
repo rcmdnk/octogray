@@ -15,7 +15,7 @@ group :development do
   gem 'parallel', '~> 1.26.3'
   gem 'pygments.rb', '~> 3.0.0'
   gem 'rackup', '~> 2.2.0'
-  gem 'rake', '~>13.2.1'
+  gem 'rake', '~>13.3.0'
   gem 'ruby-progressbar', '~> 1.13.0'
   gem 'sass-globbing', '~> 1.1.5'
   gem 'sinatra', '~> 4.1.0'
