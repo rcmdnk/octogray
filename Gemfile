@@ -12,7 +12,7 @@ group :development do
   gem 'jekyll-sitemap', '~> 1.4.0'
   gem 'json', '~> 2.8.0'
   gem 'ostruct', '~> 0.6.1'
-  gem 'parallel', '~> 1.26.3'
+  gem 'parallel', '~> 1.27.0'
   gem 'pygments.rb', '~> 3.0.0'
   gem 'rackup', '~> 2.2.0'
   gem 'rake', '~>13.2.1'
