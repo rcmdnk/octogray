@@ -5,7 +5,7 @@ group :development do
   gem 'compass', '~> 1.0.3'
   gem 'csv', '~> 3.3.0'
   gem 'gemoji', '~> 2.1.0'
-  gem 'google-analytics-data', '~> 0.6.1'
+  gem 'google-analytics-data', '~> 0.7.0'
   gem 'htmlcompressor', '~> 0.4.0'
   gem 'jekyll', '~> 4.3.3'
   gem 'jekyll-paginate', '~> 1.1.0'
