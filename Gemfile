@@ -14,7 +14,7 @@ group :development do
   gem 'ostruct', '~> 0.6.1'
   gem 'parallel', '~> 1.26.3'
   gem 'pygments.rb', '~> 3.0.0'
-  gem 'rackup', '~> 2.2.0'
+  gem 'rackup', '~> 2.3.0'
   gem 'rake', '~>13.2.1'
   gem 'ruby-progressbar', '~> 1.13.0'
   gem 'sass-globbing', '~> 1.1.5'
